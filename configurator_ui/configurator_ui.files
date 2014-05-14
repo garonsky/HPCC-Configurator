@@ -1,0 +1,7 @@
+AppData.cpp
+AppData.hpp
+CMakeLists.txt
+ConfiguratorUI.cpp
+ConfiguratorUI.hpp
+ConfiguratorUIDynamic.pro
+ConfiguratorWidget.html
