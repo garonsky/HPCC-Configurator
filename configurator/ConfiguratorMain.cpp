@@ -7,8 +7,11 @@
 #include "ExceptionStrings.hpp"
 #include <iostream>
 #include "jfile.hpp"
-#include "../configurator_ui/ConfiguratorUI.hpp"
-#include "../configurator_app/MainWindowInterface.h"
+
+#ifdef CONFIGURATOR_LIB
+    #include "../configurator_ui/ConfiguratorUI.hpp"
+    #include "../configurator_app/MainWindowInterface.h"
+#endif // CONFIGURATOR_LIB
 
 #define BUFF_SIZE 1024
 
@@ -42,19 +45,17 @@ void usage()
     std::cout << "-j -dojo                          : prints dojo js" << std::endl;
     std::cout << "-q -qml                           : prints QML" << std::endl;
     std::cout << "-c -env -config <path to env xml file> : load environment config xml file (e.g. environment.xml) " << std::endl;
-    std::cout << "-s1 -server1 <qml file>           : run server using qml file" << std::endl;
-    std::cout << "-s2 -server2                      : run QT application mode" << std::endl;
+#ifdef CONFIGURATOR_LIB
+        std::cout << "-s1 -server1 <qml file>           : run server using qml file" << std::endl;
+        std::cout << "-s2 -server2                      : run QT application mode" << std::endl;
+#endif // CONFIGURATOR_LIB
     std::cout << "-dump                             : dump out xsd internal structure and values" << std::endl;
 }
 
 #ifndef CONFIGURATOR_LIB
-
-int main(int argc, char *argv[])
-
+    int main(int argc, char *argv[])
 #else
-
-int ConfiguratorMain(int argc, char* argv[])
-
+    int ConfiguratorMain(int argc, char* argv[])
 #endif // CONFIGURATOR_LIB
 {
     InitModuleObjects();
@@ -179,6 +180,7 @@ int ConfiguratorMain(int argc, char* argv[])
 
             arrXSDs.append(argv[idx]);
         }
+#ifdef CONFIGURATOR_LIB
         else if (stricmp(argv[idx], "-s1") == 0 || stricmp(argv[idx], "-server1") == 0)
         {
             idx++;
@@ -196,6 +198,7 @@ int ConfiguratorMain(int argc, char* argv[])
         {
             bQMLServer2 = true;
         }
+#endif // #ifdef CONFIGURATOR_LIB
         else if (stricmp(argv[idx], "-list") == 0 || stricmp(argv[idx], "-l") == 0)
         {
             bListXSDs = true;

@@ -90,6 +90,25 @@ enum NODE_TYPES
     XSD_ENUMERATION_ARRAY = 0x4000000
 };
 
+static const char* DEFAULT_SCHEMA_DIRECTORY("/opt/HPCCSystems/componentfiles/configxml/");
+
+static const char* XSD_TAG_ANNOTATION("xs:annotation");
+static const char* XSD_TAG_APP_INFO("xs:appinfo");
+//static const char* XSD_TAG_ATTRIBUTE("xs:attribute");
+//static const char* XSD_TAG_ATTRIBUTE_GROUP("xs:attributeGroup");
+//static const char* XSD_TAG_CHOICE("xs:choice");
+//static const char* XSD_TAG_COMPLEX_CONTENT("xs:complexContent");
+//static const char* XSD_TAG_COMPLEX_TYPE("xs:complexType");
+static const char* XSD_TAG_DOCUMENTATION("xs:documentation");
+//static const char* XSD_TAG_ELEMENT("xs:element");
+static const char* XSD_TAG_EXTENSION("xs:extension");
+static const char* XSD_TAG_INCLUDE("xs:include");
+static const char* XSD_TAG_RESTRICTION("xs:restriction");
+static const char* XSD_TAG_SCHEMA("");//xs:schema");
+//static const char* XSD_TAG_SEQUENCE("xs:sequence");
+static const char* XSD_TAG_SIMPLE_TYPE("xs:simpleType");
+static const char* XSD_TAG_ENUMERATION("xs:enumeration");
+
 static const char* XSD_ERROR_STR("ERROR");
 static const char* XSD_ANNOTATION_STR("Annotation");
 static const char* XSD_APP_INFO_STR("AppInfo");
@@ -115,10 +134,38 @@ static const char* XSD_SIMPLE_TYPE_ARRAY_STR("SimpleTypeArray");
 static const char* XSD_ENUMERATION_STR("Enumeration");
 static const char* XSD_ENUMERATION_ARRAY_STR("EnumerationArray");
 
-static const char* DEFAULT_SCHEMA_DIRECTORY("/opt/HPCCSystems/componentfiles/configxml/");
-
 static const char* XML_ENV_VALUE_OPTIONAL("optional");
 static const char* XML_ENV_VALUE_REQUIRED("required");
+
+static const char* XML_ATTR_DEFAULT("@default");
+static const char* XML_ATTR_USE("@use");
+static const char* XML_ATTR_MINOCCURS("@minOccurs");
+static const char* XML_ATTR_BASE("@base");
+
+static const char* TAG_VIEWCHILDNODES("viewChildNodes");
+static const char* TAG_VIEWTYPE("viewType");
+static const char* TAG_TOOLTIP("tooltip");
+static const char* TAG_COLINDEX("colIndex");
+static const char* TAG_TITLE("title");
+static const char* TAG_WIDTH("width");
+//static const char* TAG_TOOLTIP("tooltip");
+static const char* TAG_AUTOGENWIZARD("autogenforwizard");
+static const char* TAG_AUTOGENDEFAULTVALUE("autogendefaultvalue");
+static const char* TAG_AUTOGENDEFAULTVALUEFORMULTINODE("autogendefaultformultinode");
+static const char* TAG_XPATH("xpath");
+static const char* TAG_DOC_ID("docid");
+
+#define TAG_OPTIONAL                    "optional"
+#define TAG_REQUIRED                    "required"
+#define XML_ATTR_ATTRIBUTEFORMDEFAULT  "@attributeFormDefault"
+#define XML_ATTR_ELEMENTFORMDEFAULT    "@elementFormDefault"
+#define XML_ATTR_ID                    "@id"
+#define XML_ATTR_REF                   "@ref"
+#define XML_ATTR_XMLNS_XS              "@xmlns:xs"
+#define XML_ATTR_SCHEMA_LOCATION       "@schemaLocation"
+#define XML_ATTR_VALUE                 "@value"
+#define XML_ATTR_OVERIDE               "@overide"
+#define XML_ATTR_DEPLOYABLE            "@deployable"
 
 static unsigned int STANDARD_OFFSET_1 = 3;
 static unsigned int STANDARD_OFFSET_2 = 6;
