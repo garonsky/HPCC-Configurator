@@ -10,9 +10,9 @@ IF( DEFINED ENV{QTDIR} )
     MESSAGE( "Set CMAKE_PREFIX_PATH to ${CMAKE_PREFIX_PATH}" )
     MESSAGE( "CMAKE_MODULE_PATH is set to ${CMAKE_MODULE_PATH}" )
     MESSAGE( "Qt5_INCLUDE_DIRS is set to ${Qt5_INCLUDE_DIRS}" )
-ELSE ()
+ELSEIF( CONFIGURATOR_STATIC_LIB )
     MESSAGE( FATAL_ERROR "ERROR: Environment variable QTDIR is not set. Please locate your Qt folder and set QTDIR.")
-endif ()
+ENDIF()
 
 SET( HPCC_CONFIGURATOR_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR} )
 
@@ -42,7 +42,11 @@ INCLUDE (${HPCC_CONFIGURATOR_SOURCE_DIR}/version.cmake)
 INCLUDE (${HPCC_SOURCE_DIR}/version.cmake)
 INCLUDE (${HPCC_CONFIGURATOR_SOURCE_DIR}/cmake_modules/optionDefaults.cmake)
 INCLUDE (${HPCC_CONFIGURATOR_SOURCE_DIR}/cmake_modules/configuratorCommonSetup.cmake)
-INCLUDE (${QT_MODULE_PATH}/Qt5Widgets/Qt5WidgetsMacros.cmake)
+
+IF( CONFIGURATOR_STATIC_LIB )
+    INCLUDE (${QT_MODULE_PATH}/Qt5Widgets/Qt5WidgetsMacros.cmake)
+ENDIF()
+
 INCLUDE (${HPCC_CONFIGURATOR_SOURCE_DIR}/platform-version-prereq.cmake)
 
 MESSAGE("-- Minimum HPCC Platform version required: ${HPCC_MAJOR_REQ}.${HPCC_MINOR_REQ}")
@@ -103,12 +107,10 @@ SET(INSTALL_LIB_DIR  lib${LIBSUFFIX} CACHE PATH "Installation directory for libr
 MARK_AS_ADVANCED(INSTALL_LIB_DIR)
 
 HPCC_ADD_SUBDIRECTORY( configurator PLATFORM )
-HPCC_ADD_SUBDIRECTORY( configurator_ui PLATFORM )
-
-
 MESSAGE( "CONFIGURATOR_LIB is set to  ${CONFIGURATOR_LIB} " )
-IF( ${CONFIGURATOR_LIB} )
+IF( CONFIGURATOR_STATIC_LIB )
     MESSAGE("Building QT Configurator Frontend " )
+    HPCC_ADD_SUBDIRECTORY( configurator_ui PLATFORM )
     HPCC_ADD_SUBDIRECTORY( configurator_app PLATFORM )
 ELSE()
     MESSAGE("Building CL Configurator " )

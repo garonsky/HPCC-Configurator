@@ -23,7 +23,7 @@ SET(  SRCS QMLMarkup.cpp QMLMarkup.hpp ConfiguratorMain.cpp ConfigFileComponentU
         ${CMAKE_CURRENT_SOURCE_DIR}/configurator_app
 )
 
-IF( ${CONFIGURATOR_LIB} )
+IF( CONFIGURATOR_STATIC_LIB )
     MESSAGE( "Building configurator LIBRARY (.so) " )
 
     ADD_DEFINITIONS( -D_USRDLL -DCONFIGURATOR_STATIC_LIB)
@@ -36,9 +36,10 @@ ELSE()
     MESSAGE( "Building configurator EXECUTABLE" )
 
     ADD_DEFINITIONS( -D_CONSOLE )
-    LINK_DIRECTORIES( ../configurator_ui Qt5_LIB_DIR )
+    #LINK_DIRECTORIES( ../configurator_ui Qt5_LIB_DIR )
     HPCC_ADD_EXECUTABLE( configurator  ${SRCS} )
-    TARGET_LINK_LIBRARIES( configurator jlib configurator_ui)
+    #TARGET_LINK_LIBRARIES( configurator jlib configurator_ui)
+    TARGET_LINK_LIBRARIES( configurator jlib )
 
     INSTALL( TARGETS configurator RUNTIME DESTINATION ${EXEC_DIR} )
 
