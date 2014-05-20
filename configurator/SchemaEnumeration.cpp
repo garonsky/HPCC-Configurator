@@ -154,6 +154,7 @@ void CEnumerationArray::traverseAndProcessNodes() const
 const char* CEnumerationArray::getXML(const char* /*pComponent*/)
 {
     assert(false); // NOT IMPLEMENTED
+    return NULL;
 }
 
 void CEnumerationArray::populateEnvXPath(StringBuffer strXPath, unsigned int index)
