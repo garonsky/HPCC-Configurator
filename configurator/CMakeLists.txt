@@ -36,9 +36,7 @@ ELSE()
     MESSAGE( "Building configurator EXECUTABLE" )
 
     ADD_DEFINITIONS( -D_CONSOLE )
-    #LINK_DIRECTORIES( ../configurator_ui Qt5_LIB_DIR )
     HPCC_ADD_EXECUTABLE( configurator  ${SRCS} )
-    #TARGET_LINK_LIBRARIES( configurator jlib configurator_ui)
     TARGET_LINK_LIBRARIES( configurator jlib )
 
     INSTALL( TARGETS configurator RUNTIME DESTINATION ${EXEC_DIR} )

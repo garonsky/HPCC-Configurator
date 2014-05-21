@@ -16,6 +16,8 @@ INCLUDE_DIRECTORIES(
         ${Qt5_INCLUDE_DIRS}/QtQml
         ${HPCC_CONFIGURATOR_SOURCE_DIR}/configurator
         ${HPCC_CONFIGURATOR_SOURCE_DIR}/configurator_app
+        ${HPCC_SOURCE_DIR}/system/jlib
+        ${HPCC_SOURCE_DIR}/system/include
 )
 
 ADD_DEFINITIONS( -D_USRDLL -DCONFIGURATOR_STATIC_LIB )

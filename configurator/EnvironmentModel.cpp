@@ -136,6 +136,7 @@ CEnvironmentModelNode* CEnvironmentModel::getParent(CEnvironmentModelNode *pChil
 CEnvironmentModelNode* CEnvironmentModel::getChild(CEnvironmentModelNode *pParent, int index)
 {
     assert(index >= 0);
+    assert(pParent != NULL);
 
     if (pParent == NULL)
     {

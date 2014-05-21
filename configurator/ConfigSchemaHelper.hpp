@@ -20,7 +20,7 @@ class CConfigSchemaHelper : public CInterface
 {
 public:
 
-    IMPLEMENT_IINTERFACE
+    IMPLEMENT_IINTERFACE;
 
     static CConfigSchemaHelper* getInstance(const char* pDefaultDirOverride =  NULL);
     static CConfigSchemaHelper* getInstance(const char* pBuildSetFileName, const char *pBaseDirectory, const char *pDefaultDirOverride = NULL);

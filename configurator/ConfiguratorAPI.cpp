@@ -453,39 +453,44 @@ const char* getData(void *pData)
 {
     assert(pData != NULL);
 
-    const char *p = CEnvironmentModel::getInstance()->getData(static_cast<CEnvironmentModelNode*>(pData));
+    const char *p = CEnvironmentModel::getInstance()->getData( static_cast<CEnvironmentModelNode*>(pData));
 
     return p;
 }
 
 void* getParent(void *pData)
 {
-    //assert(pData != NULL);
-
     if (pData == NULL)
     {
         return NULL;
     }
 
-    return (void*)(CEnvironmentModel::getInstance()->getParent(static_cast<CEnvironmentModelNode*>(pData)));
+    if (pData == (void*)(CEnvironmentModel::getInstance()->getRoot()))
+    {
+        return NULL;
+    }
+    else
+    {
+        return (void*)(CEnvironmentModel::getInstance()->getParent(static_cast<CEnvironmentModelNode*>(pData)));
+        //return pData;
+    }
 }
 
 void* getChild(void *pData, int idx)
 {
     if (pData == NULL)
     {
-        assert(idx < CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getNumberOfComponents());
+        if (idx == 0)
+        {
+            return (void*)(CEnvironmentModel::getInstance()->getRoot());
+        }
 
-        return (void*)(CEnvironmentModel::getInstance()->getRoot());
+        //assert(idx < 1);
+        return NULL;
     }
     else
     {
         void *pRetPtr = (void*)(CEnvironmentModel::getInstance()->getChild(static_cast<CEnvironmentModelNode*>(pData), idx));
-
-        if (pRetPtr == NULL)
-        {
-            pRetPtr = pData;
-        }
 
         return pRetPtr;
     }
@@ -493,11 +498,15 @@ void* getChild(void *pData, int idx)
 
 int getIndexFromParent(void *pData)
 {
-    assert(pData != NULL);
+ //   assert(pData != NULL);
 
     CEnvironmentModelNode *pNode = static_cast<CEnvironmentModelNode*>(pData);
 
-    assert (pNode->getParent() != NULL);
+    //assert (pNode->getParent() != NULL);
+    if (pNode->getParent() == NULL)
+    {
+        return 0; // Must be 'Environment' node
+    }
 
     CEnvironmentModelNode *pGrandParent = pNode->getParent();
 
@@ -513,6 +522,11 @@ int getIndexFromParent(void *pData)
 
     assert(false);
     return 0;
+}
+
+void* getRootNode()
+{
+    return (void*)(CEnvironmentModel::getInstance()->getRoot());
 }
 
 /*void* getComponent(void *pComponent, int idx)

@@ -58,11 +58,14 @@ void MainWindow::addServiceToList(char *pService)
 void MainWindow::on_actionOpen_triggered()
 {
     //QString qstrFileName = QFileDialog::getOpenFileName(this, "Open ironment Configuration File", "/etc/HPCCSystems/source/", ("*.xml"));
-    QString qstrFileName = QFileDialog::getOpenFileName(this, "Open ironment Configuration File", "/home/gleb//HPCC2/build/", ("*.qml"));
+    //QString qstrFileName = QFileDialog::getOpenFileName(this, "Open ironment Configuration File", "/home/gleb//HPCC2/build/", ("*.qml"));
+    QString qstrFileName = QFileDialog::getOpenFileName(this, "Open Environment Configuration File", "/etc/HPCCSystems/source", ("*.xml"));
 
     QQuickView *pView = new QQuickView();
 
-    CONFIGURATOR_API::openConfigurationFile("/etc/HPCCSystems/source/demo1.xml");
+    //CONFIGURATOR_API::openConfigurationFile("/etc/HPCCSystems/source/demo1.xml");
+    CONFIGURATOR_API::openConfigurationFile(qstrFileName.toLocal8Bit().data());
+
 
     ApplicationData *pAppData = new ApplicationData();
     pView->rootContext()->setContextProperty("ApplicationData", pAppData);

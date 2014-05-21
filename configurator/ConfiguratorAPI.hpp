@@ -60,6 +60,7 @@ extern "C" const char* getData(void *pData);
 extern "C" void* getParent(void *pData);
 extern "C" void* getChild(void *pData, int idx);
 extern "C" int getIndexFromParent(void *pData);
+extern "C" void* getRootNode();
 
 
 
