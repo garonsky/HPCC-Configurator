@@ -451,7 +451,11 @@ int getNumberOfChildren(void *pData)
 
 const char* getData(void *pData)
 {
-    assert(pData != NULL);
+    //assert(pData != NULL);
+    if (pData == NULL)
+    {
+        return NULL;
+    }
 
     const char *p = CEnvironmentModel::getInstance()->getData( static_cast<CEnvironmentModelNode*>(pData));
 
@@ -527,6 +531,11 @@ int getIndexFromParent(void *pData)
 void* getRootNode()
 {
     return (void*)(CEnvironmentModel::getInstance()->getRoot());
+}
+
+void* getModel()
+{
+    return (void*)(CEnvironmentModel::getInstance());
 }
 
 /*void* getComponent(void *pComponent, int idx)

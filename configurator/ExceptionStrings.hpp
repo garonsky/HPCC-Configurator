@@ -29,7 +29,7 @@ enum eExceptionCodes
 };
 
 
-const char pExceptionStringArray[EX_STR_LAST_ENTRY][MAX_EXCEPTION_STRING_LENGTH] = { /*** ALWAYS AT TO THE END OF THE ARRAY!!! ***/
+const char pExceptionStringArray[EX_STR_LAST_ENTRY][MAX_EXCEPTION_STRING_LENGTH] = { /*** ALWAYS ADD TO THE END OF THE ARRAY!!! ***/
                                                                                      "can not open xsd file",
                                                                                      "simple type already defined",
                                                                                      "complex type already defined",
@@ -40,7 +40,7 @@ const char pExceptionStringArray[EX_STR_LAST_ENTRY][MAX_EXCEPTION_STRING_LENGTH]
                                                                                      /*** ADD CORRESPONDING ENTRY TO pExceptionStringActionArray ***/
                                                                                     };
 
-const char pExceptionStringActionArray[EX_STR_LAST_ENTRY][MAX_EXCEPTION_STRING_LENGTH] = {  /*** ALWAYS AT TO THE END OF THE ARRAY!!! ***/
+const char pExceptionStringActionArray[EX_STR_LAST_ENTRY][MAX_EXCEPTION_STRING_LENGTH] = {  /*** ALWAYS ADD TO THE END OF THE ARRAY!!! ***/
                                                                                             "Ensure that input xsd files exist and that it's permissions are set properly",
                                                                                             "Multiple xs:simpleType tags with the same name defined in xsd files. Try processing xsd files using -use parameter and only specify 1 xsd file for processing." ,
                                                                                             "Multiple xs:complexType tags with the same name defined in xsd files. Try processing xsd files using -use parameter and only specify 1 xsd file for processing.",
