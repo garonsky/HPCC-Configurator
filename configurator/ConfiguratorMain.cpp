@@ -471,5 +471,5 @@ void usage()
 //        ShowMainWindowUI();
     }
 
-    return 1;
+    return 0;
 }
