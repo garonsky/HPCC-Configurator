@@ -27,6 +27,11 @@ CConfigSchemaHelper* CConfigSchemaHelper::getInstance(const char* pDefaultDirOve
     {
         s_pCConfigSchemaHelper = new CConfigSchemaHelper();
         s_pCConfigSchemaHelper->m_nTables = 0;
+
+        if (pDefaultDirOverride != NULL && pDefaultDirOverride[0] != 0)
+        {
+            s_pCConfigSchemaHelper->setBasePath(pDefaultDirOverride);
+        }
     }
 
     return s_pCConfigSchemaHelper;
@@ -57,6 +62,7 @@ CConfigSchemaHelper::CConfigSchemaHelper(const char* pBuildSetFile, const char* 
 
 CConfigSchemaHelper::~CConfigSchemaHelper()
 {
+    delete[] m_pBasePath;
     delete m_pSchemaMapManager;
 }
 
@@ -627,4 +633,15 @@ void CConfigSchemaHelper::stripXPathIndex(StringBuffer &strXPath)
         }
         nLen--;
     }
+}
+
+void CConfigSchemaHelper::setBasePath(const char *pBasePath)
+{
+    assert(m_pBasePath == NULL);
+
+    int nLength = strlen(pBasePath);
+
+    m_pBasePath = new char[nLength+1];
+
+    strcpy(m_pBasePath, pBasePath);
 }
