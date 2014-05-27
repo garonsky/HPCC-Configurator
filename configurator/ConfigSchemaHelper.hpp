@@ -63,6 +63,8 @@ public:
         return m_pBasePath;
     }
 
+    void setBasePath(const char *pBasePath);
+
     void setEnvTreeProp(const char *pXPath, const char* pValue);
 
     const char* getTableValue(const char* pXPath, int nRow = 1) const;
@@ -138,7 +140,7 @@ private:
 
     static CConfigSchemaHelper* s_pCConfigSchemaHelper;
     int m_nTables;
-    const char *m_pBasePath;
+    char *m_pBasePath;
 
     StringBuffer m_strEnvFilePath;
 
