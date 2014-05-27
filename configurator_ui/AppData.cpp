@@ -6,7 +6,7 @@ static const int TOP_LEVEL = 1;
 static void* P_TOP_LEVEL = (void*)(&TOP_LEVEL);
 
 //#define LOG_DATA_CALL
-#define LOG_ROW_COUNT_CALL
+//#define LOG_ROW_COUNT_CALL
 //#define LOG_PARENT_CALL
 //#define LOG_INDEX_CALL
 
@@ -91,7 +91,7 @@ QVariant ComponentDataModel::data(const QModelIndex &index, int role) const
 
     const char *pName = CONFIGURATOR_API::getData(index.internalPointer());
 
-    assert(CONFIGURATOR_API::getRootNode() != index.internalPointer());
+    //assert(CONFIGURATOR_API::getRootNode() != index.internalPointer());
 
 #ifdef LOG_DATA_CALL
     PROGLOG("Function: %s() at %s:%d", __func__, __FILE__, __LINE__);
@@ -128,26 +128,33 @@ QVariant ComponentDataModel::headerData(int section, Qt::Orientation orientation
 
 QModelIndex ComponentDataModel::index(int row, int column, const QModelIndex & parent) const
 {
-#ifdef LOG_INDEX_CALL
-    PROGLOG("Function: %s() at %s:%d", __func__, __FILE__, __LINE__);
-    PROGLOG("\trow = %d parent.row() = %d parent.column() = %d parent.internalPointer() = %p (%s) number_of_children = %d", row, parent.row(), parent.column(), parent.internalPointer(),\
-                CONFIGURATOR_API::getData(parent.internalPointer()), CONFIGURATOR_API::getNumberOfChildren(parent.internalPointer()));
-#endif // LOG_INDEX_CALL
     assert(column == 0);
     if (hasIndex(row, column, parent) == false)
     {
         return QModelIndex();
     }
 
+#ifdef LOG_INDEX_CALL
+    PROGLOG("Function: %s() at %s:%d", __func__, __FILE__, __LINE__);
+    PROGLOG("\trow = %d parent.row() = %d parent.column() = %d parent.internalPointer() = %p (%s) number_of_children = %d", row, parent.row(), parent.column(), parent.internalPointer(),\
+                CONFIGURATOR_API::getData(parent.internalPointer()), parent.isValid() ? CONFIGURATOR_API::getNumberOfChildren(parent.internalPointer()) : 0);
+#endif // LOG_INDEX_CALL
+
     void *pParentNode = NULL;
 
     if (parent.isValid() == false)
     {
+#ifdef LOG_INDEX_CALL
+          PROGLOG("\tparent.isValid = false");
+#endif // LOG_INDEX_CALL
         //return createIndex(row, column, CONFIGURATOR_API::getChild(CONFIGURATOR_API::getRootNode(), row));
-        pParentNode = CONFIGURATOR_API::getRootNode();
+        pParentNode = CONFIGURATOR_API::getModel();
     }
     else
     {
+#ifdef LOG_INDEX_CALL
+          PROGLOG("\tparent.isValid = true");
+#endif // LOG_INDEX_CALL
         pParentNode = parent.internalPointer();
     }
 
@@ -188,11 +195,18 @@ QModelIndex ComponentDataModel::parent(const QModelIndex & index) const
 
     void *pChildNode = index.internalPointer();
 #ifdef LOG_PARENT_CALL
-    PROGLOG("\tpChildNode is %s", CONFIGURATOR_API::getData(pChildNode));
+    if (pChildNode != CONFIGURATOR_API::getModel())
+    {
+        PROGLOG("\tpChildNode is %s", CONFIGURATOR_API::getData(pChildNode));
+    }
+    else
+    {
+        PROGLOG("\tpChildNode (%p) is model pointer", pChildNode);
+    }
 #endif
     void *pParentNode = CONFIGURATOR_API::getParent(pChildNode);
 
-    if (pParentNode == CONFIGURATOR_API::getRootNode())
+    if (pParentNode == CONFIGURATOR_API::getModel())
     {
         return QModelIndex();
     }
@@ -229,7 +243,7 @@ int ComponentDataModel::rowCount(const QModelIndex &parent) const
 #ifdef LOG_ROW_COUNT_CALL
         PROGLOG("\tusing root node");
 #endif // LOG_ROW_COUNT_CALL
-        pParentNode = CONFIGURATOR_API::getRootNode();
+        pParentNode = CONFIGURATOR_API::getModel();
         //return 1;
     }
     else

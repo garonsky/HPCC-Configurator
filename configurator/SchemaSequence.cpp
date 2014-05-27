@@ -5,6 +5,24 @@
 #include "SchemaElement.hpp"
 #include "QMLMarkup.hpp"
 
+
+const CXSDNodeBase* CSequence::getNodeByTypeAndNameDescending(NODE_TYPES eNodeType, const char *pName) const
+{
+    const CXSDNodeBase* pMatchingNode = NULL;
+
+    if (eNodeType == this->getNodeType() && (pName != NULL ? !strcmp(pName, this->getNodeTypeStr()) : true))
+    {
+        return this;
+    }
+
+    if (p_mElementArray != NULL)
+    {
+        pMatchingNode = p_mElementArray->getNodeByTypeAndNameDescending(eNodeType, pName);
+    }
+
+    return pMatchingNode;
+}
+
 CSequence* CSequence::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
 {
     assert(pSchemaRoot != NULL);

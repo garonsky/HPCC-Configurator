@@ -15,6 +15,47 @@
 #include "ExceptionStrings.hpp"
 #include "SchemaMapManager.hpp"
 
+
+
+const CXSDNodeBase* CComplexType::getNodeByTypeAndNameAscending(NODE_TYPES eNodeType, const char *pName) const
+{
+    const CXSDNodeBase* pMatchingNode = NULL;
+
+    if (eNodeType == this->getNodeType() && (pName != NULL ? !strcmp(pName, this->getNodeTypeStr()) : true))
+    {
+        return this;
+    }
+
+    if (m_pSequence != NULL)
+    {
+        pMatchingNode =  m_pSequence->getNodeByTypeAndNameAscending(eNodeType, pName);
+    }
+    if (pMatchingNode != NULL && m_pElementArray != NULL)
+    {
+        pMatchingNode = m_pElementArray->getNodeByTypeAndNameAscending(eNodeType, pName);
+    }
+    //if (pMatchingNode != NULL && )
+
+    return pMatchingNode;
+}
+
+const CXSDNodeBase* CComplexType::getNodeByTypeAndNameDescending(NODE_TYPES eNodeType, const char *pName) const
+{
+    const CXSDNodeBase* pMatchingNode = NULL;
+
+    if (eNodeType == this->getNodeType() && (pName != NULL ? !strcmp(pName, this->getNodeTypeStr()) : true))
+    {
+        return this;
+    }
+
+    if (m_pSequence != NULL)
+    {
+        pMatchingNode = m_pSequence->getNodeByTypeAndNameDescending(eNodeType, pName);
+    }
+
+    return pMatchingNode;
+}
+
 void CComplexType::dump(std::ostream& cout, unsigned int offset) const
 {
     offset+= STANDARD_OFFSET_1;

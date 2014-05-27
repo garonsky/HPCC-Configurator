@@ -19,6 +19,47 @@
 #include "SchemaMapManager.hpp"
 #include "ConfiguratorMain.hpp"
 
+const CXSDNodeBase* CElement::getNodeByTypeAndNameAscending(NODE_TYPES eNodeType, const char *pName) const
+{
+    const CXSDNodeBase* pMatchingNode = NULL;
+
+    if (eNodeType == this->getNodeType() && (pName != NULL ? !strcmp(pName, this->getNodeTypeStr()) : true))
+    {
+        return this;
+    }
+
+    if (m_pComplexTypeArray != NULL)
+    {
+        pMatchingNode =  m_pComplexTypeArray->getNodeByTypeAndNameAscending(eNodeType, pName);
+    }
+
+    if (pMatchingNode == NULL && m_pAttributeArray != NULL)
+    {
+        pMatchingNode =  m_pComplexTypeArray->getNodeByTypeAndNameDescending(eNodeType, pName);
+    }
+
+
+    return pMatchingNode;
+
+}
+
+const CXSDNodeBase* CElement::getNodeByTypeAndNameDescending(NODE_TYPES eNodeType, const char *pName) const
+{
+    const CXSDNodeBase* pMatchingNode = NULL;
+
+    if (eNodeType == this->getNodeType() && (pName != NULL ? !strcmp(pName, this->getNodeTypeStr()) : true))
+    {
+        return this;
+    }
+
+    if (m_pComplexTypeArray != NULL)
+    {
+        pMatchingNode = m_pComplexTypeArray->getNodeByTypeAndNameDescending(eNodeType, pName);
+    }
+
+    return pMatchingNode;
+}
+
 CElement* CElement::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
 {
     assert(pSchemaRoot != NULL);
@@ -608,6 +649,13 @@ void CElement::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
 //            CConfigSchemaHelper::getInstance()->getSchemaMapManager()->addMapOfXPathToElement(this->getEnvXPath(), this);
             CConfigSchemaHelper::getInstance()->appendElementXPath(this->getEnvXPath());
         }
+    }
+
+    const char* pInstanceName =  pEnvTree->queryPropTree(this->getEnvXPath())->queryProp(XML_ATTR_NAME);
+
+    if (pInstanceName != NULL && *pInstanceName != 0)
+    {
+        this->setInstanceName(pInstanceName);
     }
 }
 

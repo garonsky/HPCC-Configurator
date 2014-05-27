@@ -434,12 +434,15 @@ int getNumberOfChildren(void *pData)
 
     if (pData == NULL)
     {
-     //  CEnvironmentModel *pModel = CEnvironmentModel::getInstance();
-
-//        nRetVal = pModel->getRoot()->getNumberOfChildren();
-        return 1;
+        assert(false); // why ever null?
+        return 0;
     }
-    else
+
+    if (pData == (void*)(CEnvironmentModel::getInstance()))
+    {
+        nRetVal = (static_cast<CEnvironmentModel*>(pData))->getNumberOfRootNodes();
+    }
+    else // must be of type CEnvironmentModelNode*
     {
         CEnvironmentModelNode *pNode = static_cast<CEnvironmentModelNode*>(pData);
 
@@ -457,7 +460,7 @@ const char* getData(void *pData)
         return NULL;
     }
 
-    const char *p = CEnvironmentModel::getInstance()->getData( static_cast<CEnvironmentModelNode*>(pData));
+    const char *p = CEnvironmentModel::getInstance()->getData(static_cast<CEnvironmentModelNode*>(pData));
 
     return p;
 }
@@ -471,7 +474,7 @@ void* getParent(void *pData)
 
     if (pData == (void*)(CEnvironmentModel::getInstance()->getRoot()))
     {
-        return NULL;
+        return (void*)(CEnvironmentModel::getInstance());
     }
     else
     {
@@ -482,11 +485,11 @@ void* getParent(void *pData)
 
 void* getChild(void *pData, int idx)
 {
-    if (pData == NULL)
+    if (pData == NULL || pData == CEnvironmentModel::getInstance())
     {
         if (idx == 0)
         {
-            return (void*)(CEnvironmentModel::getInstance()->getRoot());
+            return (void*)(CEnvironmentModel::getInstance()->getRoot(0));
         }
 
         //assert(idx < 1);
@@ -512,7 +515,7 @@ int getIndexFromParent(void *pData)
         return 0; // Must be 'Environment' node
     }
 
-    CEnvironmentModelNode *pGrandParent = pNode->getParent();
+    const CEnvironmentModelNode *pGrandParent = pNode->getParent();
 
     int nChildren = pGrandParent->getNumberOfChildren();
 
@@ -528,15 +531,51 @@ int getIndexFromParent(void *pData)
     return 0;
 }
 
-void* getRootNode()
+/*int getIndexFromParent(void *pData)
 {
-    return (void*)(CEnvironmentModel::getInstance()->getRoot());
+ //   assert(pData != NULL);
+
+    CEnvironmentModelNode *pNode = static_cast<CEnvironmentModelNode*>(pData);
+
+    //assert (pNode->getParent() != NULL);
+    if (pNode->getParent() == NULL)
+    {
+        return 0; // Must be 'Environment' node
+    }
+
+    while (true)
+    {
+        const CEnvironmentModelNode *pGrandParent;
+
+        pGrandParent = pNode->getParent();
+
+        int nChildren = pGrandParent->getNumberOfChildren();
+
+        for (int idx = 0; idx < nChildren; idx++)
+        {
+            if (const_cast<const CEnvironmentModelNode*>(pNode) == (const_cast<CEnvironmentModelNode*>(pGrandParent))->getChild(idx))
+            {
+                return idx;
+            }
+        }
+
+        pNode = const_cast<CEnvironmentModelNode*>(pGrandParent);
+    }
+
+    assert(false);
+    return 0;
+}*/
+
+void* getRootNode(int idx)
+{
+    return (void*)(CEnvironmentModel::getInstance()->getRoot(idx));
 }
 
 void* getModel()
 {
     return (void*)(CEnvironmentModel::getInstance());
 }
+
 
 /*void* getComponent(void *pComponent, int idx)
 {

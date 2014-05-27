@@ -264,7 +264,7 @@ public:
 
     void dumpStdOut() const;
 
-    virtual CXSDNodeBase* getParentNode()
+    virtual CXSDNodeBase* getParentNode() const
     {
         return m_pParentNode;
     }

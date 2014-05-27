@@ -27,6 +27,11 @@ public:
     GETTERSETTER(MinOccurs)
     GETTERSETTER(Type)
     GETTERSETTER(Title)
+    GETTERSETTER(InstanceName)
+
+
+    virtual const CXSDNodeBase* getNodeByTypeAndNameAscending(NODE_TYPES eNodeType, const char *pName) const;
+    virtual const CXSDNodeBase* getNodeByTypeAndNameDescending(NODE_TYPES eNodeType, const char *pName) const;
 
     virtual const char* getXML(const char* /*pComponent*/);
 

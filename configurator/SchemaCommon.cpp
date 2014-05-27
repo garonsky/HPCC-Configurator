@@ -135,9 +135,9 @@ const CXSDNodeBase* CXSDNodeBase::getNodeByTypeAndNameAscending(NODE_TYPES eNode
 
    const CIArray *pThisArray = dynamic_cast<const CIArray*>(this);
 
-   if (pThisArray!= NULL)
+   if (pThisArray != NULL)
    {
-       len = pThisArray->length()-1;
+       len = pThisArray->length();
    }
    else
    {
@@ -182,7 +182,7 @@ const CXSDNodeBase* CXSDNodeBase::getNodeByTypeAndNameDescending(NODE_TYPES eNod
 
    if (pThisArray!= NULL)
    {
-       len = pThisArray->length()-1;
+       len = pThisArray->length();
    }
    else
    {

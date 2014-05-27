@@ -14,7 +14,7 @@ class CEnvironmentModelNode
 {
 public:
 
-    CEnvironmentModelNode(const CEnvironmentModelNode *pParent = 0, int index = 0);
+    CEnvironmentModelNode(const CEnvironmentModelNode *pParent = 0, int index = 0, CXSDNodeBase *pNode = 0);
     virtual ~CEnvironmentModelNode();
 
     int getNumberOfChildren() const;
@@ -24,18 +24,17 @@ public:
         return m_pXSDNode;
     }
 
-    CEnvironmentModelNode* getParent()
+    const CEnvironmentModelNode* getParent() const
     {
         return m_pParent;
     }
 
-    CEnvironmentModelNode* getChild(int index);
+    const CEnvironmentModelNode* getChild(int index) const;
 
 protected:
 
     CXSDNodeBase *m_pXSDNode;
-    CEnvironmentModelNode *m_pParent;
-    //CIArrayOf<CEnvironmentModelNode*> *m_pArrChildNodes;
+    const CEnvironmentModelNode *m_pParent;
     PointerArray *m_pArrChildNodes;
 } __attribute__((aligned (32)));
 
@@ -47,16 +46,13 @@ public:
 
     virtual ~CEnvironmentModel();
 
-    CEnvironmentModelNode* getParent(CEnvironmentModelNode *pChild);
-    CEnvironmentModelNode* getChild(CEnvironmentModelNode *pParent, int index);
+    const CEnvironmentModelNode* getParent(CEnvironmentModelNode *pChild);
+    const CEnvironmentModelNode* getChild(CEnvironmentModelNode *pParent, int index);
+    int getNumberOfRootNodes() const;
 
-    CEnvironmentModelNode* getRoot()
-    {
-        assert(m_pRootNode != 0);
-
-        return m_pRootNode;
-    }
-    const char* getData(CEnvironmentModelNode *pChild);
+    CEnvironmentModelNode* getRoot(int index = 0);
+    const char* getData(const CEnvironmentModelNode *pChild) const;
+    const char* getInstanceName(const CEnvironmentModelNode *pChild) const;
 
 protected:
 
