@@ -24,7 +24,7 @@ SET(  SRCS QMLMarkup.cpp QMLMarkup.hpp ConfiguratorMain.cpp ConfigFileComponentU
 )
 
 IF( CONFIGURATOR_STATIC_LIB )
-    MESSAGE( "Building configurator LIBRARY (.so) " )
+    MESSAGE( "-- configurator target is a library file (.so)" )
 
     ADD_DEFINITIONS( -D_USRDLL -DCONFIGURATOR_STATIC_LIB)
     HPCC_ADD_LIBRARY( configurator SHARED ${SRCS} )
@@ -33,7 +33,7 @@ IF( CONFIGURATOR_STATIC_LIB )
     INSTALL( TARGETS configurator LIBRARY DESTINATION ${LIB_DIR} )
 
 ELSE()
-    MESSAGE( "Building configurator EXECUTABLE" )
+    MESSAGE( "-- configurator target is a binary executable" )
 
     ADD_DEFINITIONS( -D_CONSOLE )
     HPCC_ADD_EXECUTABLE( configurator  ${SRCS} )
