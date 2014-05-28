@@ -7,6 +7,11 @@
 #include <QtQuick/QQuickView>
 #include <QQmlContext>
 #include <QFileSystemModel>
+#include <QUrl>
+#include <QFile>
+#include <QTextStream>
+#include <QDebug>
+
 #include "../configurator_ui/AppData.hpp"
 //#include "../configurator_ui/model.h"
 //#include <QDeclarativeView>
@@ -61,30 +66,29 @@ void MainWindow::on_actionOpen_triggered()
     //QString qstrFileName = QFileDialog::getOpenFileName(this, "Open ironment Configuration File", "/home/gleb//HPCC2/build/", ("*.qml"));
     QString qstrFileName = QFileDialog::getOpenFileName(this, "Open Environment Configuration File", "/etc/HPCCSystems/source", ("*.xml"));
 
-    QQuickView *pView = new QQuickView();
+    //QQuickView *pView = new QQuickView();
+    m_pView = new QQuickView();
 
     //CONFIGURATOR_API::openConfigurationFile("/etc/HPCCSystems/source/demo1.xml");
     CONFIGURATOR_API::openConfigurationFile(qstrFileName.toLocal8Bit().data());
 
 
     ApplicationData *pAppData = new ApplicationData();
-    pView->rootContext()->setContextProperty("ApplicationData", pAppData);
+    m_pView->rootContext()->setContextProperty("ApplicationData", pAppData);
 
     TableDataModel *pTableDataModel = new TableDataModel[MAX_ARRAY_X];
 
     for (int idx = 0; idx < MAX_ARRAY_X; idx++)
     {
-        pView->rootContext()->setContextProperty(modelNames[idx], &(pTableDataModel[idx]));
+        m_pView->rootContext()->setContextProperty(modelNames[idx], &(pTableDataModel[idx]));
     }
 
-    pView->setSource(QUrl::fromLocalFile(qstrFileName));
+    m_pView->setSource(QUrl::fromLocalFile("/tmp/.dali.xsd.qml"));
+    //pView->setSource(CONFIGURATOR_API::getQML());
 
-    QWidget *container = QWidget::createWindowContainer(pView);
+    QWidget *container = QWidget::createWindowContainer(m_pView);
 
     this->ui->verticalLayout->addWidget(container);
-
-    //Model *pModel = new Model(20,1,container);
-    //this->ui->treeView->setModel(pModel);
 
     ComponentDataModel *pComponentDataModel = new ComponentDataModel(container);
     this->ui->treeView->setModel(pComponentDataModel);
@@ -99,4 +103,53 @@ void MainWindow::on_actionOpen_triggered()
        //filemodel->setRootPath(sPath);
        ui->treeView->setModel(filemodel);
     //tree->setModel( &myModel);*/
+}
+
+void MainWindow::on_treeView_clicked(const QModelIndex &index)
+{
+    QUrl url;
+    //QString qstrQML(CONFIGURATOR_API::getQML(index.internalPointer()));
+    QString qstrFileName("/tmp/");
+    qstrFileName.append(CONFIGURATOR_API::getFileName(index.internalPointer()));
+    qstrFileName.append(".qml");
+
+    qDebug() << qstrFileName;
+
+    QFile qFile(qstrFileName.toLocal8Bit().data());
+
+    if (qFile.open(QIODevice::WriteOnly | QIODevice::Truncate) == 0)
+    {
+        return;
+    }
+
+    QTextStream out(&qFile);
+    out << CONFIGURATOR_API::getQML(index.internalPointer());
+
+    qFile.close();
+
+    //url.fromLocalFile(qstrFileName.toLocal8Bit().data());
+    m_pView->setSource(QUrl::fromLocalFile(qstrFileName.toLocal8Bit().data()));
+
+
+    //m_pView->setSource(QUrl::fromLocalFile("/tmp/sasha.xsd.qml"));
+    //m_pView->setSource(url);
+    //m_pView->show();
+
+
+    /*m_pView = new QQuickView();
+
+    ApplicationData *pAppData = new ApplicationData();
+    m_pView->rootContext()->setContextProperty("ApplicationData", pAppData);
+
+    TableDataModel *pTableDataModel = new TableDataModel[MAX_ARRAY_X];
+
+    for (int idx = 0; idx < MAX_ARRAY_X; idx++)
+    {
+        m_pView->rootContext()->setContextProperty(modelNames[idx], &(pTableDataModel[idx]));
+    }
+
+    m_pView->setSource(url);*/
+
+    //QWidget *container = QWidget::createWindowContainer(m_pView);
+    //this->ui->verticalLayout->addWidget(container);
 }

@@ -5,6 +5,8 @@
 #include <QThread>
 #include "Worker.hpp"
 
+class QQuickView;
+
 namespace Ui {
 class MainWindow;
 }
@@ -23,6 +25,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QQuickView *m_pView;
 
 //    QThread *m_pThread;
 //    CWorker *m_pWorker;
@@ -30,6 +33,7 @@ private:
 private slots:
 //    void on_componentListUpdated();
     void on_actionOpen_triggered();
+    void on_treeView_clicked(const QModelIndex &index);
 };
 
 #endif // MAINWINDOW_HPP

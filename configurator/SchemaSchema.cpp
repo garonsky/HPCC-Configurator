@@ -455,3 +455,19 @@ CXSDNode* CSchema::getExtensionType(const char* pExtensionTypeName) const
 
     return NULL;
 }
+
+const char* CSchema::getSchemaFileName() const
+{
+    String tempString(m_strSchemaLocation.str());
+
+    int idx = tempString.lastIndexOf('\\');
+
+    if (idx == -1)
+    {
+        return m_strSchemaLocation.str();
+    }
+    else
+    {
+        return &((m_strSchemaLocation.str())[idx]);
+    }
+}

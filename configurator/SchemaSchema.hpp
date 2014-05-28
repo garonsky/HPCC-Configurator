@@ -41,6 +41,8 @@ public:
         return m_strSchemaLocation.str();
     }
 
+    const char* getSchemaFileName() const;
+
     CComplexTypeArray* getComplexTypeArray() const
     {
         return m_pComplexTypeArray;

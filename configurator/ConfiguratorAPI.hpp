@@ -19,7 +19,6 @@ namespace CONFIGURATOR_API
 {
 
 #ifdef CONFIGURATOR_STATIC_LIB
-//extern "C" int initialize(int argc, char *argv[]);
 extern "C" int initialize();
 #endif // CONFIGURATOR_STATIC_LIB
 
@@ -57,6 +56,8 @@ extern "C" int getIndexOfParent(void *pData);
 
 extern "C" int getNumberOfChildren(void *pData);
 extern "C" const char* getData(void *pData);
+extern "C" const char* getName(void *pData);
+extern "C" const char* getFileName(void *pData);
 extern "C" void* getParent(void *pData);
 extern "C" void* getChild(void *pData, int idx);
 extern "C" int getIndexFromParent(void *pData);
@@ -64,9 +65,7 @@ extern "C" void* getRootNode(int idx = 0);
 extern "C" void* getModel();
 
 
-
-
-
+extern "C" const char* getQML(void *pData); // caller needs to delete memory
 
 
 

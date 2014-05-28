@@ -52,7 +52,9 @@ public:
 
     CEnvironmentModelNode* getRoot(int index = 0);
     const char* getData(const CEnvironmentModelNode *pChild) const;
+    //const char* getProcessName(const CEnvironmentModelNode *pChild) const;
     const char* getInstanceName(const CEnvironmentModelNode *pChild) const;
+    const char* getXSDFileName(const CEnvironmentModelNode *pChild) const;
 
 protected:
 

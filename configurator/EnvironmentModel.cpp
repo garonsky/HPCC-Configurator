@@ -3,6 +3,7 @@
 #include "ConfigSchemaHelper.hpp"
 #include "SchemaMapManager.hpp"
 #include "SchemaElement.hpp"
+#include "SchemaSchema.hpp"
 #include "jlib.hpp"
 #include "jlog.hpp"
 #include <cassert>
@@ -11,8 +12,6 @@
 
 CEnvironmentModelNode::CEnvironmentModelNode(const CEnvironmentModelNode *pParent, int index,  CXSDNodeBase *pNode) : m_pParent(NULL), m_pArrChildNodes(NULL)
 {
-    //assert(index == 0); // index will be 0 for now. No support for multi-environments
-
     if (pParent == NULL && index == 0)  // if this is the 'Environment' Node
     {
         this->m_pXSDNode = NULL;
@@ -47,8 +46,6 @@ CEnvironmentModelNode::CEnvironmentModelNode(const CEnvironmentModelNode *pParen
         assert(m_pXSDNode->getNodeType() == XSD_ELEMENT);
         assert(m_pXSDNode->getConstParentNode()->getNodeType() == XSD_ELEMENT_ARRAY);
 
-        //const CElementArray *pElementArray = static_cast<const CElementArray*>(m_pXSDNode->getConstParentNode());
-
         const CElement *pElement =  static_cast<const CElement*>(m_pXSDNode->getNodeByTypeAndNameDescending(XSD_ELEMENT, NULL));
         const CElementArray *pElementArray = pElement != NULL ? static_cast<const CElementArray*>(pElement->getParentNode()) : NULL;
 
@@ -67,106 +64,7 @@ CEnvironmentModelNode::CEnvironmentModelNode(const CEnvironmentModelNode *pParen
         this->m_pXSDNode = pNode;
         this->m_pArrChildNodes = new PointerArray();
     }
-    /*else if (pParent != NULL)  // not 'environment' node
-    {
-        assert(pNode != NULL);
-        assert(pNode->getNodeType() == XSD_ELEMENT);
-
-        this->m_pParent = pParent;
-        this->m_pArrChildNodes = new PointerArray();
-
-        CElement *pElement = static_cast<CElement*>(pNode);
-
-        CElementArray *pElementArray = static_cast<CElementArray*>(pElement->getParentNode());
-
-        assert(pElementArray->length() > index);
-
-        m_pXSDNode = &(pElementArray->item(index));
-
-        if (pElementArray->length() > index+1)
-        {
-            const CXSDNodeBase *pNodeDescendent = m_pXSDNode->getNodeByTypeAndNameDescending(XSD_ELEMENT, NULL);
-
-            CEnvironmentModelNode *pModelNode = NULL;
-            pModelNode = new CEnvironmentModelNode(this, index+1, const_cast<CXSDNodeBase*>(pNodeDescendent));
-
-            m_pParent->m_pArrChildNodes->append(pModelNode);
-        }
-    }
-    else
-    {
-        assert(false);
-    }*/
 }
-
-/*CEnvironmentModelNode::CEnvironmentModelNode(const CEnvironmentModelNode *pParent, int index) : m_pParent(NULL), m_pArrChildNodes(NULL)
-{
-    if (pParent == NULL)
-    {
-
-        m_pArrChildNodes = new PointerArray();
-
-        int nComps = CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getNumberOfComponents();
-        this->m_pXSDNode = NULL;
-
-#ifdef LOG_CONSTRUCTOR
-        PROGLOG("Function: %s() at %s:%d", __func__, __FILE__, __LINE__);
-        PROGLOG("pParent == NULL nComs = %d", nComps);
-#endif // LOG_CONSTRUCTOR
-
-        for (int idx = 0; idx < nComps; idx++)
-        {
-            CXSDNodeBase *pNode = CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getComponent(idx);
-
-            assert(pNode != NULL);
-            this->m_pXSDNode = pNode;
-
-            CEnvironmentModelNode *pModelNode = new CEnvironmentModelNode(this, idx);
-
-            pModelNode->m_pXSDNode = pNode;
-
-            m_pArrChildNodes->append(pModelNode);
-        }
-    }
-    /*else if (pParent == CEnvironmentModel::getInstance())
-    {
-        CXSDNodeBase *pNode = CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getComponent(idx);
-
-        this->m_pXSDNode = pNode;
-
-        assert(pNode != NULL);
-    }*//*
-    else
-    {
-        m_pParent = const_cast<CEnvironmentModelNode*>(pParent);
-
-        CElement *pElement = static_cast<CElement*>(m_pParent->m_pXSDNode);
-
-#ifdef LOG_CONSTRUCTOR
-        PROGLOG("\tpElement != %p index = %d", pElement, index);
-#endif // LOG_CONSTRUCTOR
-
-        *//*if (pElement == NULL)
-        {
-            CXSDNodeBase *pNode = CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getComponent(index);
-            m_pXSDNode = pNode;
-        }
-        else
-        {*//*
-            assert(pElement->getNodeType() == XSD_ELEMENT);
-
-            CElementArray *pElementArray = static_cast<CElementArray*>(pElement->getParentNode());
-
-            assert(pElementArray->length() > index);
-
-            m_pXSDNode = &(pElementArray->item(index));
-
-#ifdef LOG_CONSTRUCTOR
-            PROGLOG("m_pXSDNode = %p of type %s", m_pXSDNode, m_pXSDNode->getNodeTypeStr());
-#endif // LOG_CONSTRUCTOR
-        //}
-    }
-}*/
 
 const CEnvironmentModelNode* CEnvironmentModelNode::getChild(int index) const
 {
@@ -293,7 +191,59 @@ const char* CEnvironmentModel::getData(const CEnvironmentModelNode *pChild) cons
     }
 }
 
-const char* getInstanceName(const CEnvironmentModelNode *pChild)
+/*const char* CEnvironmentModel::getProcessName(const CEnvironmentModelNode *pChild) const
+{
+    assert(pChild != NULL);
+
+    const CElement *pElement = static_cast<const CElement*>(pChild->getXSDNode());
+
+    assert(pElement->isTopLevelElement() == true);
+
+    if (pElement != NULL && pElement->isTopLevelElement() == true)
+    {
+        const CSchema *pSchema = dynamic_cast<const CSchema*>(pElement->getConstParentNode());
+
+        if (pSchema == NULL)
+        {
+            return NULL;
+        }
+
+        return pSchema->getSchemaLocation();
+    }
+    else
+    {
+        return NULL;
+    }
+}*/
+
+const char* CEnvironmentModel::getXSDFileName(const CEnvironmentModelNode *pChild) const
+{
+    assert(pChild != NULL);
+
+    const CElement *pElement = static_cast<const CElement*>(pChild->getXSDNode());
+
+    if (pElement != NULL && pElement->isTopLevelElement() == true)
+    {
+        const CSchema *pSchema = dynamic_cast<const CSchema*>(pElement->getConstAncestorNode(2));
+
+        if (pSchema == NULL)
+        {
+            assert(false);
+            return NULL;
+        }
+        else
+        {
+            return pSchema->getSchemaFileName();
+        }
+    }
+    else
+    {
+        assert(false);
+        return NULL;
+    }
+}
+
+const char* CEnvironmentModel::getInstanceName(const CEnvironmentModelNode *pChild) const
 {
     assert(pChild != NULL);
 

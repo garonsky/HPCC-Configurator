@@ -170,6 +170,26 @@ const char* CBuildSetManager::getBuildSetComponentFileName(int index) const
     return NULL;
 }
 
+const char* CBuildSetManager::getBuildSetProcessName(int index) const
+{
+    LOOP_THRU_BUILD_SET
+    {
+        if (index == 0)
+        {
+            return m_buildSetArray.item(idx).getProcessName();
+        }
+
+        if (m_buildSetArray.item(idx).getProcessName() == NULL || strcmp(m_buildSetArray.item(idx).getProcessName(), XML_TAG_ESPSERVICE) != 0 && (m_buildSetArray.item(idx).getDeployable() == NULL || stricmp(m_buildSetArray.item(idx).getDeployable(), "no") != 0))
+        {
+            index--;
+        }
+    }
+
+    assert(false);
+
+    return NULL;
+}
+
 bool CBuildSetManager::populateBuildSet()
 {
     StringBuffer xpath;

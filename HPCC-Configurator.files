@@ -291,3 +291,4 @@ configurator_ui/ConfiguratorUI.cpp
 configurator_ui/ConfiguratorUI.hpp
 cmake_modules/configuratorCommonSetup.cmake
 cmake_modules/optionDefaults.cmake
+configurator_app/MainWindow.ui

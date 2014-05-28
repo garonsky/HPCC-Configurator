@@ -107,6 +107,11 @@ public:
         m_nTables++;
     }
 
+    void resetTables() const
+    {
+        m_nTables = 0;
+    }
+
 protected:
 
     CConfigSchemaHelper(const char* pBuildSetFile = DEFAULT_BUILD_SET_XML_FILE, const char* pBuildSetDir = DEFAULT_BUILD_SET_DIRECTORY, const char* pDefaultDirOverride = NULL);
@@ -139,7 +144,7 @@ protected:
 private:
 
     static CConfigSchemaHelper* s_pCConfigSchemaHelper;
-    int m_nTables;
+    mutable int m_nTables;
     char *m_pBasePath;
 
     StringBuffer m_strEnvFilePath;

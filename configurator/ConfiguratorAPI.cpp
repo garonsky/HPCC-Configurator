@@ -12,6 +12,8 @@
 #include "ConfiguratorMain.hpp"
 #include "EnvironmentModel.hpp"
 
+#include <iostream>
+
 namespace CONFIGURATOR_API
 {
 
@@ -465,6 +467,30 @@ const char* getData(void *pData)
     return p;
 }
 
+const char* getName(void *pData)
+{
+    if (pData == NULL)
+    {
+        return NULL;
+    }
+
+    const char *p = CEnvironmentModel::getInstance()->getInstanceName(static_cast<CEnvironmentModelNode*>(pData));
+
+    return p;
+}
+
+const char* getFileName(void *pData)
+{
+    if (pData == NULL)
+    {
+        return NULL;
+    }
+
+    const char *p = CEnvironmentModel::getInstance()->getXSDFileName(static_cast<CEnvironmentModelNode*>(pData));
+
+    return p;
+}
+
 void* getParent(void *pData)
 {
     if (pData == NULL)
@@ -531,40 +557,6 @@ int getIndexFromParent(void *pData)
     return 0;
 }
 
-/*int getIndexFromParent(void *pData)
-{
- //   assert(pData != NULL);
-
-    CEnvironmentModelNode *pNode = static_cast<CEnvironmentModelNode*>(pData);
-
-    //assert (pNode->getParent() != NULL);
-    if (pNode->getParent() == NULL)
-    {
-        return 0; // Must be 'Environment' node
-    }
-
-    while (true)
-    {
-        const CEnvironmentModelNode *pGrandParent;
-
-        pGrandParent = pNode->getParent();
-
-        int nChildren = pGrandParent->getNumberOfChildren();
-
-        for (int idx = 0; idx < nChildren; idx++)
-        {
-            if (const_cast<const CEnvironmentModelNode*>(pNode) == (const_cast<CEnvironmentModelNode*>(pGrandParent))->getChild(idx))
-            {
-                return idx;
-            }
-        }
-
-        pNode = const_cast<CEnvironmentModelNode*>(pGrandParent);
-    }
-
-    assert(false);
-    return 0;
-}*/
 
 void* getRootNode(int idx)
 {
@@ -575,6 +567,13 @@ void* getModel()
 {
     return (void*)(CEnvironmentModel::getInstance());
 }
+
+const char* getQML(void *pData)
+{
+    // caller needs to delete memory
+    return CConfigSchemaHelper::getInstance()->printQML(getFileName(pData));
+}
+
 
 
 /*void* getComponent(void *pComponent, int idx)

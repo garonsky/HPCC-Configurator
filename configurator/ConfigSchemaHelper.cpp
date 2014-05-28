@@ -197,6 +197,11 @@ const char* CConfigSchemaHelper::printQML(const char* comp) const
     assert(comp != NULL && *comp != 0);
     assert(m_pSchemaMapManager != NULL);
 
+    static StringBuffer strQML;
+
+    strQML.clear();
+    resetTables();
+
     if (comp == NULL || *comp == 0)
     {
         return NULL;
@@ -216,7 +221,6 @@ const char* CConfigSchemaHelper::printQML(const char* comp) const
 
              if (pSchema != NULL)
              {
-                static StringBuffer strQML;
                 pSchema->getQML(strQML);
 
                 return strQML.str();

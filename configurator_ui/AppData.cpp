@@ -91,8 +91,6 @@ QVariant ComponentDataModel::data(const QModelIndex &index, int role) const
 
     const char *pName = CONFIGURATOR_API::getData(index.internalPointer());
 
-    //assert(CONFIGURATOR_API::getRootNode() != index.internalPointer());
-
 #ifdef LOG_DATA_CALL
     PROGLOG("Function: %s() at %s:%d", __func__, __FILE__, __LINE__);
     PROGLOG("\tindex.row() = %d index.column() = %d index.internalPointer() = %p", index.row(), index.column(), index.internalPointer());
