@@ -115,6 +115,7 @@ void MainWindow::on_treeView_clicked(const QModelIndex &index)
 
     qDebug() << qstrFileName;
 
+    QFile::remove(qstrFileName);
     QFile qFile(qstrFileName.toLocal8Bit().data());
 
     if (qFile.open(QIODevice::WriteOnly | QIODevice::Truncate) == 0)

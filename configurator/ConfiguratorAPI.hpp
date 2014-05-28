@@ -1,19 +1,31 @@
 #ifndef _CONFIGURATOR_API_HPP_
 #define _CONFIGURATOR_API_HPP_
 
-#define MAX_ARRAY_X 10
+#define MAX_ARRAY_X 21
 #define MAX_ARRAY_Y 128
 
-const char modelNames[MAX_ARRAY_X][MAX_ARRAY_Y] = {"tableDataModel0",
-                                                   "tableDataModel1",
-                                                   "tableDataModel2",
-                                                   "tableDataModel3",
-                                                   "tableDataModel4",
-                                                   "tableDataModel5",
-                                                   "tableDataModel6",
-                                                   "tableDataModel7",
-                                                   "tableDataModel8",
-                                                   "tableDataModel9" };
+const char modelNames[MAX_ARRAY_X][MAX_ARRAY_Y] = { "tableDataModel0",
+                                                    "tableDataModel1",
+                                                    "tableDataModel2",
+                                                    "tableDataModel3",
+                                                    "tableDataModel4",
+                                                    "tableDataModel5",
+                                                    "tableDataModel6",
+                                                    "tableDataModel7",
+                                                    "tableDataModel8",
+                                                    "tableDataModel9",
+                                                    "tableDataModel10",
+                                                    "tableDataModel11",
+                                                    "tableDataModel12",
+                                                    "tableDataModel13",
+                                                    "tableDataModel14",
+                                                    "tableDataModel15",
+                                                    "tableDataModel16",
+                                                    "tableDataModel17",
+                                                    "tableDataModel18",
+                                                    "tableDataModel19",
+                                                    "tableDataModel20"
+                                                  };
 
 namespace CONFIGURATOR_API
 {

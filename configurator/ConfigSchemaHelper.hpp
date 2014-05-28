@@ -12,6 +12,7 @@
 #include "SchemaSchema.hpp"
 #include "SchemaExtension.hpp"
 #include "BuildSet.hpp"
+#include "ConfiguratorAPI.hpp"
 
 class CSchemaMapManager;
 class CSimpleType;
@@ -104,6 +105,8 @@ public:
 
     void incTables()
     {
+        assert(m_nTables < MAX_ARRAY_X);
+
         m_nTables++;
     }
 

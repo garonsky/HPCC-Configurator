@@ -357,13 +357,13 @@ CElement* CSchemaMapManager::getComponent(int index)
 
         if (pElement->isTopLevelElement() == true)
         {
-            nCount++;
-        }
+            if (nCount == index)
+            {
+                return pElement;
+            }
 
-        if (nCount == index)
-        {
-            return pElement;
-        }
+            nCount++;
+        }        
     }
 
     return NULL;

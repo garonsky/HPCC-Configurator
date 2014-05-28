@@ -122,8 +122,6 @@ QVariant ComponentDataModel::headerData(int section, Qt::Orientation orientation
     return QAbstractItemModel::headerData(section, orientation, role);
 }
 
-
-
 QModelIndex ComponentDataModel::index(int row, int column, const QModelIndex & parent) const
 {
     assert(column == 0);
