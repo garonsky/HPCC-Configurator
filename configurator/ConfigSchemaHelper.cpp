@@ -9,6 +9,7 @@
 #include "jfile.hpp"
 #include "BuildSet.hpp"
 #include "SchemaMapManager.hpp"
+#include "ConfigSchemaHelper.hpp"
 
 #define LOOP_THRU_BUILD_SET_MANAGER_BUILD_SET \
 int nComponentCount = CBuildSetManager::getInstance()->getBuildSetComponentCount();         \
@@ -55,15 +56,20 @@ CConfigSchemaHelper::CConfigSchemaHelper(const char* pBuildSetFile, const char* 
 {
     assert(pBuildSetFile != NULL);
     assert(pBuildSetDir != NULL);
+    assert(m_pSchemaMapManager == NULL);
 
     CBuildSetManager::getInstance(pBuildSetFile, pBuildSetDir);
+
     m_pSchemaMapManager = new CSchemaMapManager();
 }
 
 CConfigSchemaHelper::~CConfigSchemaHelper()
 {
     delete[] m_pBasePath;
-    delete m_pSchemaMapManager;
+    delete CConfigSchemaHelper::m_pSchemaMapManager;
+    //delete CConfigSchemaHelper::s_pCConfigSchemaHelper;
+    CConfigSchemaHelper::m_pSchemaMapManager = NULL;
+    CConfigSchemaHelper::s_pCConfigSchemaHelper = NULL;
 }
 
 bool CConfigSchemaHelper::populateSchema()
@@ -79,6 +85,7 @@ bool CConfigSchemaHelper::populateSchema()
             CXSDNodeBase *pNull = NULL;
             CSchema *pSchema = CSchema::load(pSchemaName, pNull);
 
+            assert(pSchema->getLinkCount() == 1);
             m_pSchemaMapManager->setSchemaForXSD(pSchemaName, pSchema);
         }
     }
@@ -192,7 +199,7 @@ const char* CConfigSchemaHelper::printDojoJS(const char* comp)
     return NULL;
 }
 
-const char* CConfigSchemaHelper::printQML(const char* comp) const
+const char* CConfigSchemaHelper::printQML(const char* comp, int nIdx) const
 {
     assert(comp != NULL && *comp != 0);
     assert(m_pSchemaMapManager != NULL);
@@ -221,9 +228,9 @@ const char* CConfigSchemaHelper::printQML(const char* comp) const
 
              if (pSchema != NULL)
              {
-                pSchema->getQML(strQML);
-
-                return strQML.str();
+                 //pSchema->loadXMLFromEnvXml(CConfigSchemaHelper::getConstEnvPropertyTree());
+                 pSchema->getQML(strQML, nIdx);
+                 return strQML.str();
              }
         }
     }

@@ -72,7 +72,7 @@ void CComplexContent::getDojoJS(StringBuffer &strJS) const
 
 }
 
-void CComplexContent::getQML(StringBuffer &strQML) const
+void CComplexContent::getQML(StringBuffer &strQML, int idx) const
 {
 
 }

@@ -6,6 +6,7 @@
 #include "jiface.hpp"
 #include "jstring.hpp"
 #include "jlib.hpp"
+#include "jlog.hpp"
 #include "ExceptionStrings.hpp"
 
 #define QUICK_OUT(X,Y,Z) QuickOut(X,#Y,get##Y(),Z);
@@ -232,6 +233,11 @@ public:
         return false;
     }
 
+    int getLinkCount() const
+    {
+        return xxcount.counter;
+    }
+
 private:
 
     mutable atomic_t xxcount;
@@ -313,7 +319,7 @@ public:
 
     virtual void getDojoJS(StringBuffer &strJS) const = 0;
 
-    virtual void getQML(StringBuffer &strQML) const
+    virtual void getQML(StringBuffer &strQML, int idx = -1) const
     {
     }
 

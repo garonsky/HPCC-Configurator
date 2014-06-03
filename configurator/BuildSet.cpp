@@ -54,14 +54,12 @@ CBuildSetManager::CBuildSetManager(const char* pBuildSetFile, const char* pBuild
 
 CBuildSetManager::CBuildSetManager()
 {
-    //assert(false);
 }
 
 CBuildSetManager::~CBuildSetManager()
 {
-
+    m_buildSetArray.kill();
 }
-
 
 void CBuildSetManager::getBuildSetComponents(StringArray& buildSetArray) const
 {

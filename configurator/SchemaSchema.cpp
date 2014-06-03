@@ -5,6 +5,11 @@
 #include "DocumentationMarkup.hpp"
 #include "SchemaMapManager.hpp"
 
+CSchema::~CSchema()
+{
+    assert(this->getLinkCount() == 1);
+}
+
 CSchema* CSchema::load(const char* pSchemaLocation, const IPropertyTree *pSchemaRoot, const char* xpath)
 {
     assert(pSchemaRoot != NULL);
@@ -50,6 +55,9 @@ CSchema* CSchema::load(const char* pSchemaLocation, const IPropertyTree *pSchema
 
     strXPathExt.clear().append(xpath).append(XSD_TAG_ELEMENT);
     CElementArray* pElemArray = CElementArray::load(pSchema, pSchemaRoot, strXPathExt.str());
+
+    PROGLOG("Function: %s() at %s:%d", __func__, __FILE__, __LINE__);
+    PROGLOG("pElemArray = %p", pElemArray);
 
     strXPathExt.clear().append(xpath).append(XSD_TAG_ATTRIBUTE_GROUP);
     CAttributeGroupArray* pAttributeGroupArray = CAttributeGroupArray::load(pSchema, pSchemaRoot, strXPathExt);
@@ -210,11 +218,11 @@ void CSchema::getDojoJS(StringBuffer &strJS) const
     }
 }
 
-void CSchema::getQML(StringBuffer &strQML) const
+void CSchema::getQML(StringBuffer &strQML, int idx) const
 {
     if (m_pElementArray != NULL)
     {
-        m_pElementArray->getQML(strQML);
+        m_pElementArray->getQML(strQML, idx);
     }
     if (m_pComplexTypeArray != NULL)
     {

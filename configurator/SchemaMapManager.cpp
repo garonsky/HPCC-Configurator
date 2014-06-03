@@ -3,20 +3,48 @@
 
 CSchemaMapManager::CSchemaMapManager()
 {
-
+    m_pSchemaPtrMap.setown(new MapStringToCSchema());
+    m_pSimpleTypePtrMap.setown(new MapStringToCSimpleType());
+    m_pComplexTypePtrsMap.setown (new MapStringToCComplexType);
+    m_pAttributeGroupTypePtrsMap.setown(new MapStringToCAttributeGroup);
+    m_pAttributePtrsMap.setown(new MapStringToCAttribute);
+    m_pRestrictionPtrsMap.setown(new MapStringToCRestriction);
+    m_pElementPtrsMap.setown(new MapStringToCElement);
+    m_pElementArrayPtrsMap.setown(new MapStringToCElementArray);
 }
 
 CSchemaMapManager::~CSchemaMapManager()
 {
-    //  Does not delete data in maps!!!
+    //HashIterator iter(m_pSchemaPtrMap);
+
+/*    ForEach(iter)
+    {
+        const char *pKey = static_cast<const char*>((&iter.query())->getKey());
+        CSchema *pSchema = *(m_pSchemaPtrMap->getValue(pKey));
+
+        pSchema->Release();
+        m_pSchemaPtrMap->remove(pKey);
+
+        iter.first();
+    }
+*/
+    /*clearArrays<MapStringToCSchema, CSchema>(&m_pSchemaPtrMap);
+    clearArrays<MapStringToCSimpleType, CSimpleType>(&m_simpleTypePtrMap);
+    clearArrays<MapStringToCComplexType, CComplexType>(&m_complexTypePtrsMap);
+    clearArrays<MapStringToCAttributeGroup, CAttributeGroup>(&m_attributeGroupTypePtrsMap);
+    clearArrays<MapStringToCAttribute, CAttribute>(&m_attributePtrsMap);
+    clearArrays<MapStringToCRestriction, CRestriction>(&m_restrictionPtrsMap);
+    clearArrays<MapStringToCElementArray, CElementArray>(&m_elementArrayPtrsMap);
+    clearArrays<MapStringToCElement, CElement>(&m_elementPtrsMap);*/
 }
 
 CSchema* CSchemaMapManager::getSchemaForXSD(const char* pComponent)
 {
-    CSchema **pSchema = m_schemaPtrMap.getValue(pComponent);
+    CSchema **pSchema = m_pSchemaPtrMap->getValue(pComponent);
 
     if (pSchema != NULL )
     {
+        assert ((*pSchema)->getLinkCount() == 1);
         return *pSchema;
     }
     else
@@ -28,10 +56,23 @@ CSchema* CSchemaMapManager::getSchemaForXSD(const char* pComponent)
 void CSchemaMapManager::setSchemaForXSD(const char* pComponent, CSchema *pSchema)
 {
     assert(pSchema != NULL);
+    assert(pComponent != NULL);
+    assert(*pComponent != 0);
 
-    if (pSchema != NULL)
+    assert(pSchema->getLinkCount() == 1);
+    //assert(m_pSchemaPtrMap->getValue(pComponent) == NULL);
+
+    if (pSchema != NULL && pComponent != NULL && *pComponent != 0)// && m_pSchemaPtrMap->getValue(pComponent) == NULL)
     {
-        m_schemaPtrMap.setValue(pComponent, pSchema);
+        if (m_pSchemaPtrMap->getValue(pComponent) == NULL)
+        {
+            m_pSchemaPtrMap->setValue(pComponent, (pSchema));
+        }
+        else
+        {
+            //pSchema->Link();
+        }
+        //m_pSchemaPtrMap->setValue(pComponent, (pSchema));
     }
 }
 
@@ -46,7 +87,7 @@ CSimpleType* CSchemaMapManager::getSimpleTypeWithName(const char* pName)
 
     CSimpleType **ppSimpleType = NULL;
 
-    ppSimpleType = m_simpleTypePtrMap.getValue(pName);
+    ppSimpleType = m_pSimpleTypePtrMap->getValue(pName);
 
     if (ppSimpleType != NULL)
     {
@@ -67,12 +108,13 @@ void CSchemaMapManager::setSimpleTypeWithName(const char* pName, CSimpleType *pS
         return;
     }
 
-    if (m_simpleTypePtrMap.getValue(pName) != NULL)
+    if (m_pSimpleTypePtrMap->getValue(pName) != NULL)
     {
         throw MakeExceptionFromMap(EX_STR_SIMPLE_TYPE_ALREADY_DEFINED);
     }
 
-    m_simpleTypePtrMap.setValue(pName, pSimpleType);
+    assert(pSimpleType->getLinkCount() == 1);
+    m_pSimpleTypePtrMap->setValue(pName, pSimpleType);
 }
 
 CComplexType* CSchemaMapManager::getComplexTypeWithName(const char* pName)
@@ -86,7 +128,7 @@ CComplexType* CSchemaMapManager::getComplexTypeWithName(const char* pName)
 
     CComplexType *pComplexType = NULL;
 
-    pComplexType = *(m_complexTypePtrsMap.getValue(pName));
+    pComplexType = *(m_pComplexTypePtrsMap->getValue(pName));
 
     assert(pComplexType != NULL);
 
@@ -102,19 +144,20 @@ void CSchemaMapManager::setComplexTypeWithName(const char* pName, CComplexType *
         return;
     }
 
-    if (m_complexTypePtrsMap.getValue(pName) != NULL)
+    if (m_pComplexTypePtrsMap->getValue(pName) != NULL)
     {
         throw MakeExceptionFromMap(EX_STR_COMPLEX_TYPE_ALREADY_DEFINED);
     }
 
-    m_complexTypePtrsMap.setValue(pName, pComplexType);
+    assert(pComplexType->getLinkCount() == 1);
+    m_pComplexTypePtrsMap->setValue(pName, pComplexType);
 }
 
 CComplexType* CSchemaMapManager::getComplexTypeFromXPath(const char *pXPath)
 {
     assert(pXPath != NULL && *pXPath != 0);
 
-    CComplexType** ppComplexType =  m_complexTypePtrsMap.getValue(pXPath);
+    CComplexType** ppComplexType =  m_pComplexTypePtrsMap->getValue(pXPath);
 
     if (ppComplexType != NULL)
     {
@@ -137,7 +180,7 @@ CAttributeGroup* CSchemaMapManager::getAttributeGroup(const char* pName)
 
     CAttributeGroup *pAttributeGroup = NULL;
 
-    pAttributeGroup = *(m_attributeGroupTypePtrsMap.getValue(pName));
+    pAttributeGroup = *(m_pAttributeGroupTypePtrsMap->getValue(pName));
 
     assert(pAttributeGroup != NULL);
 
@@ -153,13 +196,14 @@ void CSchemaMapManager::setAttributeGroupTypeWithName(const char* pName, CAttrib
         return;
     }
 
-    if (m_attributeGroupTypePtrsMap.getValue(pName) != NULL)
+    if (m_pAttributeGroupTypePtrsMap->getValue(pName) != NULL)
     {
-        m_attributeGroupTypePtrsMap.remove(pName);
+        m_pAttributeGroupTypePtrsMap->remove(pName);
         //throw MakeExceptionFromMap(EX_STR_ATTRIBUTE_GROUP_ALREADY_DEFINED);
     }
 
-    m_attributeGroupTypePtrsMap.setValue(pName, pAttributeGroup);
+    assert(pAttributeGroup->getLinkCount() == 1);
+    m_pAttributeGroupTypePtrsMap->setValue(pName, pAttributeGroup);
 }
 
 CAttributeGroup* CSchemaMapManager::getAttributeGroupFromXPath(const char *pXPath)
@@ -171,7 +215,7 @@ CAttributeGroup* CSchemaMapManager::getAttributeGroupFromXPath(const char *pXPat
         return NULL;
     }
 
-    CAttributeGroup **ppAttributeGroup = m_attributeGroupTypePtrsMap.getValue(pXPath);
+    CAttributeGroup **ppAttributeGroup = m_pAttributeGroupTypePtrsMap->getValue(pXPath);
 
     assert(ppAttributeGroup != NULL);
 
@@ -192,25 +236,26 @@ void CSchemaMapManager::addMapOfXPathToAttribute(const char*pXPath, CAttribute *
 
     // TODO:: throw exception if problems here
 
-    assert(m_attributePtrsMap.find(pXPath) == NULL);
+    assert(m_pAttributePtrsMap->find(pXPath) == NULL);
 
     // should I remove automatically?
 
-    m_attributePtrsMap.setValue(pXPath, pAttribute);
+    assert(pAttribute->getLinkCount() == 1);
+    m_pAttributePtrsMap->setValue(pXPath, pAttribute);
 }
 
 void CSchemaMapManager::removeMapOfXPathToAttribute(const char*pXPath)
 {
-    assert (m_attributePtrsMap.find(pXPath) != NULL);
+    assert (m_pAttributePtrsMap->find(pXPath) != NULL);
 
-    m_attributePtrsMap.remove(pXPath);
+    m_pAttributePtrsMap->remove(pXPath);
 }
 
 CAttribute* CSchemaMapManager::getAttributeFromXPath(const char* pXPath)
 {
     assert(pXPath != NULL && *pXPath != 0);
 
-    CAttribute **pAttribute = m_attributePtrsMap.getValue(pXPath);
+    CAttribute **pAttribute = m_pAttributePtrsMap->getValue(pXPath);
 
     assert(pAttribute != NULL);
 
@@ -221,18 +266,21 @@ void CSchemaMapManager::addMapOfXPathToElementArray(const char*pXPath, CElementA
 {
     assert (pElementArray != NULL);
     assert(pXPath != NULL && *pXPath != 0);
+    assert(pElementArray->getLinkCount() == 1);
 
-    if (m_elementArrayPtrsMap.find(pXPath) != NULL)
+    if (m_pElementArrayPtrsMap->find(pXPath) != NULL)
     {
         return;  // already mapped, we must be dealing with live data
     }
-    m_elementArrayPtrsMap.setValue(pXPath, pElementArray);
+
+
+    m_pElementArrayPtrsMap->setValue(pXPath, pElementArray);
 }
 
 void CSchemaMapManager::removeMapOfXPathToElementArray(const char*pXPath)
 {
-    assert (m_elementArrayPtrsMap.find(pXPath) != NULL);
-    m_elementArrayPtrsMap.remove(pXPath);
+    assert (m_pElementArrayPtrsMap->find(pXPath) != NULL);
+    m_pElementArrayPtrsMap->remove(pXPath);
 }
 
 CElementArray* CSchemaMapManager::getElementArrayFromXPath(const char* pXPath)
@@ -244,7 +292,7 @@ CElementArray* CSchemaMapManager::getElementArrayFromXPath(const char* pXPath)
         return NULL;
     }
 
-    CElementArray** ppElementArray = m_elementArrayPtrsMap.getValue(pXPath);
+    CElementArray** ppElementArray = m_pElementArrayPtrsMap->getValue(pXPath);
 
     if (ppElementArray != NULL)
     {
@@ -261,22 +309,28 @@ void CSchemaMapManager::addMapOfXPathToElement(const char* pXPath, CElement *pEl
     assert (pElement != NULL);
     assert(pXPath != NULL && *pXPath != 0);
 
-    assert(m_elementPtrsMap.find(pXPath) == NULL);
+    //assert(m_pElementPtrsMap->find(pXPath) == NULL);
 
-    m_elementPtrsMap.setValue(pXPath, pElement);
+    assert(pElement->getLinkCount() == 1);
+    m_pElementPtrsMap->setValue(pXPath, pElement);
 }
 
 void CSchemaMapManager::removeMapOfXPathToElement(const char*pXPath)
 {
-    assert (m_elementPtrsMap.find(pXPath) != NULL);
-    m_elementPtrsMap.remove(pXPath);
+    assert (m_pElementPtrsMap->find(pXPath) != NULL);
+    m_pElementPtrsMap->remove(pXPath);
 }
+
+/*void CSchemaMapManager::clearMapOfXPathToElement()
+{
+    m_pElementPtrsMap->clear();
+}*/
 
 CElement* CSchemaMapManager::getElementFromXPath(const char *pXPath)
 {
     assert(pXPath != NULL && *pXPath != 0);
 
-    CElement **ppElement = m_elementPtrsMap.getValue(pXPath);
+    CElement **ppElement = m_pElementPtrsMap->getValue(pXPath);
 
     assert(ppElement != NULL);
 
@@ -294,23 +348,24 @@ void CSchemaMapManager::addMapOfXPathToRestriction(const char*pXPath, CRestricti
 {
     assert (pRestriction != NULL);
     assert(pXPath != NULL && *pXPath != 0);
-    assert(m_restrictionPtrsMap.find(pXPath) == NULL);
+    assert(m_pRestrictionPtrsMap->find(pXPath) == NULL);
 
-    m_restrictionPtrsMap.setValue(pXPath, pRestriction);
+    assert(pRestriction->getLinkCount() == 1);
+    m_pRestrictionPtrsMap->setValue(pXPath, pRestriction);
 }
 
 void CSchemaMapManager::removeMapOfXPathToRestriction(const char*pXPath)
 {
     assert(pXPath != NULL && *pXPath != 0);
 
-    m_restrictionPtrsMap.remove(pXPath);
+    m_pRestrictionPtrsMap->remove(pXPath);
 }
 
 CRestriction* CSchemaMapManager::getRestrictionFromXPath(const char* pXPath)
 {
     assert(pXPath != NULL && *pXPath != 0);
 
-    CRestriction **ppRestriction = m_restrictionPtrsMap.getValue(pXPath);
+    CRestriction **ppRestriction = m_pRestrictionPtrsMap->getValue(pXPath);
 
     assert(ppRestriction != NULL);
 
@@ -326,13 +381,13 @@ CRestriction* CSchemaMapManager::getRestrictionFromXPath(const char* pXPath)
 
 int CSchemaMapManager::getNumberOfComponents() const
 {
-    HashIterator iter(m_elementPtrsMap);
+    HashIterator iter(*(m_pElementPtrsMap.get()));
 
     int nCount = 0;
 
     ForEach(iter)
     {
-        CElement *pElement = *(m_elementPtrsMap.mapToValue(&iter.query()));
+        CElement *pElement = *(m_pElementPtrsMap->mapToValue(&iter.query()));
 
         if (pElement->isTopLevelElement() == true)
         {
@@ -347,13 +402,13 @@ CElement* CSchemaMapManager::getComponent(int index)
 {
     assert(index >= 0 && index < getNumberOfComponents());
 
-    HashIterator iter(m_elementPtrsMap);
+    HashIterator iter(*(m_pElementPtrsMap.get()));
 
     int nCount = 0;
 
     ForEach(iter)
     {
-        CElement *pElement = *(m_elementPtrsMap.mapToValue(&iter.query()));
+        CElement *pElement = *(m_pElementPtrsMap->mapToValue(&iter.query()));
 
         if (pElement->isTopLevelElement() == true)
         {
@@ -373,11 +428,11 @@ int CSchemaMapManager::getIndexOfElement(const CElement *pElem)
 {
     int nCount = 0;
 
-    HashIterator iter(m_elementPtrsMap);
+    HashIterator iter(*(m_pElementPtrsMap.get()));
 
     ForEach(iter)
     {
-        CElement *pElement = *(m_elementPtrsMap.mapToValue(&iter.query()));
+        CElement *pElement = *(m_pElementPtrsMap->mapToValue(&iter.query()));
 
         if (pElement == pElem)
         {

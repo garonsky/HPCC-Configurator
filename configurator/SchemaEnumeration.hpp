@@ -20,7 +20,7 @@ public:
 
     virtual void getDojoJS(StringBuffer &strJS) const;
 
-    void getQML(StringBuffer &strQML) const;
+    void getQML(StringBuffer &strQML, int idx = -1) const;
 
     virtual void traverseAndProcessNodes() const;
 
@@ -77,7 +77,7 @@ public:
 
     virtual void getDojoJS(StringBuffer &strJS) const;
 
-    void getQML(StringBuffer &strQML) const;
+    void getQML(StringBuffer &strQML, int idx = -1) const;
 
     virtual void traverseAndProcessNodes() const;
 

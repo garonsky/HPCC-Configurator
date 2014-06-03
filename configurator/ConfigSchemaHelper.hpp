@@ -21,7 +21,7 @@ class CConfigSchemaHelper : public CInterface
 {
 public:
 
-    IMPLEMENT_IINTERFACE;
+    IMPLEMENT_IINTERFACE
 
     static CConfigSchemaHelper* getInstance(const char* pDefaultDirOverride =  NULL);
     static CConfigSchemaHelper* getInstance(const char* pBuildSetFileName, const char *pBaseDirectory, const char *pDefaultDirOverride = NULL);
@@ -51,7 +51,7 @@ public:
 
     const char* printDocumentation(const char* comp);
     const char* printDojoJS(const char* comp);
-    const char* printQML(const char* comp) const;
+    const char* printQML(const char* comp, int nIdx = -1) const;
     void printDump(const char* comp) const;
     void dumpStdOut() const;
 
@@ -94,6 +94,11 @@ public:
     static void stripXPathIndex(StringBuffer &strXPath);
 
     IPropertyTree* getEnvPropertyTree()
+    {
+        return m_pEnvPropertyTree;
+    }
+
+    const IPropertyTree* getConstEnvPropertyTree() const
     {
         return m_pEnvPropertyTree;
     }

@@ -289,7 +289,7 @@ const CXSDNodeBase* CXSDNode::getNodeByTypeAndNameAscending(NODE_TYPES eNodeType
 
 const CXSDNodeBase* CXSDNode::getNodeByTypeAndNameDescending(NODE_TYPES eNodeType, const char *pName) const
 {
-  assert(false);  // Derived classes need to hanldes this
+  assert(false);  // Derived classes need to hande this
 
   return NULL;
 }

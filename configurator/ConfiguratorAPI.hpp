@@ -77,8 +77,7 @@ extern "C" void* getRootNode(int idx = 0);
 extern "C" void* getModel();
 
 
-extern "C" const char* getQML(void *pData); // caller needs to delete memory
-
+extern "C" const char* getQML(void *pData, int nIdx);
 
 
 //extern "C" void* getComponentType(int idx);

@@ -113,42 +113,4 @@ private:
     mutable atomic_t xxcount;
 };
 
-
-class CComponentAttributes : public CInterface
-{
-public:
-
-    IMPLEMENT_IINTERFACE
-
-    CComponentAttributes();
-    virtual ~CComponentAttributes();
-
-    const CComponentAttributeArray* getAttribArray(const char* pCompName) const;
-
-protected:
-
-    virtual CComponentAttributeArray* loadComponentAttributes(const char* pSchemaFile, const char* pXPath = NULL);
-
-private:
-};
-
-
-class CComponentAttributeGroups : public CInterface
-{
-public:
-
-    IMPLEMENT_IINTERFACE
-
-    CComponentAttributeGroups();
-    virtual ~CComponentAttributeGroups();
-
-    const CComponentAttributeArray* getAttribArray(const char* pCompName) const;
-
-protected:
-
-    CComponentAttributeArray* loadComponentAttributeGroup(const char* pSchemaFile);
-
-private:
-};
-
 #endif // _COMPONENT_ATTRIBUTES_HPP_

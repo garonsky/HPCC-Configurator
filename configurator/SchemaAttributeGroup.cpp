@@ -103,7 +103,7 @@ void CAttributeGroup::getDojoJS(StringBuffer &strJS) const
     }
 }
 
-void CAttributeGroup::getQML(StringBuffer &strQML) const
+void CAttributeGroup::getQML(StringBuffer &strQML, int idx) const
 {
     if (this->getRef() != NULL && this->getRef()[0] != 0 && m_pRefAttributeGroup != NULL)
     {
@@ -366,7 +366,7 @@ void CAttributeGroupArray::getDojoJS(StringBuffer &strJS) const
     QUICK_DOJO_JS_ARRAY(strJS);
 }
 
-void CAttributeGroupArray::getQML(StringBuffer &strQML) const
+void CAttributeGroupArray::getQML(StringBuffer &strQML, int idx) const
 {
     StringBuffer strQMLDupe1(strQML);
 

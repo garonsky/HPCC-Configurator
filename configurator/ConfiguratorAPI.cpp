@@ -83,13 +83,32 @@ int initialize(int argc, char *argv[])
 
 int initialize()
 {
-    assert(s_pConfigSchemaHelper == NULL);
+    static bool bOnce = true;
 
-    InitModuleObjects();
+    if (bOnce == true)
+    {
+        bOnce = false;
+
+        InitModuleObjects();
+
+    }
+//    assert(s_pConfigSchemaHelper == NULL);
+
+    delete s_pConfigSchemaHelper;
 
     s_pConfigSchemaHelper = CConfigSchemaHelper::getInstance();
 
     s_pConfigSchemaHelper->populateSchema();
+
+    delete s_pConfigSchemaHelper;
+
+    s_pConfigSchemaHelper = NULL;
+
+    s_pConfigSchemaHelper = CConfigSchemaHelper::getInstance();
+
+    s_pConfigSchemaHelper->populateSchema();
+
+
 
     return 1;
 }
@@ -568,10 +587,9 @@ void* getModel()
     return (void*)(CEnvironmentModel::getInstance());
 }
 
-const char* getQML(void *pData)
+const char* getQML(void *pData, int nIdx)
 {
-    // caller needs to delete memory
-    return CConfigSchemaHelper::getInstance()->printQML(getFileName(pData));
+    return CConfigSchemaHelper::getInstance()->printQML(getFileName(pData), nIdx);
 }
 
 

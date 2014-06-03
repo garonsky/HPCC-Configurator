@@ -181,7 +181,7 @@ void CComplexType::getDojoJS(StringBuffer &strJS) const
     }
 }
 
-void CComplexType::getQML(StringBuffer &strQML) const
+void CComplexType::getQML(StringBuffer &strQML, int idx) const
 {
     if (m_pSequence != NULL)
     {
@@ -391,6 +391,10 @@ CComplexType* CComplexType::load(CXSDNodeBase* pParentNode, const IPropertyTree 
     strXPathExt.clear().append(xpath).append("/").append(XSD_TAG_ELEMENT);
     pElementArray = CElementArray::load(NULL, pSchemaRoot, strXPathExt.str());
 
+    PROGLOG("Function: %s() at %s:%d", __func__, __FILE__, __LINE__);
+    if (pElementArray != NULL)
+        PROGLOG("pElementArray = %p", pElementArray);
+
     strXPathExt.clear().append(xpath).append("/").append(XSD_TAG_ATTRIBUTE_GROUP);
     pAttributeGroupArray = CAttributeGroupArray::load(NULL, pSchemaRoot, strXPathExt.str());
 
@@ -442,7 +446,7 @@ void CComplexTypeArray::getDojoJS(StringBuffer &strJS) const
     QUICK_DOJO_JS_ARRAY(strJS);
 }
 
-void CComplexTypeArray::getQML(StringBuffer &strQML) const
+void CComplexTypeArray::getQML(StringBuffer &strQML, int idx) const
 {
    QUICK_QML_ARRAY(strQML);
 }

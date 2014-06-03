@@ -96,7 +96,7 @@ void CAnnotation::getDojoJS(StringBuffer &strJS) const
     }
 }
 
-void CAnnotation::getQML(StringBuffer &strQML) const
+void CAnnotation::getQML(StringBuffer &strQML, int idx) const
 {
     if (m_pAppInfo != NULL)
     {

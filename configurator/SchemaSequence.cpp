@@ -44,6 +44,9 @@ CSequence* CSequence::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSche
 
     CElementArray *pElemArray = CElementArray::load(NULL, pSchemaRoot, strXPath.str());
 
+    PROGLOG("Function: %s() at %s:%d", __func__, __FILE__, __LINE__);
+    PROGLOG("pElementArray = %p", pElemArray);
+
     if (pElemArray != NULL)
     {
         pSequence = new CSequence(pParentNode, pElemArray);
@@ -88,7 +91,7 @@ void CSequence::getDojoJS(StringBuffer &strJS) const
     }
 }
 
-void CSequence::getQML(StringBuffer &strQML) const
+void CSequence::getQML(StringBuffer &strQML, int idx) const
 {
     if (p_mElementArray != NULL)
     {

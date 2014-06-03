@@ -438,7 +438,7 @@ void CElement::getDojoJS(StringBuffer &strJS) const
     }
 }
 
-void CElement::getQML(StringBuffer &strQML) const
+void CElement::getQML(StringBuffer &strQML, int idx) const
 {
     //TODO: Handle tree view
     if (stricmp(this->getType(), "NodeType") == 0)
@@ -676,6 +676,26 @@ void CElement::traverseAndProcessNodes() const
     CXSDNodeBase::processExitHandlers(this);
 }
 
+bool CElement::isTopLevelElement() const
+{
+    //const CElementArray *pElemArray = dynamic_cast<const CElementArray*>(this->getConstParentNode());
+    const CElementArray *pElemArray = static_cast<const CElementArray*>(this->getConstParentNode());
+
+    assert(pElemArray != NULL);
+
+    const CElement *pElem = static_cast<CElement*>(&(pElemArray->item(0)));
+    if (pElem->m_bTopLevelElement == true && strcmp(pElem->getXSDXPath(), this->getXSDXPath()) == 0 && pElem->m_bTopLevelElement == true)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
+    //return m_bTopLevelElement;
+}
+
 void CElementArray::dump(std::ostream &cout, unsigned int offset) const
 {
     offset+= STANDARD_OFFSET_1;
@@ -699,9 +719,16 @@ void CElementArray::getDojoJS(StringBuffer &strDoc) const
     QUICK_DOJO_JS_ARRAY(strDoc);
 }
 
-void CElementArray::getQML(StringBuffer &strQML) const
+void CElementArray::getQML(StringBuffer &strQML, int idx) const
 {
-    QUICK_QML_ARRAY(strQML);
+    if (idx == -1)
+    {
+        QUICK_QML_ARRAY(strQML);
+    }
+    else
+    {
+        (this->item(idx)).getQML(strQML);
+    }
 }
 
 void CElementArray::populateEnvXPath(StringBuffer strXPath, unsigned int index)
@@ -818,7 +845,12 @@ CElementArray* CElementArray::load(const char* pSchemaFile)
 
     pSchemaRoot.setown(createPTreeFromXMLFile(schemaPath.str()));
 
-    return CElementArray::load(NULL, pSchemaRoot, XSD_TAG_ELEMENT);
+    CElementArray *pElemArray = CElementArray::load(NULL, pSchemaRoot, XSD_TAG_ELEMENT);
+
+    PROGLOG("Function: %s() at %s:%d", __func__, __FILE__, __LINE__);
+    PROGLOG("pElemArray = %p", pElemArray);
+
+    return pElemArray;
 }
 
 CElementArray* CElementArray::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)

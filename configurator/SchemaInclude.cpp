@@ -30,7 +30,7 @@ void CInclude::getDojoJS(StringBuffer &strJS) const
 {
 }
 
-void CInclude::getQML(StringBuffer &strQML) const
+void CInclude::getQML(StringBuffer &strQML, int idx) const
 {
 
 }
@@ -177,7 +177,7 @@ void CIncludeArray::getDojoJS(StringBuffer &strJS) const
     QUICK_DOJO_JS_ARRAY(strJS);
 }
 
-void CIncludeArray::getQML(StringBuffer &strQML) const
+void CIncludeArray::getQML(StringBuffer &strQML, int idx) const
 {
     QUICK_QML_ARRAY(strQML);
 }

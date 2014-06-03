@@ -52,7 +52,7 @@ void CSimpleType::getDojoJS(StringBuffer &strJS) const
     }
 }
 
-void CSimpleType::getQML(StringBuffer &strQML) const
+void CSimpleType::getQML(StringBuffer &strQML, int idx) const
 {
     if (m_pRestriction != NULL)
     {
@@ -239,7 +239,7 @@ void CSimpleTypeArray::getDojoJS(StringBuffer &strJS) const
     QUICK_DOJO_JS_ARRAY(strJS);
 }
 
-void CSimpleTypeArray::getQML(StringBuffer &strQML) const
+void CSimpleTypeArray::getQML(StringBuffer &strQML, int idx) const
 {
     QUICK_QML_ARRAY(strQML);
 }

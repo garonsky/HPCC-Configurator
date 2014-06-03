@@ -14,7 +14,7 @@
 
 CAttribute::~CAttribute()
 {
-    CConfigSchemaHelper::getInstance()->getSchemaMapManager()->removeMapOfXPathToAttribute(this->getEnvXPath());
+    //CConfigSchemaHelper::getInstance()->getSchemaMapManager()->removeMapOfXPathToAttribute(this->getEnvXPath());
 }
 
 const char* CAttribute::getTitle() const
@@ -202,7 +202,7 @@ void CAttribute::getDojoJS(StringBuffer &strJS) const
     }*/
 }
 
-void CAttribute::getQML(StringBuffer &strQML) const
+void CAttribute::getQML(StringBuffer &strQML, int idx) const
 {
     assert(this->getConstParentNode() != NULL);
 
@@ -653,7 +653,7 @@ void CAttributeArray::getDojoJS(StringBuffer &strJS) const
     }
 }
 
-void CAttributeArray::getQML(StringBuffer &strQML) const
+void CAttributeArray::getQML(StringBuffer &strQML, int idx) const
 {
     assert(this->getConstParentNode() != NULL);
     assert(this->getConstAncestorNode(2) != NULL);

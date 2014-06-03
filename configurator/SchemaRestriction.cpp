@@ -79,7 +79,7 @@ void CRestriction::getDojoJS(StringBuffer &strJS) const
     }
 }
 
-void CRestriction::getQML(StringBuffer &strQML) const
+void CRestriction::getQML(StringBuffer &strQML, int idx) const
 {
     if (m_pEnumerationArray != NULL)
     {

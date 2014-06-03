@@ -124,7 +124,7 @@ void MainWindow::on_treeView_clicked(const QModelIndex &index)
     }
 
     QTextStream out(&qFile);
-    out << CONFIGURATOR_API::getQML(index.internalPointer());
+    out << CONFIGURATOR_API::getQML(index.internalPointer(), index.row());
 
     qFile.close();
 
