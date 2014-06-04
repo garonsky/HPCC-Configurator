@@ -72,14 +72,16 @@
      <x>0</x>
      <y>0</y>
      <width>1280</width>
-     <height>20</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="separator"/>
     <addaction name="actionOpen"/>
+    <addaction name="actionReload"/>
     <addaction name="actionRecent"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
@@ -220,6 +222,11 @@
   <action name="actionAdd_Thor_s">
    <property name="text">
     <string>Reconfigure Existing Hardware</string>
+   </property>
+  </action>
+  <action name="actionReload">
+   <property name="text">
+    <string>Reload</string>
    </property>
   </action>
  </widget>

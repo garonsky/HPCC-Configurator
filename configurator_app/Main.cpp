@@ -8,6 +8,7 @@
 #include "ConfiguratorAPI.hpp"
 
 
+
 QApplication *pApp = NULL;
 MainWindow *pMW = NULL;
 

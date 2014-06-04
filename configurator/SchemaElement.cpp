@@ -508,8 +508,19 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
             strQML.append(QML_TABLE_VIEW_BEGIN);
             DEBUG_MARK_QML;
 
-            strQML.append(QML_MODEL).append(modelNames[CConfigSchemaHelper::getInstance(0)->getNumberOfTables()]);
+            strQML.append(QML_MODEL).append(modelNames[CConfigSchemaHelper::getInstance(0)->getNumberOfTables()]).append(QML_STYLE_NEW_LINE);
             DEBUG_MARK_QML;
+//            strQML.append(QML_MODEL).append(&(modelNames[(CConfigSchemaHelper::getInstance(0)->getNumberOfTables() - 1) * MAX_ARRAY_Y]));
+/*            strQML.append(QML_MODEL);
+            char *pTableName = new char[128]();
+
+            const int MY = MAX_ARRAY_Y;
+            strcpy(pTableName,(char*)(&(modelNames[(CConfigSchemaHelper::getInstance(0)->getNumberOfTables() - 1) * MY])));
+
+            strQML.append(pTableName);
+            DEBUG_MARK_QML;
+
+            delete[] pTableName;*/
 
             const CElement *pElement = dynamic_cast<const CElement*>(this->getParentNodeByType(XSD_ELEMENT));
             assert(pElement != NULL);
@@ -679,7 +690,7 @@ void CElement::traverseAndProcessNodes() const
 bool CElement::isTopLevelElement() const
 {
     //const CElementArray *pElemArray = dynamic_cast<const CElementArray*>(this->getConstParentNode());
-    const CElementArray *pElemArray = static_cast<const CElementArray*>(this->getConstParentNode());
+    /*const CElementArray *pElemArray = static_cast<const CElementArray*>(this->getConstParentNode());
 
     assert(pElemArray != NULL);
 
@@ -693,7 +704,7 @@ bool CElement::isTopLevelElement() const
         return false;
     }
 
-    //return m_bTopLevelElement;
+    //*/return m_bTopLevelElement;
 }
 
 void CElementArray::dump(std::ostream &cout, unsigned int offset) const

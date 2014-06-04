@@ -21,7 +21,7 @@ int main2(int argc, char *argv[])
 
     int nTables = CONFIGURATOR_API::getNumberOfTables();
 
-    TableDataModel tableDataModel[10];
+    TableDataModel tableDataModel[MAX_ARRAY_X];
 
     assert(nTables <= MAX_ARRAY_X);
 

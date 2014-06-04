@@ -391,9 +391,9 @@ CComplexType* CComplexType::load(CXSDNodeBase* pParentNode, const IPropertyTree 
     strXPathExt.clear().append(xpath).append("/").append(XSD_TAG_ELEMENT);
     pElementArray = CElementArray::load(NULL, pSchemaRoot, strXPathExt.str());
 
-    PROGLOG("Function: %s() at %s:%d", __func__, __FILE__, __LINE__);
+    //PROGLOG("Function: %s() at %s:%d", __func__, __FILE__, __LINE__);
     if (pElementArray != NULL)
-        PROGLOG("pElementArray = %p", pElementArray);
+        //PROGLOG("pElementArray = %p", pElementArray);
 
     strXPathExt.clear().append(xpath).append("/").append(XSD_TAG_ATTRIBUTE_GROUP);
     pAttributeGroupArray = CAttributeGroupArray::load(NULL, pSchemaRoot, strXPathExt.str());

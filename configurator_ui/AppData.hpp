@@ -1,3 +1,6 @@
+#ifndef _APP_DATA_HPP_
+#define _APP_DATA_HPP_
+
 #include <QObject>
 #include <QtQuick/QQuickView>
 #include <QGuiApplication>
@@ -103,3 +106,5 @@ public:
 
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 };
+
+#endif // _APP_DATA_HPP_

@@ -2,12 +2,20 @@ PROJECT ( configurator_app )
 
 CMAKE_MINIMUM_REQUIRED( VERSION 2.8.11)
 
-IF( CONFIGURATOR_STATIC_LIB ) 
-QT5_WRAP_UI(MainWindow.ui ui_MainWindow.h)
-ENDIF()
-
-SET( CMAKE_AUTOMOC ON )
 SET( CMAKE_INCLUDE_CURRENT_DIR ON )
+SET( CMAKE_AUTOMOC ON )
+
+FIND_PACKAGE( Qt5Core )
+FIND_PACKAGE( Qt5Widgets )
+FIND_PACKAGE( Qt5OpenGL )
+FIND_PACKAGE( Qt5Quick )
+FIND_PACKAGE( Qt5Qml )
+
+
+IF( CONFIGURATOR_STATIC_LIB ) 
+QT5_WRAP_UI( UI_HDRS MainWindow.ui )
+MESSAGE("-- UI_HDRS (QT): " ${UI_HDRS} )
+ENDIF()
 
 INCLUDE_DIRECTORIES(
         ${Qt5_INCLUDE_DIRS}
@@ -22,12 +30,6 @@ INCLUDE_DIRECTORIES(
         ${HPCC_SOURCE_DIR}/deployment/deploy
  )
 
-FIND_PACKAGE( Qt5Core )
-FIND_PACKAGE( Qt5Widgets )
-FIND_PACKAGE( Qt5OpenGL )
-FIND_PACKAGE( Qt5Quick )
-FIND_PACKAGE( Qt5Qml )
-
 SET(    SRCS
         Main.cpp
         MainWindow.cpp
@@ -35,7 +37,7 @@ SET(    SRCS
         ${HPCC_CONFIGURATOR_SOURCE_DIR}/configurator_ui/AppData.cpp
 )
 
-HPCC_ADD_EXECUTABLE ( configurator_app ${SRCS} )
+HPCC_ADD_EXECUTABLE ( configurator_app ${SRCS} ${UI_HDRS} )
 
 TARGET_LINK_LIBRARIES( configurator_app
     jlib

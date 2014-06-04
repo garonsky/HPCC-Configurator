@@ -1,5 +1,3 @@
-//#ifdef CONFIGURATOR_STATIC_LIB
-
 #include "ConfiguratorAPI.hpp"
 #include "ConfiguratorMain.hpp"
 #include "BuildSet.hpp"
@@ -11,13 +9,28 @@
 #include "SchemaCommon.hpp"
 #include "ConfiguratorMain.hpp"
 #include "EnvironmentModel.hpp"
-
 #include <iostream>
 
 namespace CONFIGURATOR_API
 {
 
 static CConfigSchemaHelper *s_pConfigSchemaHelper = NULL;
+
+
+void reload(const char *pFile)
+{
+    assert(pFile != NULL && *pFile != 0);
+
+    delete s_pConfigSchemaHelper;
+
+    s_pConfigSchemaHelper = NULL;
+
+    s_pConfigSchemaHelper = CConfigSchemaHelper::getInstance();
+
+    s_pConfigSchemaHelper->populateSchema();
+
+    CConfigSchemaHelper::getInstance()->loadEnvFromConfig(pFile);
+}
 
 int getNumberOfAvailableComponents()
 {

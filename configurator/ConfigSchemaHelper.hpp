@@ -105,18 +105,69 @@ public:
 
     int getNumberOfTables() const
     {
+/*        static const char *pTDM = "tableDataModel0";
+        if (modelNames[0] == 0)
+        {
+            delete modelNames;
+            modelNames = new char[MAX_ARRAY_Y]();
+
+            strcpy(modelNames, pTDM);
+        }
+        if (m_nTables == 0)
+        {
+            return 1;
+        }*/
         return m_nTables;
     }
 
     void incTables()
     {
-        assert(m_nTables < MAX_ARRAY_X);
+       /* static int nSize = MAX_ARRAY_X;
+        //assert(m_nTables < MAX_ARRAY_X);
+        if (m_nTables >= nSize)
+        {
+            modelNames = static_cast<char*>(realloc((void*)(modelNames), nSize*2));
+            nSize *= 2;
+        }
 
+        m_nTables++;*/
+
+        /*static int nSize = 0;
+
+        if (*modelNames == 0)
+        {
+            modelNames = new char[MAX_ARRAY_Y];
+
+            strcpy(modelNames, "tableDataModel0");
+            nSize = 1;
+        }
+
+        if (m_nTables >= nSize)
+        {
+                modelNames = static_cast<char*>(realloc((void*)(modelNames), (nSize * MAX_ARRAY_Y) + (INCREMENT_SIZE * MAX_ARRAY_Y)));
+
+                char *pTemp = new char[128];
+                char pTempInt[32] = "";
+
+                for (int i = 0; i < INCREMENT_SIZE; i++)
+                {
+                    itoa(i+nSize, pTempInt, 10);
+
+                    strcpy(pTemp, "tableDataModel");
+
+                    pTemp = strcat(pTemp,pTempInt);
+
+                    strcpy(&(modelNames[(nSize*MAX_ARRAY_Y)+(i*MAX_ARRAY_Y)]), pTemp);
+
+                }
+                nSize += INCREMENT_SIZE;
+        }*/
         m_nTables++;
     }
 
     void resetTables() const
     {
+        //assert(false);
         m_nTables = 0;
     }
 

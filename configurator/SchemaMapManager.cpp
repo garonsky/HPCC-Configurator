@@ -15,27 +15,7 @@ CSchemaMapManager::CSchemaMapManager()
 
 CSchemaMapManager::~CSchemaMapManager()
 {
-    //HashIterator iter(m_pSchemaPtrMap);
-
-/*    ForEach(iter)
-    {
-        const char *pKey = static_cast<const char*>((&iter.query())->getKey());
-        CSchema *pSchema = *(m_pSchemaPtrMap->getValue(pKey));
-
-        pSchema->Release();
-        m_pSchemaPtrMap->remove(pKey);
-
-        iter.first();
-    }
-*/
-    /*clearArrays<MapStringToCSchema, CSchema>(&m_pSchemaPtrMap);
-    clearArrays<MapStringToCSimpleType, CSimpleType>(&m_simpleTypePtrMap);
-    clearArrays<MapStringToCComplexType, CComplexType>(&m_complexTypePtrsMap);
-    clearArrays<MapStringToCAttributeGroup, CAttributeGroup>(&m_attributeGroupTypePtrsMap);
-    clearArrays<MapStringToCAttribute, CAttribute>(&m_attributePtrsMap);
-    clearArrays<MapStringToCRestriction, CRestriction>(&m_restrictionPtrsMap);
-    clearArrays<MapStringToCElementArray, CElementArray>(&m_elementArrayPtrsMap);
-    clearArrays<MapStringToCElement, CElement>(&m_elementPtrsMap);*/
+    //PROGLOG("Function: %s() at %s:%d", __func__, __FILE__, __LINE__);
 }
 
 CSchema* CSchemaMapManager::getSchemaForXSD(const char* pComponent)

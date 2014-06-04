@@ -2,6 +2,7 @@
 #include "Worker.hpp"
 #include "ui_MainWindow.h"
 #include "Worker.hpp"
+#include "AppData.hpp"
 #include <QThread>
 #include <QFileDialog>
 #include <QtQuick/QQuickView>
@@ -62,15 +63,20 @@ void MainWindow::addServiceToList(char *pService)
 
 void MainWindow::on_actionOpen_triggered()
 {
-    //QString qstrFileName = QFileDialog::getOpenFileName(this, "Open ironment Configuration File", "/etc/HPCCSystems/source/", ("*.xml"));
-    //QString qstrFileName = QFileDialog::getOpenFileName(this, "Open ironment Configuration File", "/home/gleb//HPCC2/build/", ("*.qml"));
     QString qstrFileName = QFileDialog::getOpenFileName(this, "Open Environment Configuration File", "/etc/HPCCSystems/source", ("*.xml"));
 
-    //QQuickView *pView = new QQuickView();
     m_pView = new QQuickView();
 
-    //CONFIGURATOR_API::openConfigurationFile("/etc/HPCCSystems/source/demo1.xml");
-    CONFIGURATOR_API::openConfigurationFile(qstrFileName.toLocal8Bit().data());
+    if (m_envFile != "")
+    {
+        CONFIGURATOR_API::reload(m_envFile.toLocal8Bit().data());
+    }
+    else
+    {
+        CONFIGURATOR_API::openConfigurationFile(qstrFileName.toLocal8Bit().data());
+    }
+
+    m_envFile = qstrFileName;
 
 
     ApplicationData *pAppData = new ApplicationData();
@@ -83,26 +89,12 @@ void MainWindow::on_actionOpen_triggered()
         m_pView->rootContext()->setContextProperty(modelNames[idx], &(pTableDataModel[idx]));
     }
 
-    m_pView->setSource(QUrl::fromLocalFile("/tmp/.dali.xsd.qml"));
-    //pView->setSource(CONFIGURATOR_API::getQML());
-
     QWidget *container = QWidget::createWindowContainer(m_pView);
 
     this->ui->verticalLayout->addWidget(container);
 
     ComponentDataModel *pComponentDataModel = new ComponentDataModel(container);
     this->ui->treeView->setModel(pComponentDataModel);
-
-
-
-
-/*
-    QFileSystemModel *filemodel = new QFileSystemModel(this);
-       filemodel->setFilter(QDir::Files | QDir::NoDotAndDotDot);
-       filemodel->setNameFilterDisables(false);
-       //filemodel->setRootPath(sPath);
-       ui->treeView->setModel(filemodel);
-    //tree->setModel( &myModel);*/
 }
 
 void MainWindow::on_treeView_clicked(const QModelIndex &index)
@@ -153,4 +145,9 @@ void MainWindow::on_treeView_clicked(const QModelIndex &index)
 
     //QWidget *container = QWidget::createWindowContainer(m_pView);
     //this->ui->verticalLayout->addWidget(container);
+}
+
+void MainWindow::on_actionReload_triggered()
+{
+    CONFIGURATOR_API::reload(m_envFile.toLocal8Bit().data());
 }

@@ -44,8 +44,8 @@ CSequence* CSequence::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSche
 
     CElementArray *pElemArray = CElementArray::load(NULL, pSchemaRoot, strXPath.str());
 
-    PROGLOG("Function: %s() at %s:%d", __func__, __FILE__, __LINE__);
-    PROGLOG("pElementArray = %p", pElemArray);
+    //PROGLOG("Function: %s() at %s:%d", __func__, __FILE__, __LINE__);
+    //PROGLOG("pElementArray = %p", pElemArray);
 
     if (pElemArray != NULL)
     {

@@ -674,7 +674,7 @@ void CAttributeArray::getQML(StringBuffer &strQML, int idx) const
         strQML.append(QML_TABLE_VIEW_BEGIN);
         DEBUG_MARK_QML;
 
-        strQML.append(QML_MODEL).append(modelNames[CConfigSchemaHelper::getInstance(0)->getNumberOfTables()]);
+        strQML.append(QML_MODEL).append(modelNames[CConfigSchemaHelper::getInstance(0)->getNumberOfTables()]).append(QML_STYLE_NEW_LINE);
         DEBUG_MARK_QML;
 
         const CElement *pElement = dynamic_cast<const CElement*>(this->getParentNodeByType(XSD_ELEMENT));

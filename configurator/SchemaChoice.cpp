@@ -25,8 +25,8 @@ CChoice* CChoice::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRo
 
     CElementArray *pElemArray = CElementArray::load(NULL, pSchemaRoot, strXPathExt.str());
 
-    PROGLOG("Function: %s() at %s:%d", __func__, __FILE__, __LINE__);
-    PROGLOG("pElementArray = %p xpath=%s", pElemArray, xpath);
+    //PROGLOG("Function: %s() at %s:%d", __func__, __FILE__, __LINE__);
+    //PROGLOG("pElementArray = %p xpath=%s", pElemArray, xpath);
 
     assert(pElemArray);
 

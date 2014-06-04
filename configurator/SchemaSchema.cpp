@@ -56,8 +56,8 @@ CSchema* CSchema::load(const char* pSchemaLocation, const IPropertyTree *pSchema
     strXPathExt.clear().append(xpath).append(XSD_TAG_ELEMENT);
     CElementArray* pElemArray = CElementArray::load(pSchema, pSchemaRoot, strXPathExt.str());
 
-    PROGLOG("Function: %s() at %s:%d", __func__, __FILE__, __LINE__);
-    PROGLOG("pElemArray = %p", pElemArray);
+    //PROGLOG("Function: %s() at %s:%d", __func__, __FILE__, __LINE__);
+    //PROGLOG("pElemArray = %p", pElemArray);
 
     strXPathExt.clear().append(xpath).append(XSD_TAG_ATTRIBUTE_GROUP);
     CAttributeGroupArray* pAttributeGroupArray = CAttributeGroupArray::load(pSchema, pSchemaRoot, strXPathExt);
