@@ -19,7 +19,9 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    m_pView(NULL),
+    m_pAppData(NULL)
 {
     ui->setupUi(this);
 

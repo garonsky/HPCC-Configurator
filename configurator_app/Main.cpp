@@ -1,13 +1,11 @@
+#define CONFIGURATOR_STATIC_LIB 1
+
 #include "MainWindow.hpp"
 #include <QApplication>
 #include <QThread>
 #include "MainWindowThread.hpp"
 #include <cstdlib>
-
-#define CONFIGURATOR_STATIC_LIB
 #include "ConfiguratorAPI.hpp"
-
-
 
 QApplication *pApp = NULL;
 MainWindow *pMW = NULL;

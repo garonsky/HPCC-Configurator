@@ -81,21 +81,10 @@ const char* getBuildSetComponentName(int idx, char *pName)
 
 #ifdef CONFIGURATOR_STATIC_LIB
 
-int initialize(int argc, char *argv[])
+int initialize()
 {
     assert(s_pConfigSchemaHelper == NULL);
 
-    InitModuleObjects();
-
-    //ConfiguratorMain(argc, argv);
-
-    s_pConfigSchemaHelper = CConfigSchemaHelper::getInstance();
-
-    return 1;
-}
-
-int initialize()
-{
     static bool bOnce = true;
 
     if (bOnce == true)
@@ -105,25 +94,24 @@ int initialize()
         InitModuleObjects();
 
     }
-//    assert(s_pConfigSchemaHelper == NULL);
-
-    delete s_pConfigSchemaHelper;
 
     s_pConfigSchemaHelper = CConfigSchemaHelper::getInstance();
-
     s_pConfigSchemaHelper->populateSchema();
-
-    delete s_pConfigSchemaHelper;
-
-    s_pConfigSchemaHelper = NULL;
-
-    s_pConfigSchemaHelper = CConfigSchemaHelper::getInstance();
-
-    s_pConfigSchemaHelper->populateSchema();
-
-
 
     return 1;
+}
+
+#else // CONFIGURATOR_STATIC_LIB
+
+int initialize(int argc, char *argv[])
+{
+    assert(s_pConfigSchemaHelper == NULL);
+
+    InitModuleObjects();
+
+    s_pConfigSchemaHelper = CConfigSchemaHelper::getInstance();
+
+    return 0;
 }
 
 #endif // CONFIGURATOR_STATIC_LIB
