@@ -34,6 +34,8 @@ SET(    SRCS
         Main.cpp
         MainWindow.cpp
         Worker.cpp
+        ComponentSelectorDialog.cpp
+        finddialog.cpp
         ${HPCC_CONFIGURATOR_SOURCE_DIR}/configurator_ui/AppData.cpp
 )
 

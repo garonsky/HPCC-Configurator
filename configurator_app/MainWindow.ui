@@ -138,6 +138,16 @@
      <string>Validation</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>Tools</string>
+    </property>
+    <addaction name="actionGenerate_QML"/>
+    <addaction name="actionGenerate_DockBook"/>
+    <addaction name="actionGenerate_Dojo"/>
+    <addaction name="separator"/>
+    <addaction name="actionGenerate_Internal_Data_Structure_Debug"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuAdd_Component"/>
@@ -145,6 +155,7 @@
    <addaction name="menuWizards"/>
    <addaction name="menuSettings"/>
    <addaction name="menuValidation"/>
+   <addaction name="menuTools"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -227,6 +238,29 @@
   <action name="actionReload">
    <property name="text">
     <string>Reload</string>
+   </property>
+  </action>
+  <action name="actionGenerate_QML">
+   <property name="text">
+    <string>Generate QML</string>
+   </property>
+  </action>
+  <action name="actionGenerate_DockBook">
+   <property name="text">
+    <string>Generate DocBook</string>
+   </property>
+   <property name="toolTip">
+    <string>Generate DocBook formatted documentation for XSD component definitions.</string>
+   </property>
+  </action>
+  <action name="actionGenerate_Dojo">
+   <property name="text">
+    <string>Generate Dojo</string>
+   </property>
+  </action>
+  <action name="actionGenerate_Internal_Data_Structure_Debug">
+   <property name="text">
+    <string>Generate Internal Data Structure (Debug)</string>
    </property>
   </action>
  </widget>

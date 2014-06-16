@@ -133,7 +133,6 @@ extern "C" int getNumberOfTables();
 
 extern "C" int openConfigurationFile(const char* pFile);
 
-
 extern "C" int getNumberOfComponentsInConfiguration(void *pData);
 extern "C" void* getComponentInConfiguration(int idx);
 extern "C" void* getComponentInstance(int idx, void *pData);
@@ -159,6 +158,11 @@ extern "C" void reload(const char *pFile);
 
 
 extern "C" const char* getQML(void *pData, int nIdx);
+extern "C" const char* getQMLFromFile(const char *pXSD, int idx);
+
+extern "C" const char* getQMLByIndex(int idx);
+extern "C" const char* getDocBookByIndex(int idx);
+extern "C" const char* getDojoByIndex(int idx);
 
 
 //extern "C" void* getComponentType(int idx);

@@ -8,6 +8,9 @@
 #include "AppData.hpp"
 
 class QQuickView;
+class ApplicationData;
+class TableDataModel;
+class ComponentDataModel;
 
 namespace Ui {
 class MainWindow;
@@ -30,6 +33,8 @@ private:
     QQuickView *m_pView;
     QString m_envFile;
     ApplicationData *m_pAppData;
+    TableDataModel *m_pTableDataModel;
+    ComponentDataModel *m_pComponentDataModel;
 
 //    QThread *m_pThread;
 //    CWorker *m_pWorker;
@@ -39,6 +44,10 @@ private slots:
     void on_actionOpen_triggered();
     void on_treeView_clicked(const QModelIndex &index);
     void on_actionReload_triggered();
+    void on_actionGenerate_QML_triggered();
+    void on_actionGenerate_DockBook_triggered();
+    void on_actionGenerate_Internal_Data_Structure_Debug_triggered();
+    void on_actionGenerate_Dojo_triggered();
 };
 
 #endif // MAINWINDOW_HPP

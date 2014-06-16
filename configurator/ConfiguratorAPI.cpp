@@ -593,7 +593,36 @@ const char* getQML(void *pData, int nIdx)
     return CConfigSchemaHelper::getInstance()->printQML(getFileName(pData), nIdx);
 }
 
+const char* getQMLFromFile(const char *pXSD, int idx)
+{
+    if (pXSD == NULL || *pXSD == 0)
+    {
+        return NULL;
+    }
 
+    //const char *pFileName = ConfigSchemaHelper::getInstance()->getFileName(pData)
+
+    //return CConfigSchemaHelper::getInstance()->printQML(pFileName, 0);
+            return NULL;
+}
+
+const char* getQMLByIndex(int idx)
+{
+    const char *pFileName = CBuildSetManager::getInstance()->getBuildSetComponentFileName(idx);
+    return (CConfigSchemaHelper::getInstance()->printQML(pFileName, 0));
+}
+
+const char* getDocBookByIndex(int idx)
+{
+    const char *pFileName = CBuildSetManager::getInstance()->getBuildSetComponentFileName(idx);
+    return CConfigSchemaHelper::getInstance()->printDocumentation(pFileName);
+}
+
+const char* getDojoByIndex(int idx)
+{
+    const char *pFileName = CBuildSetManager::getInstance()->getBuildSetComponentFileName(idx);
+    return CConfigSchemaHelper::getInstance()->printDojoJS(pFileName);
+}
 
 /*void* getComponent(void *pComponent, int idx)
 {
