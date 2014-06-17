@@ -738,7 +738,10 @@ void CElementArray::getQML(StringBuffer &strQML, int idx) const
     }
     else
     {
-        (this->item(idx)).getQML(strQML);
+        if (idx < this->length())
+        {
+            (this->item(idx)).getQML(strQML);
+        }
     }
 }
 

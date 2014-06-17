@@ -182,8 +182,14 @@ const char* getTableValue(const char *pXPath, int nRow)
 {
     assert(pXPath != NULL && *pXPath != 0);
 
-    CAttribute *pAttribute = CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getAttributeFromXPath(pXPath);
+    CAttribute *pAttribute = NULL;
     CElement *pElement = NULL;
+
+
+    if (CConfigSchemaHelper::isXPathTailAttribute(pXPath) == true)
+    {
+       pAttribute = CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getAttributeFromXPath(pXPath);
+    }
 
     if (pAttribute == NULL)
     {
@@ -204,20 +210,21 @@ const char* getTableValue(const char *pXPath, int nRow)
         else
         {
             StringBuffer strXPath(pXPath);
-            StringBuffer strXPathOrignal(pXPath);
+            const StringBuffer strXPathOrignal(pXPath);
 
-            CConfigSchemaHelper::stripXPathIndex(strXPath);
+
+            int offset = CConfigSchemaHelper::stripXPathIndex(strXPath);
             CConfigSchemaHelper::stripXPathIndex(strXPath);
 
             strXPath.appendf("[%d]", nRow);
 
-            char pTemp[64];
-            int offset = strlen(itoa(nRow, pTemp, 10)) - 1;
+            //char pTemp[64];
+            //int offset = strlen(itoa(nRow, pTemp, 10)) - 1;
 
-            strXPath.append((String(strXPathOrignal).substring(strXPath.length()-offset, strXPathOrignal.length()))->toCharArray());
+            //strXPath.append((String(strXPathOrignal).substring(strXPath.length()-offset, strXPathOrignal.length()))->toCharArray());
+            strXPath.append((String(strXPathOrignal).substring(strXPathOrignal.length()-offset-1, strXPathOrignal.length()))->toCharArray());
 
             pAttribute =  CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getAttributeFromXPath(strXPath.str());
-
             assert(pAttribute != NULL);
 
             return pAttribute->getEnvValueFromXML();

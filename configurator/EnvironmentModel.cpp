@@ -238,8 +238,8 @@ const char* CEnvironmentModel::getXSDFileName(const CEnvironmentModelNode *pChil
     }
     else
     {
-        assert(pElement != NULL);
-        assert(pElement->isTopLevelElement() == true);
+        //assert(pElement != NULL);
+        //assert(pElement->isTopLevelElement() == true);
         return NULL;
     }
 }

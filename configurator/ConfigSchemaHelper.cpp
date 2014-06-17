@@ -631,7 +631,24 @@ void CConfigSchemaHelper::appendElementXPath(const char* pXPath)
     m_strArrayEnvXPaths.append(pXPath);
 }
 
-void CConfigSchemaHelper::stripXPathIndex(StringBuffer &strXPath)
+int CConfigSchemaHelper::stripXPathIndex(StringBuffer &strXPath)
+{
+    int nLen = strXPath.length()-3;
+    int nLengthOfStringInBracket = 3;
+
+    while (nLen > 0)
+    {
+        if (strXPath[nLen] == '[')
+        {
+            strXPath.reverse().remove(0,strXPath.length()-nLen).reverse();
+            return nLengthOfStringInBracket;
+        }
+        nLen--;
+        nLengthOfStringInBracket++;
+    }
+}
+
+bool CConfigSchemaHelper::isXPathTailAttribute(const StringBuffer &strXPath)
 {
     int nLen = strXPath.length()-3;
 
@@ -639,8 +656,14 @@ void CConfigSchemaHelper::stripXPathIndex(StringBuffer &strXPath)
     {
         if (strXPath[nLen] == '[')
         {
-            strXPath.reverse().remove(0,strXPath.length()-nLen).reverse();
-            return;
+            if (strXPath[nLen+1] == '@')
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         nLen--;
     }

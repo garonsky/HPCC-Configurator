@@ -55,7 +55,7 @@ MainWindow::~MainWindow()
     delete m_pThread;
     delete m_pWorker;*/
     delete m_pAppData;
-    delete m_pTableDataModel;
+    //delete m_pTableDataModel;
     delete m_pComponentDataModel;
     delete ui;
 
