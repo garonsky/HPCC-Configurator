@@ -44,6 +44,9 @@ protected:
 
     CBuildSetManager(const char* pBuildSetFile, const char* pBuildSetDir);
 
+    const CBuildSet* getBuildSetComponent(int index) const;
+    const CBuildSet* getBuildSetService(int index) const;
+
     CIArrayOf<CBuildSet> m_buildSetArray;
 
     Owned<IPropertyTree> m_buildSetTree;

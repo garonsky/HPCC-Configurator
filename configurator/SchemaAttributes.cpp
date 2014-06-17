@@ -11,6 +11,7 @@
 #include "ExceptionStrings.hpp"
 #include "SchemaMapManager.hpp"
 #include "ConfiguratorMain.hpp"
+#include "jlog.hpp"
 
 CAttribute::~CAttribute()
 {
@@ -296,6 +297,7 @@ void CAttribute::populateEnvXPath(StringBuffer strXPath, unsigned int index)
     CConfigSchemaHelper::getInstance()->getSchemaMapManager()->addMapOfXPathToAttribute(this->getEnvXPath(), this);
     CConfigSchemaHelper::getInstance()->appendAttributeXPath(this->getEnvXPath());
 
+    PROGLOG("Mapping attribute with XPATH of %s", this->getEnvXPath());
 
     if (this->m_pSimpleTypeArray != NULL)
     {

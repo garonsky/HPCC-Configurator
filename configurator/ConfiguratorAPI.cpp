@@ -36,25 +36,27 @@ int getNumberOfAvailableComponents()
 {
     assert(s_pConfigSchemaHelper != NULL);
 
-    StringArray arrComps;
+    /*StringArray arrComps;
 
     CBuildSetManager::getInstance()->getBuildSetComponents(arrComps);
 
-    return arrComps.length();
+    return arrComps.length();*/
+    return CBuildSetManager::getInstance()->getBuildSetComponentCount();
 }
 
 int getNumberOfAvailableServices()
 {
     assert(s_pConfigSchemaHelper != NULL);
 
-    StringArray arrServices;
+    /*StringArray arrServices;
 
     CBuildSetManager::getInstance()->getBuildSetServices(arrServices);
 
-    return arrServices.length();
+    return arrServices.length();*/
+    return  CBuildSetManager::getInstance()->getBuildSetServiceCount();
 }
 
-const char* getBuildSetServiceName(int idx, char *pName)
+/*const char* getBuildSetServiceName(int idx, char *pName)
 {
     assert(s_pConfigSchemaHelper != NULL);
 
@@ -76,7 +78,7 @@ const char* getBuildSetComponentName(int idx, char *pName)
     }
 
     return CBuildSetManager::getInstance()->getBuildSetComponentName(idx);
-}
+}*/
 
 
 #ifdef CONFIGURATOR_STATIC_LIB
@@ -262,9 +264,9 @@ const char* getServiceName(int idx, char *pName)
 {
     if (pName != NULL)
     {
-        strcpy (pName, CBuildSetManager::getInstance()->getBuildSetComponentName(idx));
+        strcpy (pName, CBuildSetManager::getInstance()->getBuildSetServiceName(idx));
     }
-    return CBuildSetManager::getInstance()->getBuildSetComponentName(idx);
+    return CBuildSetManager::getInstance()->getBuildSetServiceName(idx);
 }
 
 const char* getComponentName(int idx, char *pName)
