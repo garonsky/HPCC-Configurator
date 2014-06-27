@@ -201,7 +201,12 @@ const char* CConfigSchemaHelper::printDojoJS(const char* comp)
 
 const char* CConfigSchemaHelper::printQML(const char* comp, int nIdx) const
 {
-    assert(comp != NULL && *comp != 0);
+    //assert(comp != NULL && *comp != 0);
+    if (! (comp != NULL && *comp != 0) )
+    {
+        DBGLOG("no component selected for QML, index = %d", nIdx);
+        return NULL;
+    }
     assert(m_pSchemaMapManager != NULL);
 
     static StringBuffer strQML;

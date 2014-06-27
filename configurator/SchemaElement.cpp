@@ -812,7 +812,8 @@ void CElementArray::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
 
             strEnvXPath.appendf("[%d]",subIndex);
 
-            if (pEnvTree->hasProp(strEnvXPath.str()) == false)
+            //if (pEnvTree->hasProp(strEnvXPath.str()) == false)
+            if (pEnvTree->queryPropTree(strEnvXPath.str()) == NULL)
             {
                 break;
             }

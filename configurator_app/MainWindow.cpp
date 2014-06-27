@@ -68,7 +68,6 @@ void MainWindow::addComponentToList(char *pComponent)
     this->ui->menuAdd_Component->addAction(qstrComp);
 }
 
-
 void MainWindow::addServiceToList(char *pService)
 {
     QString qstrComp(pService);
@@ -108,6 +107,8 @@ void MainWindow::on_actionOpen_triggered()
     }
 
     QWidget *container = QWidget::createWindowContainer(m_pView);
+
+    m_pView->setResizeMode(QQuickView::SizeRootObjectToView);
 
     this->ui->verticalLayout->addWidget(container);
 
