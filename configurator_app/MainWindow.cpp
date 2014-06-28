@@ -17,8 +17,6 @@
 #include <QComboBox>
 #include <QListWidget>
 #include "ComponentSelectorDialog.h"
-#include "finddialog.h"
-
 #include "../configurator_ui/AppData.hpp"
 //#include "../configurator_ui/model.h"
 //#include <QDeclarativeView>
