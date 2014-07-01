@@ -237,7 +237,14 @@ CAttribute* CSchemaMapManager::getAttributeFromXPath(const char* pXPath)
 
     CAttribute **pAttribute = m_pAttributePtrsMap->getValue(pXPath);
 
-    assert(pAttribute != NULL);
+    if (STRICTNESS_LEVEL >= DEFAULT_STRICTNESS)
+    {
+        assert(pAttribute != NULL);
+    }
+    if (pAttribute == NULL)
+    {
+        return NULL;
+    }
 
     return *pAttribute;
 }

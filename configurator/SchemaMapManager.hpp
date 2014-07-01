@@ -51,7 +51,6 @@ public:
 
     void addMapOfXPathToElement(const char* pXPath, CElement *pElement, bool bIsTopLevelElement = false);
     void removeMapOfXPathToElement(const char* pXPath);
-    //void clearMapOfXPathToElement();
     CElement* getElementFromXPath(const char *pXPath);
 
     int getNumberOfComponents() const;
@@ -61,35 +60,27 @@ public:
 protected:
 
     typedef MapStringTo<CSchema*> MapStringToCSchema;
-    //MapStringToCSchema m_schemaPtrMap;
     Owned<MapStringToCSchema> m_pSchemaPtrMap;
 
     typedef MapStringTo<CSimpleType*> MapStringToCSimpleType;
-    //MapStringToCSimpleType m_simpleTypePtrMap;
     Owned<MapStringToCSimpleType> m_pSimpleTypePtrMap;
 
     typedef MapStringTo<CComplexType*> MapStringToCComplexType;
-//    MapStringToCComplexType m_complexTypePtrsMap;
     Owned<MapStringToCComplexType> m_pComplexTypePtrsMap;
 
     typedef MapStringTo<CAttributeGroup*> MapStringToCAttributeGroup;
-    //MapStringToCAttributeGroup m_attributeGroupTypePtrsMap;
     Owned<MapStringToCAttributeGroup> m_pAttributeGroupTypePtrsMap;
 
     typedef MapStringTo<CAttribute*> MapStringToCAttribute;
-    //MapStringToCAttribute m_attributePtrsMap;
     Owned<MapStringToCAttribute> m_pAttributePtrsMap;
 
     typedef MapStringTo<CRestriction*> MapStringToCRestriction;
-    //MapStringToCRestriction m_restrictionPtrsMap;
     Owned<MapStringToCRestriction> m_pRestrictionPtrsMap;
 
     typedef MapStringTo<CElement*> MapStringToCElement;
-    //MapStringToCElement m_elementPtrsMap;
     Owned<MapStringToCElement> m_pElementPtrsMap;
 
     typedef MapStringTo<CElementArray*> MapStringToCElementArray;
-    //MapStringToCElementArray m_elementArrayPtrsMap;
     Owned<MapStringToCElementArray> m_pElementArrayPtrsMap;
 
 

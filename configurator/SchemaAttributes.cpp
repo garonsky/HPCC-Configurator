@@ -230,10 +230,10 @@ void CAttribute::getQML(StringBuffer &strQML, int idx) const
     {
         if (this->m_pSimpleTypeArray->length() == 0)
         {
-            strQML.append(QML_ROW_BEGIN).append(QML_RECTANGLE_LIGHT_STEEEL_BLUE_BEGIN);
+            strQML.append(QML_ROW_BEGIN).append(QML_RECTANGLE_DEFAULT_COLOR_SCHEME_1_BEGIN);
             DEBUG_MARK_QML;
 
-            strQML.append(QML_TEXT_BEGIN_2).append("\"").append(this->getTitle()).append("\"").append(QML_TEXT_END_2);
+            strQML.append(QML_TEXT_BEGIN_2).append("\"  ").append(this->getTitle()).append("\"").append(QML_TEXT_END_2);
             DEBUG_MARK_QML;
 
             strQML.append(QML_RECTANGLE_LIGHT_STEEEL_BLUE_END);

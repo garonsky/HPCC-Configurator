@@ -226,7 +226,17 @@ const char* getTableValue(const char *pXPath, int nRow)
             strXPath.append((String(strXPathOrignal).substring(strXPathOrignal.length()-offset-1, strXPathOrignal.length()))->toCharArray());
 
             pAttribute =  CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getAttributeFromXPath(strXPath.str());
-            assert(pAttribute != NULL);
+
+            if (STRICTNESS_LEVEL >= DEFAULT_STRICTNESS)
+            {
+                assert(pAttribute != NULL);
+            }
+
+            if (pAttribute == NULL)
+            {
+                return NULL;
+            }
+
 
             return pAttribute->getEnvValueFromXML();
         }

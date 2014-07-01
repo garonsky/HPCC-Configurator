@@ -580,7 +580,12 @@ const char* CConfigSchemaHelper::getTableValue(const char* pXPath,  int nRow) co
 
             pAttribute = m_pSchemaMapManager->getAttributeFromXPath(strXPath.str());
 
-            assert(pAttribute != NULL);
+            //assert(pAttribute != NULL);
+
+            if (pAttribute == NULL)
+            {
+                return NULL;
+            }
 
             return pAttribute->getEnvValueFromXML();
         }

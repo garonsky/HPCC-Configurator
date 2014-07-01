@@ -9,6 +9,12 @@
 #include "jlog.hpp"
 #include "ExceptionStrings.hpp"
 
+
+#define MINIMUM_STRICTNESS  0
+#define DEFAULT_STRICTNESS  5
+#define MAXIMUM_STRICTNESS  10
+#define STRICTNESS_LEVEL MAXIMUM_STRICTNESS
+
 #define QUICK_OUT(X,Y,Z) QuickOut(X,#Y,get##Y(),Z);
 #define QUICK_OUT_2(Y) QuickOut(cout, #Y, get##Y(), offset);
 #define QUICK_OUT_ARRAY(X,Z) for (int idx=0; idx < this->length(); idx++)               \
@@ -32,6 +38,10 @@
                            {                                                            \
                                 (this->item(idx)).getQML(X);                            \
                            }
+#define QUICK_QML_ARRAY2(X)     for (int idx=0; idx < this->length(); idx++)            \
+                                {                                                       \
+                                    (this->item(idx)).getQML(X, idx);                   \
+                                }
 
 #define QUICK_ENV_XPATH(X) for (int idx=0; idx < this->length(); idx++)                 \
                             {                                                           \

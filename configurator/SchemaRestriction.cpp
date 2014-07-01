@@ -90,10 +90,10 @@ void CRestriction::getQML(StringBuffer &strQML, int idx) const
         assert(pAttrib != NULL);
 
         strQML.append(QML_ROW_BEGIN);
-        strQML.append(QML_RECTANGLE_LIGHT_STEEEL_BLUE_BEGIN);
+        strQML.append(QML_RECTANGLE_DEFAULT_COLOR_SCHEME_1_BEGIN);
         DEBUG_MARK_QML;
 
-        strQML.append(QML_TEXT_BEGIN_2).append("\"").append(pAttrib->getName()).append("\"").append(QML_TEXT_END_2);
+        strQML.append(QML_TEXT_BEGIN_2).append("\"  ").append(pAttrib->getName()).append("\"").append(QML_TEXT_END_2);
 
         strQML.append(QML_RECTANGLE_LIGHT_STEEEL_BLUE_END);
 

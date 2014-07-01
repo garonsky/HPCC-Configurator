@@ -2,6 +2,10 @@
 #include "jlog.hpp"
 #include <cassert>
 
+// TODO: REMOVE REFERENCES TO SCHEAM
+#include "SchemaCommon.hpp"
+//
+
 static const int TOP_LEVEL = 1;
 static void* P_TOP_LEVEL = (void*)(&TOP_LEVEL);
 
@@ -32,7 +36,10 @@ QVariant TableDataModel::data(const QModelIndex & index, int role) const
 
     const char *pValue  = CONFIGURATOR_API::getTableValue(Roles.value(role), index.row()+1);
 
-    assert(pValue != NULL);
+    if (STRICTNESS_LEVEL >= DEFAULT_STRICTNESS)
+    {
+        assert(pValue != NULL);
+    }
 
     return QString(pValue);
 }

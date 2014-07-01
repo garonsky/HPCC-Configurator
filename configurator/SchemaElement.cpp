@@ -547,20 +547,29 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
             m_pAnnotation->getQML(strQML);
         }
 
-        CQMLMarkupHelper::getTabQML(strQML, this->getTitle());
-        DEBUG_MARK_QML;
-
-        strQML.append(QML_GRID_LAYOUT_BEGIN_1);
-        DEBUG_MARK_QML;
+        if (idx < 1)
+        {
+            CQMLMarkupHelper::getTabQML(strQML, this->getTitle());
+            DEBUG_MARK_QML;
+        }
+            strQML.append(QML_GRID_LAYOUT_BEGIN_1);
+            DEBUG_MARK_QML;
+//        }
 
         m_pComplexTypeArray->getQML(strQML);
 
         strQML.append(QML_GRID_LAYOUT_END);
         DEBUG_MARK_QML;
 
-        strQML.append(QML_TAB_END);
-        DEBUG_MARK_QML;
 
+        if (idx < 1)
+        {
+//            strQML.append(QML_GRID_LAYOUT_END);
+//            DEBUG_MARK_QML;
+
+            strQML.append(QML_TAB_END);
+            DEBUG_MARK_QML;
+        }
     }
     else if (m_pComplexTypeArray == NULL)
     {
@@ -734,7 +743,19 @@ void CElementArray::getQML(StringBuffer &strQML, int idx) const
 {
     if (idx == -1)
     {
-        QUICK_QML_ARRAY(strQML);
+        for (int idx=0; idx < this->length(); idx++)
+        {
+            bool bIsTab =  this->item(idx).isTopLevelElement();
+
+            if (/*bIsTab == */true)
+            {
+                (this->item(idx)).getQML(strQML, 0);
+            }
+            else
+            {
+                (this->item(idx)).getQML(strQML, 1);
+            }
+        }
     }
     else
     {

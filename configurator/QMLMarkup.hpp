@@ -86,8 +86,10 @@ static const char* QML_TAB_VIEW_STYLE("\
     style: TabViewStyle {\n\
                 frameOverlap: 1\n\
                 tab: Rectangle {\n\
-                    color: styleData.selected ? \"steelblue\" :\"lightsteelblue\"\n\
-                    border.color:  \"steelblue\"\n\
+//                    color: styleData.selected ? \"steelblue\" :\"lightsteelblue\"\n\
+                    color: styleData.selected ? \"#98A9B1\" :\"lightsteelblue\"\n\
+//                    border.color:  \"steelblue\"\n\
+                    border.color:  \"#0E3860\"\n\
                     implicitWidth: Math.max(text.width + 4, 80)\n\
                     implicitHeight: 20\n\
                     radius: 2\n\
@@ -95,10 +97,12 @@ static const char* QML_TAB_VIEW_STYLE("\
                         id: text\n\
                         anchors.centerIn: parent\n\
                         text: styleData.title\n\
-                        color: styleData.selected ? \"white\" : \"black\"\n\
+//                        color: styleData.selected ? \"white\" : \"black\"\n\
+                          color: styleData.selected ? \"#0E3860\" : \"black\" \n\
                     }\n\
                 }\n\
-                frame: Rectangle { color: \"steelblue\" }\n\
+//                frame: Rectangle { color: \"steelblue\" }\n\
+                frame: Rectangle { color: \"#98A9B1\" }\n\
       }\n");
 
 static const char* QML_TAB_BEGIN("\
@@ -149,6 +153,12 @@ static const char* QML_RECTANGLE_LIGHT_STEEEL_BLUE_BEGIN("\
          Rectangle {\n\
             color: \"lightsteelblue\"\n");
 
+static const char* QML_RECTANGLE_DEFAULT_MIGUEL_1_BEGIN("\
+         Rectangle {\n\
+            color: \"#0E3860\"\n");
+
+static const char* QML_RECTANGLE_DEFAULT_COLOR_SCHEME_1_BEGIN(QML_RECTANGLE_DEFAULT_MIGUEL_1_BEGIN);
+
 static const char* QML_RECTANGLE_BEGIN("\n\
          Rectangle {\n\
                      ");
@@ -178,10 +188,13 @@ static const char* QML_TEXT_END("\"\n\
 
 static const char* QML_TEXT_BEGIN_2("\
           Text {\n\
+//                 color: \"#98A9B1\"\n\
+                 color: \"lightgray\"\n\
+                 font.pointSize: 14\n\
                  width: 275\n\
                  height: 25\n\
                  verticalAlignment: Text.AlignVCenter\n\
-                 horizontalAlignment: Text.AlignHCenter\n\
+                 horizontalAlignment: Text.AlignHLeft\n\
                  text: ");
 
 static const char* QML_TEXT_END_2("\n\
@@ -196,6 +209,7 @@ static const char* QML_TEXT_FIELD_BEGIN("\
         TextField {\n\
         style: TextFieldStyle {\n\
                 textColor: \"black\"\n\
+//                textColor: \"#0E3860\"\n\
         background: Rectangle {\n\
              radius: 2\n\
              implicitWidth: 250\n\
