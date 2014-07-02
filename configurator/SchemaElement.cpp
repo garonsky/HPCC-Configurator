@@ -493,7 +493,7 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
 
         return;
     }
-    else if (CDojoHelper::IsElementATab(this) == false)
+    else if (CDojoHelper::IsElementATab(this) == false) // TODO: Fix this HACK
     {
         if (m_pComplexTypeArray != NULL)
         {
@@ -510,17 +510,6 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
 
             strQML.append(QML_MODEL).append(modelNames[CConfigSchemaHelper::getInstance(0)->getNumberOfTables()]).append(QML_STYLE_NEW_LINE);
             DEBUG_MARK_QML;
-//            strQML.append(QML_MODEL).append(&(modelNames[(CConfigSchemaHelper::getInstance(0)->getNumberOfTables() - 1) * MAX_ARRAY_Y]));
-/*            strQML.append(QML_MODEL);
-            char *pTableName = new char[128]();
-
-            const int MY = MAX_ARRAY_Y;
-            strcpy(pTableName,(char*)(&(modelNames[(CConfigSchemaHelper::getInstance(0)->getNumberOfTables() - 1) * MY])));
-
-            strQML.append(pTableName);
-            DEBUG_MARK_QML;
-
-            delete[] pTableName;*/
 
             const CElement *pElement = dynamic_cast<const CElement*>(this->getParentNodeByType(XSD_ELEMENT));
             assert(pElement != NULL);
@@ -741,29 +730,29 @@ void CElementArray::getDojoJS(StringBuffer &strDoc) const
 
 void CElementArray::getQML(StringBuffer &strQML, int idx) const
 {
-    if (idx == -1)
+    //if (idx == -1)
     {
         for (int idx=0; idx < this->length(); idx++)
         {
             bool bIsTab =  this->item(idx).isTopLevelElement();
 
-            if (/*bIsTab == */true)
+            if (bIsTab == true)
             {
                 (this->item(idx)).getQML(strQML, 0);
             }
             else
             {
-                (this->item(idx)).getQML(strQML, 1);
+                //(this->item(idx)).getQML(strQML, 1);
             }
         }
     }
-    else
+    /*else
     {
         if (idx < this->length())
         {
             (this->item(idx)).getQML(strQML);
         }
-    }
+    }*/
 }
 
 void CElementArray::populateEnvXPath(StringBuffer strXPath, unsigned int index)
@@ -844,6 +833,7 @@ void CElementArray::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
             {
                 pElement = CElement::load(this, this->getSchemaRoot(), this->item(idx).getXSDXPath());
                 pElement->populateEnvXPath(this->getEnvXPath(), subIndex);
+                pElement->setTopLevelElement(false);
 
                 this->append(*pElement);
             }

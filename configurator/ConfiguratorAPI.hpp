@@ -25,7 +25,7 @@ const char modelNames[MAX_ARRAY_X][MAX_ARRAY_Y] =
                                             "tableDataModel17",
                                             "tableDataModel18",
                                             "tableDataModel19",
-                                            "tableDataModel20"
+                                            "tableDataModel20",
                                             "tableDataModel21",
                                             "tableDataModel22",
                                             "tableDataModel23",
@@ -45,8 +45,8 @@ const char modelNames[MAX_ARRAY_X][MAX_ARRAY_Y] =
                                             "tableDataModel37",
                                             "tableDataModel38",
                                             "tableDataModel39",
-                                            "tableDataModel40"
-                                            "tableDataModel41"
+                                            "tableDataModel40",
+                                            "tableDataModel41",
                                             "tableDataModel42",
                                             "tableDataModel43",
                                             "tableDataModel44",
@@ -55,8 +55,8 @@ const char modelNames[MAX_ARRAY_X][MAX_ARRAY_Y] =
                                             "tableDataModel47",
                                             "tableDataModel48",
                                             "tableDataModel49",
-                                            "tableDataModel50"
-                                            "tableDataModel51"
+                                            "tableDataModel50",
+                                            "tableDataModel51",
                                             "tableDataModel52",
                                             "tableDataModel53",
                                             "tableDataModel54",
@@ -65,8 +65,8 @@ const char modelNames[MAX_ARRAY_X][MAX_ARRAY_Y] =
                                             "tableDataModel57",
                                             "tableDataModel58",
                                             "tableDataModel59",
-                                            "tableDataModel60"
-                                            "tableDataModel61"
+                                            "tableDataModel60",
+                                            "tableDataModel61",
                                             "tableDataModel62",
                                             "tableDataModel63",
                                             "tableDataModel64",

@@ -13,7 +13,7 @@
 #define MINIMUM_STRICTNESS  0
 #define DEFAULT_STRICTNESS  5
 #define MAXIMUM_STRICTNESS  10
-#define STRICTNESS_LEVEL MAXIMUM_STRICTNESS
+#define STRICTNESS_LEVEL MINIMUM_STRICTNESS
 
 #define QUICK_OUT(X,Y,Z) QuickOut(X,#Y,get##Y(),Z);
 #define QUICK_OUT_2(Y) QuickOut(cout, #Y, get##Y(), offset);

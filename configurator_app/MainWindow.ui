@@ -132,11 +132,13 @@
     <property name="title">
      <string>Settings</string>
     </property>
+    <addaction name="actionRegenerate_QML"/>
    </widget>
    <widget class="QMenu" name="menuValidation">
     <property name="title">
      <string>Validation</string>
     </property>
+    <addaction name="actionCheck_For_Issues"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
@@ -276,6 +278,22 @@
    </property>
    <property name="text">
     <string>Show Action List</string>
+   </property>
+  </action>
+  <action name="actionCheck_For_Issues">
+   <property name="text">
+    <string>Check For Issues</string>
+   </property>
+  </action>
+  <action name="actionRegenerate_QML">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Regenerate QML</string>
    </property>
   </action>
  </widget>

@@ -27,7 +27,8 @@ MainWindow::MainWindow(QWidget *parent) :
     m_pView(NULL),
     m_pAppData(NULL),
     m_pTableDataModel(NULL),
-    m_pComponentDataModel(NULL)
+    m_pComponentDataModel(NULL),
+    m_bRegenerateQML(true)
 {
     ui->setupUi(this);
     m_pAppData = new ApplicationData();
@@ -128,16 +129,19 @@ void MainWindow::on_treeView_clicked(const QModelIndex &index)
 
     qDebug() << qstrFileName;
 
-    QFile::remove(qstrFileName);
     QFile qFile(qstrFileName.toLocal8Bit().data());
-
-    if (qFile.open(QIODevice::WriteOnly | QIODevice::Truncate) == 0)
+    qDebug() << "this->getRegenerateQML() =" << this->getRegenerateQML() << " qFile.exists() = " << qFile.exists();
+    if (this->getRegenerateQML() == true || qFile.exists() == false)
     {
-        return;
-    }
+        QFile::remove(qstrFileName);
+        if (qFile.open(QIODevice::WriteOnly | QIODevice::Truncate) == 0)
+        {
+            return;
+        }
 
-    QTextStream out(&qFile);
-    out << CONFIGURATOR_API::getQML(index.internalPointer(), index.row());
+        QTextStream out(&qFile);
+        out << CONFIGURATOR_API::getQML(index.internalPointer(), index.row());
+    }
 
     qFile.close();
 
@@ -199,4 +203,9 @@ void MainWindow::on_actionGenerate_Dojo_triggered()
     CComponenetSelectorDialog compSelDialog(this, DOJO_OUTPUT);
     compSelDialog.setModal(true);
     compSelDialog.exec();
+}
+
+void MainWindow::on_actionRegenerate_QML_toggled(bool arg1)
+{
+    m_bRegenerateQML = arg1;
 }

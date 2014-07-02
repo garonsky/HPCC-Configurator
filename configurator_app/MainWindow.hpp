@@ -29,12 +29,21 @@ public:
     void addServiceToList(char *pService);
 
 private:
+
+    bool getRegenerateQML() const
+    {
+       return m_bRegenerateQML;
+    }
+
+private:
     Ui::MainWindow *ui;
     QQuickView *m_pView;
     QString m_envFile;
     ApplicationData *m_pAppData;
     TableDataModel *m_pTableDataModel;
     ComponentDataModel *m_pComponentDataModel;
+
+    bool m_bRegenerateQML;
 
 //    QThread *m_pThread;
 //    CWorker *m_pWorker;
@@ -48,6 +57,7 @@ private slots:
     void on_actionGenerate_DockBook_triggered();
     void on_actionGenerate_Internal_Data_Structure_Debug_triggered();
     void on_actionGenerate_Dojo_triggered();
+    void on_actionRegenerate_QML_toggled(bool arg1);
 };
 
 #endif // MAINWINDOW_HPP
