@@ -298,7 +298,7 @@ void CSchemaMapManager::addMapOfXPathToElement(const char* pXPath, CElement *pEl
 
     //assert(m_pElementPtrsMap->find(pXPath) == NULL);
 
-    PROGLOG("Mapping XPath %s to %p element", pXPath, pElement);
+    //PROGLOG("Mapping XPath %s to %p element", pXPath, pElement);
 
     assert(pElement->getLinkCount() == 1);
     m_pElementPtrsMap->setValue(pXPath, pElement);

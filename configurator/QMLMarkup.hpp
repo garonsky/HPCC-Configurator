@@ -342,14 +342,16 @@ static const char* QML_MOUSE_AREA_ID_APPEND("\n");
 
 static const char* QML_MOUSE_AREA_ON_ENTERED_BEGIN("\
             onEntered: {\n\
-            console.log(\"entered mouse area\");\n");
+            //console.log(\"entered mouse area\");\
+                         \n");
 
 static const char* QML_MOUSE_AREA_ON_ENTERED_END("\
              }\n");
 
 static const char* QML_MOUSE_AREA_ON_EXITED_BEGIN("\
             onExited: {\n\
-            console.log(\"exited mouse area\");\n");
+            //console.log(\"exited mouse area\");\
+                        \n");
 
 static const char* QML_MOUSE_AREA_ON_EXITED_END("\
             }\n");
@@ -358,7 +360,8 @@ static const char* QML_MOUSE_AREA_ON_EXITED_END("\
 static const char* QML_MOUSE_AREA_TIMER_APPEND(".start();\n\
             }\n\
             onExited:  {\n\
-            console.log(\"exited mouse area\");\n");
+            //console.log(\"exited mouse area\");\n\
+                         ");
 
 static const char* QML_MOUSE_AREA_RECTANGLE_APPEND(".visible = false;\n\
         }\n");
@@ -369,7 +372,7 @@ static const char* QML_MOUSE_AREA_ON_POSITION_CHANGED_BEGIN("\
             onPositionChanged: {\n");
 
 static const char* QML_MOUSE_AREA_ON_POSITION_CHANGED_END("\n\
-            console.log(\"onPositionChanged\");\n\
+            //console.log(\"onPositionChanged\");\n\
             }");
 
 
@@ -377,7 +380,7 @@ static const char* QML_MOUSE_AREA_ON_PRESSED_BEGIN("\n\
             onPressed: {\n");
 
 static const char* QML_MOUSE_AREA_ON_PRESSED_END("\
-                console.log(\"mouse area pressed\");\n\
+                //console.log(\"mouse area pressed\");\n\
             }\n");
 
 

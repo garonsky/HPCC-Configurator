@@ -117,6 +117,12 @@ void MainWindow::on_actionOpen_triggered()
     m_pComponentDataModel = new ComponentDataModel(container);
 
     this->ui->treeView->setModel(m_pComponentDataModel);
+    this->ui->labelConfigurationFile->setText(qstrFileName);
+
+    QPalette palette = this->ui->labelConfigurationFile->palette();
+    //palette.setColor(ui->pLabel->backgroundRole(), Qt::yellow);
+    palette.setColor(this->ui->labelConfigurationFile->foregroundRole(), Qt::red);
+    this->ui->labelConfigurationFile->setPalette(palette);
 }
 
 void MainWindow::on_treeView_clicked(const QModelIndex &index)
