@@ -127,3 +127,39 @@ enum CConfigFileUtils::CF_ERROR_CODES CConfigFileUtils::populateConfigFileArray(
         return CF_DIRECTORY_ACCESS_ERROR;
     }
 }
+
+enum CConfigFileUtils::CF_ERROR_CODES CConfigFileUtils::writeConfigurationToFile(const char *pFilePath, const char* pBuffer, unsigned int length)
+{
+    assert(pBuffer != NULL);
+    assert(length != 0);
+    assert(pBuffer != NULL && *pBuffer != 0);
+
+    Owned<IFile>   pFile;
+    Owned<IFileIO> pFileIO;
+    IFileIO *pFIO = NULL;
+
+    pFile.setown(createIFile(pFilePath));
+
+    try
+    {
+        pFIO = pFile->open(IFOcreaterw);
+    }
+    catch(IErrnoException *pException)
+    {
+        pException->Release();
+    }
+
+
+    if (pFIO == NULL)
+    {
+        return CF_FILE_PERMISSIONS;
+    }
+
+    pFileIO.setown(pFIO);
+
+    pFileIO->write(0, length, pBuffer);
+
+    notify(IConfigFileUtilsObserver::CF_FILE_WRITE_NO_CHECK);
+
+    return CF_NO_ERROR;
+}

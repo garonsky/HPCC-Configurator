@@ -119,6 +119,8 @@ public:
         m_nTables = 0;
     }
 
+    bool saveConfigurtionFile() const;
+
 protected:
 
     CConfigSchemaHelper(const char* pBuildSetFile = DEFAULT_BUILD_SET_XML_FILE, const char* pBuildSetDir = DEFAULT_BUILD_SET_DIRECTORY, const char* pDefaultDirOverride = NULL);

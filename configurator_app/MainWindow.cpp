@@ -16,6 +16,7 @@
 #include <QStringListModel>
 #include <QComboBox>
 #include <QListWidget>
+#include <QMessageBox>
 #include "ComponentSelectorDialog.h"
 #include "../configurator_ui/AppData.hpp"
 //#include "../configurator_ui/model.h"
@@ -214,4 +215,16 @@ void MainWindow::on_actionGenerate_Dojo_triggered()
 void MainWindow::on_actionRegenerate_QML_toggled(bool arg1)
 {
     m_bRegenerateQML = arg1;
+}
+
+void MainWindow::on_actionSave_triggered()
+{
+    if (CONFIGURATOR_API::saveConfigurationFile() == true)
+    {
+        QMessageBox::information( this, tr("File Save"), tr("Saved sucessfully") );
+    }
+    else
+    {
+        QMessageBox::warning( this, tr("File Save"), tr("Saved failed") );
+    }
 }

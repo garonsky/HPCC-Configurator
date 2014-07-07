@@ -10,6 +10,7 @@
 #include "BuildSet.hpp"
 #include "SchemaMapManager.hpp"
 #include "ConfigSchemaHelper.hpp"
+#include "ConfigFileUtils.hpp"
 
 #define LOOP_THRU_BUILD_SET_MANAGER_BUILD_SET \
 int nComponentCount = CBuildSetManager::getInstance()->getBuildSetComponentCount();         \
@@ -525,18 +526,21 @@ void CConfigSchemaHelper::setEnvTreeProp(const char *pXPath, const char* pValue)
     }
 
 
-    StringBuffer strXML;
+//    StringBuffer strXML;
 
-    strXML.appendf("<"XML_HEADER">\n<!-- Edited with THE CONFIGURATOR -->\n");
-    toXML(this->getEnvPropertyTree(), strXML, 0, XML_SortTags | XML_Format);
+//    strXML.appendf("<"XML_HEADER">\n<!-- Edited with THE CONFIGURATOR -->\n");
+//    toXML(this->getEnvPropertyTree(), strXML, 0, XML_SortTags | XML_Format);
 
-    Owned<IFile>   pFile;
-    Owned<IFileIO> pFileIO;
 
-    pFile.setown(createIFile(getEnvFilePath()));
-    pFileIO.setown(pFile->open(IFOcreaterw));
+//    Owned<IFile>   pFile;
+//    Owned<IFileIO> pFileIO;
 
-    pFileIO->write(0, strXML.length(), strXML.str());
+//    pFile.setown(createIFile(getEnvFilePath()));
+//    pFileIO.setown(pFile->open(IFOcreaterw));
+
+//    pFileIO->write(0, strXML.length(), strXML.str());
+
+    //CConfigFileUtils::getInstance()->writeConfigurationToFile(getEnvFilePath(), strXML.str(), strXML.length());
 }
 
 const char* CConfigSchemaHelper::getTableValue(const char* pXPath,  int nRow) const
@@ -688,4 +692,29 @@ void CConfigSchemaHelper::setBasePath(const char *pBasePath)
     m_pBasePath = new char[nLength+1];
 
     strcpy(m_pBasePath, pBasePath);
+}
+
+
+bool CConfigSchemaHelper::saveConfigurtionFile() const
+{
+    assert(m_strEnvFilePath.length() != 0);
+
+    if (m_strEnvFilePath.length() == 0)
+    {
+        return false;
+    }
+
+    StringBuffer strXML;
+
+    strXML.appendf("<"XML_HEADER">\n<!-- Edited with THE CONFIGURATOR -->\n");
+    toXML(this->getConstEnvPropertyTree(), strXML, 0, XML_SortTags | XML_Format);
+
+    if (CConfigFileUtils::getInstance()->writeConfigurationToFile(m_strEnvFilePath.str(), strXML.str(), strXML.length()) == CConfigFileUtils::CF_NO_ERROR)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }

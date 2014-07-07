@@ -14,16 +14,21 @@ class CConfigFileUtils : public CConfigFileUtilsObservable
 {
 public:
 
-    static CConfigFileUtils* getInstance();
 
     enum CF_ERROR_CODES { CF_NO_ERROR = 0,
                           CF_FILE_EXISTS,
                           CF_FILE_PERMISSIONS,
                           CF_FILE_NOT_OPEN,
                           CF_FILE_ALREADY_OPEN,
+                          CF_FILE_DOES_NOT_EXIST,
                           CF_WRITE_BUFFER_EMPTY,
                           CF_DIRECTORY_ACCESS_ERROR,
                           CF_OTHER = 99 };
+
+public:
+
+    static CConfigFileUtils* getInstance();
+    CF_ERROR_CODES writeConfigurationToFile(const char *pFilePath, const char* pBuffer, unsigned int length);
 
     virtual ~CConfigFileUtils();
 

@@ -58,6 +58,7 @@ private slots:
     void on_actionGenerate_Internal_Data_Structure_Debug_triggered();
     void on_actionGenerate_Dojo_triggered();
     void on_actionRegenerate_QML_toggled(bool arg1);
+    void on_actionSave_triggered();
 };
 
 #endif // MAINWINDOW_HPP

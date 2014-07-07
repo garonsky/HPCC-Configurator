@@ -646,6 +646,16 @@ const char* getDojoByIndex(int idx)
     return CConfigSchemaHelper::getInstance()->printDojoJS(pFileName);
 }
 
+bool saveConfigurationFile()
+{
+    bool bRetVal = false;
+
+    bRetVal = CConfigSchemaHelper::getInstance()->saveConfigurtionFile();
+
+    return bRetVal;
+}
+
+
 /*void* getComponent(void *pComponent, int idx)
 {
     assert(idx >= 0);
@@ -672,11 +682,6 @@ const char* getDojoByIndex(int idx)
 void closeConfigurationFile()
 {
 
-}
-
-bool saveConfigurationFile()
-{
-    return true;
 }
 
 

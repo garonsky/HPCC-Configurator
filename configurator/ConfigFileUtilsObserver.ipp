@@ -12,6 +12,7 @@ public:
                           CF_FILE_WRITE_EVENT,
                           CF_FILE_DELETE_EVENT,
                           CF_FILE_CREATE_EVENT,
+                          CF_FILE_WRITE_NO_CHECK,
                           CF_FILE_ANY_EVENT,
                           CF_FILE_OTHER_EVENT = 0xFF };
 

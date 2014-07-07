@@ -164,21 +164,21 @@ extern "C" const char* getQMLByIndex(int idx);
 extern "C" const char* getDocBookByIndex(int idx);
 extern "C" const char* getDojoByIndex(int idx);
 
-
-//extern "C" void* getComponentType(int idx);
-//extern "C" void* getComponentTypes(void *pComponentTyp, int idx);
-//extern "C" void* getComponent(void *pComponent, int idx);
-
-
-
-/*extern "C" void closeConfigurationFile();
 extern "C" bool saveConfigurationFile();
+/*extern "C" void closeConfigurationFile();
+
 
 extern "C" const char* getComponentNameInConfiguration(int index, char *pName = 0);
 extern "C" int getNumberOfServicesInConfiguration();
 extern "C" const char* getServiceNameInConfiguration(int index, char *pName = 0);
 
 extern "C" void setActiveView(int bIsService, int idx);*/
+
+//extern "C" void* getComponentType(int idx);
+//extern "C" void* getComponentTypes(void *pComponentTyp, int idx);
+//extern "C" void* getComponent(void *pComponent, int idx);
+
+
 
 }
 
