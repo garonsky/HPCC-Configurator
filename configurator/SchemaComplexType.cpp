@@ -392,7 +392,7 @@ CComplexType* CComplexType::load(CXSDNodeBase* pParentNode, const IPropertyTree 
     pElementArray = CElementArray::load(NULL, pSchemaRoot, strXPathExt.str());
 
     //PROGLOG("Function: %s() at %s:%d", __func__, __FILE__, __LINE__);
-    if (pElementArray != NULL)
+    //if (pElementArray != NULL)
         //PROGLOG("pElementArray = %p", pElementArray);
 
     strXPathExt.clear().append(xpath).append("/").append(XSD_TAG_ATTRIBUTE_GROUP);

@@ -736,7 +736,7 @@ void CElementArray::getQML(StringBuffer &strQML, int idx) const
         {
             bool bIsTab =  this->item(idx).isTopLevelElement();
 
-            if (bIsTab == true)
+            if (/*bIsTab ==*/ true)
             {
                 (this->item(idx)).getQML(strQML, 0);
             }

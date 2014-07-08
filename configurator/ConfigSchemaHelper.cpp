@@ -372,9 +372,9 @@ void CConfigSchemaHelper::processExtensionArr()
 
 void CConfigSchemaHelper::processAttributeGroupArr()
 {
-    int length = m_attributeGroupArr.length();
+    aindex_t length = m_attributeGroupArr.length();
 
-    for (int idx = 0; idx < length; idx++)
+    for (aindex_t idx = 0; idx < length; idx++)
     {
         CAttributeGroup &AttributeGroup = (m_attributeGroupArr.item(idx));
         const char *pRef = AttributeGroup.getRef();

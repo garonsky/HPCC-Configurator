@@ -1,4 +1,4 @@
-#include "SchemaAttributeGroup.hpp"
+﻿#include "SchemaAttributeGroup.hpp"
 #include "DocumentationMarkup.hpp"
 #include "ConfigSchemaHelper.hpp"
 #include "jptree.hpp"
@@ -105,6 +105,8 @@ void CAttributeGroup::getDojoJS(StringBuffer &strJS) const
 
 void CAttributeGroup::getQML(StringBuffer &strQML, int idx) const
 {
+    assert(this->getRef() != NULL);
+
     if (this->getRef() != NULL && this->getRef()[0] != 0 && m_pRefAttributeGroup != NULL)
     {
         if (m_pRefAttributeGroup->getConstAttributeArray() != NULL)
