@@ -9,11 +9,15 @@
         <xs:complexType>
             <xs:element name="Computer Types">
                 <xs:sequence>
-                    <xs:element name="Name" type="xsd:string"/>
+                    <xs:element name="Name">
+                         <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                 <xs:length value="100"/>
+                         </xs:simpleType>
+                    </xs:element>
                 </xs:sequence>
             </xs:element>
         </xs:complexType>
-
 
     </xs:element>
 </xs:schema>
