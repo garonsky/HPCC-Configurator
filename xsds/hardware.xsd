@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:element name="Hardware">
+
+        <xs:annotatoion>
+            <xs:documentation>Describes the HPCC Hardware</xs:documentation>
+        </xs:annotation>
+
+        <xs:complexType>
+            <xs:element name="Computer Types">
+                <xs:sequence>
+                    <xs:element name="Name" type="xsd:string"/>
+                </xs:sequence>
+            </xs:element>
+        </xs:complexType>
+
+
+    </xs:element>
+</xs:schema>
