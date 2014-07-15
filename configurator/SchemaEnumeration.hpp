@@ -1,5 +1,5 @@
-﻿#ifndef SCHEMA_ENUMERATION_HPP
-#define SCHEMA_ENUMERATION_HPP
+﻿#ifndef _SCHEMA_ENUMERATION_HPP_
+#define _SCHEMA_ENUMERATION_HPP_
 
 #include "SchemaCommon.hpp"
 
@@ -104,4 +104,4 @@ private:
     }
 };
 
-#endif // SCHEMA_ENUMERATION_HPP
+#endif // _SCHEMA_ENUMERATION_HPP_

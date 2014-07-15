@@ -17,6 +17,7 @@
 
 #define QUICK_OUT(X,Y,Z) QuickOut(X,#Y,get##Y(),Z);
 #define QUICK_OUT_2(Y) QuickOut(cout, #Y, get##Y(), offset);
+#define QUICK_OUT_3(X) if (m_p##X != NULL) m_p##X->dump(cout, offset);
 #define QUICK_OUT_ARRAY(X,Z) for (int idx=0; idx < this->length(); idx++)               \
                              {                                                          \
                                 QuickOutPad(X,Z+STANDARD_OFFSET_1);                     \
@@ -61,9 +62,15 @@
     CXSDNodeBase::processExitHandlers(this);                                            \
 }
 
+
 #define GETTER(X) virtual const char* get##X() const { return m_str##X.str(); }
 #define SETTER(X) virtual void set##X(const char* p) { m_str##X.clear().append(p); }
 #define GETTERSETTER(X) protected: StringBuffer m_str##X; public: GETTER(X) SETTER(X) public:
+
+#define GETTERINT(X) virtual const long get##X() const { return m_n##X; }
+#define SETTERINT(X) virtual void set##X(long p) { m_n##X = p; } virtual void set##X(const char *p) { assert(p != NULL); if (p != 0 && *p != 0) m_n##X = atol(p); }
+#define GETTERSETTERINT(X) protected: long m_n##X; public: GETTERINT(X) SETTERINT(X) public:
+
 #define SETPARENTNODE(X, Y) if (X!= NULL && Y != NULL) X->setParentNode(Y);
 //#define DEBUG_MARK_STRDOC strDoc.append(__FILE__).append(":").append(__LINE__).append("\n");
 #define DEBUG_MARK_STRDOC
@@ -72,6 +79,10 @@
 #define DEBUG_MARK_QML DEBUG_MARK_COMMENT(strQML)
 //#define DEBUG_MARK_QML
 //#define DEBUG_MARK_STRJS
+
+#define GETTERTYPE(X) C##X* get##X() { return m_p##X; }
+#define SETTERTYPE(X) void set##X( C##X *p ) { assert(p != NULL); if (p != NULL) m_p##X = p; }
+#define GETTERSETTERTYPE(X) private: C##X *m_p##X; GETTERTYPE(X) SETTERTYPE(X)
 
 enum NODE_TYPES
 {
@@ -99,7 +110,16 @@ enum NODE_TYPES
     XSD_SIMPLE_TYPE_ARRAY = 0x100000,
     XSD_ENUMERATION = 0x200000,
     XSD_ENUMERATION_ARRAY = 0x4000000,
-    XSD_LENGTH = 0x8000000
+    XSD_LENGTH = 0x8000000,
+    XSD_FRACTION_DIGITS = 0x1000000,
+    XSD_MAX_EXCLUSIVE = 0x2000000,
+    XSD_MAX_INCLUSIVE = 0x4000000,
+    XSD_MIN_EXCLUSIVE = 0x8000000,
+    XSD_MIN_INCLUSIVE = 0x10000000,
+    XSD_MIN_LENGTH = 0x20000000,
+    XSD_PATTERN = 0x40000000/*,
+    XSD_TOTAL_DIGITS = 0x80000000,
+    XSD_WHITE_SPACE = 0x100000000*/
 };
 
 static const char* DEFAULT_SCHEMA_DIRECTORY("/opt/HPCCSystems/componentfiles/configxml/");
@@ -120,6 +140,17 @@ static const char* XSD_TAG_SCHEMA("");//xs:schema");
 //static const char* XSD_TAG_SEQUENCE("xs:sequence");
 static const char* XSD_TAG_SIMPLE_TYPE("xs:simpleType");
 static const char* XSD_TAG_ENUMERATION("xs:enumeration");
+static const char* XSD_TAG_FRACTION_DIGITS("xs:fractionDigits");
+static const char* XSD_TAG_LENGTH("xs:length");
+static const char* XSD_TAG_MAX_EXCLUSIVE("xs:maxExclusive");
+static const char* XSD_TAG_MAX_INCLUSIVE("xs:maxInclusive");
+static const char* XSD_TAG_MIN_EXCLUSIVE("xs:minExlusive");
+static const char* XSD_TAG_MIN_INCLUSIVE("xs:minExclusive");
+static const char* XSD_TAG_MAX_LENGTH("xs:maxLength");
+static const char* XSD_TAG_MIN_LENGTH("xs:minLength");
+static const char* XSD_TAG_PATTERN("xs:pattern");
+static const char* XSD_TAG_TOTAL_DIGITS("xs:totalDigits");
+static const char* XSD_TAG_WHITE_SPACE("xs:whiteSpace");
 
 static const char* XSD_ERROR_STR("ERROR");
 static const char* XSD_ANNOTATION_STR("Annotation");
@@ -136,13 +167,24 @@ static const char* XSD_DOCUMENTATION_STR("Documentation");
 static const char* XSD_ELEMENT_STR("Element");
 static const char* XSD_ELEMENT_ARRAY_STR("ElementArray");
 static const char* XSD_EXTENSION_STR("Extension");
+static const char* XSD_FRACTION_DIGITS_STR("FractionDigits");
 static const char* XSD_INCLUDE_STR("Include");
 static const char* XSD_INCLUDE_ARRAY_STR("IncludeArray");
+static const char* XSD_LENGTH_STR("Length");
+static const char* XSD_MIN_INCLUSIVE_STR("MinInclusive");
+static const char* XSD_MAX_INCLUSIVE_STR("MaxInclusive");
+static const char* XSD_MIN_EXCLUSIVE_STR("MinExclusive");
+static const char* XSD_MAX_EXCLUSIVE_STR("MaxExclusive");
+static const char* XSD_MIN_LENGTH_STR("MinLength");
+static const char* XSD_MAX_LENGTH_STR("MaxLength");
+static const char* XSD_PATTERN_STR("Pattern");
 static const char* XSD_RESTRICTION_STR("Restriction");
 static const char* XSD_SCHEMA_STR("Schema");
 static const char* XSD_SEQUENCE_STR("Sequence");
 static const char* XSD_SIMPLE_TYPE_STR("SimpleType");
 static const char* XSD_SIMPLE_TYPE_ARRAY_STR("SimpleTypeArray");
+static const char* XSD_TOTAL_DIGITS_STR("TotalDigits");
+static const char* XSD_WHITE_SPACE_STR("WhiteSpace");
 static const char* XSD_ENUMERATION_STR("Enumeration");
 static const char* XSD_ENUMERATION_ARRAY_STR("EnumerationArray");
 

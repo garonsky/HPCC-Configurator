@@ -4,13 +4,23 @@
 #include "SchemaCommon.hpp"
 
 class CEnumerationArray;
+class CFractionDigits;
+class CLength;
+class CMaxExclusive;
+class CMaxInclusive;
+class CMinExclusive;
+class CMaxInclusive;
+class CMaxLength;
+class CMinLength;
+class CPattern;
+class CTotalDigits;
+class CWhiteSpace;
 
 class CRestriction : public CXSDNode
 {
 public:
 
     virtual ~CRestriction();
-
 
     GETTERSETTER(ID)
     GETTERSETTER(Base)
@@ -44,7 +54,7 @@ protected:
     {
     }
 
-    void setEnumerationArray(CEnumerationArray *pEnumerationArray)
+    /*void setEnumerationArray(CEnumerationArray *pEnumerationArray)
     {
         assert(pEnumerationArray != NULL);
 
@@ -52,13 +62,26 @@ protected:
         {
             m_pEnumerationArray = pEnumerationArray;
         }
-    }
+    }*/
 
-    CEnumerationArray *m_pEnumerationArray;
+    GETTERSETTERTYPE(EnumerationArray)
+    GETTERSETTERTYPE(FractionDigits)
+    GETTERSETTERTYPE(Length)
+    GETTERSETTERTYPE(MaxExclusive)
+    GETTERSETTERTYPE(MaxInclusive)
+    GETTERSETTERTYPE(MinExclusive)
+    GETTERSETTERTYPE(MinInclusive)
+    GETTERSETTERTYPE(MaxLength)
+    GETTERSETTERTYPE(MinLength)
+    GETTERSETTERTYPE(Pattern)
+    GETTERSETTERTYPE(TotalDigits)
+    GETTERSETTERTYPE(WhiteSpace)
 
 private:
 
-    CRestriction(CXSDNodeBase* pParentNode = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_RESTRICTION), m_pEnumerationArray(NULL)
+    CRestriction(CXSDNodeBase* pParentNode = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_RESTRICTION), m_pEnumerationArray(NULL), m_pFractionDigits(NULL), m_pLength(NULL),
+        m_pMaxExclusive(NULL), m_pMaxInclusive(NULL), m_pMinExclusive(NULL), m_pMaxInclusive(NULL), m_pMaxLength(NULL), m_pMinLength(NULL),
+        m_pPattern(NULL), m_pTotalDigits(NULL), m_pWhiteSpace(NULL)
     {
     }
 };

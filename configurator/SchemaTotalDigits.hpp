@@ -1,19 +1,17 @@
-#ifndef _SCHEMA_LENGTH_HPP_
-#define _SCHEMA_LENGTH_HPP_
+#ifndef _SCHEMA_TOTAL_DIGITS_HPP_
+#define _SCHEMA_TOTAL_DIGITS_HPP_
 
 #include "SchemaCommon.hpp"
 
-class CLength : public CXSDNode
+class CTotalDigits : public CXSDNode
 {
 public:
 
-    virtual ~CLength()
+    virtual ~CTotalDigits()
     {
     }
 
-    static CLength* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
-
-    GETTERSETTER(Value)
+    static CTotalDigits* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
     virtual void dump(std::ostream& cout, unsigned int offset = 0) const;
 
@@ -47,14 +45,16 @@ public:
         assert(!"Not Implemented");
     }
 
-    GETTERSETTER(Value)
-    GETTERSETTERINT(Length)
+protected:
 
 private:
 
-    CLength() : CXSDNode::CXSDNode(NULL, XSD_LENGTH), m_length(-1)
+    CTotalDigits() : CXSDNode::CXSDNode(NULL, XSD_TotalDigits), m_TotalDigits(-1)
     {
     }
+
+    int m_nTotalDigits;
+
 };
 
-#endif // _SCHEMA_LENGTH_HPP_
+#endif // _SCHEMA_TOTAL_DIGITS_HPP_

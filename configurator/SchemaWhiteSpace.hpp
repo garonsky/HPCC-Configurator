@@ -1,19 +1,17 @@
-#ifndef _SCHEMA_LENGTH_HPP_
-#define _SCHEMA_LENGTH_HPP_
+#ifndef _SCHEMA_WHITE_SPACE_HPP_
+#define _SCHEMA_WHITE_SPACE_HPP_
 
 #include "SchemaCommon.hpp"
 
-class CLength : public CXSDNode
+class CWhiteSpace : public CXSDNode
 {
 public:
 
-    virtual ~CLength()
+    virtual ~CWhiteSpace()
     {
     }
 
-    static CLength* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
-
-    GETTERSETTER(Value)
+    static CWhiteSpace* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
     virtual void dump(std::ostream& cout, unsigned int offset = 0) const;
 
@@ -47,14 +45,17 @@ public:
         assert(!"Not Implemented");
     }
 
-    GETTERSETTER(Value)
-    GETTERSETTERINT(Length)
+
+protected:
 
 private:
 
-    CLength() : CXSDNode::CXSDNode(NULL, XSD_LENGTH), m_length(-1)
+    CWhiteSpace() : CXSDNode::CXSDNode(NULL, XSD_WhiteSpace), m_WhiteSpace(-1)
     {
     }
+
+    int m_nWhiteSpace;
+
 };
 
-#endif // _SCHEMA_LENGTH_HPP_
+#endif // _SCHEMA_WHITE_SPACE_HPP_

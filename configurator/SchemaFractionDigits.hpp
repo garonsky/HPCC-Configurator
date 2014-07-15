@@ -1,19 +1,17 @@
-#ifndef _SCHEMA_LENGTH_HPP_
-#define _SCHEMA_LENGTH_HPP_
+#ifndef _SCHEMA_FRACTION_DIGITS_HPP_
+#define _SCHEMA_FRACTION_DIGITS_HPP_
 
 #include "SchemaCommon.hpp"
 
-class CLength : public CXSDNode
+class CFractionDigits : public CXSDNode
 {
 public:
 
-    virtual ~CLength()
+    virtual ~CFractionDigits()
     {
     }
 
-    static CLength* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
-
-    GETTERSETTER(Value)
+    static CFractionDigits* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
     virtual void dump(std::ostream& cout, unsigned int offset = 0) const;
 
@@ -48,13 +46,13 @@ public:
     }
 
     GETTERSETTER(Value)
-    GETTERSETTERINT(Length)
+    GETTERSETTERINT(MaxFractionDigits)
 
 private:
 
-    CLength() : CXSDNode::CXSDNode(NULL, XSD_LENGTH), m_length(-1)
+    CFractionDigits() : CXSDNode::CXSDNode(NULL, XSD_FRACTION_DIGITS), m_pValue(NULL), m_nMaxFractionDigits(-1)
     {
     }
 };
 
-#endif // _SCHEMA_LENGTH_HPP_
+#endif

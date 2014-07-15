@@ -1,19 +1,19 @@
-#ifndef _SCHEMA_LENGTH_HPP_
-#define _SCHEMA_LENGTH_HPP_
+#ifndef _SCHEMA_MAX_LENGTH_HPP_
+#define _SCHEMA_MAX_LENGTH_HPP_
 
 #include "SchemaCommon.hpp"
 
-class CLength : public CXSDNode
+class CMaxLength : public CXSDNode
 {
 public:
 
-    virtual ~CLength()
+    virtual ~CMaxLength()
     {
     }
 
-    static CLength* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
+    static CMaxLength* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
-    GETTERSETTER(Value)
+    //GETTERSETTER(V)
 
     virtual void dump(std::ostream& cout, unsigned int offset = 0) const;
 
@@ -47,14 +47,17 @@ public:
         assert(!"Not Implemented");
     }
 
-    GETTERSETTER(Value)
-    GETTERSETTERINT(Length)
+
+protected:
 
 private:
 
-    CLength() : CXSDNode::CXSDNode(NULL, XSD_LENGTH), m_length(-1)
+    CMaxLength() : CXSDNode::CXSDNode(NULL, XSD_MaxLength), m_MaxLength(-1)
     {
     }
+
+    int m_nMaxLength;
+
 };
 
-#endif // _SCHEMA_LENGTH_HPP_
+#endif // _SCHEMA_MAX_LENGTH_HPP_

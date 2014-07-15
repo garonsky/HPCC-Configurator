@@ -8,6 +8,16 @@
 #include "QMLMarkup.hpp"
 #include "DocumentationMarkup.hpp"
 #include "SchemaMapManager.hpp"
+#include "SchemaFractionDigits.hpp"
+
+#define QUICK_LOAD_XSD_RESTRICTIONS(X, Y)       \
+    strXPathExt.set(xpath);                     \
+    strXPathExt.append("/").append(Y);          \
+    C##X *p##X = X::load(pRestriction, pSchemaRoot, strXPathExt.str());    \
+    if (p##X != NULL) pRestriction->C##X(p##X);
+
+#define QUICK
+
 
 CRestriction::~CRestriction()
 {
@@ -26,10 +36,23 @@ void CRestriction::dump(std::ostream& cout, unsigned int offset) const
     QUICK_OUT(cout, EnvXPath,  offset);
     QUICK_OUT(cout, EnvValueFromXML,  offset);
 
-    if (m_pEnumerationArray != NULL)
+    /*if (m_pEnumerationArray != NULL)
     {
         m_pEnumerationArray->dump(cout, offset);
-    }
+    }*/
+
+    QUICK_OUT_3(EnumerationArray)
+    QUICK_OUT_3(FractionDigits)
+    QUICK_OUT_3(Length)
+    QUICK_OUT_3(MaxExclusive)
+    QUICK_OUT_3(MaxInclusive)
+    QUICK_OUT_3(MinExclusive)
+    QUICK_OUT_3(MinInclusive)
+    QUICK_OUT_3(MaxLength)
+    QUICK_OUT_3(MinLength)
+    QUICK_OUT_3(Pattern)
+    QUICK_OUT_3(TotalDigits)
+    QUICK_OUT_3(WhiteSpace)
 
     QuickOutFooter(cout, XSD_RESTRICTION_STR, offset);
 }
@@ -168,8 +191,24 @@ CRestriction* CRestriction::load(CXSDNodeBase* pParentNode, const IPropertyTree 
 
     pRestriction->setXSDXPath(xpath);
 
-    StringBuffer strXPathExt(xpath);
+    StringBuffer strXPathExt;
 
+    QUICK_LOAD_XSD_RESTRICTIONS(EnumerationArray, XSD_TAG_ENUMERATION)
+    QUICK_LOAD_XSD_RESTRICTIONS(FractionDigits, XSD_TAG_FRACTION_DIGITS)
+    QUICK_LOAD_XSD_RESTRICTIONS(Length, XSD_TAG_LENGTH)
+    QUICK_LOAD_XSD_RESTRICTIONS(MaxExclusive, XSD_TAG_MAX_EXCLUSIVE)
+    QUICK_LOAD_XSD_RESTRICTIONS(MaxInclusive, XSD_TAG_MAX_INCLUSIVE)
+    QUICK_LOAD_XSD_RESTRICTIONS(MinExclusive, XSD_TAG_MIN_EXCLUSIVE)
+    QUICK_LOAD_XSD_RESTRICTIONS(MinInclusive, XSD_TAG_MIN_INCLUSIVE)
+    QUICK_LOAD_XSD_RESTRICTIONS(MaxLength, XSD_TAG_MAX_LENGTH)
+    QUICK_LOAD_XSD_RESTRICTIONS(MinLength, XSD_TAG_MIN_LENGTH)
+    QUICK_LOAD_XSD_RESTRICTIONS(Pattern, XSD_TAG_PATTERN)
+    QUICK_LOAD_XSD_RESTRICTIONS(TotalDigits, XSD_TAG_TOTAL_DIGITS)
+    QUICK_LOAD_XSD_RESTRICTIONS(WhiteSpace, XSD_TAG_WHITE_SPACE)
+
+
+    /*** xs:enumeration ***/
+    /*strXPathExt.set(xpath);
     strXPathExt.append("/").append(XSD_TAG_ENUMERATION);
 
     CEnumerationArray *pEnumerationArray = CEnumerationArray::load(pRestriction, pSchemaRoot, strXPathExt.str());
@@ -177,7 +216,18 @@ CRestriction* CRestriction::load(CXSDNodeBase* pParentNode, const IPropertyTree 
     if (pEnumerationArray != NULL)
     {
         pRestriction->setEnumerationArray(pEnumerationArray);
-    }
+    }*/
+
+    /*** xs:fractionDigits ***/
+    /*strXPathExt.set(xpath);
+    strXPathExt.append("/").append(XSD_TAG_FRACTION_DIGITS);
+
+    CFractionDigits *pFractionDigits = CEnumerationArray::load(pRestriction, pSchemaRoot, strXPathExt.str());
+
+    if (pFractionDigits != NULL)
+    {
+        pRestriction->setFractionDigits(pFractionDigits);
+    }*/
 
     return pRestriction;
 }

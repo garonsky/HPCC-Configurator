@@ -1,19 +1,17 @@
-#ifndef _SCHEMA_LENGTH_HPP_
-#define _SCHEMA_LENGTH_HPP_
+#ifndef _SCHEMA_MIN_INCLUSIVE_HPP_
+#define _SCHEMA_MIN_INCLUSIVE_HPP_
 
 #include "SchemaCommon.hpp"
 
-class CLength : public CXSDNode
+class CMinInclusive : public CXSDNode
 {
 public:
 
-    virtual ~CLength()
+    virtual ~CMinInclusive()
     {
     }
 
-    static CLength* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
-
-    GETTERSETTER(Value)
+    static CMinInclusive* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
     virtual void dump(std::ostream& cout, unsigned int offset = 0) const;
 
@@ -48,13 +46,14 @@ public:
     }
 
     GETTERSETTER(Value)
-    GETTERSETTERINT(Length)
+    GETTERSETTERINT(MinInclusive)
 
 private:
 
-    CLength() : CXSDNode::CXSDNode(NULL, XSD_LENGTH), m_length(-1)
+    CMinInclusive() : CXSDNode::CXSDNode(NULL, XSD_MinInclusive), m_MinInclusive(-1)
     {
     }
+
 };
 
-#endif // _SCHEMA_LENGTH_HPP_
+#endif // _SCHEMA_MIN_INCLUSIVE_HPP_

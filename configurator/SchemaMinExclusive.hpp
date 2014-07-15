@@ -1,19 +1,19 @@
-#ifndef _SCHEMA_LENGTH_HPP_
-#define _SCHEMA_LENGTH_HPP_
+#ifndef _SCHEMA_MIN_EXCLUSIVE_HPP_
+#define _SCHEMA_MIN_EXCLUSIVE_HPP_
 
 #include "SchemaCommon.hpp"
 
-class CLength : public CXSDNode
+class CMinExclusive : public CXSDNode
 {
 public:
 
-    virtual ~CLength()
+    virtual ~CMinExclusive()
     {
     }
 
-    static CLength* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
+    static CMinExclusive* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
-    GETTERSETTER(Value)
+    //GETTERSETTER(V)
 
     virtual void dump(std::ostream& cout, unsigned int offset = 0) const;
 
@@ -47,14 +47,17 @@ public:
         assert(!"Not Implemented");
     }
 
-    GETTERSETTER(Value)
-    GETTERSETTERINT(Length)
+
+protected:
 
 private:
 
-    CLength() : CXSDNode::CXSDNode(NULL, XSD_LENGTH), m_length(-1)
+    CMinExclusive() : CXSDNode::CXSDNode(NULL, XSD_MinExclusive), m_MinExclusive(-1)
     {
     }
+
+    int m_nMinExclusive;
+
 };
 
-#endif // _SCHEMA_LENGTH_HPP_
+#endif // _SCHEMA_MIN_EXCLUSIVE_HPP_

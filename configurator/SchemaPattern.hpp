@@ -1,19 +1,17 @@
-#ifndef _SCHEMA_LENGTH_HPP_
-#define _SCHEMA_LENGTH_HPP_
+#ifndef _SCHEMA_PATTERN_HPP_
+#define _SCHEMA_PATTERN_HPP_
 
 #include "SchemaCommon.hpp"
 
-class CLength : public CXSDNode
+class CPattern : public CXSDNode
 {
 public:
 
-    virtual ~CLength()
+    virtual ~CPattern()
     {
     }
 
-    static CLength* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
-
-    GETTERSETTER(Value)
+    static CPattern* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
     virtual void dump(std::ostream& cout, unsigned int offset = 0) const;
 
@@ -47,14 +45,17 @@ public:
         assert(!"Not Implemented");
     }
 
-    GETTERSETTER(Value)
-    GETTERSETTERINT(Length)
+
+protected:
 
 private:
 
-    CLength() : CXSDNode::CXSDNode(NULL, XSD_LENGTH), m_length(-1)
+    CPattern() : CXSDNode::CXSDNode(NULL, XSD_Pattern), m_Pattern(-1)
     {
     }
+
+    int m_nPattern;
+
 };
 
-#endif // _SCHEMA_LENGTH_HPP_
+#endif // _SCHEMA_PATTERN_HPP_
