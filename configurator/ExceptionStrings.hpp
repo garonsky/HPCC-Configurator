@@ -26,6 +26,8 @@ enum eExceptionCodes
     EX_STR_MISSING_REQUIRED_ATTRIBUTE,
     EX_STR_MISSING_VALUE_ATTRIBUTE_IN_LENGTH,
     EX_STR_LENGTH_VALUE_MUST_BE_GREATER_THAN_OR_EQUAL_TO_ZERO,
+    EX_STR_PATTERN_HAS_INVALID_VALUE,
+    EX_STR_WHITE_SPACE_HAS_INVALID_VALUE,
     EX_STR_UNKNOWN,
     EX_STR_LAST_ENTRY
 };
@@ -53,16 +55,28 @@ const char pExceptionStringActionArray[EX_STR_LAST_ENTRY][MAX_EXCEPTION_STRING_L
                                                                                             /* 6 */ "The XML file may have errors.",
                                                                                             /* 7 */ "The XML file may have errors.  An attribute marked as required in the XSD is missing in the xml file."
                                                                                             /* 8 */ "The XSD has an node  xs:restriction type with an xs:length datatype that has not value; value is required",
-                                                                                            /* 9 */ "The XSD has an node xs:length that has a value that is not greater than or equal to 0",
+                                                                                            /* 9 */ "The XSD has an node xs:length @value is not greater than or equal to 0",
                                                                                             /* 10 */ "The XSD has an node xs:fractionDigits that has a value that is not greater than or equl to 0",
-                                                                                            /* 11 */ "The XSD has an node xs:minLength that has a value that is not greater than or equl to 0",
+                                                                                            /* 11 */ "The XSD has an node xs:minLength value that is not greater than or equl to 0",
                                                                                             /* 12 */ "The XSD has an node xs:minInclusive that has no value attribute",
+                                                                                            /* 13 */ "The XSD has an node xs:max:Exclusive that has no value attribute",
+                                                                                            /* 14 */ "The XSD has an node xs:max:Inclusive that has no value attribute",
+                                                                                            /* 15 */ "The XSD has a node xs:maxLength @value is not greater than or equal to 0",
+                                                                                            /* 16 */ "The XSD has a node xs:pattern @value is not set",
+                                                                                            /* 17 */ "The XSD has a node xs:totalDigits @value is not greater than or equal to 0",
+                                                                                            /* 17 */ "The XSD has a node xs:whitespace @value is not valid",
                                                                                             /*** ADD CORRESPONDING ENTRY TO pExceptionStringActionArray ***/
                                                                                         };
 
 enum eActionArray { EACTION_FRACTION_DIGITS_HAS_BAD_LENGTH = 10,
                     EACTION_MIN_LENGTH_BAD_LENGTH = 11,
-                    EACTION_MIN_INCLUSIVE_NO_VALUE = 12
+                    EACTION_MIN_INCLUSIVE_NO_VALUE = 12,
+                    EACTION_MAX_EXCLUSIVE_NO_VALUE = 13,
+                    EACTION_MAX_INCLUSIVE_NO_VALUE = 14,
+                    EACTION_MIN_LENGTH_BAD_LENGTH = 15,
+                    EACTION_PATTERN_MISSING_VALUE = 16,
+                    EACTION_TOTAL_DIGITS_BAD_LENGTH = 17,
+                    EACTION_WHITE_SPACE_BAD_VALUE = 18
                   };
 
 IException *MakeExceptionFromMap(int code, enum eExceptionCodes, const char* pMsg = NULL);

@@ -45,9 +45,9 @@ void CMinInclusive::dump(std::ostream& cout, unsigned int offset = 0) const
 {
     offset += STANDARD_OFFSET_1;
 
-    QuickOutHeader(cout, XSD_LENGTH_STR, offset);
+    QuickOutHeader(cout, XSD_MIN_INCLUSIVE_STR, offset);
 
     QUICK_OUT(cout, Value, offset);
 
-    QuickOutFooter(cout, XSD_MIN_EXCLUSIVE_STR, offset);
+    QuickOutFooter(cout, XSD_MIN_INCLUSIVE_STR, offset);
 }

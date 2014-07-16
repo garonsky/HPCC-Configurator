@@ -1,17 +1,17 @@
-#ifndef _SCHEMA_TOTAL_DIGITS_HPP_
-#define _SCHEMA_TOTAL_DIGITS_HPP_
+#ifndef _SCHEMA_MAX_INCLUSIVE_HPP_
+#define _SCHEMA_MAX_INCLUSIVE_HPP_
 
 #include "SchemaCommon.hpp"
 
-class CTotalDigits : public CXSDNode
+class CMaxInclusive : public CXSDNode
 {
 public:
 
-    virtual ~CTotalDigits()
+    virtual ~CMaxInclusive()
     {
     }
 
-    static CTotalDigits* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
+    static CMaxInclusive* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
     virtual void dump(std::ostream& cout, unsigned int offset = 0) const;
 
@@ -40,19 +40,17 @@ public:
         assert(!"Not Implemented");
     }
 
-    virtual void loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
-    {
-        assert(!"Not Implemented");
-    }
-
     GETTERSETTER(Value)
-    GETTERSETTERINT(TotalDigits)
+    GETTERSETTERINT(MaxInclusive)
 
 private:
 
-    CTotalDigits() : CXSDNode::CXSDNode(NULL, XSD_TOTAL_DIGITS), m_nTotalDigits(-1)
+    CMaxInclusive() : CXSDNode::CXSDNode(NULL, XSD_MAX_INCLUSIVE), m_MaxInclusive(-1)
     {
     }
+
+    int m_nMaxInclusive;
+
 };
 
-#endif // _SCHEMA_TOTAL_DIGITS_HPP_
+#endif // _SCHEMA_MAX_INCLUSIVE_HPP_

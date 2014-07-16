@@ -16,9 +16,6 @@
     C##X *p##X = X::load(pRestriction, pSchemaRoot, strXPathExt.str());    \
     if (p##X != NULL) pRestriction->C##X(p##X);
 
-#define QUICK
-
-
 CRestriction::~CRestriction()
 {
     CConfigSchemaHelper::getInstance()->getSchemaMapManager()->removeMapOfXPathToRestriction(this->getEnvXPath());

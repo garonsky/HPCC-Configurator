@@ -80,7 +80,7 @@ void CEnumeration::traverseAndProcessNodes() const
 
 const char* CEnumeration::getXML(const char* /*pComponent*/)
 {
-    assert(false); // NOT IMPLEMENTED
+    assert(!"Not Implemented");
     return NULL;
 }
 

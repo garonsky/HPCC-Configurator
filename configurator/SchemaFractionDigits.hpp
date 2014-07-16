@@ -33,14 +33,10 @@ public:
     virtual const char* getXML(const char* /*pComponent*/)
     {
         assert(!"Not Implemented");
+        return NULL;
     }
 
     virtual void populateEnvXPath(StringBuffer strXPath, unsigned int index = 1)
-    {
-        assert(!"Not Implemented");
-    }
-
-    virtual void loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
     {
         assert(!"Not Implemented");
     }

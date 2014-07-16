@@ -78,8 +78,38 @@ CXSDNodeBase::CXSDNodeBase(CXSDNodeBase* pParentNode, NODE_TYPES eNodeType) : m_
    case(XSD_ENUMERATION_ARRAY):
        strcpy(m_pNodeType, XSD_ENUMERATION_ARRAY_STR);
        break;
+   case(XSD_LENGTH):
+       strcpy(m_pNodeType, XSD_LENGTH_STR);
+       break;
+   case(XSD_FRACTION_DIGITS):
+       strcpy(m_pNodeType, XSD_FRACTION_DIGITS_STR);
+       break;
+   case(XSD_MAX_EXCLUSIVE):
+       strcpy(m_pNodeType, XSD_MAX_EXCLUSIVE_STR);
+       break;
+   case(XSD_MAX_INCLUSIVE):
+       strcpy(m_pNodeType, XSD_MAX_INCLUSIVE_STR);
+       break;
+   case(XSD_MIN_EXCLUSIVE):
+       strcpy(m_pNodeType, XSD_MIN_INCLUSIVE_STR);
+       break;
+   case(XSD_MIN_LENGTH):
+       strcpy(m_pNodeType, XSD_MIN_LENGTH_STR);
+       break;
+   case(XSD_MAX_LENGTH):
+       strcpy(m_pNodeType, XSD_MAX_LENGTH_STR);
+       break;
+   case(XSD_PATTERN):
+       strcpy(m_pNodeType, XSD_PATTERN_STR);
+       break;
+   case(XSD_TOTAL_DIGITS):
+       strcpy(m_pNodeType, XSD_TOTAL_DIGITS_STR);
+       break;
+   case(XSD_WHITE_SPACE):
+       strcpy(m_pNodeType, XSD_WHITE_SPACE_STR);
+       break;
    default:
-       assert(false); // should never get here
+       assert(!"Unknown XSD Type"); // should never get here
        strcpy(m_pNodeType, XSD_ERROR_STR);
        break;
    }
@@ -113,22 +143,25 @@ const CXSDNodeBase* CXSDNodeBase::getConstAncestorNode(unsigned iLevel) const
    return pAncestorNode;
 }
 
-const CXSDNodeBase* CXSDNodeBase::getParentNodeByType(NODE_TYPES eNodeType, const CXSDNodeBase *pParent) const
+const CXSDNodeBase* CXSDNodeBase::getParentNodeByType(NODE_TYPES eNodeType[], const CXSDNodeBase *pParent, int length) const
 {
-   if (this->m_eNodeType == eNodeType && pParent != NULL)
+   for (i = 0; i < length; i++)
    {
-       return this;
+       if (this->m_eNodeType == eNodeType[i] && pParent != NULL)
+       {
+           return this;
+       }
    }
 
    if (this->getConstParentNode() != NULL)
    {
-       return this->getConstParentNode()->getParentNodeByType(eNodeType, this);
+       return this->getConstParentNode()->getParentNodeByType(eNodeType, this, length);
    }
 
    return NULL;
 }
 
-const CXSDNodeBase* CXSDNodeBase::getNodeByTypeAndNameAscending(NODE_TYPES eNodeType, const char *pName) const
+const CXSDNodeBase* CXSDNodeBase::getNodeByTypeAndNameAscending(NODE_TYPES eNodeType[], const char *pName, int length) const
 {
    const CXSDNodeBase* pMatchingNode = NULL;
    int len = 0;
@@ -155,14 +188,14 @@ const CXSDNodeBase* CXSDNodeBase::getNodeByTypeAndNameAscending(NODE_TYPES eNode
            return NULL;
        }
 
-       pMatchingNode = pNode->getNodeByTypeAndNameDescending(eNodeType, pName);
+       pMatchingNode = pNode->getNodeByTypeAndNameDescending(eNodeType, pName, length);
 
        if (pMatchingNode != NULL)
        {
            return pMatchingNode;
        }
 
-       pMatchingNode = pNode->getNodeByTypeAndNameAscending(eNodeType, pName);
+       pMatchingNode = pNode->getNodeByTypeAndNameAscending(eNodeType, pName, length);
 
        if (pMatchingNode != NULL)
        {
@@ -173,7 +206,7 @@ const CXSDNodeBase* CXSDNodeBase::getNodeByTypeAndNameAscending(NODE_TYPES eNode
    return NULL;  // nothing found
 }
 
-const CXSDNodeBase* CXSDNodeBase::getNodeByTypeAndNameDescending(NODE_TYPES eNodeType, const char *pName) const
+const CXSDNodeBase* CXSDNodeBase::getNodeByTypeAndNameDescending(NODE_TYPES eNodeType[], const char *pName, int length) const
 {
    const CXSDNodeBase* pMatchingNode = NULL;
    int len = 0;
@@ -199,7 +232,7 @@ const CXSDNodeBase* CXSDNodeBase::getNodeByTypeAndNameDescending(NODE_TYPES eNod
            return NULL;
        }
 
-       pMatchingNode = pNode->getNodeByTypeAndNameDescending(eNodeType, pName);
+       pMatchingNode = pNode->getNodeByTypeAndNameDescending(eNodeType, pName, length);
 
        if (pMatchingNode != NULL)
        {

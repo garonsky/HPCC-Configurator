@@ -13,8 +13,6 @@ public:
 
     static CLength* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
-    GETTERSETTER(Value)
-
     virtual void dump(std::ostream& cout, unsigned int offset = 0) const;
 
     virtual void getDocumentation(StringBuffer &strDoc) const
@@ -38,11 +36,6 @@ public:
     }
 
     virtual void populateEnvXPath(StringBuffer strXPath, unsigned int index = 1)
-    {
-        assert(!"Not Implemented");
-    }
-
-    virtual void loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
     {
         assert(!"Not Implemented");
     }

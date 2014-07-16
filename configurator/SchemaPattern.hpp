@@ -45,16 +45,14 @@ public:
         assert(!"Not Implemented");
     }
 
-
-protected:
+    GETTERSETTER(Value)
 
 private:
 
-    CPattern() : CXSDNode::CXSDNode(NULL, XSD_Pattern), m_Pattern(-1)
+    CPattern() : CXSDNode::CXSDNode(NULL, XSD_PATTERN), m_Pattern(-1)
     {
     }
 
-    int m_nPattern;
 
 };
 

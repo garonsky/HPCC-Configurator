@@ -13,8 +13,6 @@ public:
 
     static CMaxExclusive* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
-    //GETTERSETTER(V)
-
     virtual void dump(std::ostream& cout, unsigned int offset = 0) const;
 
     virtual void getDocumentation(StringBuffer &strDoc) const
@@ -41,12 +39,6 @@ public:
     {
         assert(!"Not Implemented");
     }
-
-    virtual void loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
-    {
-        assert(!"Not Implemented");
-    }
-
 
 protected:
 

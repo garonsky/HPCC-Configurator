@@ -45,12 +45,11 @@ public:
         assert(!"Not Implemented");
     }
 
-
-protected:
+    GETTERSETTER(Value)
 
 private:
 
-    CWhiteSpace() : CXSDNode::CXSDNode(NULL, XSD_WhiteSpace), m_WhiteSpace(-1)
+    CWhiteSpace() : CXSDNode::CXSDNode(NULL, XSD_WHITE_SPACE), m_pWhiteSpace(-1)
     {
     }
 

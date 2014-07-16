@@ -34,7 +34,6 @@ CLength* CLength::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRo
             pLength = new CLength(pParentNode);
             pLength->setXSDXPath(xpath);
             pLength->setBase(pBase);
-
         }
         else
         {

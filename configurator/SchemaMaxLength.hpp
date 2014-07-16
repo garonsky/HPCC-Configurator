@@ -13,8 +13,6 @@ public:
 
     static CMaxLength* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
-    //GETTERSETTER(V)
-
     virtual void dump(std::ostream& cout, unsigned int offset = 0) const;
 
     virtual void getDocumentation(StringBuffer &strDoc) const
@@ -42,22 +40,14 @@ public:
         assert(!"Not Implemented");
     }
 
-    virtual void loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
-    {
-        assert(!"Not Implemented");
-    }
-
-
-protected:
+    GETTERSETTER(Value)
+    GETTERSETTERINT(MaxLength)
 
 private:
 
     CMaxLength() : CXSDNode::CXSDNode(NULL, XSD_MaxLength), m_MaxLength(-1)
     {
     }
-
-    int m_nMaxLength;
-
 };
 
 #endif // _SCHEMA_MAX_LENGTH_HPP_

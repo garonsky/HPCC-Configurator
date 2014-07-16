@@ -86,40 +86,41 @@
 
 enum NODE_TYPES
 {
-    XSD_ERROR = 0x0,
     XSD_ANNOTATION = 0x1,
-    XSD_APP_INFO = 0x2,
-    XSD_ATTRIBUTE = 0x4,
-    XSD_ATTRIBUTE_ARRAY = 0x8,
-    XSD_ATTRIBUTE_GROUP = 0x10,
-    XSD_ATTRIBUTE_GROUP_ARRAY = 0x20,
-    XSD_CHOICE = 0x40,
-    XSD_COMPLEX_CONTENT = 0x80,
-    XSD_COMPLEX_TYPE = 0x100,
-    XSD_COMPLEX_TYPE_ARRAY = 0x200,
-    XSD_DOCUMENTATION = 0x400,
-    XSD_ELEMENT = 0x800,
-    XSD_ELEMENT_ARRAY = 0x1000,
-    XSD_EXTENSION = 0x2000,
-    XSD_INCLUDE =  0x4000,
-    XSD_INCLUDE_ARRAY = 0x8000,
-    XSD_RESTRICTION = 0x10000,
-    XSD_SCHEMA = 0x20000,
-    XSD_SEQUENCE = 0x40000,
-    XSD_SIMPLE_TYPE = 0x80000,
-    XSD_SIMPLE_TYPE_ARRAY = 0x100000,
-    XSD_ENUMERATION = 0x200000,
-    XSD_ENUMERATION_ARRAY = 0x4000000,
-    XSD_LENGTH = 0x8000000,
-    XSD_FRACTION_DIGITS = 0x1000000,
-    XSD_MAX_EXCLUSIVE = 0x2000000,
-    XSD_MAX_INCLUSIVE = 0x4000000,
-    XSD_MIN_EXCLUSIVE = 0x8000000,
-    XSD_MIN_INCLUSIVE = 0x10000000,
-    XSD_MIN_LENGTH = 0x20000000,
-    XSD_PATTERN = 0x40000000/*,
-    XSD_TOTAL_DIGITS = 0x80000000,
-    XSD_WHITE_SPACE = 0x100000000*/
+    XSD_APP_INFO,
+    XSD_ATTRIBUTE,
+    XSD_ATTRIBUTE_ARRAY,
+    XSD_ATTRIBUTE_GROUP,
+    XSD_ATTRIBUTE_GROUP_ARRAY,
+    XSD_CHOICE,
+    XSD_COMPLEX_CONTENT,
+    XSD_COMPLEX_TYPE,
+    XSD_COMPLEX_TYPE_ARRAY,
+    XSD_DOCUMENTATION,
+    XSD_ELEMENT,
+    XSD_ELEMENT_ARRAY,
+    XSD_EXTENSION,
+    XSD_INCLUDE,
+    XSD_INCLUDE_ARRAY,
+    XSD_RESTRICTION,
+    XSD_SCHEMA,
+    XSD_SEQUENCE,
+    XSD_SIMPLE_TYPE,
+    XSD_SIMPLE_TYPE_ARRAY,
+    XSD_ENUMERATION,
+    XSD_ENUMERATION_ARRAY,
+    XSD_LENGTH,
+    XSD_FRACTION_DIGITS,
+    XSD_MAX_EXCLUSIVE,
+    XSD_MAX_INCLUSIVE,
+    XSD_MIN_EXCLUSIVE,
+    XSD_MIN_INCLUSIVE,
+    XSD_MIN_LENGTH,
+    XSD_MAX_LENGTH,
+    XSD_PATTERN,
+    XSD_TOTAL_DIGITS,
+    XSD_WHITE_SPACE,
+    XSD_ERROR
 };
 
 static const char* DEFAULT_SCHEMA_DIRECTORY("/opt/HPCCSystems/componentfiles/configxml/");
@@ -335,11 +336,24 @@ public:
         return m_pParentNode;
     }
 
-    virtual const CXSDNodeBase* getParentNodeByType(NODE_TYPES eNodeType, const CXSDNodeBase *pParent = NULL) const;
+    virtual const CXSDNodeBase* getParentNodeByType(NODE_TYPES eNodeType[], const CXSDNodeBase *pParent = NULL, int length = 1) const;
 
-    virtual const CXSDNodeBase* getNodeByTypeAndNameAscending(NODE_TYPES eNodeType, const char *pName) const;
+    virtual const CXSDNodeBase* getParentNodeByType(NODE_TYPES eNodeType, const CXSDNodeBase *pParent = NULL) const
+    {
+        return getParentNodeByType(eNodeType, pParent);
+    }
 
-    virtual const CXSDNodeBase* getNodeByTypeAndNameDescending(NODE_TYPES eNodeType, const char *pName) const;
+    virtual const CXSDNodeBase* getNodeByTypeAndNameAscending(NODE_TYPES eNodeType[], const char *pName, int length = 1) const;
+    virtual const CXSDNodeBase* getNodeByTypeAndNameAscending(NODE_TYPES eNodeType, const char *pName) const
+    {
+        return getNodeByTypeAndNameAscending(&eNodeType, pName);
+    }
+
+    virtual const CXSDNodeBase* getNodeByTypeAndNameDescending(NODE_TYPES eNodeType[], const char *pName, int length = 1) const;
+    virtual const CXSDNodeBase* getNodeByTypeAndNameDescending(NODE_TYPES eNodeType, const char *pName) const
+    {
+        return getNodeByTypeAndNameDescending(&eNodeType, pName);
+    }
 
     void setParentNode(CXSDNodeBase *pParentNode)
     {

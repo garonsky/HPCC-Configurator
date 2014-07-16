@@ -12,7 +12,6 @@ public:
     }
 
     GETTERSETTER(Value)
-//    GETTERSETTER(InstanceValue)
 
     virtual void dump(std::ostream &cout, unsigned int offset = 0) const;
 
