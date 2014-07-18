@@ -108,6 +108,9 @@ CXSDNodeBase::CXSDNodeBase(CXSDNodeBase* pParentNode, NODE_TYPES eNodeType) : m_
    case(XSD_WHITE_SPACE):
        strcpy(m_pNodeType, XSD_WHITE_SPACE_STR);
        break;
+   case(XSD_DT_NORMALIZED_STRING):
+       strcpy(m_pNodeType, XSD_DATAT_TYPE_NORMALIZED_STRING_STR);
+       break;
    default:
        assert(!"Unknown XSD Type"); // should never get here
        strcpy(m_pNodeType, XSD_ERROR_STR);
@@ -322,7 +325,56 @@ const CXSDNodeBase* CXSDNode::getNodeByTypeAndNameAscending(NODE_TYPES eNodeType
 
 const CXSDNodeBase* CXSDNode::getNodeByTypeAndNameDescending(NODE_TYPES eNodeType, const char *pName) const
 {
-  assert(false);  // Derived classes need to hande this
+    assert(false);  // Derived classes need to hande this
 
-  return NULL;
+    return NULL;
+}
+
+/*CXSDBuiltInDataType* CXSDBuiltInDataType::load(CXSDNodeBase *pParentNode, const IPropertyTree *pSchemaRoot, const char*  xpath)
+{
+    assert(pSchemaRoot != NULL);
+
+    if (pSchemaRoot == NULL)
+    {
+        return NULL;
+    }
+
+    CXSDBuiltInDataType *pBuiltInType = NULL;
+
+    if (xpath != NULL && *pXPath != 0)
+    {
+
+    }
+
+
+}*/
+
+CXSDBuiltInDataType::CXSDBuiltInDataType(CXSDNodeBase* pParentNode = NULL, enum NODE_TYPES eNodeType) : CXSDNode::CXSDNode(pParentNode, eNodeType)
+{
+    assert(eNodeType != XSD_ERROR);
+}
+
+virtual CXSDBuiltInDataType::~CXSDBuiltInDataType()
+{
+
+}
+
+void CXSDBuiltInDataType::dump(std::ostream& cout, unsigned int offset = 0) const
+{
+    assert(!"Not Implemented");
+}
+
+void CXSDBuiltInDataType::traverseAndProcessNodes() const
+{
+    assert(!"Not Implemented");
+}
+
+virtual void CXSDBuiltInDataType::getDocumentation(StringBuffer &strDoc) const
+{
+    assert(!"Not Implemented");
+}
+
+void CXSDBuiltInDataType::getDojoJS(StringBuffer &strJS) const
+{
+    assert(!"Not Implemented");
 }

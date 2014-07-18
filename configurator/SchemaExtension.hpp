@@ -57,7 +57,7 @@ protected:
         return m_pXSDNode;
     }
 
-    CXSDNodeBase *m_pXSDNode;
+    CXSDNode *m_pXSDNode;
 
 private:
 

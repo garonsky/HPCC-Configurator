@@ -359,7 +359,7 @@ void CConfigSchemaHelper::processExtensionArr()
 
         if (pName != NULL)
         {
-            CXSDNodeBase *pNodeBase = NULL;
+            CXSDNode *pNodeBase = NULL;
 
             pNodeBase = m_pSchemaMapManager->getSimpleTypeWithName(pName) != NULL ? dynamic_cast<CSimpleType*>(m_pSchemaMapManager->getSimpleTypeWithName(pName)) : NULL;
 
@@ -422,7 +422,7 @@ void CConfigSchemaHelper::processRestrictionGroupArr()
 
         if (pName != NULL)
         {
-            CXSDNodeBase *pNodeBase = NULL;
+            CXSDNode *pNode = NULL;
 
             pNodeBase = m_pSchemaMapManager->getSimpleTypeWithName(pName) != NULL ? dynamic_cast<CSimpleType*>(m_pSchemaMapManager->getSimpleTypeWithName(pName)) : NULL;
 

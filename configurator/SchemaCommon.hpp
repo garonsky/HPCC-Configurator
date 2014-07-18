@@ -120,6 +120,18 @@ enum NODE_TYPES
     XSD_PATTERN,
     XSD_TOTAL_DIGITS,
     XSD_WHITE_SPACE,
+    XSD_DT_NORMALIZED_STRING,
+    XSD_DT_STRING,
+    XSD_DT_TOKEN,
+    XSD_DT_DATE,
+    XSD_DT_TIME,
+    XSD_DT_DATE_TIME,
+    XSD_DT_INTEGER,
+    XSD_DT_LONG,
+    XSD_DT_NON_NEG_INTEGER,
+    XSD_DT_NON_POS_INTEGER,
+    XSD_DT_POS_INTEGER,
+    XSD_DT_NEG_INTEGER,
     XSD_ERROR
 };
 
@@ -162,7 +174,7 @@ static const char* XSD_DATA_TYPE_DATE_TIME("xs:dateTime");
 static const char* XSD_DATA_TYPE_DECIMAL("xs:decimal"); // A decimal value
 static const char* XSD_DATA_TYPE_INTEGER("xs:integer"); // An integer value
 static const char* XSD_DATA_TYPE_INT("xs:int"); // A signed 32-bit integer
-static const char* XSD_DATA_TYPE_INT("xs:long"); // A signed 64-bit integer
+static const char* XSD_DATA_TYPE_LONG("xs:long"); // A signed 64-bit integer
 static const char* XSD_DATA_TYPE_NON_NEGATIVE_INTEGER("xs:nonNegativeInteger");
 static const char* XSD_DATA_TYPE_NON_POSITIVE_INTEGER("xs:nonPositiveInteger");
 static const char* XSD_DATA_TYPE_NEGATIVE_INTEGER("xs:negativeInteger");
@@ -204,6 +216,18 @@ static const char* XSD_SIMPLE_TYPE_STR("SimpleType");
 static const char* XSD_SIMPLE_TYPE_ARRAY_STR("SimpleTypeArray");
 static const char* XSD_TOTAL_DIGITS_STR("TotalDigits");
 static const char* XSD_WHITE_SPACE_STR("WhiteSpace");
+static const char* XSD_DT_NORMALIZED_STRING_STR("NormalizedString");
+static const char* XSD_DT_STRING_STR("String");
+static const char* XSD_DT_TOKEN_STR("Token");
+static const char* XSD_DT_DATE_STR("Date");
+static const char* XSD_DT_TIME_STR("Time");
+static const char* XSD_DT_DATE_TIME_STR("DateTime");
+static const char* XSD_DT_INTEGER_STR("Integer");
+static const char* XSD_DT_LONG_STR("Long");
+static const char* XSD_DT_NON_NEG_INTEGER_STR("NonNegativeInteger");
+static const char* XSD_DT_NON_POS_INTEGER_STR("NonPositiveInteger");
+static const char* XSD_DT_POS_INTEGER_STR("PositiveInteger");
+static const char* XSD_DT_NEG_INTEGER_STR("NegativeInteger");
 
 static const char* XML_ENV_VALUE_OPTIONAL("optional");
 static const char* XML_ENV_VALUE_REQUIRED("required");
@@ -460,6 +484,24 @@ public:
 
 private:
 
+};
+
+class CXSDBuiltInDataType : public CXSDNode
+{
+public:
+
+    //static CXSDBuiltInDataType* load(CXSDNodeBase *pParentNode, const IPropertyTree *pSchemaRoot, const char*  xpath);
+
+    virtual ~CXSDBuiltInDataType();
+
+    virtual void dump(std::ostream& cout, unsigned int offset = 0) const;
+    virtual void traverseAndProcessNodes() const = 0;
+    virtual void getDocumentation(StringBuffer &strDoc) const;
+    virtual void getDojoJS(StringBuffer &strJS) const;
+
+private:
+
+    CXSDBuiltInDataType(CXSDNodeBase* pParentNode = NULL, enum NODE_TYPES eNodeType = XSD_ERROR);
 };
 
 #endif // _SCHEMA_COMMON_HPP_

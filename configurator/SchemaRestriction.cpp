@@ -165,7 +165,6 @@ void CRestriction::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
     }
 }
 
-
 CRestriction* CRestriction::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
 {
     if (pParentNode == NULL || pSchemaRoot == NULL)
