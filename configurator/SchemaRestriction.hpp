@@ -54,6 +54,12 @@ protected:
     {
     }
 
+    void setBaseNode(CXSDNodeBase* pCXSDNode)
+    {
+        assert(pCXSDNode != NULL);
+
+        m_pXSDNode = pCXSDNode;
+    }
     /*void setEnumerationArray(CEnumerationArray *pEnumerationArray)
     {
         assert(pEnumerationArray != NULL);
@@ -77,11 +83,13 @@ protected:
     GETTERSETTERTYPE(TotalDigits)
     GETTERSETTERTYPE(WhiteSpace)
 
+    CXSDNodeBase *m_pXSDNode;
+
 private:
 
     CRestriction(CXSDNodeBase* pParentNode = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_RESTRICTION), m_pEnumerationArray(NULL), m_pFractionDigits(NULL), m_pLength(NULL),
         m_pMaxExclusive(NULL), m_pMaxInclusive(NULL), m_pMinExclusive(NULL), m_pMaxInclusive(NULL), m_pMaxLength(NULL), m_pMinLength(NULL),
-        m_pPattern(NULL), m_pTotalDigits(NULL), m_pWhiteSpace(NULL)
+        m_pPattern(NULL), m_pTotalDigits(NULL), m_pWhiteSpace(NULL), m_pXSDNode(NULL)
     {
     }
 };

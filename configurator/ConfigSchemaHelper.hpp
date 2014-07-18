@@ -37,13 +37,18 @@ public:
     }
 
     void addExtensionToBeProcessed(CExtension *pExtension);
+    void processExtensionArr();
+
     void addAttributeGroupToBeProcessed(CAttributeGroup *pAttributeGroup);
+    void processAttributeGroupArr();
+
+    void addRestrictionToBeProcessed(CRestriction *pRestriction);
+    void processRestrictionGroupArr();
 
     //test purposes
     bool getXMLFromSchema(StringBuffer& strXML, const char* pXSD);
 
-    void processExtensionArr();
-    void processAttributeGroupArr();
+
     void populateEnvXPath();
     void loadEnvFromConfig(const char *pEnvFile);
 
@@ -129,6 +134,7 @@ protected:
 
     CIArrayOf<CExtension> m_extensionArr;
     CIArrayOf<CAttributeGroup> m_attributeGroupArr;
+    CIArrayOf<CRestriction> m_restrictionArr;
     StringArray m_strToolTipsJS;
     StringArray m_strArrayEnvXPaths;
     StringArray m_strArrayEnvXMLComponentInstances;

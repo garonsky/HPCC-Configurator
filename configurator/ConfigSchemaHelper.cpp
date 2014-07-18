@@ -336,6 +336,16 @@ void CConfigSchemaHelper::addAttributeGroupToBeProcessed(CAttributeGroup *pAttri
     }
 }
 
+void CConfigSchemaHelper::addRestrictionToBeProcessed(CRestriction *pRestriction)
+{
+    assert(pRestriction != NULL);
+
+    if (pRestriction != NULL)
+    {
+        m_restrictionArr.append(*pRestriction);
+    }
+}
+
 void CConfigSchemaHelper::processExtensionArr()
 {
     int length = m_extensionArr.length();
@@ -397,6 +407,45 @@ void CConfigSchemaHelper::processAttributeGroupArr()
     }
 
     m_attributeGroupArr.popAll(true);
+}
+
+void CConfigSchemaHelper::processRestrictionGroupArr()
+{
+    int length = m_restrictionArr.length();
+
+    for (int idx = 0; idx < length; idx++)
+    {
+        CRestriction &Restriction = (m_restrictionArr.item(idx));
+        const char *pName = Restriction.getBase();
+
+        assert(pName != NULL);
+
+        if (pName != NULL)
+        {
+            CXSDNodeBase *pNodeBase = NULL;
+
+            pNodeBase = m_pSchemaMapManager->getSimpleTypeWithName(pName) != NULL ? dynamic_cast<CSimpleType*>(m_pSchemaMapManager->getSimpleTypeWithName(pName)) : NULL;
+
+            if (pNodeBase == NULL)
+            {
+                pNodeBase = m_pSchemaMapManager->getComplexTypeWithName(pName) != NULL ? dynamic_cast<CComplexType*>(m_pSchemaMapManager->getComplexTypeWithName(pName)) : NULL;
+            }
+
+            if (pNodeBase == NULL)
+            {
+                // built in datatypes
+            }
+
+            assert(pNodeBase != NULL);
+
+            if (pNodeBase != NULL)
+            {
+                Restriction.setBaseNode(pNodeBase);
+            }
+        }
+    }
+
+    m_restrictionArr.popAll(false);
 }
 
 void CConfigSchemaHelper::populateEnvXPath()

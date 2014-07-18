@@ -153,7 +153,22 @@ static const char* XSD_TAG_PATTERN("xs:pattern");
 static const char* XSD_TAG_TOTAL_DIGITS("xs:totalDigits");
 static const char* XSD_TAG_WHITE_SPACE("xs:whiteSpace");
 
-static const char* XSD_ERROR_STR("ERROR");
+static const char* XSD_DATA_TYPE_NORMALIZED_STRING("xs:normalizedString");
+static const char* XSD_DATA_TYPE_STRING("xs:string");
+static const char* XSD_DATA_TYPE_TOKEN("xs:token");
+static const char* XSD_DATA_TYPE_DATE("xs:date");
+static const char* XSD_DATA_TYPE_TIME("xs:time");
+static const char* XSD_DATA_TYPE_DATE_TIME("xs:dateTime");
+static const char* XSD_DATA_TYPE_DECIMAL("xs:decimal"); // A decimal value
+static const char* XSD_DATA_TYPE_INTEGER("xs:integer"); // An integer value
+static const char* XSD_DATA_TYPE_INT("xs:int"); // A signed 32-bit integer
+static const char* XSD_DATA_TYPE_INT("xs:long"); // A signed 64-bit integer
+static const char* XSD_DATA_TYPE_NON_NEGATIVE_INTEGER("xs:nonNegativeInteger");
+static const char* XSD_DATA_TYPE_NON_POSITIVE_INTEGER("xs:nonPositiveInteger");
+static const char* XSD_DATA_TYPE_NEGATIVE_INTEGER("xs:negativeInteger");
+static const char* XSD_DATA_TYPE_POSITIVE_INTEGER("xs:positiveInteger");
+
+
 static const char* XSD_ANNOTATION_STR("Annotation");
 static const char* XSD_APP_INFO_STR("AppInfo");
 static const char* XSD_ATTRIBUTE_STR("Attribute");
@@ -167,6 +182,9 @@ static const char* XSD_COMPLEX_TYPE_ARRAY_STR("ComplexTypeArray");
 static const char* XSD_DOCUMENTATION_STR("Documentation");
 static const char* XSD_ELEMENT_STR("Element");
 static const char* XSD_ELEMENT_ARRAY_STR("ElementArray");
+static const char* XSD_ERROR_STR("ERROR");
+static const char* XSD_ENUMERATION_STR("Enumeration");
+static const char* XSD_ENUMERATION_ARRAY_STR("EnumerationArray");
 static const char* XSD_EXTENSION_STR("Extension");
 static const char* XSD_FRACTION_DIGITS_STR("FractionDigits");
 static const char* XSD_INCLUDE_STR("Include");
@@ -186,8 +204,6 @@ static const char* XSD_SIMPLE_TYPE_STR("SimpleType");
 static const char* XSD_SIMPLE_TYPE_ARRAY_STR("SimpleTypeArray");
 static const char* XSD_TOTAL_DIGITS_STR("TotalDigits");
 static const char* XSD_WHITE_SPACE_STR("WhiteSpace");
-static const char* XSD_ENUMERATION_STR("Enumeration");
-static const char* XSD_ENUMERATION_ARRAY_STR("EnumerationArray");
 
 static const char* XML_ENV_VALUE_OPTIONAL("optional");
 static const char* XML_ENV_VALUE_REQUIRED("required");
