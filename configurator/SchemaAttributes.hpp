@@ -12,7 +12,7 @@ class CSimpleTypeArray;
 static const char* DEFAULT_COMPONENT_ATTRIBUTE_XPATH("./xs:element/xs:complexType/xs:attribute");
 static const char* DEFAULT_COMPONENT_ATTRIBUTE_GROUP_XPATH("./xs:attributeGroup");
 
-class CAttribute : public CXSDNode
+class CAttribute : public CXSDNodeWithType
 {
 public:
 
@@ -27,7 +27,6 @@ public:
     virtual ~CAttribute();
 
     GETTERSETTER(Name)
-    GETTERSETTER(Type)
     GETTERSETTER(Default)
     GETTERSETTER(Use)
     GETTERSETTER(InstanceValue)

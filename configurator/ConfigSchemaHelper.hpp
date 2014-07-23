@@ -42,8 +42,14 @@ public:
     void addAttributeGroupToBeProcessed(CAttributeGroup *pAttributeGroup);
     void processAttributeGroupArr();
 
-    void addRestrictionToBeProcessed(CRestriction *pRestriction);
-    void processRestrictionGroupArr();
+
+    //void addNodeForBaseProcessing(CXSDNodeWithBase *pNode);
+    //void processNodeWithBaseArr();
+
+    void addNodeForTypeProcessing(CXSDNodeWithType *pNode);
+    void processNodeWithTypeArr();
+    //void addRestrictionToBeProcessed(CRestriction *pRestriction);
+    //void processRestrictionGroupArr();
 
     //test purposes
     bool getXMLFromSchema(StringBuffer& strXML, const char* pXSD);
@@ -134,7 +140,7 @@ protected:
 
     CIArrayOf<CExtension> m_extensionArr;
     CIArrayOf<CAttributeGroup> m_attributeGroupArr;
-    CIArrayOf<CRestriction> m_restrictionArr;
+    CIArrayOf<CXSDNodeWithType> m_nodeWithTypeArr;
     StringArray m_strToolTipsJS;
     StringArray m_strArrayEnvXPaths;
     StringArray m_strArrayEnvXMLComponentInstances;

@@ -14,7 +14,7 @@ class CAttributeArray;
 
 static const char* DEFAULT_ELEMENT_ARRAY_XPATH(".");
 
-class CElement : public CXSDNode
+class CElement : public CXSDNodeWithType
 {
 public:
 
@@ -25,7 +25,6 @@ public:
     GETTERSETTER(Name)
     GETTERSETTER(MaxOccurs)
     GETTERSETTER(MinOccurs)
-    GETTERSETTER(Type)
     GETTERSETTER(Title)
     GETTERSETTER(InstanceName)
 

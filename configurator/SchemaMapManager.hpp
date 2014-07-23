@@ -57,6 +57,8 @@ public:
     CElement* getComponent(int index);
     int getIndexOfElement(const CElement *pElem);
 
+    enum NODE_TYPES getEnumFromTypeName(const char *pTypeName);
+
 protected:
 
     typedef MapStringTo<CSchema*> MapStringToCSchema;
@@ -83,6 +85,8 @@ protected:
     typedef MapStringTo<CElementArray*> MapStringToCElementArray;
     Owned<MapStringToCElementArray> m_pElementArrayPtrsMap;
 
+    typedef MapStringTo<enum NODE_TYPES *> MapStringToEnum;
+    Owned<MapStringToNodeTypeEnum> m_pStringToEnumMap;
 
 private:
 

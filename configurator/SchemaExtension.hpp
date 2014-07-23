@@ -6,7 +6,7 @@
 
 class IPropertyTree;
 
-class CExtension : public CXSDNode
+class CExtension : public CXSDNodeWithBase
 {
 public:
 
@@ -14,7 +14,7 @@ public:
     {
     }
 
-    GETTERSETTER(Base)
+    //GETTERSETTER(Base)
 
     virtual void dump(std::ostream& cout, unsigned int offset = 0) const;
 
@@ -34,7 +34,7 @@ public:
 
     virtual void initExtension();
 
-    void setBaseNode(CXSDNodeBase* pCXSDNode)
+    /*void setBaseNode(CXSDNodeBase* pCXSDNode)
     {
         if (m_pXSDNode != NULL)
         {
@@ -42,7 +42,7 @@ public:
         }
 
         m_pXSDNode = pCXSDNode;
-    }
+    }*/
 
     static CExtension* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath = NULL);
 
@@ -52,12 +52,12 @@ protected:
     {
     }
 
-    const CXSDNodeBase* getBaseNode() const
+/*    const CXSDNodeBase* getBaseNode() const
     {
         return m_pXSDNode;
     }
 
-    CXSDNode *m_pXSDNode;
+    CXSDNode *m_pXSDNode;*/
 
 private:
 

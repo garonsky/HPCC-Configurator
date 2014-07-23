@@ -1,4 +1,5 @@
 #include "SchemaCommon.hpp"
+#include "ConfigSchemaHelper.hpp"
 
 CXSDNodeBase::CXSDNodeBase(CXSDNodeBase* pParentNode, NODE_TYPES eNodeType) : m_pParentNode(pParentNode),  m_eNodeType(eNodeType)
 {
@@ -349,9 +350,39 @@ const CXSDNodeBase* CXSDNode::getNodeByTypeAndNameDescending(NODE_TYPES eNodeTyp
 
 }*/
 
+/*enum NODE_TYPES CXSDBuiltInDataType::getENUMFromTypeName(const char *pTypeName)
+{
+    if (pTypeName == NULL || *pTypeName == 0)
+    {
+        return XSD_ERROR;
+    }
+
+    return CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getValue(pTypeName);
+}*/
+
+CXSDBuiltInDataType::create(CXSDNodeBase* pParentNode = NULL, const char* pNodeType)
+{
+    enum NODE_TYPES eNodeType = CConfigSchemaHelper::getSchemaMapManager()->getEnumFromTypeName(pNodeType);
+
+    if (eNodeType != XSD_ERROR)
+    {
+        return new CXSDBuiltInDataType(pParentNode, eNodeType);
+    }
+    else
+    {
+        return NULL;
+    }
+}
+
 CXSDBuiltInDataType::CXSDBuiltInDataType(CXSDNodeBase* pParentNode = NULL, enum NODE_TYPES eNodeType) : CXSDNode::CXSDNode(pParentNode, eNodeType)
 {
     assert(eNodeType != XSD_ERROR);
+}
+
+
+CXSDBuiltInDataType::CXSDBuiltInDataType(CXSDNodeBase* pParentNode, const char* pNodeType)
+{
+
 }
 
 virtual CXSDBuiltInDataType::~CXSDBuiltInDataType()

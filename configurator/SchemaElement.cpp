@@ -99,7 +99,13 @@ CElement* CElement::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchema
         }
         else if (strcmp(iterAttrib->queryName(), XML_ATTR_TYPE) == 0)
         {
-            pElement->setType(iterAttrib->queryValue());
+            const char *pType = iterAttrib->queryValue();
+
+            if (pType != NULL && *pType != 0)
+            {
+                pElement->setType(pType);
+                CConfigSchemaHelper::getInstance()->addNodeForTypeProcessing(pElement);
+            }
         }
 
         assert(iterAttrib->queryValue() != NULL);

@@ -11,6 +11,22 @@ CSchemaMapManager::CSchemaMapManager()
     m_pRestrictionPtrsMap.setown(new MapStringToCRestriction);
     m_pElementPtrsMap.setown(new MapStringToCElement);
     m_pElementArrayPtrsMap.setown(new MapStringToCElementArray);
+    m_pStringToEnumMap.setown(new MapStringToEnum);
+
+
+    m_pStringToEnumMap.setValue(XSD_DATA_TYPE_NORMALIZED_STRING, XSD_DT_NORMALIZED_STRING);
+    m_pStringToEnumMap.setValue(XSD_DATA_TYPE_STRING, XSD_DT_STRING);
+    m_pStringToEnumMap.setValue(XSD_DATA_TYPE_TOKEN, XSD_DT_TOKEN);
+    m_pStringToEnumMap.setValue(XSD_DATA_TYPE_DATE, XSD_DT_DATE);
+    m_pStringToEnumMap.setValue(XSD_DATA_TYPE_TIME, XSD_DT_TIME);
+    m_pStringToEnumMap.setValue(XSD_DATA_TYPE_DATE_TIME, XSD_DT_DATE_TIME);
+    m_pStringToEnumMap.setValue(XSD_DATA_TYPE_DECIMAL, XSD_DT_INTEGER);
+    m_pStringToEnumMap.setValue(XSD_DATA_TYPE_DECIMAL, XSD_DT_DECIMAL);
+    m_pStringToEnumMap.setValue(XSD_DATA_TYPE_LONG, XSD_DT_LONG);
+    m_pStringToEnumMap.setValue(XSD_DATA_TYPE_NON_NEGATIVE_INTEGER, XSD_DT_NON_NEG_INTEGER);
+    m_pStringToEnumMap.setValue(XSD_DATA_TYPE_NON_POSITIVE_INTEGER, XSD_DT_NON_POS_INTEGER);
+    m_pStringToEnumMap.setValue(XSD_DATA_TYPE_NEGATIVE_INTEGER, XSD_DT_POS_INTEGER);
+    m_pStringToEnumMap.setValue(XSD_DATA_TYPE_POSITIVE_INTEGER, XSD_DT_NEG_INTEGER);
 }
 
 CSchemaMapManager::~CSchemaMapManager()
@@ -436,4 +452,14 @@ int CSchemaMapManager::getIndexOfElement(const CElement *pElem)
 
     assert(false);
     return -1;
+}
+
+enum NODE_TYPES CSchemaMapManager::getEnumFromTypeName(const char *pTypeName)
+{
+    if (pTypeName == NULL || *pTypeName == 0)
+    {
+        return XSD_ERROR;
+    }
+
+    return CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getValue(pTypeName);
 }

@@ -16,14 +16,14 @@ class CPattern;
 class CTotalDigits;
 class CWhiteSpace;
 
-class CRestriction : public CXSDNode
+class CRestriction : public CXSDNodeWithBase
 {
 public:
 
     virtual ~CRestriction();
 
     GETTERSETTER(ID)
-    GETTERSETTER(Base)
+    //GETTERSETTER(Base)
 
     virtual void dump(std::ostream& cout, unsigned int offset = 0) const;
 
@@ -54,12 +54,12 @@ protected:
     {
     }
 
-    void setBaseNode(CXSDNodeBase* pCXSDNode)
+    /*void setBaseNode(CXSDNodeBase* pCXSDNode)
     {
         assert(pCXSDNode != NULL);
 
         m_pXSDNode = pCXSDNode;
-    }
+    }*/
     /*void setEnumerationArray(CEnumerationArray *pEnumerationArray)
     {
         assert(pEnumerationArray != NULL);

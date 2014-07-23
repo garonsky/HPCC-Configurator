@@ -126,6 +126,7 @@ enum NODE_TYPES
     XSD_DT_DATE,
     XSD_DT_TIME,
     XSD_DT_DATE_TIME,
+    XSD_DT_DECIMAL,
     XSD_DT_INTEGER,
     XSD_DT_LONG,
     XSD_DT_NON_NEG_INTEGER,
@@ -486,11 +487,59 @@ private:
 
 };
 
+class CXSDNodeWithType : public CXSDNode
+{
+    GETTERSETTER(Type)
+
+protected:
+
+    CXSDNodeWithType()
+    {
+    }
+
+    void setTypeNode(CXSDNodeBase* pCXSDNode)
+    {
+        m_pXSDNode = pCXSDNode;
+    }
+
+    const CXSDNode* getTypeNode() const
+    {
+        return m_pXSDNode;
+    }
+
+    CXSDNode *m_pXSDNode;
+};
+
+class CXSDNodeWithBase : public CXSDNode
+{
+    GETTERSETTER(Base)
+
+protected:
+
+    CXSDNodeWithBase() : m_pXSDNode(NULL)
+    {
+    }
+
+    void setBaseNode(CXSDNodeBase* pCXSDNode)
+    {
+        m_pXSDNode = pCXSDNode;
+    }
+
+    const CXSDNode* getBaseNode() const
+    {
+        return m_pXSDNode;
+    }
+
+    CXSDNode *m_pXSDNode;
+};
+
 class CXSDBuiltInDataType : public CXSDNode
 {
 public:
 
     //static CXSDBuiltInDataType* load(CXSDNodeBase *pParentNode, const IPropertyTree *pSchemaRoot, const char*  xpath);
+    static create(CXSDNodeBase* pParentNode = NULL, const char* pNodeType);
+    static enum NODE_TYPES getENUMFromTypeName(const char *pTypeName);
 
     virtual ~CXSDBuiltInDataType();
 
@@ -502,6 +551,8 @@ public:
 private:
 
     CXSDBuiltInDataType(CXSDNodeBase* pParentNode = NULL, enum NODE_TYPES eNodeType = XSD_ERROR);
+    CXSDBuiltInDataType(CXSDNodeBase* pParentNode = NULL, const char* pNodeType);
+
 };
 
 #endif // _SCHEMA_COMMON_HPP_

@@ -177,11 +177,8 @@ CRestriction* CRestriction::load(CXSDNodeBase* pParentNode, const IPropertyTree 
     const char* pID =  NULL;
     const char* pBase =  NULL;
 
-    // TODO: handle Base in restrictions
-
     pID = pTree->queryProp(XML_ATTR_ID);
     pBase = pTree->queryProp(XML_ATTR_BASE);
-
 
     CRestriction* pRestriction = new CRestriction(pParentNode, pID, pBase);
 
@@ -201,6 +198,11 @@ CRestriction* CRestriction::load(CXSDNodeBase* pParentNode, const IPropertyTree 
     QUICK_LOAD_XSD_RESTRICTIONS(Pattern, XSD_TAG_PATTERN)
     QUICK_LOAD_XSD_RESTRICTIONS(TotalDigits, XSD_TAG_TOTAL_DIGITS)
     QUICK_LOAD_XSD_RESTRICTIONS(WhiteSpace, XSD_TAG_WHITE_SPACE)
+
+    if (pBase != NULL && *pBase != 0 && pRestriction != NULL)
+    {
+        CConfigSchemaHelper::addNodeForTypeProcessing(pRestriction);
+    }
 
 
     /*** xs:enumeration ***/

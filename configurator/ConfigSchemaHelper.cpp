@@ -336,13 +336,13 @@ void CConfigSchemaHelper::addAttributeGroupToBeProcessed(CAttributeGroup *pAttri
     }
 }
 
-void CConfigSchemaHelper::addRestrictionToBeProcessed(CRestriction *pRestriction)
+void CConfigSchemaHelper::addNodeForTypeProcessing(CXSDNodeWithType *pNode)
 {
-    assert(pRestriction != NULL);
+    assert(pNode != NULL);
 
-    if (pRestriction != NULL)
+    if (pNode != NULL)
     {
-        m_restrictionArr.append(*pRestriction);
+        m_nodeWithTypeArr.append(*pNode);
     }
 }
 
@@ -409,7 +409,52 @@ void CConfigSchemaHelper::processAttributeGroupArr()
     m_attributeGroupArr.popAll(true);
 }
 
-void CConfigSchemaHelper::processRestrictionGroupArr()
+
+void CConfigSchemaHelper::processNodeWithTypeArr()
+{
+    int length = m_nodeWithTypeArr.length();
+
+    for (int idx = 0; idx < length; idx++)
+    {
+        CXSDNodeWithType *pNodeWithType = &(m_nodeWithTypeArr.item(idx));
+        const char *pTypeName = pNodeWithType->getType();
+
+        assert(pTypeName != NULL);
+
+        if (pTypeName != NULL)
+        {
+            CXSDNode *pNode = NULL;
+
+            pNode = m_pSchemaMapManager->getSimpleTypeWithName(pTypeName) != NULL ? dynamic_cast<CSimpleType*>(m_pSchemaMapManager->getSimpleTypeWithName(pTypeName)) : NULL;
+
+            if (pNode == NULL)
+            {
+                pNode = m_pSchemaMapManager->getComplexTypeWithName(pTypeName) != NULL ? dynamic_cast<CComplexType*>(m_pSchemaMapManager->getComplexTypeWithName(pTypeName)) : NULL;
+            }
+
+            if (pNode == NULL)
+            {
+                pNode = new CXSDBuiltInDataType(pNode, pTypeName);
+            }
+
+            assert(pNode != NULL);
+
+            if (pNode != NULL)
+            {
+                m_nodeWithTypeArr.setBaseNode(pNode);
+            }
+            else
+            {
+                PROGLOG("Unsupported type '%s'", pTypeName);
+            }
+        }
+    }
+
+    m_nodeWithTypeArr.popAll(false);
+}
+
+
+/*void CConfigSchemaHelper::processNodeWithTypeArr()
 {
     int length = m_restrictionArr.length();
 
@@ -446,7 +491,7 @@ void CConfigSchemaHelper::processRestrictionGroupArr()
     }
 
     m_restrictionArr.popAll(false);
-}
+}*/
 
 void CConfigSchemaHelper::populateEnvXPath()
 {
