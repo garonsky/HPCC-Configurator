@@ -42,7 +42,6 @@ public:
     void addAttributeGroupToBeProcessed(CAttributeGroup *pAttributeGroup);
     void processAttributeGroupArr();
 
-
     //void addNodeForBaseProcessing(CXSDNodeWithBase *pNode);
     //void processNodeWithBaseArr();
 

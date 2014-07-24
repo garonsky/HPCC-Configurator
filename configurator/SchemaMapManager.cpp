@@ -1,6 +1,9 @@
 #include "SchemaMapManager.hpp"
 #include "SchemaAll.hpp"
 
+#define SET_ENUM_ARRAY(X) m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_##X][0] = XSD_DATA_TYPE_##X; \
+                          m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_##X][1] = XSD_DT_##X_STR;
+
 CSchemaMapManager::CSchemaMapManager()
 {
     m_pSchemaPtrMap.setown(new MapStringToCSchema());
@@ -11,9 +14,50 @@ CSchemaMapManager::CSchemaMapManager()
     m_pRestrictionPtrsMap.setown(new MapStringToCRestriction);
     m_pElementPtrsMap.setown(new MapStringToCElement);
     m_pElementArrayPtrsMap.setown(new MapStringToCElementArray);
+
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_NORMALIZED_STRING][0] = XSD_DATA_TYPE_NORMALIZED_STRING;
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_NORMALIZED_STRING][1] = XSD_DT_NORMALIZED_STRING_STR;
+
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_STRING][0] = XSD_DATA_TYPE_STRING;
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_STRING][1] = XSD_DT_STRING_STR;
+
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_TOKEN][0] = XSD_DATA_TYPE_TOKEN;
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_TOKEN][1] = XSD_DT_TOKEN_STR;
+
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_DATE][0] = XSD_DATA_TYPE_DATE;
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_DATE][1] = XSD_DT_DATE_STR;
+
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_TIME][0] = XSD_DATA_TYPE_TIME;
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_TIME][1] = XSD_DT_TIME_STR;
+
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_DATE_TIME][0] = XSD_DATA_TYPE_DATE_TIME;
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_DATE_TIME][1] = XSD_DT_DATE_TIME_STR;
+
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_DECIMAL][0] = XSD_DATA_TYPE_DECIMAL;
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_DECIMAL][1] = XSD_DT_DECIMAL_STR;
+
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_INTEGER][0] = XSD_DATA_TYPE_INTEGER;
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_INTEGER][1] = XSD_DT_INTEGER_STR;
+
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_INT][0] = XSD_DATA_TYPE_INT;
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_INT][1] = XSD_DT_INT_STR;
+
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_LONG][0] = XSD_DATA_TYPE_NORMALIZED_STRING;
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_LONG][1] = XSD_DT_LONG_STR;
+
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_NON_NEG_INTEGER][0] = XSD_DATA_TYPE_NORMALIZED_STRING;
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_NON_NEG_INTEGER][1] = XSD_DT_NON_NEG_INTEGER_STR;
+
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_NON_POS_INTEGER][0] = XSD_DATA_TYPE_NORMALIZED_STRING;
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_NON_POS_INTEGER][1] = XSD_DT_NON_POS_INTEGER_STR;
+
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_POS_INTEGER][0] = XSD_DATA_TYPE_NORMALIZED_STRING;
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_POS_INTEGER][1] = XSD_DT_POS_INTEGER_STR;
+
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_NEG_INTEGER][0] = XSD_DATA_TYPE_NORMALIZED_STRING;
+    m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_NEG_INTEGER][1] = XSD_DT_NEG_INTEGER_STR;
+
     m_pStringToEnumMap.setown(new MapStringToEnum);
-
-
     m_pStringToEnumMap.setValue(XSD_DATA_TYPE_NORMALIZED_STRING, XSD_DT_NORMALIZED_STRING);
     m_pStringToEnumMap.setValue(XSD_DATA_TYPE_STRING, XSD_DT_STRING);
     m_pStringToEnumMap.setValue(XSD_DATA_TYPE_TOKEN, XSD_DT_TOKEN);
@@ -27,6 +71,7 @@ CSchemaMapManager::CSchemaMapManager()
     m_pStringToEnumMap.setValue(XSD_DATA_TYPE_NON_POSITIVE_INTEGER, XSD_DT_NON_POS_INTEGER);
     m_pStringToEnumMap.setValue(XSD_DATA_TYPE_NEGATIVE_INTEGER, XSD_DT_POS_INTEGER);
     m_pStringToEnumMap.setValue(XSD_DATA_TYPE_POSITIVE_INTEGER, XSD_DT_NEG_INTEGER);
+
 }
 
 CSchemaMapManager::~CSchemaMapManager()
@@ -454,12 +499,34 @@ int CSchemaMapManager::getIndexOfElement(const CElement *pElem)
     return -1;
 }
 
-enum NODE_TYPES CSchemaMapManager::getEnumFromTypeName(const char *pTypeName)
+enum NODE_TYPES CSchemaMapManager::getEnumFromTypeName(const char *pTypeName) const
 {
     if (pTypeName == NULL || *pTypeName == 0)
     {
         return XSD_ERROR;
     }
 
-    return CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getValue(pTypeName);
+    enum NODE_TYPES eRet = m_pStringToEnumMap.getValue(pTypeName);
+
+    if (eRet == XSD_ERROR)
+    {
+        assert(!"Unknown XSD built in data type");
+        PROGLOG("Unknown XSD built in data type");
+    }
+
+    return eRet;
+}
+
+
+const char* CSchemaMapManager::getTypeNameFromEnum(enum NODE_TYPES eType, bool bForDump) const
+{
+    if (eType-XSD_DT_NORMALIZED_STRING > 0 && eType-XSD_DT_NORMALIZED_STRING < XSD_ERROR)
+    {
+        return m_enumArray[eType-XSD_DT_NORMALIZED_STRING][bForDump ? 1 : 0];
+    }
+
+    assert(!"Unknown XSD built-in type");
+    PROGLOG(!"Unknown XSD built-in type");
+
+    return NULL;
 }

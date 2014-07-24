@@ -1,5 +1,6 @@
 #include "SchemaCommon.hpp"
 #include "ConfigSchemaHelper.hpp"
+#include "SchemaMapManager.hpp"
 
 CXSDNodeBase::CXSDNodeBase(CXSDNodeBase* pParentNode, NODE_TYPES eNodeType) : m_pParentNode(pParentNode),  m_eNodeType(eNodeType)
 {
@@ -360,8 +361,10 @@ const CXSDNodeBase* CXSDNode::getNodeByTypeAndNameDescending(NODE_TYPES eNodeTyp
     return CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getValue(pTypeName);
 }*/
 
-CXSDBuiltInDataType::create(CXSDNodeBase* pParentNode = NULL, const char* pNodeType)
+CXSDBuiltInDataType::create(CXSDNodeBase* pParentNode, const char* pNodeType)
 {
+    assert(pParentNode != NULL);
+
     enum NODE_TYPES eNodeType = CConfigSchemaHelper::getSchemaMapManager()->getEnumFromTypeName(pNodeType);
 
     if (eNodeType != XSD_ERROR)
@@ -390,9 +393,16 @@ virtual CXSDBuiltInDataType::~CXSDBuiltInDataType()
 
 }
 
-void CXSDBuiltInDataType::dump(std::ostream& cout, unsigned int offset = 0) const
+void CXSDBuiltInDataType::dump(std::ostream& cout, unsigned int offset) const
 {
-    assert(!"Not Implemented");
+    offset += STANDARD_OFFSET_1;
+
+    const char *pTypeNameString = CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getTypeNameFromEnum(this->getNodeType(), true);
+
+    QuickOutHeader(cout, pTypeNameString, offset);
+
+    QuickOutFooter(cout, pTypeNameString, offset);
+
 }
 
 void CXSDBuiltInDataType::traverseAndProcessNodes() const

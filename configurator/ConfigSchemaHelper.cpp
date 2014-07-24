@@ -409,7 +409,6 @@ void CConfigSchemaHelper::processAttributeGroupArr()
     m_attributeGroupArr.popAll(true);
 }
 
-
 void CConfigSchemaHelper::processNodeWithTypeArr()
 {
     int length = m_nodeWithTypeArr.length();
@@ -434,7 +433,7 @@ void CConfigSchemaHelper::processNodeWithTypeArr()
 
             if (pNode == NULL)
             {
-                pNode = new CXSDBuiltInDataType(pNode, pTypeName);
+                pNode = CXSDBuiltInDataType::create(pNode, pTypeName);
             }
 
             assert(pNode != NULL);
@@ -452,7 +451,6 @@ void CConfigSchemaHelper::processNodeWithTypeArr()
 
     m_nodeWithTypeArr.popAll(false);
 }
-
 
 /*void CConfigSchemaHelper::processNodeWithTypeArr()
 {

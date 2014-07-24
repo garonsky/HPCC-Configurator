@@ -57,7 +57,8 @@ public:
     CElement* getComponent(int index);
     int getIndexOfElement(const CElement *pElem);
 
-    enum NODE_TYPES getEnumFromTypeName(const char *pTypeName);
+    enum NODE_TYPES getEnumFromTypeName(const char *pTypeName) const;
+    const char* getTypeNameFromEnum(enum NODE_TYPES, bool bForDump = false) const;
 
 protected:
 
@@ -85,8 +86,19 @@ protected:
     typedef MapStringTo<CElementArray*> MapStringToCElementArray;
     Owned<MapStringToCElementArray> m_pElementArrayPtrsMap;
 
-    typedef MapStringTo<enum NODE_TYPES *> MapStringToEnum;
+    char m_enumArray[XSD_ERROR][2];
+
+    /*typedef MapStringTo<enum NODE_TYPES *> MapStringToEnum;
     Owned<MapStringToNodeTypeEnum> m_pStringToEnumMap;
+
+    struct STypeStrings
+    {
+        const char *pXSDTypeString;
+        const char *pDumpTypeString;
+    };
+
+    typedef MapBetween<enum NODE_TYPES, enum NODE_TYPES, STypeStrings, STypeStrings> MapEnumToTypeStringStruct;
+    Owned<MapEnumToTypeStringStruct> m_pEnumToTypeStringStruct;*/
 
 private:
 

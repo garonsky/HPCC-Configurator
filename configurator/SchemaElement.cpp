@@ -214,6 +214,11 @@ void CElement::dump(std::ostream &cout, unsigned int offset) const
         m_pAttributeArray->dump(cout, offset);
     }
 
+    if (this->getTypeNode() != NULL)
+    {
+        this->getTypeNode()->dump(cout, offset);
+    }
+
     QuickOutFooter(cout, XSD_ELEMENT_STR, offset);
 }
 

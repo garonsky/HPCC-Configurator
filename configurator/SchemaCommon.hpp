@@ -86,7 +86,7 @@
 
 enum NODE_TYPES
 {
-    XSD_ANNOTATION = 0x1,
+    XSD_ANNOTATION = 0x0,
     XSD_APP_INFO,
     XSD_ATTRIBUTE,
     XSD_ATTRIBUTE_ARRAY,
@@ -120,13 +120,14 @@ enum NODE_TYPES
     XSD_PATTERN,
     XSD_TOTAL_DIGITS,
     XSD_WHITE_SPACE,
-    XSD_DT_NORMALIZED_STRING,
+    XSD_DT_NORMALIZED_STRING,  // keep this as the first DT type for array index purposes
     XSD_DT_STRING,
     XSD_DT_TOKEN,
     XSD_DT_DATE,
     XSD_DT_TIME,
     XSD_DT_DATE_TIME,
     XSD_DT_DECIMAL,
+    XSD_DT_INTEGER,
     XSD_DT_INTEGER,
     XSD_DT_LONG,
     XSD_DT_NON_NEG_INTEGER,
@@ -223,7 +224,9 @@ static const char* XSD_DT_TOKEN_STR("Token");
 static const char* XSD_DT_DATE_STR("Date");
 static const char* XSD_DT_TIME_STR("Time");
 static const char* XSD_DT_DATE_TIME_STR("DateTime");
+static const char* XSD_DT_DECIMAL_STR("Decimal");
 static const char* XSD_DT_INTEGER_STR("Integer");
+static const char* XSD_DT_INT_STR("Int");
 static const char* XSD_DT_LONG_STR("Long");
 static const char* XSD_DT_NON_NEG_INTEGER_STR("NonNegativeInteger");
 static const char* XSD_DT_NON_POS_INTEGER_STR("NonPositiveInteger");
@@ -537,7 +540,6 @@ class CXSDBuiltInDataType : public CXSDNode
 {
 public:
 
-    //static CXSDBuiltInDataType* load(CXSDNodeBase *pParentNode, const IPropertyTree *pSchemaRoot, const char*  xpath);
     static create(CXSDNodeBase* pParentNode = NULL, const char* pNodeType);
     static enum NODE_TYPES getENUMFromTypeName(const char *pTypeName);
 
