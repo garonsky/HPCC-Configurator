@@ -101,6 +101,8 @@ CElement* CElement::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchema
         {
             const char *pType = iterAttrib->queryValue();
 
+            assert(pType != NULL && *pType != 0);
+
             if (pType != NULL && *pType != 0)
             {
                 pElement->setType(pType);

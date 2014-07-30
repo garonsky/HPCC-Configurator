@@ -55,7 +55,9 @@
                                      (this->item(idx)).loadXMLFromEnvXml(X);              \
                                 }
 
-#define QUICK_TRAVERSE_AND_PROCESS  for (int idx=0; idx < this->length(); idx++)        \
+
+#define QUICK_TRAVERSE_AND_PROCESS
+//#define QUICK_TRAVERSE_AND_PROCESS  for (int idx=0; idx < this->length(); idx++)        \
 {                                                                                       \
     CXSDNodeBase::processEntryHandlers(this);                                           \
     this->item(idx).traverseAndProcessNodes();                                          \
@@ -69,7 +71,7 @@
 
 #define GETTERINT(X) virtual const long get##X() const { return m_n##X; }
 #define SETTERINT(X) virtual void set##X(long p) { m_n##X = p; } virtual void set##X(const char *p) { assert(p != NULL); if (p != 0 && *p != 0) m_n##X = atol(p); }
-#define GETTERSETTERINT(X) protected: long m_n##X; public: GETTERINT(X) SETTERINT(X) public:
+#define GETTERSETTERINT(X) protected: long m_n##X; public: GETTERINT(X) SETTERINT(X) private:
 
 #define SETPARENTNODE(X, Y) if (X!= NULL && Y != NULL) X->setParentNode(Y);
 //#define DEBUG_MARK_STRDOC strDoc.append(__FILE__).append(":").append(__LINE__).append("\n");
@@ -82,7 +84,7 @@
 
 #define GETTERTYPE(X) C##X* get##X() { return m_p##X; }
 #define SETTERTYPE(X) void set##X( C##X *p ) { assert(p != NULL); if (p != NULL) m_p##X = p; }
-#define GETTERSETTERTYPE(X) private: C##X *m_p##X; GETTERTYPE(X) SETTERTYPE(X)
+#define GETTERSETTERTYPE(X) public: C##X *m_p##X; GETTERTYPE(X) SETTERTYPE(X) private:
 
 enum NODE_TYPES
 {
@@ -127,13 +129,13 @@ enum NODE_TYPES
     XSD_DT_TIME,
     XSD_DT_DATE_TIME,
     XSD_DT_DECIMAL,
-    XSD_DT_INTEGER,
+    XSD_DT_INT,
     XSD_DT_INTEGER,
     XSD_DT_LONG,
     XSD_DT_NON_NEG_INTEGER,
     XSD_DT_NON_POS_INTEGER,
-    XSD_DT_POS_INTEGER,
     XSD_DT_NEG_INTEGER,
+    XSD_DT_POS_INTEGER,
     XSD_ERROR
 };
 
@@ -419,7 +421,7 @@ public:
 
     virtual void dump(std::ostream& cout, unsigned int offset = 0) const = 0;
 
-    virtual void traverseAndProcessNodes() const = 0;
+    //virtual void traverseAndProcessNodes() const = 0;
 
     virtual const char* getXML(const char* /*pComponent*/)
     {
@@ -482,9 +484,9 @@ public:
 
     virtual const CXSDNodeBase* getParentNodeByType(NODE_TYPES eNodeType) const;
 
-    virtual const CXSDNodeBase* getNodeByTypeAndNameAscending(NODE_TYPES eNodeType, const char *pName) const;
+    //virtual const CXSDNodeBase* getNodeByTypeAndNameAscending(NODE_TYPES eNodeType, const char *pName) const;
 
-    virtual const CXSDNodeBase* getNodeByTypeAndNameDescending(NODE_TYPES eNodeType, const char *pName) const;
+    //virtual const CXSDNodeBase* getNodeByTypeAndNameDescending(NODE_TYPES eNodeType, const char *pName) const;
 
 private:
 
@@ -494,13 +496,13 @@ class CXSDNodeWithType : public CXSDNode
 {
     GETTERSETTER(Type)
 
-protected:
+public:
 
-    CXSDNodeWithType()
+    CXSDNodeWithType(CXSDNodeBase* pParentNode, enum NODE_TYPES eNodeType) : CXSDNode::CXSDNode(pParentNode, eNodeType), m_pXSDNode(NULL)
     {
     }
 
-    void setTypeNode(CXSDNodeBase* pCXSDNode)
+    void setTypeNode(CXSDNode* pCXSDNode)
     {
         m_pXSDNode = pCXSDNode;
     }
@@ -510,6 +512,8 @@ protected:
         return m_pXSDNode;
     }
 
+protected:
+
     CXSDNode *m_pXSDNode;
 };
 
@@ -517,9 +521,9 @@ class CXSDNodeWithBase : public CXSDNode
 {
     GETTERSETTER(Base)
 
-protected:
+public:
 
-    CXSDNodeWithBase() : m_pXSDNode(NULL)
+    CXSDNodeWithBase(CXSDNodeBase* pParentNode, enum NODE_TYPES eNodeType) : CXSDNode::CXSDNode(pParentNode, eNodeType), m_pXSDNode(NULL)
     {
     }
 
@@ -528,32 +532,33 @@ protected:
         m_pXSDNode = pCXSDNode;
     }
 
-    const CXSDNode* getBaseNode() const
+    const CXSDNodeBase* getBaseNode() const
     {
         return m_pXSDNode;
     }
 
-    CXSDNode *m_pXSDNode;
+protected:
+
+    CXSDNodeBase *m_pXSDNode;
 };
 
 class CXSDBuiltInDataType : public CXSDNode
 {
 public:
 
-    static create(CXSDNodeBase* pParentNode = NULL, const char* pNodeType);
-    static enum NODE_TYPES getENUMFromTypeName(const char *pTypeName);
+    static CXSDBuiltInDataType* create(CXSDNodeBase* pParentNode, const char* pNodeType);
 
     virtual ~CXSDBuiltInDataType();
 
     virtual void dump(std::ostream& cout, unsigned int offset = 0) const;
-    virtual void traverseAndProcessNodes() const = 0;
+    //virtual void traverseAndProcessNodes() const = 0;
     virtual void getDocumentation(StringBuffer &strDoc) const;
     virtual void getDojoJS(StringBuffer &strJS) const;
 
 private:
 
-    CXSDBuiltInDataType(CXSDNodeBase* pParentNode = NULL, enum NODE_TYPES eNodeType = XSD_ERROR);
-    CXSDBuiltInDataType(CXSDNodeBase* pParentNode = NULL, const char* pNodeType);
+    CXSDBuiltInDataType(CXSDNodeBase* pParentNode = NULL, NODE_TYPES eNodeType = XSD_ERROR);
+    CXSDBuiltInDataType(CXSDNodeBase* pParentNode, const char* pNodeType);
 
 };
 

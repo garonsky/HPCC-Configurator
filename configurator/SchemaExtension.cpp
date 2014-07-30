@@ -24,7 +24,7 @@ void CExtension::dump(std::ostream& cout, unsigned int offset) const
     QuickOutFooter(cout, XSD_EXTENSION_STR, offset);
 }
 
-void CExtension::traverseAndProcessNodes() const
+/*void CExtension::traverseAndProcessNodes() const
 {
     CXSDNodeBase::processEntryHandlers(this);
 
@@ -34,7 +34,7 @@ void CExtension::traverseAndProcessNodes() const
     }
 
     CXSDNodeBase::processExitHandlers(this);
-}
+}*/
 
 const char* CExtension::getXML(const char* /*pComponent*/)
 {

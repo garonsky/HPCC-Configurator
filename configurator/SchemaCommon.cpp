@@ -111,7 +111,46 @@ CXSDNodeBase::CXSDNodeBase(CXSDNodeBase* pParentNode, NODE_TYPES eNodeType) : m_
        strcpy(m_pNodeType, XSD_WHITE_SPACE_STR);
        break;
    case(XSD_DT_NORMALIZED_STRING):
-       strcpy(m_pNodeType, XSD_DATAT_TYPE_NORMALIZED_STRING_STR);
+       strcpy(m_pNodeType, XSD_DATA_TYPE_NORMALIZED_STRING);
+       break;
+   case(XSD_DT_STRING):
+       strcpy(m_pNodeType, XSD_DATA_TYPE_STRING);
+       break;
+   case(XSD_DT_TOKEN):
+       strcpy(m_pNodeType, XSD_DATA_TYPE_TOKEN);
+       break;
+   case(XSD_DT_DATE):
+       strcpy(m_pNodeType, XSD_DATA_TYPE_DATE);
+       break;
+   case(XSD_DT_TIME):
+       strcpy(m_pNodeType, XSD_DATA_TYPE_TIME);
+       break;
+   case(XSD_DT_DATE_TIME):
+       strcpy(m_pNodeType, XSD_DATA_TYPE_DATE_TIME);
+       break;
+   case(XSD_DT_DECIMAL):
+       strcpy(m_pNodeType, XSD_DATA_TYPE_DECIMAL);
+       break;
+   case(XSD_DT_INT):
+       strcpy(m_pNodeType, XSD_DATA_TYPE_INT);
+       break;
+   case(XSD_DT_INTEGER):
+       strcpy(m_pNodeType, XSD_DATA_TYPE_INTEGER);
+       break;
+   case(XSD_DT_LONG):
+       strcpy(m_pNodeType, XSD_DATA_TYPE_LONG);
+       break;
+   case(XSD_DT_NON_NEG_INTEGER):
+       strcpy(m_pNodeType, XSD_DATA_TYPE_NON_NEGATIVE_INTEGER);
+       break;
+   case(XSD_DT_NON_POS_INTEGER):
+       strcpy(m_pNodeType, XSD_DATA_TYPE_NON_POSITIVE_INTEGER);
+       break;
+   case(XSD_DT_NEG_INTEGER):
+       strcpy(m_pNodeType, XSD_DATA_TYPE_NEGATIVE_INTEGER);
+       break;
+   case(XSD_DT_POS_INTEGER):
+       strcpy(m_pNodeType, XSD_DATA_TYPE_POSITIVE_INTEGER);
        break;
    default:
        assert(!"Unknown XSD Type"); // should never get here
@@ -150,7 +189,7 @@ const CXSDNodeBase* CXSDNodeBase::getConstAncestorNode(unsigned iLevel) const
 
 const CXSDNodeBase* CXSDNodeBase::getParentNodeByType(NODE_TYPES eNodeType[], const CXSDNodeBase *pParent, int length) const
 {
-   for (i = 0; i < length; i++)
+   for (int i = 0; i < length; i++)
    {
        if (this->m_eNodeType == eNodeType[i] && pParent != NULL)
        {
@@ -166,7 +205,7 @@ const CXSDNodeBase* CXSDNodeBase::getParentNodeByType(NODE_TYPES eNodeType[], co
    return NULL;
 }
 
-const CXSDNodeBase* CXSDNodeBase::getNodeByTypeAndNameAscending(NODE_TYPES eNodeType[], const char *pName, int length) const
+/*const CXSDNodeBase* CXSDNodeBase::getNodeByTypeAndNameAscending(NODE_TYPES eNodeType[], const char *pName, int length) const
 {
    const CXSDNodeBase* pMatchingNode = NULL;
    int len = 0;
@@ -209,9 +248,9 @@ const CXSDNodeBase* CXSDNodeBase::getNodeByTypeAndNameAscending(NODE_TYPES eNode
    }
 
    return NULL;  // nothing found
-}
+}*/
 
-const CXSDNodeBase* CXSDNodeBase::getNodeByTypeAndNameDescending(NODE_TYPES eNodeType[], const char *pName, int length) const
+/*const CXSDNodeBase* CXSDNodeBase::getNodeByTypeAndNameDescending(NODE_TYPES eNodeType[], const char *pName, int length) const
 {
    const CXSDNodeBase* pMatchingNode = NULL;
    int len = 0;
@@ -246,7 +285,7 @@ const CXSDNodeBase* CXSDNodeBase::getNodeByTypeAndNameDescending(NODE_TYPES eNod
    }
 
    return NULL;  // nothing found
-}
+}*/
 
 void CXSDNodeBase::processEntryHandlers(const CXSDNodeBase *pBase)
 {
@@ -312,20 +351,24 @@ const CXSDNodeBase* CXSDNode::getParentNodeByType(NODE_TYPES eNodeType) const
   return NULL;
 }
 
-
-const CXSDNodeBase* CXSDNode::getNodeByTypeAndNameAscending(NODE_TYPES eNodeType, const char *pName) const
+const CXSDNodeBase* CXSDNodeBase::getNodeByTypeAndNameAscending(NODE_TYPES eNodeType[], const char *pName, int length) const
 {
-  assert(this->m_eNodeType != eNodeType); //  Base functionality just blindly searchs upstream
 
-  if (this->getConstParentNode() != NULL)
+
+  for (int i = 0; i < length; i++)
   {
-      return this->getConstParentNode()->getNodeByTypeAndNameAscending(eNodeType, pName);
+    assert(this->m_eNodeType != eNodeType[i]);
+
+    if (this->getConstParentNode() != NULL)
+    {
+        return this->getConstParentNode()->getNodeByTypeAndNameAscending(eNodeType[i], pName);
+    }
   }
 
   return NULL;
 }
 
-const CXSDNodeBase* CXSDNode::getNodeByTypeAndNameDescending(NODE_TYPES eNodeType, const char *pName) const
+const CXSDNodeBase* CXSDNodeBase::getNodeByTypeAndNameDescending(NODE_TYPES eNodeType[], const char *pName, int length) const
 {
     assert(false);  // Derived classes need to hande this
 
@@ -361,11 +404,11 @@ const CXSDNodeBase* CXSDNode::getNodeByTypeAndNameDescending(NODE_TYPES eNodeTyp
     return CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getValue(pTypeName);
 }*/
 
-CXSDBuiltInDataType::create(CXSDNodeBase* pParentNode, const char* pNodeType)
+CXSDBuiltInDataType* CXSDBuiltInDataType::create(CXSDNodeBase* pParentNode, const char* pNodeType)
 {
     assert(pParentNode != NULL);
 
-    enum NODE_TYPES eNodeType = CConfigSchemaHelper::getSchemaMapManager()->getEnumFromTypeName(pNodeType);
+    enum NODE_TYPES eNodeType = CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getEnumFromTypeName(pNodeType);
 
     if (eNodeType != XSD_ERROR)
     {
@@ -377,18 +420,18 @@ CXSDBuiltInDataType::create(CXSDNodeBase* pParentNode, const char* pNodeType)
     }
 }
 
-CXSDBuiltInDataType::CXSDBuiltInDataType(CXSDNodeBase* pParentNode = NULL, enum NODE_TYPES eNodeType) : CXSDNode::CXSDNode(pParentNode, eNodeType)
+CXSDBuiltInDataType::CXSDBuiltInDataType(CXSDNodeBase* pParentNode, enum NODE_TYPES eNodeType) : CXSDNode::CXSDNode(pParentNode, eNodeType)
 {
     assert(eNodeType != XSD_ERROR);
 }
 
 
-CXSDBuiltInDataType::CXSDBuiltInDataType(CXSDNodeBase* pParentNode, const char* pNodeType)
+/*CXSDBuiltInDataType::CXSDBuiltInDataType(CXSDNodeBase* pParentNode, const char* pNodeType)
 {
 
-}
+}*/
 
-virtual CXSDBuiltInDataType::~CXSDBuiltInDataType()
+CXSDBuiltInDataType::~CXSDBuiltInDataType()
 {
 
 }
@@ -405,12 +448,12 @@ void CXSDBuiltInDataType::dump(std::ostream& cout, unsigned int offset) const
 
 }
 
-void CXSDBuiltInDataType::traverseAndProcessNodes() const
+/*void CXSDBuiltInDataType::traverseAndProcessNodes() const
 {
     assert(!"Not Implemented");
-}
+}*/
 
-virtual void CXSDBuiltInDataType::getDocumentation(StringBuffer &strDoc) const
+void CXSDBuiltInDataType::getDocumentation(StringBuffer &strDoc) const
 {
     assert(!"Not Implemented");
 }

@@ -5,6 +5,9 @@
 
 class CMaxExclusive : public CXSDNode
 {
+    GETTERSETTER(Value)
+    GETTERSETTERINT(MaxExclusive)
+
 public:
 
     virtual ~CMaxExclusive()
@@ -44,12 +47,9 @@ protected:
 
 private:
 
-    CMaxExclusive() : CXSDNode::CXSDNode(NULL, XSD_MaxExclusive), m_MaxExclusive(-1)
+    CMaxExclusive() : CXSDNode::CXSDNode(NULL, XSD_MAX_EXCLUSIVE), m_nMaxExclusive(-1)
     {
     }
-
-    int m_nMaxExclusive;
-
 };
 
 #endif // _SCHEMA_MAX_EXCLUSIVE_HPP_

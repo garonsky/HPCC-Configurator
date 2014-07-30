@@ -45,12 +45,9 @@ public:
 
 private:
 
-    CMaxInclusive() : CXSDNode::CXSDNode(NULL, XSD_MAX_INCLUSIVE), m_MaxInclusive(-1)
+    CMaxInclusive() : CXSDNode::CXSDNode(NULL, XSD_MAX_INCLUSIVE), m_nMaxInclusive(-1)
     {
     }
-
-    int m_nMaxInclusive;
-
 };
 
 #endif // _SCHEMA_MAX_INCLUSIVE_HPP_

@@ -346,6 +346,16 @@ void CConfigSchemaHelper::addNodeForTypeProcessing(CXSDNodeWithType *pNode)
     }
 }
 
+void CConfigSchemaHelper::addNodeForBaseProcessing(CXSDNodeWithBase *pNode)
+{
+    assert(pNode != NULL);
+
+    if (pNode != NULL)
+    {
+        m_nodeWithBaseArr.append(*pNode);
+    }
+}
+
 void CConfigSchemaHelper::processExtensionArr()
 {
     int length = m_extensionArr.length();
@@ -440,7 +450,8 @@ void CConfigSchemaHelper::processNodeWithTypeArr()
 
             if (pNode != NULL)
             {
-                m_nodeWithTypeArr.setBaseNode(pNode);
+                //m_nodeWithTypeArr.setBaseNode(pNode);
+                pNodeWithType->setTypeNode(pNode);
             }
             else
             {
@@ -452,44 +463,48 @@ void CConfigSchemaHelper::processNodeWithTypeArr()
     m_nodeWithTypeArr.popAll(false);
 }
 
-/*void CConfigSchemaHelper::processNodeWithTypeArr()
+void CConfigSchemaHelper::processNodeWithBaseArr()
 {
-    int length = m_restrictionArr.length();
+    int length = m_nodeWithBaseArr.length();
 
     for (int idx = 0; idx < length; idx++)
     {
-        CRestriction &Restriction = (m_restrictionArr.item(idx));
-        const char *pName = Restriction.getBase();
+        CXSDNodeWithBase *pNodeWithBase = &(this->m_nodeWithBaseArr.item(idx));
+        const char *pBaseName = pNodeWithBase->getBase();
 
-        assert(pName != NULL);
+        assert(pBaseName != NULL);
 
-        if (pName != NULL)
+        if (pBaseName != NULL)
         {
             CXSDNode *pNode = NULL;
 
-            pNodeBase = m_pSchemaMapManager->getSimpleTypeWithName(pName) != NULL ? dynamic_cast<CSimpleType*>(m_pSchemaMapManager->getSimpleTypeWithName(pName)) : NULL;
+            pNode = m_pSchemaMapManager->getSimpleTypeWithName(pBaseName) != NULL ? dynamic_cast<CSimpleType*>(m_pSchemaMapManager->getSimpleTypeWithName(pBaseName)) : NULL;
 
-            if (pNodeBase == NULL)
+            if (pNode == NULL)
             {
-                pNodeBase = m_pSchemaMapManager->getComplexTypeWithName(pName) != NULL ? dynamic_cast<CComplexType*>(m_pSchemaMapManager->getComplexTypeWithName(pName)) : NULL;
+                pNode = m_pSchemaMapManager->getComplexTypeWithName(pBaseName) != NULL ? dynamic_cast<CComplexType*>(m_pSchemaMapManager->getComplexTypeWithName(pBaseName)) : NULL;
             }
 
-            if (pNodeBase == NULL)
+            if (pNode == NULL)
             {
-                // built in datatypes
+                pNode = CXSDBuiltInDataType::create(pNode, pBaseName);
             }
 
-            assert(pNodeBase != NULL);
+            assert(pNode != NULL);
 
-            if (pNodeBase != NULL)
+            if (pNode != NULL)
             {
-                Restriction.setBaseNode(pNodeBase);
+                pNodeWithBase->setBaseNode(pNode);
+            }
+            else
+            {
+                PROGLOG("Unsupported type '%s'", pBaseName);
             }
         }
     }
 
-    m_restrictionArr.popAll(false);
-}*/
+    m_nodeWithBaseArr.popAll(false);
+}
 
 void CConfigSchemaHelper::populateEnvXPath()
 {

@@ -46,7 +46,7 @@ public:
 
 private:
 
-    CFractionDigits() : CXSDNode::CXSDNode(NULL, XSD_FRACTION_DIGITS), m_pValue(NULL), m_nMaxFractionDigits(-1)
+    CFractionDigits() : CXSDNode::CXSDNode(NULL, XSD_FRACTION_DIGITS), m_strValue(""), m_nMaxFractionDigits(-1)
     {
     }
 };

@@ -382,6 +382,18 @@ CAttribute* CAttribute::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSc
         {
             pAttribute->setUse(iterAttrib->queryValue());
         }
+        else if (strcmp(iterAttrib->queryName(), XML_ATTR_TYPE) == 0)
+        {
+            const char *pType = iterAttrib->queryValue();
+
+            assert(pType != NULL && *pType != 0);
+
+            if (pType != NULL && *pType != 0)
+            {
+                pAttribute->setType(pType);
+                CConfigSchemaHelper::getInstance()->addNodeForTypeProcessing(pAttribute);
+            }
+        }
     }
 
     const char *pType = pSchemaRoot->queryPropTree(xpath)->queryProp(XML_ATTR_TYPE);

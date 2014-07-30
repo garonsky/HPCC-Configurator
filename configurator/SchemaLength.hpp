@@ -45,7 +45,7 @@ public:
 
 private:
 
-    CLength() : CXSDNode::CXSDNode(NULL, XSD_LENGTH), m_length(-1)
+    CLength() : CXSDNode::CXSDNode(NULL, XSD_LENGTH), m_nLength(-1)
     {
     }
 };

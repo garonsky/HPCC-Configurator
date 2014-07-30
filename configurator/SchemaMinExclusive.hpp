@@ -47,17 +47,16 @@ public:
         assert(!"Not Implemented");
     }
 
+    GETTERSETTER(Value)
+    GETTERSETTERINT(MinExclusive)
 
 protected:
 
 private:
 
-    CMinExclusive() : CXSDNode::CXSDNode(NULL, XSD_MinExclusive), m_MinExclusive(-1)
+    CMinExclusive() : CXSDNode::CXSDNode(NULL, XSD_MIN_EXCLUSIVE), m_nMinExclusive(-1)
     {
     }
-
-    int m_nMinExclusive;
-
 };
 
 #endif // _SCHEMA_MIN_EXCLUSIVE_HPP_

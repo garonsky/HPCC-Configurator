@@ -42,8 +42,8 @@ public:
     void addAttributeGroupToBeProcessed(CAttributeGroup *pAttributeGroup);
     void processAttributeGroupArr();
 
-    //void addNodeForBaseProcessing(CXSDNodeWithBase *pNode);
-    //void processNodeWithBaseArr();
+    void addNodeForBaseProcessing(CXSDNodeWithBase *pNode);
+    void processNodeWithBaseArr();
 
     void addNodeForTypeProcessing(CXSDNodeWithType *pNode);
     void processNodeWithTypeArr();
@@ -140,6 +140,7 @@ protected:
     CIArrayOf<CExtension> m_extensionArr;
     CIArrayOf<CAttributeGroup> m_attributeGroupArr;
     CIArrayOf<CXSDNodeWithType> m_nodeWithTypeArr;
+    CIArrayOf<CXSDNodeWithBase> m_nodeWithBaseArr;
     StringArray m_strToolTipsJS;
     StringArray m_strArrayEnvXPaths;
     StringArray m_strArrayEnvXMLComponentInstances;

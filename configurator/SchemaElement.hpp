@@ -96,7 +96,7 @@ public:
 
 protected:
 
-    CElement(CXSDNodeBase* pParentNode, const char* pName = "") : CXSDNode::CXSDNode(pParentNode, XSD_ELEMENT), m_strMinOccurs(""), m_strMaxOccurs(""), m_strName(pName), m_pAnnotation(NULL),
+    CElement(CXSDNodeBase* pParentNode, const char* pName = "") : CXSDNodeWithType::CXSDNodeWithType(pParentNode, XSD_ELEMENT), m_strMinOccurs(""), m_strMaxOccurs(""), m_strName(pName), m_pAnnotation(NULL),
         m_pComplexTypeArray(NULL), m_pAttributeArray(NULL), m_bTopLevelElement(false), m_nParentIndex(-1)
     {
     }
@@ -110,7 +110,7 @@ protected:
 
 private:
 
-    CElement() : CXSDNode::CXSDNode(NULL, XSD_ELEMENT), m_strMinOccurs(""), m_strMaxOccurs(""), m_strName(""), m_pAnnotation(NULL),
+    CElement() : CXSDNodeWithType::CXSDNodeWithType(NULL, XSD_ELEMENT), m_strMinOccurs(""), m_strMaxOccurs(""), m_strName(""), m_pAnnotation(NULL),
         m_pComplexTypeArray(NULL), m_pAttributeArray(NULL), m_bTopLevelElement(false)
     {
     }

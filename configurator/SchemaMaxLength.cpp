@@ -41,3 +41,18 @@ CMaxLength* CMaxLength::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSc
 
     return pMaxLength;
 }
+
+void CMaxLength::dump(std::ostream& cout, unsigned int offset) const
+{
+    offset+= STANDARD_OFFSET_1;
+
+    QuickOutHeader(cout, XSD_MAX_LENGTH_STR, offset);
+
+    QUICK_OUT(cout, XSDXPath,  offset);
+    QUICK_OUT(cout, EnvXPath,  offset);
+    QUICK_OUT(cout, Value, offset);
+    QUICK_OUT(cout, MaxLength, offset);
+    QUICK_OUT_ARRAY(cout, offset);
+
+    QuickOutFooter(cout, XSD_MAX_LENGTH_STR, offset);
+}

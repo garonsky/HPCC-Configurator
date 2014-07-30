@@ -77,7 +77,7 @@ void CComplexContent::getQML(StringBuffer &strQML, int idx) const
 
 }
 
-void CComplexContent::traverseAndProcessNodes() const
+/*void CComplexContent::traverseAndProcessNodes() const
 {
     CXSDNodeBase::processEntryHandlers(this);
 
@@ -87,7 +87,7 @@ void CComplexContent::traverseAndProcessNodes() const
     }
 
     CXSDNodeBase::processExitHandlers(this);
-}
+}*/
 
 const char* CComplexContent::getXML(const char* /*pComponent*/)
 {

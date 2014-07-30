@@ -9,7 +9,7 @@ class CLength;
 class CMaxExclusive;
 class CMaxInclusive;
 class CMinExclusive;
-class CMaxInclusive;
+class CMinInclusive;
 class CMaxLength;
 class CMinLength;
 class CPattern;
@@ -41,16 +41,16 @@ public:
 
     virtual void loadXMLFromEnvXml(const IPropertyTree *pEnvTree);
 
-    CEnumerationArray* getEnumerationArray()
+/*    CEnumerationArray* getEnumerationArray()
     {
         return m_pEnumerationArray;
-    }
+    }*/
 
     static CRestriction* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
 protected:
 
-    CRestriction(CXSDNodeBase* pParentNode = NULL, const char* pID = NULL, const char* pBase = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_RESTRICTION), m_strID(pID), m_strBase(pBase), m_pEnumerationArray(NULL)
+    CRestriction(CXSDNodeBase* pParentNode = NULL, const char* pID = NULL, const char* pBase = NULL) : CXSDNodeWithBase::CXSDNodeWithBase(pParentNode, XSD_RESTRICTION), m_strID(pID), m_pEnumerationArray(NULL)
     {
     }
 
@@ -83,12 +83,14 @@ protected:
     GETTERSETTERTYPE(TotalDigits)
     GETTERSETTERTYPE(WhiteSpace)
 
+protected:
+
     CXSDNodeBase *m_pXSDNode;
 
 private:
 
-    CRestriction(CXSDNodeBase* pParentNode = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_RESTRICTION), m_pEnumerationArray(NULL), m_pFractionDigits(NULL), m_pLength(NULL),
-        m_pMaxExclusive(NULL), m_pMaxInclusive(NULL), m_pMinExclusive(NULL), m_pMaxInclusive(NULL), m_pMaxLength(NULL), m_pMinLength(NULL),
+    CRestriction(CXSDNodeBase* pParentNode = NULL) : CXSDNodeWithBase::CXSDNodeWithBase(pParentNode, XSD_RESTRICTION), m_pEnumerationArray(NULL), m_pFractionDigits(NULL), m_pLength(NULL),
+        m_pMaxExclusive(NULL), m_pMaxInclusive(NULL), m_pMinExclusive(NULL), m_pMinInclusive(NULL), m_pMaxLength(NULL), m_pMinLength(NULL),
         m_pPattern(NULL), m_pTotalDigits(NULL), m_pWhiteSpace(NULL), m_pXSDNode(NULL)
     {
     }

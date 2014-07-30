@@ -46,10 +46,11 @@ public:
     }
 
     GETTERSETTER(Value)
+    GETTERSETTERINT(Pattern)
 
 private:
 
-    CPattern() : CXSDNode::CXSDNode(NULL, XSD_PATTERN), m_Pattern(-1)
+    CPattern() : CXSDNode::CXSDNode(NULL, XSD_PATTERN), m_nPattern(-1)
     {
     }
 

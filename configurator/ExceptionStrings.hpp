@@ -46,7 +46,7 @@ const char pExceptionStringArray[EX_STR_LAST_ENTRY][MAX_EXCEPTION_STRING_LENGTH]
                                                                                      /*** ADD CORRESPONDING ENTRY TO pExceptionStringActionArray ***/
                                                                                     };
 
-const char pExceptionStringActionArray[EX_STR_LAST_ENTRY][MAX_EXCEPTION_STRING_LENGTH] = {  /*** ALWAYS ADD TO THE END OF THE ARRAY!!! ***/
+const char pExceptionStringActionArray[EX_STR_LAST_ENTRY*2][MAX_EXCEPTION_STRING_LENGTH] = {  /*** ALWAYS ADD TO THE END OF THE ARRAY!!! ***/
                                                                                             /* 1 */ "Ensure that input xsd files exist and that it's permissions are set properly",
                                                                                             /* 2 */ "Multiple xs:simpleType tags with the same name defined in xsd files. Try processing xsd files using -use parameter and only specify 1 xsd file for processing." ,
                                                                                             /* 3 */ "Multiple xs:complexType tags with the same name defined in xsd files. Try processing xsd files using -use parameter and only specify 1 xsd file for processing.",
@@ -73,7 +73,7 @@ enum eActionArray { EACTION_FRACTION_DIGITS_HAS_BAD_LENGTH = 10,
                     EACTION_MIN_INCLUSIVE_NO_VALUE = 12,
                     EACTION_MAX_EXCLUSIVE_NO_VALUE = 13,
                     EACTION_MAX_INCLUSIVE_NO_VALUE = 14,
-                    EACTION_MIN_LENGTH_BAD_LENGTH = 15,
+                    EACTION_MAX_LENGTH_BAD_LENGTH = 15,
                     EACTION_PATTERN_MISSING_VALUE = 16,
                     EACTION_TOTAL_DIGITS_BAD_LENGTH = 17,
                     EACTION_WHITE_SPACE_BAD_VALUE = 18

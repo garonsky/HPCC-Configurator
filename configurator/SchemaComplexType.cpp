@@ -282,7 +282,7 @@ void CComplexType::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
     }
 }
 
-void CComplexType::traverseAndProcessNodes() const
+/*void CComplexType::traverseAndProcessNodes() const
 {
     CComplexType::processEntryHandlers(this);
 
@@ -317,7 +317,7 @@ void CComplexType::traverseAndProcessNodes() const
     }
 
     CComplexType::processExitHandlers(this);
-}
+}*/
 
 const char* CComplexType::getXML(const char* /*pComponent*/)
 {

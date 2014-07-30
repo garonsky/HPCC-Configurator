@@ -53,9 +53,6 @@ private:
     CMinLength() : CXSDNode::CXSDNode(NULL, XSD_MIN_LENGTH), m_nMinLength(-1)
     {
     }
-
-    int m_nMinLength;
-
 };
 
 #endif // _SCHEMA_MIN_LENGTH_HPP_

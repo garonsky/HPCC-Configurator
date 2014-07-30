@@ -9,12 +9,17 @@
 #include "DocumentationMarkup.hpp"
 #include "SchemaMapManager.hpp"
 #include "SchemaFractionDigits.hpp"
+#include "SchemaLength.hpp"
+#include "SchemaTotalDigits.hpp"
+#include "SchemaWhiteSpace.hpp"
+#include "SchemaAll.hpp"
 
 #define QUICK_LOAD_XSD_RESTRICTIONS(X, Y)       \
     strXPathExt.set(xpath);                     \
     strXPathExt.append("/").append(Y);          \
-    C##X *p##X = X::load(pRestriction, pSchemaRoot, strXPathExt.str());    \
-    if (p##X != NULL) pRestriction->C##X(p##X);
+    C##X *p##X = C##X::load(pRestriction, pSchemaRoot, strXPathExt.str());    \
+    if (p##X != NULL) pRestriction->set##X(p##X);
+    //if (p##X != NULL) pRestriction->C##X(p##X);
 
 CRestriction::~CRestriction()
 {
@@ -201,7 +206,7 @@ CRestriction* CRestriction::load(CXSDNodeBase* pParentNode, const IPropertyTree 
 
     if (pBase != NULL && *pBase != 0 && pRestriction != NULL)
     {
-        CConfigSchemaHelper::addNodeForTypeProcessing(pRestriction);
+        CConfigSchemaHelper::getInstance()->addNodeForBaseProcessing(pRestriction);
     }
 
 

@@ -1,6 +1,7 @@
 #include "jhash.hpp"
 #include "jhash.ipp"
 #include "jlog.hpp"
+#include "SchemaCommon.hpp"
 
 #ifndef _SCHEMA_MAP_MANAGER_HPP_
 #define _SCHEMA_MAP_MANAGER_HPP_
@@ -57,7 +58,7 @@ public:
     CElement* getComponent(int index);
     int getIndexOfElement(const CElement *pElem);
 
-    enum NODE_TYPES getEnumFromTypeName(const char *pTypeName) const;
+    //enum NODE_TYPES getEnumFromTypeName(const char *pTypeName) const;
     const char* getTypeNameFromEnum(enum NODE_TYPES, bool bForDump = false) const;
 
 protected:
@@ -86,9 +87,9 @@ protected:
     typedef MapStringTo<CElementArray*> MapStringToCElementArray;
     Owned<MapStringToCElementArray> m_pElementArrayPtrsMap;
 
-    char m_enumArray[XSD_ERROR][2];
+    const char* m_enumArray[XSD_ERROR][2];
 
-    /*typedef MapStringTo<enum NODE_TYPES *> MapStringToEnum;
+    typedef MapStringTo<enum NODE_TYPES *> MapStringToEnum;
     Owned<MapStringToNodeTypeEnum> m_pStringToEnumMap;
 
     struct STypeStrings
@@ -98,7 +99,7 @@ protected:
     };
 
     typedef MapBetween<enum NODE_TYPES, enum NODE_TYPES, STypeStrings, STypeStrings> MapEnumToTypeStringStruct;
-    Owned<MapEnumToTypeStringStruct> m_pEnumToTypeStringStruct;*/
+    Owned<MapEnumToTypeStringStruct> m_pStringToEnumMap;
 
 private:
 

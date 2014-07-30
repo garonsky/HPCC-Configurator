@@ -28,40 +28,21 @@ public:
         assert(false);
     }
 
-    virtual void traverseAndProcessNodes() const;
-
     virtual const char* getXML(const char* /*pComponent*/);
 
     virtual void initExtension();
-
-    /*void setBaseNode(CXSDNodeBase* pCXSDNode)
-    {
-        if (m_pXSDNode != NULL)
-        {
-            //m_pXSDNode->Release();
-        }
-
-        m_pXSDNode = pCXSDNode;
-    }*/
 
     static CExtension* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath = NULL);
 
 protected:
 
-    CExtension(CXSDNodeBase* pParentNode, const char* pBase = NULL, CXSDNode *pXSDNode = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_EXTENSION), m_strBase(pBase), m_pXSDNode(pXSDNode)
+    CExtension(CXSDNodeBase* pParentNode, const char* pBase = NULL, CXSDNode *pXSDNode = NULL) : CXSDNodeWithBase::CXSDNodeWithBase(pParentNode, XSD_EXTENSION)
     {
     }
-
-/*    const CXSDNodeBase* getBaseNode() const
-    {
-        return m_pXSDNode;
-    }
-
-    CXSDNode *m_pXSDNode;*/
 
 private:
 
-    CExtension() : CXSDNode::CXSDNode(NULL, XSD_EXTENSION)
+    CExtension() : CXSDNodeWithBase::CXSDNodeWithBase(NULL, XSD_EXTENSION)
     {
     }
 };

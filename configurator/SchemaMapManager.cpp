@@ -499,8 +499,10 @@ int CSchemaMapManager::getIndexOfElement(const CElement *pElem)
     return -1;
 }
 
-enum NODE_TYPES CSchemaMapManager::getEnumFromTypeName(const char *pTypeName) const
+/*enum NODE_TYPES CSchemaMapManager::getEnumFromTypeName(const char *pTypeName) const
 {
+    assert(!"NOT IMPLEMENTED?");
+
     if (pTypeName == NULL || *pTypeName == 0)
     {
         return XSD_ERROR;
@@ -515,7 +517,7 @@ enum NODE_TYPES CSchemaMapManager::getEnumFromTypeName(const char *pTypeName) co
     }
 
     return eRet;
-}
+}*/
 
 
 const char* CSchemaMapManager::getTypeNameFromEnum(enum NODE_TYPES eType, bool bForDump) const
