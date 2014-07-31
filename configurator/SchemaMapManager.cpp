@@ -57,7 +57,7 @@ CSchemaMapManager::CSchemaMapManager()
     m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_NEG_INTEGER][0] = XSD_DATA_TYPE_NORMALIZED_STRING;
     m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_NEG_INTEGER][1] = XSD_DT_NEG_INTEGER_STR;
 
-    m_pStringToEnumMap.setown(new MapStringToEnum);
+    //m_pStringToEnumMap.setown(new MapEnumToTypeStringStruct());
     m_pStringToEnumMap.setValue(XSD_DATA_TYPE_NORMALIZED_STRING, XSD_DT_NORMALIZED_STRING);
     m_pStringToEnumMap.setValue(XSD_DATA_TYPE_STRING, XSD_DT_STRING);
     m_pStringToEnumMap.setValue(XSD_DATA_TYPE_TOKEN, XSD_DT_TOKEN);
@@ -499,9 +499,9 @@ int CSchemaMapManager::getIndexOfElement(const CElement *pElem)
     return -1;
 }
 
-/*enum NODE_TYPES CSchemaMapManager::getEnumFromTypeName(const char *pTypeName) const
+enum NODE_TYPES CSchemaMapManager::getEnumFromTypeName(const char *pTypeName) const
 {
-    assert(!"NOT IMPLEMENTED?");
+    //assert(!"NOT IMPLEMENTED?");
 
     if (pTypeName == NULL || *pTypeName == 0)
     {
@@ -517,8 +517,7 @@ int CSchemaMapManager::getIndexOfElement(const CElement *pElem)
     }
 
     return eRet;
-}*/
-
+}
 
 const char* CSchemaMapManager::getTypeNameFromEnum(enum NODE_TYPES eType, bool bForDump) const
 {
