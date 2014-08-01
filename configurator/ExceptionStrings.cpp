@@ -3,7 +3,7 @@
 
 const int nDefaultCode = 99;
 
-IException *MakeExceptionFromMap(int code, enum eExceptionCodes eCode,const char* pMsg)
+IException *MakeExceptionFromMap(int code, enum eExceptionCodes eCode, const char* pMsg)
 {
     static StringBuffer strExceptionMessage;
 

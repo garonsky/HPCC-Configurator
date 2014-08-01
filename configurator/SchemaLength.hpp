@@ -45,7 +45,7 @@ public:
 
 private:
 
-    CLength() : CXSDNode::CXSDNode(NULL, XSD_LENGTH), m_nLength(-1)
+    CLength(CXSDNodeBase* pParentNode = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_LENGTH), m_nLength(-1)
     {
     }
 };

@@ -34,14 +34,15 @@ CMinInclusive* CMinInclusive::load(CXSDNodeBase* pParentNode, const IPropertyTre
             delete pMinInclusive;
             pMinInclusive = NULL;
 
-            throw MakeExceptionFromMap(EX_STR_MISSING_REQUIRED_ATTRIBUTE , EACTION_MIN_INCLUSIVE_NO_VALUE);
+            //throw MakeExceptionFromMap(EX_STR_MISSING_REQUIRED_ATTRIBUTE , EACTION_MIN_INCLUSIVE_NO_VALUE);
+            assert(false);
         }
     }
 
     return pMinInclusive;
 }
 
-void CMinInclusive::dump(std::ostream& cout, unsigned int offset = 0) const
+void CMinInclusive::dump(std::ostream& cout, unsigned int offset) const
 {
     offset += STANDARD_OFFSET_1;
 

@@ -89,8 +89,8 @@ protected:
 
     const char* m_enumArray[XSD_ERROR][2];
 
-    //typedef MapStringTo<enum NODE_TYPES *> MapStringToNodeTypeEnum;
-    //Owned<MapStringToNodeTypeEnum> m_pStringToEnumMap;
+    typedef MapStringTo<enum NODE_TYPES> MapStringToNodeTypeEnum;
+    Owned<MapStringToNodeTypeEnum> m_pStringToEnumMap;
 
     struct STypeStrings
     {
@@ -98,8 +98,8 @@ protected:
         const char *pDumpTypeString;
     };
 
-    typedef MapBetween<enum NODE_TYPES, enum NODE_TYPES, STypeStrings, STypeStrings> MapEnumToTypeStringStruct;
-    Owned<MapEnumToTypeStringStruct> m_pStringToEnumMap;
+    /*typedef MapBetween<enum NODE_TYPES, enum NODE_TYPES, STypeStrings, STypeStrings> MapEnumToTypeStringStruct;
+    Owned<MapEnumToTypeStringStruct> m_pStringToEnumMap;*/
 
 private:
 

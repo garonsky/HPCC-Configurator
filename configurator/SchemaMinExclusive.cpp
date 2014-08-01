@@ -5,7 +5,7 @@ CMinExclusive* CMinExclusive::load(CXSDNodeBase* pParentNode, const IPropertyTre
     assert(!"Not Implemented");
 }
 
-void CMinExclusive::dump(std::ostream& cout, unsigned int offset = 0) const
+void CMinExclusive::dump(std::ostream& cout, unsigned int offset) const
 {
     assert(!"Not Implemented");
 }

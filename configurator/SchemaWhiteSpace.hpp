@@ -49,7 +49,7 @@ public:
 
 private:
 
-    CWhiteSpace() : CXSDNode::CXSDNode(NULL, XSD_WHITE_SPACE)
+    CWhiteSpace(CXSDNodeBase* pParentNode = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_WHITE_SPACE)
     {
     }
 

@@ -30,12 +30,13 @@ CMinLength* CMinLength::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSc
             pMinLength->setValue(pValue);
         }
 
-        if (pMinLength->setMinLength() < 0)  // not set or bad length value
+        if (pMinLength->getMinLength() < 0)  // not set or bad length value
         {
             delete pMinLength;
             pMinLength = NULL;
 
-            throw MakeExceptionFromMap(EX_STR_LENGTH_VALUE_MUST_BE_GREATER_THAN_OR_EQUAL_TO_ZERO , EACTION_MIN_LENGTH_BAD_LENGTH);
+            assert(false);
+            //throw MakeExceptionFromMap(EX_STR_LENGTH_VALUE_MUST_BE_GREATER_THAN_OR_EQUAL_TO_ZERO , EACTION_MIN_LENGTH_BAD_LENGTH);
         }
     }
 
@@ -52,7 +53,6 @@ void CMinLength::dump(std::ostream& cout, unsigned int offset) const
     QUICK_OUT(cout, EnvXPath,  offset);
     QUICK_OUT(cout, Value, offset);
     QUICK_OUT(cout, MinLength, offset);
-    QUICK_OUT_ARRAY(cout, offset);
 
     QuickOutFooter(cout, XSD_MIN_LENGTH_STR, offset);
 }

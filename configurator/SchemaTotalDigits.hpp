@@ -50,7 +50,7 @@ public:
 
 private:
 
-    CTotalDigits() : CXSDNode::CXSDNode(NULL, XSD_TOTAL_DIGITS), m_nTotalDigits(-1)
+    CTotalDigits(CXSDNodeBase* pParentNode = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_TOTAL_DIGITS), m_nTotalDigits(-1)
     {
     }
 };

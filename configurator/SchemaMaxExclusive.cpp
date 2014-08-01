@@ -26,7 +26,7 @@ CMaxExclusive* CMaxExclusive::load(CXSDNodeBase* pParentNode, const IPropertyTre
 
         if (pValue != NULL && *pValue != 0)
         {
-            pMaxExclusive->setMinExclusive(pValue);
+            pMaxExclusive->setMaxExclusive(pValue);
             pMaxExclusive->setValue(pValue);
         }
         else
@@ -34,14 +34,16 @@ CMaxExclusive* CMaxExclusive::load(CXSDNodeBase* pParentNode, const IPropertyTre
             delete pMaxExclusive;
             pMaxExclusive = NULL;
 
-            throw MakeExceptionFromMap(EX_STR_MISSING_REQUIRED_ATTRIBUTE , EACTION_MIN_EXCLUSIVE_NO_VALUE);
+            assert(false);
+            //TODO: fix exceptions
+            //throw MakeExceptionFromMap(EX_STR_MISSING_REQUIRED_ATTRIBUTE , EACTION_MIN_EXCLUSIVE_NO_VALUE);
         }
     }
 
     return pMaxExclusive;
 }
 
-void CMaxExclusive::dump(std::ostream& cout, unsigned int offset = 0) const
+void CMaxExclusive::dump(std::ostream& cout, unsigned int offset) const
 {
     offset += STANDARD_OFFSET_1;
 

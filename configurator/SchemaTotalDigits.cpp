@@ -35,9 +35,24 @@ CTotalDigits* CTotalDigits::load(CXSDNodeBase* pParentNode, const IPropertyTree 
             delete pTotalDigits;
             pTotalDigits = NULL;
 
-            throw MakeExceptionFromMap(EX_STR_LENGTH_VALUE_MUST_BE_GREATER_THAN_OR_EQUAL_TO_ZERO , EACTION_TOTAL_DIGITS_BAD_LENGTH);
+            assert(false);
+            //throw MakeExceptionFromMap(EX_STR_LENGTH_VALUE_MUST_BE_GREATER_THAN_OR_EQUAL_TO_ZERO , EACTION_TOTAL_DIGITS_BAD_LENGTH);
         }
     }
 
     return pTotalDigits;
+}
+
+void CTotalDigits::dump(std::ostream& cout, unsigned int offset) const
+{
+    offset+= STANDARD_OFFSET_1;
+
+    QuickOutHeader(cout, XSD_TOTAL_DIGITS_STR, offset);
+
+    QUICK_OUT(cout, XSDXPath,  offset);
+    QUICK_OUT(cout, EnvXPath,  offset);
+    QUICK_OUT(cout, Value, offset);
+    QUICK_OUT(cout, TotalDigits, offset);
+
+    QuickOutFooter(cout, XSD_TOTAL_DIGITS_STR, offset);
 }

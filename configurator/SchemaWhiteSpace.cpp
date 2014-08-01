@@ -31,9 +31,23 @@ CWhiteSpace* CWhiteSpace::load(CXSDNodeBase* pParentNode, const IPropertyTree *p
         }
         else
         {
-            throw MakeExceptionFromMap(EX_STR_WHITE_SPACE_HAS_INVALID_VALUE , EACTION_WHITE_SPACE_BAD_VALUE);
+            assert(false);
+            //throw MakeExceptionFromMap(EX_STR_WHITE_SPACE_HAS_INVALID_VALUE , EACTION_WHITE_SPACE_BAD_VALUE);
         }
     }
 
     return pWhiteSpace;
+}
+
+void CWhiteSpace::dump(std::ostream& cout, unsigned int offset) const
+{
+    offset+= STANDARD_OFFSET_1;
+
+    QuickOutHeader(cout, XSD_WHITE_SPACE_STR, offset);
+
+    QUICK_OUT(cout, XSDXPath,  offset);
+    QUICK_OUT(cout, EnvXPath,  offset);
+    QUICK_OUT(cout, Value, offset);
+
+    QuickOutFooter(cout, XSD_WHITE_SPACE_STR, offset);
 }

@@ -47,7 +47,7 @@ protected:
 
 private:
 
-    CMaxExclusive() : CXSDNode::CXSDNode(NULL, XSD_MAX_EXCLUSIVE), m_nMaxExclusive(-1)
+    CMaxExclusive(CXSDNodeBase* pParentNode = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_MAX_EXCLUSIVE), m_nMaxExclusive(-1)
     {
     }
 };

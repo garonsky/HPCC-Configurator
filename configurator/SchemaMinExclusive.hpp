@@ -13,8 +13,6 @@ public:
 
     static CMinExclusive* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
-    //GETTERSETTER(V)
-
     virtual void dump(std::ostream& cout, unsigned int offset = 0) const;
 
     virtual void getDocumentation(StringBuffer &strDoc) const
@@ -54,7 +52,7 @@ protected:
 
 private:
 
-    CMinExclusive() : CXSDNode::CXSDNode(NULL, XSD_MIN_EXCLUSIVE), m_nMinExclusive(-1)
+    CMinExclusive(CXSDNodeBase* pParentNode = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_MIN_EXCLUSIVE), m_nMinExclusive(-1)
     {
     }
 };

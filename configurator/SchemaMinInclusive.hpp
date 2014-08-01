@@ -50,7 +50,7 @@ public:
 
 private:
 
-    CMinInclusive() : CXSDNode::CXSDNode(NULL, XSD_MIN_INCLUSIVE), m_nMinInclusive(-1)
+    CMinInclusive(CXSDNodeBase* pParentNode = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_MIN_INCLUSIVE), m_nMinInclusive(-1)
     {
     }
 

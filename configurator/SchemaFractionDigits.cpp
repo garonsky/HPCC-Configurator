@@ -29,18 +29,33 @@ CFractionDigits* CFractionDigits::load(CXSDNodeBase* pParentNode, const IPropert
 
         if (pValue != NULL && *pValue != 0)
         {
-            pFractionDigits->setMaxFractionDigits(pValue);
+            pFractionDigits->setFractionDigits(pValue);
             pFractionDigits->setValue(pValue);
         }
 
-        if (pFractionDigits->getMaxFractionalDigits() < 0)  // not set or bad length value
+        if (pFractionDigits->getFractionDigits() < 0)  // not set or bad length value
         {
             delete pFractionDigits;
             pFractionDigits = NULL;
 
-            throw MakeExceptionFromMap(EX_STR_LENGTH_VALUE_MUST_BE_GREATER_THAN_OR_EQUAL_TO_ZERO , EACTION_FRACTION_DIGITS_HAS_BAD_LENGTH);
+            //throw MakeExceptionFromMap(EX_STR_LENGTH_VALUE_MUST_BE_GREATER_THAN_OR_EQUAL_TO_ZERO, EACTION_FRACTION_DIGITS_HAS_BAD_LENGTH);
+            assert(false);
         }
     }
 
     return pFractionDigits;
+}
+
+void CFractionDigits::dump(std::ostream& cout, unsigned int offset) const
+{
+    offset+= STANDARD_OFFSET_1;
+
+    QuickOutHeader(cout, XSD_FRACTION_DIGITS_STR, offset);
+
+    QUICK_OUT(cout, XSDXPath,  offset);
+    QUICK_OUT(cout, EnvXPath,  offset);
+    QUICK_OUT(cout, Value, offset);
+    QUICK_OUT(cout, FractionDigits, offset);
+
+    QuickOutFooter(cout, XSD_FRACTION_DIGITS_STR, offset);
 }

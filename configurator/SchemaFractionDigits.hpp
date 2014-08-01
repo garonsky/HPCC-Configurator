@@ -42,11 +42,11 @@ public:
     }
 
     GETTERSETTER(Value)
-    GETTERSETTERINT(MaxFractionDigits)
+    GETTERSETTERINT(FractionDigits)
 
 private:
 
-    CFractionDigits() : CXSDNode::CXSDNode(NULL, XSD_FRACTION_DIGITS), m_strValue(""), m_nMaxFractionDigits(-1)
+    CFractionDigits(CXSDNodeBase* pParentNode = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_FRACTION_DIGITS), m_strValue(""), m_nFractionDigits(-1)
     {
     }
 };

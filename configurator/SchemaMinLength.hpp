@@ -50,7 +50,7 @@ public:
 
 private:
 
-    CMinLength() : CXSDNode::CXSDNode(NULL, XSD_MIN_LENGTH), m_nMinLength(-1)
+    CMinLength(CXSDNodeBase* pParentNode = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_MIN_LENGTH), m_nMinLength(-1)
     {
     }
 };

@@ -1,4 +1,4 @@
-#include "SchemaMaxLength.hpp"
+#include "SchemaPattern.hpp"
 
 CPattern* CPattern::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
 {
@@ -11,8 +11,6 @@ CPattern* CPattern::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchema
 
     CPattern *pPattern = NULL;
 
-    pMaxLength->setXSDXPath(xpath);
-
     if (xpath != NULL && *xpath != 0)
     {
         IPropertyTree* pTree = pSchemaRoot->queryPropTree(xpath);
@@ -23,6 +21,7 @@ CPattern* CPattern::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchema
         }
 
         pPattern = new CPattern(pParentNode);
+        pPattern->setXSDXPath(xpath);
 
         const char* pValue = pTree->queryProp(XML_ATTR_VALUE);
 
@@ -35,9 +34,25 @@ CPattern* CPattern::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchema
             delete pPattern;
             pPattern = NULL;
 
-            throw MakeExceptionFromMap(EX_STR_MISSING_REQUIRED_ATTRIBUTE , EACTION_PATTERN_MISSING_VALUE);
+            assert(false);
+//            throw MakeExceptionFromMap(EX_STR_MISSING_REQUIRED_ATTRIBUTE , EACTION_PATTERN_MISSING_VALUE);
         }
     }
 
     return pPattern;
+}
+
+
+void CPattern::dump(std::ostream& cout, unsigned int offset) const
+{
+    offset+= STANDARD_OFFSET_1;
+
+    QuickOutHeader(cout, XSD_FRACTION_DIGITS_STR, offset);
+
+    QUICK_OUT(cout, XSDXPath,  offset);
+    QUICK_OUT(cout, EnvXPath,  offset);
+    QUICK_OUT(cout, Value, offset);
+    QUICK_OUT(cout, Pattern, offset);
+
+    QuickOutFooter(cout, XSD_FRACTION_DIGITS_STR, offset);
 }

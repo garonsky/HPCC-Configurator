@@ -30,12 +30,13 @@ CMaxLength* CMaxLength::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSc
             pMaxLength->setValue(pValue);
         }
 
-        if (pMaxLength->setMaxLength() < 0)  // not set or bad length value
+        if (pMaxLength->getMaxLength() < 0)  // not set or bad length value
         {
             delete pMaxLength;
             pMaxLength = NULL;
 
-            throw MakeExceptionFromMap(EX_STR_LENGTH_VALUE_MUST_BE_GREATER_THAN_OR_EQUAL_TO_ZERO , EACTION_MAX_LENGTH_BAD_LENGTH);
+            assert(false);
+            //throw MakeExceptionFromMap(EX_STR_LENGTH_VALUE_MUST_BE_GREATER_THAN_OR_EQUAL_TO_ZERO , EACTION_MAX_LENGTH_BAD_LENGTH);
         }
     }
 
@@ -52,7 +53,6 @@ void CMaxLength::dump(std::ostream& cout, unsigned int offset) const
     QUICK_OUT(cout, EnvXPath,  offset);
     QUICK_OUT(cout, Value, offset);
     QUICK_OUT(cout, MaxLength, offset);
-    QUICK_OUT_ARRAY(cout, offset);
 
     QuickOutFooter(cout, XSD_MAX_LENGTH_STR, offset);
 }

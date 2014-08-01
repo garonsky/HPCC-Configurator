@@ -45,7 +45,7 @@ public:
 
 private:
 
-    CMaxLength() : CXSDNode::CXSDNode(NULL, XSD_MAX_LENGTH), m_nMaxLength(-1)
+    CMaxLength(CXSDNodeBase* pParentNode = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_MAX_LENGTH), m_nMaxLength(-1)
     {
     }
 };
