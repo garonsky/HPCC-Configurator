@@ -7,7 +7,8 @@ SET(  SRCS QMLMarkup.cpp QMLMarkup.hpp ConfiguratorMain.cpp ConfigFileComponentU
       SchemaExtension.cpp SchemaChoice.cpp SchemaInclude.cpp SchemaSchema.cpp SchemaSimpleType.cpp SchemaRestriction.cpp NodeHandlerDocumentation.cpp DojoHelper.cpp
       SchemaEnumeration.cpp SchemaCommon.cpp ExceptionStrings.cpp SchemaEnumeration.cpp SchemaAttributeGroup.cpp DocumentationMarkup.hpp DojoJSMarkup.hpp
       SchemaCommon.hpp BuildSet.cpp ConfiguratorAPI.cpp SchemaMapManager.cpp EnvironmentModel.cpp SchemaFractionDigits.cpp SchemaLength.cpp SchemaMaxExclusive.cpp
-      SchemaMaxInclusive.cpp SchemaMaxLength.cpp SchemaMinInclusive.cpp SchemaMinExclusive.cpp SchemaMinLength.cpp SchemaPattern.cpp SchemaTotalDigits.cpp SchemaWhiteSpace.cpp )
+      SchemaMaxInclusive.cpp SchemaMaxLength.cpp SchemaMinInclusive.cpp SchemaMinExclusive.cpp SchemaMinLength.cpp SchemaPattern.cpp SchemaTotalDigits.cpp SchemaWhiteSpace.cpp
+      SchemaKey.cpp SchemaKeyRef.cpp SchemaSelector.cpp SchemaUnqiue.cpp SchemaField.cpp )
 
   INCLUDE_DIRECTORIES(
         ${Qt5_INCLUDE_DIRS}

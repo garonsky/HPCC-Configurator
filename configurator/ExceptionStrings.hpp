@@ -28,13 +28,14 @@ enum eExceptionCodes
     EX_STR_LENGTH_VALUE_MUST_BE_GREATER_THAN_OR_EQUAL_TO_ZERO,
     EX_STR_PATTERN_HAS_INVALID_VALUE,
     EX_STR_WHITE_SPACE_HAS_INVALID_VALUE,
+    EX_STR_MISSING_NAME_ATTRIBUTE,
     EX_STR_UNKNOWN,
     EX_STR_LAST_ENTRY
 };
 
 
 const char pExceptionStringArray[EX_STR_LAST_ENTRY][MAX_EXCEPTION_STRING_LENGTH] = { /*** ALWAYS ADD TO THE END OF THE ARRAY!!! ***/
-                                                                                     "can not open xsd file",
+                                                                                     "can not open xsd file", //
                                                                                      "simple type already defined",
                                                                                      "complex type already defined",
                                                                                      "attribute group already defined",

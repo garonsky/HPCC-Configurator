@@ -1,5 +1,5 @@
-#ifndef _SCHEMA_KEY_HPP_
-#define _SCHEMA_KEY_HPP_
+#ifndef _SCHEMA_KeyRef_HPP_
+#define _SCHEMA_KeyRef_HPP_
 
 #include "SchemaCommon.hpp"
 #include "jstring.hpp"
@@ -7,11 +7,11 @@
 class CSelector;
 class CFieldArray;
 
-class CKey : public CXSDNode
+class CKeyRef : public CXSDNode
 {
 public:
 
-    virtual ~CKey()
+    virtual ~CKeyRef()
     {
     }
 
@@ -41,14 +41,15 @@ public:
         assert(!"Not Implemented");
     }
 
-    static CKey* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
+    static CKeyRef* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
     GETTERSETTER(Name)
     GETTERSETTER(ID)
+    GETTERSETTER(Refer)
 
 protected:
 
-    CKey(CXSDNodeBase* pParentNode) : CXSDNode::CXSDNode(pParentNode, XSD_KEY), m_pFieldArray(NULL), m_pSelector(NULL)
+    CKeyRef(CXSDNodeBase* pParentNode) : CXSDNode::CXSDNode(pParentNode, XSD_KEYREF), m_pFieldArray(NULL), m_pSelector(NULL)
     {
     }
 
@@ -57,11 +58,11 @@ protected:
 };
 
 
-class CKeyArray : public CIArrayOf<CKey>, public InterfaceImpl, public CXSDNodeBase
+class CKeyRefArray : public CIArrayOf<CKeyRef>, public InterfaceImpl, public CXSDNodeBase
 {
 public:
 
-    virtual ~CKeyArray()
+    virtual ~CKeyRefArray()
     {
     }
 
@@ -92,14 +93,14 @@ public:
         assert(!"Not Implemented");
     }
 
-    static CKeyArray* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
+    static CKeyRefArray* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
 protected:
 
-    CKeyArray(CXSDNodeBase* pParentNode = NULL) : CXSDNodeBase::CXSDNodeBase(pParentNode, XSD_KEY_ARRAY)
+    CKeyRefArray(CXSDNodeBase* pParentNode = NULL) : CXSDNodeBase::CXSDNodeBase(pParentNode, XSD_KEYREF_ARRAY)
     {
     }
 
 };
 
-#endif // _SCHEMA_KEY_HPP_
+#endif // _SCHEMA_KeyRef_HPP_

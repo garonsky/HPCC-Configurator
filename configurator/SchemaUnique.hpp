@@ -1,17 +1,14 @@
-#ifndef _SCHEMA_KEY_HPP_
-#define _SCHEMA_KEY_HPP_
+#ifndef _SCHEMA_UNIQUE_HPP_
+#define _SCHEMA_UNIQUE_HPP_
 
 #include "SchemaCommon.hpp"
 #include "jstring.hpp"
 
-class CSelector;
-class CFieldArray;
-
-class CKey : public CXSDNode
+class CUnique : public CXSDNode
 {
 public:
 
-    virtual ~CKey()
+    virtual ~CUnique()
     {
     }
 
@@ -32,8 +29,6 @@ public:
         assert(!"Not Implemented");
     }
 
-    //virtual void traverseAndProcessNodes() const;
-
     //virtual const char* getXML(const char* /*pComponent*/);
 
     virtual void populateEnvXPath(StringBuffer strXPath, unsigned int index = 1)
@@ -41,27 +36,25 @@ public:
         assert(!"Not Implemented");
     }
 
-    static CKey* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
+    static CSchemaUnique* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
-    GETTERSETTER(Name)
     GETTERSETTER(ID)
+    GETTERSETTER(Name)
 
 protected:
 
-    CKey(CXSDNodeBase* pParentNode) : CXSDNode::CXSDNode(pParentNode, XSD_KEY), m_pFieldArray(NULL), m_pSelector(NULL)
+    CUnique(CXSDNodeBase *pParentNode) : CXSDNode::CXSDNode(pParentNode, XSD_Unique)
     {
     }
 
-    CFieldArray *m_pFieldArray;
-    CSelector *m_pSelector;
 };
 
 
-class CKeyArray : public CIArrayOf<CKey>, public InterfaceImpl, public CXSDNodeBase
+class CUniqueArray : public CIArrayOf<CKey>, public InterfaceImpl, public CXSDNodeBase
 {
 public:
 
-    virtual ~CKeyArray()
+    virtual ~CUniqueArray()
     {
     }
 
@@ -92,14 +85,15 @@ public:
         assert(!"Not Implemented");
     }
 
-    static CKeyArray* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
+    static CUniqueArray* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
 protected:
 
-    CKeyArray(CXSDNodeBase* pParentNode = NULL) : CXSDNodeBase::CXSDNodeBase(pParentNode, XSD_KEY_ARRAY)
+    CUniqueArray(CXSDNodeBase* pParentNode = NULL) : CXSDNodeBase::CXSDNodeBase(pParentNode, XSD_UNIQUE_ARRAY)
     {
     }
-
 };
 
-#endif // _SCHEMA_KEY_HPP_
+
+
+#endif // _SCHEMA_UNIQUE_HPP_

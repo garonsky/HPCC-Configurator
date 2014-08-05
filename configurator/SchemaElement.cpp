@@ -137,6 +137,12 @@ CElement* CElement::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchema
         pElement->setTitle(pElement->getName());
     }
 
+    strXPathExt.clear().append(xpath).append("/").append(XSD_TAG_KEY);
+    pElement->m_pKeyArray = CKeyArray::load(pElement, pSchemaRoot, strXPathExt.str());
+
+    strXPathExt.clear().append(xpath).append("/").append(XSD_TAG_KEYREF);
+    pElement->m_pKeyRefArray = CKeyRefArray::load(pElement, pSchemaRoot, strXPathExt.str());
+
     SETPARENTNODE(pElement, pParentNode);
 
     return pElement;
@@ -179,6 +185,14 @@ const char* CElement::getXML(const char* /*pComponent*/)
         {
             m_strXML.append(m_pAttributeArray->getXML(NULL));
         }
+        if (m_pKeyArray != NULL)
+        {
+            m_strXML.append(m_pKeyArray->getXML(NULL));
+        }
+        if (m_pKeyRefArray != NULL)
+        {
+            m_strXML.append(m_pKeyRefArray->getXML(NULL));
+        }
 
 //        m_strXML.append("/>\n");
     }
@@ -214,6 +228,16 @@ void CElement::dump(std::ostream &cout, unsigned int offset) const
     if (m_pAttributeArray != NULL)
     {
         m_pAttributeArray->dump(cout, offset);
+    }
+
+    if (m_pKeyArray != NULL)
+    {
+        m_pKeyArray->dump(cout, offset);
+    }
+
+    if (m_pKeyRefArray != NULL)
+    {
+        m_pKeyRefArray->dump(cout, offset);
     }
 
     if (this->getTypeNode() != NULL)

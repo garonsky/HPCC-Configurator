@@ -1,17 +1,14 @@
-#ifndef _SCHEMA_KEY_HPP_
-#define _SCHEMA_KEY_HPP_
+#ifndef _SCHEMA_FIELD_HPP_
+#define _SCHEMA_FIELD_HPP_
 
 #include "SchemaCommon.hpp"
 #include "jstring.hpp"
 
-class CSelector;
-class CFieldArray;
-
-class CKey : public CXSDNode
+class CField : public CXSDNode
 {
 public:
 
-    virtual ~CKey()
+    virtual ~CField()
     {
     }
 
@@ -32,8 +29,6 @@ public:
         assert(!"Not Implemented");
     }
 
-    //virtual void traverseAndProcessNodes() const;
-
     //virtual const char* getXML(const char* /*pComponent*/);
 
     virtual void populateEnvXPath(StringBuffer strXPath, unsigned int index = 1)
@@ -41,27 +36,25 @@ public:
         assert(!"Not Implemented");
     }
 
-    static CKey* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
+    static CSchemaField* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
-    GETTERSETTER(Name)
     GETTERSETTER(ID)
+    GETTERSETTER(XPath)
 
 protected:
 
-    CKey(CXSDNodeBase* pParentNode) : CXSDNode::CXSDNode(pParentNode, XSD_KEY), m_pFieldArray(NULL), m_pSelector(NULL)
+    CField(CXSDNodeBase *pParentNode) : CXSDNode::CXSDNode(pParentNode, XSD_FIELD)
     {
     }
 
-    CFieldArray *m_pFieldArray;
-    CSelector *m_pSelector;
 };
 
 
-class CKeyArray : public CIArrayOf<CKey>, public InterfaceImpl, public CXSDNodeBase
+class CFieldArray : public CIArrayOf<CKey>, public InterfaceImpl, public CXSDNodeBase
 {
 public:
 
-    virtual ~CKeyArray()
+    virtual ~CFieldArray()
     {
     }
 
@@ -92,14 +85,14 @@ public:
         assert(!"Not Implemented");
     }
 
-    static CKeyArray* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
+    static CFieldArray* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
 protected:
 
-    CKeyArray(CXSDNodeBase* pParentNode = NULL) : CXSDNodeBase::CXSDNodeBase(pParentNode, XSD_KEY_ARRAY)
+    CFieldArray(CXSDNodeBase* pParentNode = NULL) : CXSDNodeBase::CXSDNodeBase(pParentNode, XSD_FIELD_ARRAY)
     {
     }
-
 };
 
-#endif // _SCHEMA_KEY_HPP_
+
+#endif // _SCHEMA_FIELD_HPP_

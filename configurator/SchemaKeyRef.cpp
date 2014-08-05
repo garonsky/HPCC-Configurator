@@ -1,13 +1,12 @@
-#include "SchemaKey.hpp"
+#include "SchemaKeyRef.hpp"
 #include "SchemaSelector.hpp"
-#include "SchemaField.hpp"
 #include "SchemaCommon.hpp"
 
-CKey* CKey::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
+CKeyRef* CKeyRef::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
 {
     assert(pSchemaRoot != NULL);
     assert(pParentNode != NULL);
-    assert(pParentNode->getNodeType() == XSD_KEY_ARRAY);
+    assert(pParentNode->getNodeType() == XSD_KEYREF_ARRAY);
 
     if (pSchemaRoot == NULL || pParentNode == NULL)
     {
@@ -15,7 +14,7 @@ CKey* CKey::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, co
         return NULL;
     }
 
-    CKey *pKey = NULL;
+    CKeyRef *pKeyRef = NULL;
 
     if (xpath != NULL && *xpath != 0)
     {
@@ -23,16 +22,17 @@ CKey* CKey::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, co
 
         if (pTree == NULL)
         {
-            return NULL; // no xs:key
+            return NULL; // no xs:KeyRef
         }
 
-         const char* pName = pSchemaRoot->getPropTree(xpath)->queryProp(XML_ATTR_NAME);
+        const char* pName = pSchemaRoot->getPropTree(xpath)->queryProp(XML_ATTR_NAME);
+        const char* pRefer = pSchemaRoot->getPropTree(xpath)->queryProp(XML_ATTR_REFER);
 
-         if (pName != NULL)
+         if (pName != NULL && pRefer != NULL)
          {
-             pKey = new CKey(pParentNode);
-             pKey->setXSDXPath(xpath);
-             pKey->setName(pName);
+             pKeyRef = new CKeyRef(pParentNode);
+             pKeyRef->setXSDXPath(xpath);
+             pKeyRef->setName(pName);
          }
          else
          {
@@ -44,7 +44,7 @@ CKey* CKey::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, co
 
          if (pID != NULL)
          {
-             pKey->setID(pID);
+             pKeyRef->setID(pID);
          }
 
          StringBuffer strXPathExt(xpath);
@@ -56,18 +56,19 @@ CKey* CKey::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, co
          m_pSelector = CSelector::load(pParentNode, pSchemaRoot, strXPathExt.str());
     }
 
-    return pKey;
+    return pKeyRef;
 }
 
 
-void CKey::dump(std::ostream& cout, unsigned int offset) const
+void CKeyRef::dump(std::ostream& cout, unsigned int offset) const
 {
     offset += STANDARD_OFFSET_1;
 
-    QuickOutHeader(cout, XSD_KEY_STR, offset);
+    QuickOutHeader(cout, XSD_KEYREF_STR, offset);
 
     QUICK_OUT(cout, Name, offset);
     QUICK_OUT(cout, ID, offset);
+    QUICK_OUT(cout, Refer, offset);
     QUICK_OUT(cout, XSDXPath,  offset);
 
     if (m_pFieldArray != NULL)
@@ -80,11 +81,11 @@ void CKey::dump(std::ostream& cout, unsigned int offset) const
         m_pSelector->dump(cout, offset);
     }
 
-    QuickOutFooter(cout, XSD_KEY_STR, offset);
+    QuickOutFooter(cout, XSD_KEYREF_STR, offset);
 }
 
 
-CKeyArray* CKeyArray::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
+CKeyRefArray* CKeyRefArray::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
 {
     assert(pSchemaRoot != NULL);
     assert(pParentNode->getNodeType() == XSD_ELEMENT);
@@ -96,8 +97,8 @@ CKeyArray* CKeyArray::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSche
 
     StringBuffer strXPathExt(xpath);
 
-    CKeyArray *pKeyArray = new CKeyArray(pParentNode);
-    pKeyArray->setXSDXPath(xpath);
+    CKeyRefArray *pKeyRefArray = new CKeyRefArray(pParentNode);
+    pKeyRefArray->setXSDXPath(xpath);
 
     Owned<IPropertyTreeIterator> attributeIter = pSchemaRoot->getElements(xpath, ipt_ordered);
 
@@ -106,34 +107,34 @@ CKeyArray* CKeyArray::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSche
     {
         strXPathExt.clear().append(xpath).appendf("[%d]",count);
 
-        CKey *pKey = CKey::load(pKeyArray, pSchemaRoot, strXPathExt.str());
+        CKeyRef *pKeyRef = CKeyRef::load(pKeyRefArray, pSchemaRoot, strXPathExt.str());
 
-        if (pKey != NULL)
+        if (pKeyRef != NULL)
         {
-            pKeyArray->append(*pKey);
+            pKeyRefArray->append(*pKeyRef);
         }
 
         count++;
     }
 
-    if (pKeyArray->length() == 0)
+    if (pKeyRefArray->length() == 0)
     {
-        delete pKeyArray;
-        pKeyArray = NULL;
+        delete pKeyRefArray;
+        pKeyRefArray = NULL;
     }
 
-    return pKeyArray;
+    return pKeyRefArray;
 }
 
-void CKeyArray::dump(std::ostream &cout, unsigned int offset) const
+void CKeyRefArray::dump(std::ostream &cout, unsigned int offset) const
 {
     offset+= STANDARD_OFFSET_1;
 
-    QuickOutHeader(cout, XSD_KEY_ARRAY_STR, offset);
+    QuickOutHeader(cout, XSD_KEYREF_ARRAY_STR, offset);
 
     QUICK_OUT(cout, XSDXPath,  offset);
     QUICK_OUT(cout, EnvXPath,  offset);
     QUICK_OUT_ARRAY(cout, offset);
 
-    QuickOutFooter(cout, XSD_KEY_ARRAY_STR, offset);
+    QuickOutFooter(cout, XSD_KEYREF_ARRAY_STR, offset);
 }

@@ -8,6 +8,7 @@
 #include "jlib.hpp"
 #include "jlog.hpp"
 #include "ExceptionStrings.hpp"
+#include "XMLTags.h"
 
 
 #define MINIMUM_STRICTNESS  0
@@ -102,6 +103,12 @@ enum NODE_TYPES
     XSD_ELEMENT,
     XSD_ELEMENT_ARRAY,
     XSD_EXTENSION,
+    XSD_FIELD,
+    XSD_FIELD_ARRAY,
+    XSD_KEY,
+    XSD_KEY_ARRAY,
+    XSD_KEYREF,
+    XSD_KEYREF_ARRAY,
     XSD_INCLUDE,
     XSD_INCLUDE_ARRAY,
     XSD_RESTRICTION,
@@ -120,7 +127,10 @@ enum NODE_TYPES
     XSD_MIN_LENGTH,
     XSD_MAX_LENGTH,
     XSD_PATTERN,
+    XSD_SELECTOR,
     XSD_TOTAL_DIGITS,
+    XSD_UNIQUE,
+    XSD_UNIQUE_ARRAY,
     XSD_WHITE_SPACE,
     XSD_DT_NORMALIZED_STRING,  // keep this as the first DT type for array index purposes
     XSD_DT_STRING,
@@ -151,6 +161,10 @@ static const char* XSD_TAG_APP_INFO("xs:appinfo");
 static const char* XSD_TAG_DOCUMENTATION("xs:documentation");
 //static const char* XSD_TAG_ELEMENT("xs:element");
 static const char* XSD_TAG_EXTENSION("xs:extension");
+static const char* XSD_TAG_KEY("xs:key");
+static const char* XSD_TAG_KEYREF("xs:keyref");
+static const char* XSD_TAG_SELECTOR("xs:selector");
+static const char* XSD_TAG_FIELD("xs:field");
 static const char* XSD_TAG_INCLUDE("xs:include");
 static const char* XSD_TAG_RESTRICTION("xs:restriction");
 static const char* XSD_TAG_SCHEMA("");//xs:schema");
@@ -167,6 +181,7 @@ static const char* XSD_TAG_MAX_LENGTH("xs:maxLength");
 static const char* XSD_TAG_MIN_LENGTH("xs:minLength");
 static const char* XSD_TAG_PATTERN("xs:pattern");
 static const char* XSD_TAG_TOTAL_DIGITS("xs:totalDigits");
+static const char* XSD_TAG_UNQIUE("xs:unique");
 static const char* XSD_TAG_WHITE_SPACE("xs:whiteSpace");
 
 static const char* XSD_DATA_TYPE_NORMALIZED_STRING("xs:normalizedString");
@@ -202,9 +217,15 @@ static const char* XSD_ERROR_STR("ERROR");
 static const char* XSD_ENUMERATION_STR("Enumeration");
 static const char* XSD_ENUMERATION_ARRAY_STR("EnumerationArray");
 static const char* XSD_EXTENSION_STR("Extension");
+static const char* XSD_FIELD_STR("Field");
+static const char* XSD_FIELD_ARRAY_STR("FieldArray");
 static const char* XSD_FRACTION_DIGITS_STR("FractionDigits");
 static const char* XSD_INCLUDE_STR("Include");
 static const char* XSD_INCLUDE_ARRAY_STR("IncludeArray");
+static const char* XSD_KEY_STR("Key");
+static const char* XSD_KEY_ARRAY_STR("KeyArray");
+static const char* XSD_KEYREF_STR("KeyRef");
+static const char* XSD_KEYREF_ARRAY_STR("KeyRefArray");
 static const char* XSD_LENGTH_STR("Length");
 static const char* XSD_MIN_INCLUSIVE_STR("MinInclusive");
 static const char* XSD_MAX_INCLUSIVE_STR("MaxInclusive");
@@ -215,10 +236,13 @@ static const char* XSD_MAX_LENGTH_STR("MaxLength");
 static const char* XSD_PATTERN_STR("Pattern");
 static const char* XSD_RESTRICTION_STR("Restriction");
 static const char* XSD_SCHEMA_STR("Schema");
+static const char* XSD_SELECTOR_STR("Selector");
 static const char* XSD_SEQUENCE_STR("Sequence");
 static const char* XSD_SIMPLE_TYPE_STR("SimpleType");
 static const char* XSD_SIMPLE_TYPE_ARRAY_STR("SimpleTypeArray");
 static const char* XSD_TOTAL_DIGITS_STR("TotalDigits");
+static const char* XSD_UNQIUE_STR("Unique");
+static const char* XSD_UNQIUE_ARRRAY_STR("UniqueArray");
 static const char* XSD_WHITE_SPACE_STR("WhiteSpace");
 static const char* XSD_DT_NORMALIZED_STRING_STR("NormalizedString");
 static const char* XSD_DT_STRING_STR("String");
@@ -242,6 +266,8 @@ static const char* XML_ATTR_DEFAULT("@default");
 static const char* XML_ATTR_USE("@use");
 static const char* XML_ATTR_MINOCCURS("@minOccurs");
 static const char* XML_ATTR_BASE("@base");
+static const char* XML_ATTR_XPATH("@xpath");
+static const char* XML_ATTR_REFER("@refer");
 
 static const char* TAG_VIEWCHILDNODES("viewChildNodes");
 static const char* TAG_VIEWTYPE("viewType");

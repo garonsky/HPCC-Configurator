@@ -506,6 +506,7 @@ CAttributeArray* CAttributeArray::load(CXSDNodeBase* pParentNode, const IPropert
 
     if (pAttribArray->length() == 0)
     {
+        delete pAttribArray;
         return NULL;
     }
 

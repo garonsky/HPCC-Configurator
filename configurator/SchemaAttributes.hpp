@@ -126,16 +126,16 @@ public:
 
     virtual void loadXMLFromEnvXml(const IPropertyTree *pEnvTree);
 
-    virtual void traverseAndProcessNodes() const;
+    //virtual void traverseAndProcessNodes() const;
 
     virtual const char* getXML(const char* /*pComponent*/);
 
     const CAttribute* findAttributeWithName(const char *pName, bool bCaseInsensitive = true) const;
 
+protected:
+
     static CAttributeArray* load(const char* pSchemaFile);
     static CAttributeArray* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
-
-protected:
 
 private:
 
