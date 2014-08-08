@@ -353,8 +353,6 @@ const CXSDNodeBase* CXSDNode::getParentNodeByType(NODE_TYPES eNodeType) const
 
 const CXSDNodeBase* CXSDNodeBase::getNodeByTypeAndNameAscending(NODE_TYPES eNodeType[], const char *pName, int length) const
 {
-
-
   for (int i = 0; i < length; i++)
   {
     assert(this->m_eNodeType != eNodeType[i]);

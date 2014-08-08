@@ -506,6 +506,48 @@ void CConfigSchemaHelper::processNodeWithBaseArr()
     m_nodeWithBaseArr.popAll(false);
 }
 
+void CConfigSchemaHelper::addElementForRefProcessing(CElement *pElement)
+{
+    assert (pElement != NULL);
+
+    if (pElement != NULL)
+    {
+        m_ElementArr.append(*pElement);
+    }
+}
+
+void CConfigSchemaHelper::processElementArr(CElement *pElement)
+{
+    int length = m_nodeWithBaseArr.length();
+
+    for (int idx = 0; idx < length; idx++)
+    {
+        CElement *pElement = &(this->m_ElementArr.item(idx));
+        const char *pRef = pNodeWithBase->getRef();
+
+        assert(pRef != NULL);
+
+        if (pRef != NULL)
+        {
+            CElement *pRefElementNode = NULL;
+
+            pRefElementNode = m_pSchemaMapManager->getElementWithName(pRef);
+
+            if (pRefElementNode != NULL)
+            {
+                pElement->setRefElementNode(pRefElementNode);
+            }
+            else
+            {
+                //TODO: throw exception
+                assert(!"Unknown element referenced");
+            }
+        }
+    }
+
+    m_ElementArr.popAll(false);
+}
+
 void CConfigSchemaHelper::populateEnvXPath()
 {
     CSchema* pSchema = NULL;

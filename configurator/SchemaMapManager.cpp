@@ -13,6 +13,7 @@ CSchemaMapManager::CSchemaMapManager()
     m_pAttributePtrsMap.setown(new MapStringToCAttribute);
     m_pRestrictionPtrsMap.setown(new MapStringToCRestriction);
     m_pElementPtrsMap.setown(new MapStringToCElement);
+    m_pElementNamePtrsMap.setown(new MapStringToCElement);
     m_pElementArrayPtrsMap.setown(new MapStringToCElementArray);
 
     m_enumArray[XSD_DT_NORMALIZED_STRING-XSD_DT_NORMALIZED_STRING][0] = XSD_DATA_TYPE_NORMALIZED_STRING;
@@ -266,6 +267,56 @@ CAttributeGroup* CSchemaMapManager::getAttributeGroupFromXPath(const char *pXPat
     else
     {
         return NULL;
+    }
+}
+
+CElement* CSchemaMapManager::getElementWithName(const char* pName)
+{
+    assert (pName != NULL && *pName != 0);
+
+    if (pName != NULL && *pName != 0)
+    {
+        CElement **ppElement = m_pElementNamePtrsMap->getValue(pName);
+
+        assert(ppElement != NULL);
+
+        if (pElement != NULL)
+        {
+            return *ppElement;
+        }
+        else
+        {
+            return NULL;
+        }
+    }
+    else
+    {
+        return NULL;
+    }
+}
+
+void CSchemaMapManager::setElementWithName(const char* pName, CElement *pElement)
+{
+    assert (pName != NULL && *pName != 0 && pElement != NULL);
+
+    if (pName != NULL && *pName != 0 && pElement != NULL)
+    {
+        assert (pElement != NULL);
+
+        if (pName == NULL || *pName == 0 || pElement == NULL)
+        {
+            return;
+        }
+
+        if (m_pElementNamePtrsMap->getValue(pName) != NULL)
+        {
+            //m_pElementNamePtrsMap->remove(pName);
+            //throw MakeExceptionFromMap(EX_STR_ATTRIBUTE_GROUP_ALREADY_DEFINED);
+            assert(!"Redefintion");
+        }
+
+        assert(m_pElementNamePtrsMap->getLinkCount() == 1);
+        m_pElementNamePtrsMap->setValue(pName, pElement);
     }
 }
 

@@ -38,6 +38,7 @@ CKey* CKey::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, co
          {
              assert(!"value attribute can be empty!");
              // TODO: throw MakeExceptionFromMap(EX_STR_MISSING_VALUE_ATTRIBUTE_IN_LENGTH);
+             return NULL;
          }
 
          const char *pID = pSchemaRoot->getPropTree(xpath)->queryProp(XML_ATTR_ID);
@@ -54,6 +55,8 @@ CKey* CKey::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, co
          strXPathExt.clear().set(xpath);
          strXPathExt.append("/").append(XSD_TAG_SELECTOR);
          m_pSelector = CSelector::load(pParentNode, pSchemaRoot, strXPathExt.str());
+
+         assert(m_pFieldArray != NULL && m_pSelector != NULL);
     }
 
     return pKey;

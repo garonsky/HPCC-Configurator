@@ -87,7 +87,13 @@ CElement* CElement::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchema
     {
         if (strcmp(iterAttrib->queryName(), XML_ATTR_NAME) == 0)
         {
-            pElement->setName(iterAttrib->queryValue());
+            const char *pName = iterAttrib->queryValue();
+
+            if (pName != NULL && *pName != 0)
+            {
+                pElement->setName(pName);
+                CConfigSchemaHelper::getInstance()->getSchemaMapManager()->setElementWithName(pName, pElement);
+            }
         }
         else if (strcmp(iterAttrib->queryName(), XML_ATTR_MAXOCCURS) == 0)
         {
@@ -107,6 +113,22 @@ CElement* CElement::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchema
             {
                 pElement->setType(pType);
                 CConfigSchemaHelper::getInstance()->addNodeForTypeProcessing(pElement);
+            }
+        }
+        else if (strcmp(iterAttrib->queryName(), XML_ATTR_REF) == 0)
+        {
+            const char *pRef = iterAttrib->queryValue();
+
+            assert (pRef != NULL && *pRef != 0 && pElement->getAncestorNode(2) != XSD_SCHEMA);
+
+            if (pRef != NULL && *pRef != 0 && Element->getAncestorNode(2) != XSD_SCHEMA)
+            {
+                pElement->setRef(pRef);
+                CConfigSchemaHelper::getInstance()->addElementForRefProcessing(pElement);
+            }
+            else
+            {
+                // TODO:  throw exception
             }
         }
 
@@ -214,6 +236,12 @@ void CElement::dump(std::ostream &cout, unsigned int offset) const
     QUICK_OUT(cout, XSDXPath,  offset);
     QUICK_OUT(cout, EnvXPath,  offset);
     QUICK_OUT(cout, EnvValueFromXML,  offset);
+    QUICK_OUT(cout, Ref, offset);
+
+    if (this->getTypeNode() != NULL)
+    {
+        this->getTypeNode()->dump(cout, offset);
+    }
 
     if (m_pAnnotation != NULL)
     {
@@ -240,9 +268,16 @@ void CElement::dump(std::ostream &cout, unsigned int offset) const
         m_pKeyRefArray->dump(cout, offset);
     }
 
-    if (this->getTypeNode() != NULL)
+    if (this->getRef() != NULL)
     {
-        this->getTypeNode()->dump(cout, offset);
+        CElement *pElement = CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getElementWithName(this->getRef());
+
+        assert(pElement != NULL);
+
+        if (pElement != NULL)
+        {
+            pElement->dump(cout, offset);
+        }
     }
 
     QuickOutFooter(cout, XSD_ELEMENT_STR, offset);

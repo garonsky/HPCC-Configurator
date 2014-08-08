@@ -50,6 +50,9 @@ public:
     //void addRestrictionToBeProcessed(CRestriction *pRestriction);
     //void processRestrictionGroupArr();
 
+    void addElementForRefProcessing(CElement *pElement);
+    void processElementArr(CElement *pElement);
+
     //test purposes
     bool getXMLFromSchema(StringBuffer& strXML, const char* pXSD);
 
@@ -141,6 +144,7 @@ protected:
     CIArrayOf<CAttributeGroup> m_attributeGroupArr;
     CIArrayOf<CXSDNodeWithType> m_nodeWithTypeArr;
     CIArrayOf<CXSDNodeWithBase> m_nodeWithBaseArr;
+    CIArrayOf<CElement> m_ElementArr;
     StringArray m_strToolTipsJS;
     StringArray m_strArrayEnvXPaths;
     StringArray m_strArrayEnvXMLComponentInstances;

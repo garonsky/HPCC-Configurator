@@ -24,13 +24,6 @@ public:
     {
     }
 
-    GETTERSETTER(Name)
-    GETTERSETTER(MaxOccurs)
-    GETTERSETTER(MinOccurs)
-    GETTERSETTER(Title)
-    GETTERSETTER(InstanceName)
-
-
     virtual const CXSDNodeBase* getNodeByTypeAndNameAscending(NODE_TYPES eNodeType, const char *pName) const;
     virtual const CXSDNodeBase* getNodeByTypeAndNameDescending(NODE_TYPES eNodeType, const char *pName) const;
 
@@ -94,12 +87,34 @@ public:
         return (pNode != NULL && pNode->getParentNodeByType(XSD_ELEMENT) == getTopMostElement(pNode));
     }
 
+    void setRefElementNode(CElement *pElement)
+    {
+        assert (pElement != NULL && this->getRefElementNode() != NULL);
+
+        if (pElement != NULL)
+        {
+            this->m_pElementRefNode = pElement;
+        }
+    }
+
+    CElement* getRefElementNode() const
+    {
+        return this->m_pElementRefNode;
+    }
+
     static CElement* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
+
+    GETTERSETTER(Name)
+    GETTERSETTER(MaxOccurs)
+    GETTERSETTER(MinOccurs)
+    GETTERSETTER(Title)
+    GETTERSETTER(InstanceName)
+    GETTERSETTER(Ref)
 
 protected:
 
     CElement(CXSDNodeBase* pParentNode, const char* pName = "") : CXSDNodeWithType::CXSDNodeWithType(pParentNode, XSD_ELEMENT), m_strMinOccurs(""), m_strMaxOccurs(""), m_strName(pName), m_pAnnotation(NULL),
-        m_pComplexTypeArray(NULL), m_pAttributeArray(NULL), m_pKeyArray(NULL), m_pKeyRefArray(NULL), m_bTopLevelElement(false), m_nParentIndex(-1)
+        m_pComplexTypeArray(NULL), m_pAttributeArray(NULL), m_pKeyArray(NULL), m_pKeyRefArray(NULL), m_pElementRefNode(NULL), m_bTopLevelElement(false), m_nParentIndex(-1)
     {
     }
 
@@ -108,9 +123,11 @@ protected:
     CAttributeArray* m_pAttributeArray;
     CKeyArray *m_pKeyArray;
     CKeyRefArray *m_pKeyRefArray;
+    CElement *m_pElementRefNode;
 
     bool m_bTopLevelElement;
     int m_nParentIndex;
+
 
 private:
 

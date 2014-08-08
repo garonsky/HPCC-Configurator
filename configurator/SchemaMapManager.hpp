@@ -38,6 +38,9 @@ public:
     void setAttributeGroupTypeWithName(const char* pName, CAttributeGroup *pAttributeGroup);
     CAttributeGroup* getAttributeGroupFromXPath(const char *pXPath);
 
+    CElement* getElementWithName(const char* pName);
+    void setElementWithName(const char* pName, CElement *pElement);
+
     void addMapOfXPathToAttribute(const char* pXPath, CAttribute *pAttribute);
     void removeMapOfXPathToAttribute(const char* pXPath);
     CAttribute* getAttributeFromXPath(const char* pXPath);
@@ -83,6 +86,7 @@ protected:
 
     typedef MapStringTo<CElement*> MapStringToCElement;
     Owned<MapStringToCElement> m_pElementPtrsMap;
+    Owned<MapStringToCElement> m_pElementNamePtrsMap;
 
     typedef MapStringTo<CElementArray*> MapStringToCElementArray;
     Owned<MapStringToCElementArray> m_pElementArrayPtrsMap;
