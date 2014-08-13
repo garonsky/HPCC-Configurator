@@ -6,6 +6,7 @@
 
 class CSelector;
 class CFieldArray;
+class CAnnotation;
 
 class CKey : public CXSDNode
 {
@@ -41,6 +42,12 @@ public:
         assert(!"Not Implemented");
     }
 
+    const CAnnotation* getAnnotation() const
+    {
+        return m_pAnnotation;
+    }
+
+
     static CKey* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
     GETTERSETTER(Name)
@@ -54,6 +61,7 @@ protected:
 
     CFieldArray *m_pFieldArray;
     CSelector *m_pSelector;
+    CAnnotation *m_pAnnotation;
 };
 
 

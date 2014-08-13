@@ -8,9 +8,7 @@
 #include "SchemaAnnotation.hpp"
 
 class CSimpleTypeArray;
-
-static const char* DEFAULT_COMPONENT_ATTRIBUTE_XPATH("./xs:element/xs:complexType/xs:attribute");
-static const char* DEFAULT_COMPONENT_ATTRIBUTE_GROUP_XPATH("./xs:attributeGroup");
+class CKeyRefArray;
 
 class CAttribute : public CXSDNodeWithType
 {
@@ -80,7 +78,6 @@ protected:
         m_pAnnotation = pAnnotation;
     }
 
-
     void setSimpleTypeArray(CSimpleTypeArray *pSimpleTypeArray)
     {
         assert(pSimpleTypeArray != NULL);  // why would this ever be NULL?
@@ -93,8 +90,11 @@ protected:
         m_pSimpleTypeArray = pSimpleTypeArray;
     }
 
+    virtual void setEnvValueFromXML(const char *p);
+
     CAnnotation *m_pAnnotation;
     CSimpleTypeArray *m_pSimpleTypeArray;
+    CKeyRefArray *m_pReverseKeyRefArray;
     bool m_bInstanceValueValid;
 
 private:

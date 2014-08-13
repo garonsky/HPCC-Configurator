@@ -1,6 +1,7 @@
 #include "SchemaKey.hpp"
 #include "SchemaSelector.hpp"
 #include "SchemaField.hpp"
+#include "SchemaAnnotation.hpp"
 #include "SchemaCommon.hpp"
 
 CKey* CKey::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
@@ -57,6 +58,10 @@ CKey* CKey::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, co
          m_pSelector = CSelector::load(pParentNode, pSchemaRoot, strXPathExt.str());
 
          assert(m_pFieldArray != NULL && m_pSelector != NULL);
+
+         strXPathExt.append("/").append(XSD_TAG_ANNOTATION);
+         pElement->m_pAnnotation = CAnnotation::load(pElement, pSchemaRoot, strXPathExt.str());
+
     }
 
     return pKey;

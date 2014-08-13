@@ -12,6 +12,7 @@
 #include "SchemaMapManager.hpp"
 #include "ConfiguratorMain.hpp"
 #include "jlog.hpp"
+#include "SchemaKeyRef.hpp"
 
 CAttribute::~CAttribute()
 {
@@ -347,6 +348,24 @@ void CAttribute::traverseAndProcessNodes() const
     }
 
     CXSDNodeBase::processExitHandlers(this);
+}
+
+void CAttribute::setEnvValueFromXML(const char *p)
+{
+    assert( p != NULL);
+
+    if (p == NULL)
+    {
+        return;
+    }
+
+    if (this->m_pReverseKeyRefArray != NULL)
+    {
+        for (int idx = 0; this->m_pReverseKeyRefArray->length(); idx++)
+        {
+          //  this->m_pReverseKeyRefArray->item(idx).
+        }
+    }
 }
 
 CAttribute* CAttribute::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)

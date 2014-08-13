@@ -13,6 +13,7 @@ class IPropertyTree;
 class CAttributeArray;
 class CKeyArray;
 class CKeyRefArray;
+class CKeyRef;
 
 static const char* DEFAULT_ELEMENT_ARRAY_XPATH(".");
 
@@ -102,6 +103,8 @@ public:
         return this->m_pElementRefNode;
     }
 
+    void addReverseKeyRef(const CKeyRef *pKeyRef);
+
     static CElement* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
     GETTERSETTER(Name)
@@ -114,7 +117,7 @@ public:
 protected:
 
     CElement(CXSDNodeBase* pParentNode, const char* pName = "") : CXSDNodeWithType::CXSDNodeWithType(pParentNode, XSD_ELEMENT), m_strMinOccurs(""), m_strMaxOccurs(""), m_strName(pName), m_pAnnotation(NULL),
-        m_pComplexTypeArray(NULL), m_pAttributeArray(NULL), m_pKeyArray(NULL), m_pKeyRefArray(NULL), m_pElementRefNode(NULL), m_bTopLevelElement(false), m_nParentIndex(-1)
+        m_pComplexTypeArray(NULL), m_pAttributeArray(NULL), m_pKeyArray(NULL), m_pKeyRefArray(NULL), m_pReverseKeyRefArray(NULL), m_pElementRefNode(NULL), m_bTopLevelElement(false), m_nParentIndex(-1)
     {
     }
 
@@ -123,6 +126,7 @@ protected:
     CAttributeArray* m_pAttributeArray;
     CKeyArray *m_pKeyArray;
     CKeyRefArray *m_pKeyRefArray;
+    CKeyRefArray *m_pReverseKeyRefArray;
     CElement *m_pElementRefNode;
 
     bool m_bTopLevelElement;
