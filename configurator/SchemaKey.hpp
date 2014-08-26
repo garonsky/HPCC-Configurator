@@ -47,6 +47,7 @@ public:
         return m_pAnnotation;
     }
 
+    bool checkConstraint(const char *pValue) const;
 
     static CKey* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 

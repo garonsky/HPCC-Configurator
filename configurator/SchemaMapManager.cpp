@@ -444,6 +444,38 @@ CElement* CSchemaMapManager::getElementFromXPath(const char *pXPath)
     }
 }
 
+void CSchemaMapManager::addMapOfXSDXPathToElement(const char* pXPath, CElement *pElement)
+{
+    assert (pElement != NULL);
+    assert(pXPath != NULL && *pXPath != 0);
+
+    if (pElement != NULL && pXPath != NULL && *pXPath != 0)
+    {
+        m_pXSDToElementPtrsMap->setValue(pXPath, pElement);
+    }
+}
+
+CElement* CSchemaMapManager::getElementFromXSDXPath(const char *pXPath) const
+{
+    assert(pXPath != NULL && *pXPath != 0);
+
+    if (pXPath != NULL && *pXPath != 0)
+    {
+        CElement **ppElement = m_pElementPtrsMap->getValue(pXPath);
+
+        assert(ppElement != NULL);
+
+        if (ppElement != NULL)
+        {
+            return *ppElement;
+        }
+        else
+        {
+            return NULL;
+        }
+    }
+}
+
 void CSchemaMapManager::addMapOfXPathToRestriction(const char*pXPath, CRestriction *pRestriction)
 {
     assert (pRestriction != NULL);

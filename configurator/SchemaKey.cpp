@@ -3,6 +3,9 @@
 #include "SchemaField.hpp"
 #include "SchemaAnnotation.hpp"
 #include "SchemaCommon.hpp"
+#include "ConfigSchemaHelper.hpp"
+#include "SchemaMapManager.hpp"
+#include "SchemaAttributes.hpp"
 
 CKey* CKey::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
 {
@@ -67,6 +70,40 @@ CKey* CKey::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, co
     return pKey;
 }
 
+bool CKey::checkConstraint(const char *pValue) const
+{
+    bool bRetVal = true;
+
+    if (m_pSelector != NULL && m_pFieldArray->length() != 0)
+    {
+        for (int idx = 0; idx < m_pFieldArray->length(); idx++)
+        {
+            const CField *m_pField = m_pFieldArray->item(idx);
+
+            assert(m_pField != NULL);
+
+            if (m_pField == NULL)
+            {
+                return false;
+            }
+
+            StringBuffer strXSDPathForConstraint(this->getXSDXPath());
+
+            strXSDPathForConstraint.appendf("/%s", this->m_pSelector->getXPath());
+
+            const CElement *pElement = CConfigSchemaHelper::getSchemaMapManager()->getElementFromXSDXPath(strXSDXPath.str());
+
+            if (pElement == NULL)
+            {
+                return false;
+            }
+
+            const CAttribute *pAttribute = pElement->getNodeByTypeAndNameDescending(XSD_ATTRIBUTE, )
+        }
+    }
+
+    return bRetVal;
+}
 
 void CKey::dump(std::ostream& cout, unsigned int offset) const
 {

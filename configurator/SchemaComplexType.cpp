@@ -52,6 +52,22 @@ const CXSDNodeBase* CComplexType::getNodeByTypeAndNameDescending(NODE_TYPES eNod
     {
         pMatchingNode = m_pSequence->getNodeByTypeAndNameDescending(eNodeType, pName);
     }
+    if (pMatchingNode == NULL && m_pSequence != NULL)
+    {
+        pMatchingNode = m_pComplexContent->getNodeByTypeAndNameDescending(eNodeType, pName);
+    }
+    if (pMatchingNode == NULL && m_pAttributeArray != NULL)
+    {
+        pMatchingNode = m_pSequence->getNodeByTypeAndNameDescending(eNodeType, pName);
+    }
+    if (pMatchingNode == NULL && m_pElementArray != NULL)
+    {
+        pMatchingNode = m_pSequence->getNodeByTypeAndNameDescending(eNodeType, pName);
+    }
+    if (pMatchingNode == NULL && m_pChoice != NULL)
+    {
+        pMatchingNode = m_pSequence->getNodeByTypeAndNameDescending(eNodeType, pName);
+    }
 
     return pMatchingNode;
 }

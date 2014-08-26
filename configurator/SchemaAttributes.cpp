@@ -363,7 +363,13 @@ void CAttribute::setEnvValueFromXML(const char *p)
     {
         for (int idx = 0; this->m_pReverseKeyRefArray->length(); idx++)
         {
-          //  this->m_pReverseKeyRefArray->item(idx).
+            CKeyRef *pKeyRef = this->m_pReverseKeyRefArray->item(idx);
+
+            assert(pKeyRef != NULL);
+
+            //pKeyRef
+
+
         }
     }
 }

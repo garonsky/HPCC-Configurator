@@ -73,6 +73,7 @@ CElement* CElement::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchema
     CElement *pElement = new CElement();
 
     pElement->setXSDXPath(xpath);
+    CConfigSchemaHelper::getSchemaMapManager()->addMapOfXSDXPathToElement(xpath, pElement);
 
     IPropertyTree *pTree = pSchemaRoot->queryPropTree(xpath);
 
@@ -187,6 +188,38 @@ const CElement* CElement::getTopMostElement(const CXSDNodeBase *pNode)
     }
 
     return getTopMostElement(pNode->getParentNodeByType(XSD_ELEMENT));
+}
+
+
+const CXSDNodeBase* CElement::getNodeByTypeAndNameDescending(NODE_TYPES eNodeType, const char *pName) const
+{
+    for (int idx = 0; idx < m_pAttributeArray->length(); idx++)
+    {
+        const CAttribute *pAttribute  = m_pAttributeArray->item(idx);
+
+        assert(pAttrib != NULL);
+
+        if (pName == NULL || *pName == 0)
+        {
+            return pAttribute;
+        }
+
+        if (pAttribute->getName() == NULL || *(pAttribute->getName()) == 0)
+        {
+            assert(!"Attribute needs name");
+            return NULL;
+        }
+
+        if (strcmp(pNamepAttribute->getName(), pName) == 0)
+        {
+            return pAttribute;
+        }
+
+        // not found yet.  descend into complextypes
+        pAttribute = dynamic_cast<CAttribute*>(this->getNodeByTypeAndNameDescending(eNodeType, pName));
+
+        return pAttribute;
+    }
 }
 
 const char* CElement::getXML(const char* /*pComponent*/)
