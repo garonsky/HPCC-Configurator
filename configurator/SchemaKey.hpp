@@ -10,6 +10,7 @@ class CAnnotation;
 
 class CKey : public CXSDNode
 {
+    friend class CKeyArray;
 public:
 
     virtual ~CKey()
@@ -47,8 +48,6 @@ public:
         return m_pAnnotation;
     }
 
-    bool checkConstraint(const char *pValue) const;
-
     static CKey* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
     GETTERSETTER(Name)
@@ -59,6 +58,8 @@ protected:
     CKey(CXSDNodeBase* pParentNode) : CXSDNode::CXSDNode(pParentNode, XSD_KEY), m_pFieldArray(NULL), m_pSelector(NULL)
     {
     }
+
+    virtual bool checkConstraint(const char *pValue) const;
 
     CFieldArray *m_pFieldArray;
     CSelector *m_pSelector;
@@ -100,6 +101,8 @@ public:
     {
         assert(!"Not Implemented");
     }
+
+    virtual bool checkConstraint(const char *pValue) const;
 
     static CKeyArray* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 

@@ -372,6 +372,8 @@ void CAttribute::setEnvValueFromXML(const char *p)
 
         }
     }
+
+    if (this->m_Re)
 }
 
 CAttribute* CAttribute::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
@@ -882,4 +884,10 @@ const CAttribute* CAttributeArray::findAttributeWithName(const char *pName, bool
 void CAttributeArray::traverseAndProcessNodes() const
 {
     QUICK_TRAVERSE_AND_PROCESS;
+}
+
+
+bool CAttributeArray::getCountOfValueMatches(const char *pValue) const
+{
+
 }

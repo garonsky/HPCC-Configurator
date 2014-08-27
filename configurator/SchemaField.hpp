@@ -39,7 +39,29 @@ public:
     static CSchemaField* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
     GETTERSETTER(ID)
-    GETTERSETTER(XPath)
+    SETTER(XPath)
+
+    const char* getXPath(bool bRemoveAmpersand = true) const
+    {
+        if (bRemoveAmpersand == true)
+        {
+            static StringBuffer strRetString(m_strXPath);
+
+            static bool bOnce = true;
+
+            if (bOnce == true)
+            {
+                strRetString.remove(0,1);
+            }
+
+            return strRetString;
+        }
+        else
+        {
+            return m_strXPath.str();
+        }
+    }
+
 
 protected:
 

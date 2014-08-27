@@ -78,6 +78,8 @@ bool CKey::checkConstraint(const char *pValue) const
     {
         for (int idx = 0; idx < m_pFieldArray->length(); idx++)
         {
+            assert(!"Multiple fields not implemented");
+
             const CField *m_pField = m_pFieldArray->item(idx);
 
             assert(m_pField != NULL);
@@ -98,7 +100,19 @@ bool CKey::checkConstraint(const char *pValue) const
                 return false;
             }
 
-            const CAttribute *pAttribute = pElement->getNodeByTypeAndNameDescending(XSD_ATTRIBUTE, )
+            const CAttribute *pAttribute = pElement->getNodeByTypeAndNameDescending(XSD_ATTRIBUTE, m_pField->getXPath());  // needs to be first possible descendent
+
+            if (pAttribute != NULL)
+            {
+                if (pAttribute->getParentNodeByType(XSD_ELEMENT) == pElement)
+                {
+
+                }
+                else
+                {
+                    assert(!"Could not find match for key");
+                }
+            }
         }
     }
 
@@ -168,6 +182,26 @@ CKeyArray* CKeyArray::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSche
     }
 
     return pKeyArray;
+}
+
+virtual bool CKeyArray::checkConstraint(const char *pValue) const
+{
+    assert(pValue != NULL);
+
+    if (pValue == NULL)
+    {
+        return false;
+    }
+
+    for (int idx = 0; idx < this->length(); idx++)
+    {
+        if ((this->item(idx)).checkConstraint(pValue) == false)
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 void CKeyArray::dump(std::ostream &cout, unsigned int offset) const

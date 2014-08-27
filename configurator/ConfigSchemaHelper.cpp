@@ -867,3 +867,23 @@ bool CConfigSchemaHelper::saveConfigurtionFile() const
         return false;
     }
 }
+
+void CConfigSchemaHelper::addKeyRefForReverseAssociation(const CKeyRef *pKeyRef) const
+{
+
+}
+
+void CConfigSchemaHelper::processKeyRefReverseAssociation() const
+{
+
+}
+
+void CConfigSchemaHelper::addKeyForReverseAssociation(const CKeyRef *pKeyRef) const
+{
+
+}
+
+void CConfigSchemaHelper::processKeyReverseAssociation() const
+{
+
+}

@@ -56,6 +56,9 @@ public:
     void addKeyRefForReverseAssociation(const CKeyRef *pKeyRef) const;
     void processKeyRefReverseAssociation() const;
 
+    void addKeyForReverseAssociation(const CKeyRef *pKeyRef) const;
+    void processKeyReverseAssociation() const;
+
     //test purposes
     bool getXMLFromSchema(StringBuffer& strXML, const char* pXSD);
 

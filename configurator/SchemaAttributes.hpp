@@ -9,16 +9,19 @@
 
 class CSimpleTypeArray;
 class CKeyRefArray;
+class CKeyArray;
 
 class CAttribute : public CXSDNodeWithType
 {
 public:
 
-    CAttribute(CXSDNodeBase* pParentNode, const char* pName = NULL) : CXSDNodeWithType::CXSDNodeWithType(pParentNode, XSD_ATTRIBUTE), m_strName(pName), m_pAnnotation(NULL), m_bInstanceValueValid(false)
+    CAttribute(CXSDNodeBase* pParentNode, const char* pName = NULL) : CXSDNodeWithType::CXSDNodeWithType(pParentNode, XSD_ATTRIBUTE), m_strName(pName), m_pAnnotation(NULL),
+            m_strDefault(pDefault), m_strUse(pUse), m_pAnnotation(NULL), m_pSimpleTypeArray(NULL), m_pReverseKeyRefArray(NULL), m_pReverseKeyArray(NULL), m_bInstanceValueValid(false)
     {
     }
 
-    CAttribute(CXSDNodeBase* pParentNode, const char* pName, const char* pType, const char* pDefault, const char* pUse) : CXSDNodeWithType::CXSDNodeWithType(pParentNode, XSD_ATTRIBUTE), m_strName(pName), m_strDefault(pDefault), m_strUse(pUse), m_pAnnotation(NULL), m_pSimpleTypeArray(NULL), m_bInstanceValueValid(false)
+    CAttribute(CXSDNodeBase* pParentNode, const char* pName, const char* pType, const char* pDefault, const char* pUse) : CXSDNodeWithType::CXSDNodeWithType(pParentNode, XSD_ATTRIBUTE), m_strName(pName), m_pAnnotation(NULL),
+            m_strDefault(pDefault), m_strUse(pUse), m_pAnnotation(NULL), m_pSimpleTypeArray(NULL), m_pReverseKeyRefArray(NULL), m_pReverseKeyArray(NULL), m_bInstanceValueValid(false)
     {
     }
 
@@ -95,6 +98,7 @@ protected:
     CAnnotation *m_pAnnotation;
     CSimpleTypeArray *m_pSimpleTypeArray;
     CKeyRefArray *m_pReverseKeyRefArray;
+    CKeyArray *m_pReverseKeyArray;
     bool m_bInstanceValueValid;
 
 private:
@@ -136,6 +140,8 @@ protected:
 
     static CAttributeArray* load(const char* pSchemaFile);
     static CAttributeArray* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
+
+    bool getCountOfValueMatches(const char *pValue) const;
 
 private:
 

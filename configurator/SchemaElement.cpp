@@ -28,16 +28,15 @@ const CXSDNodeBase* CElement::getNodeByTypeAndNameAscending(NODE_TYPES eNodeType
         return this;
     }
 
-    if (m_pComplexTypeArray != NULL)
+    if (eNodeType == XSD_ELEMENT)
     {
-        pMatchingNode =  m_pComplexTypeArray->getNodeByTypeAndNameAscending(eNodeType, pName);
+        pMatchingNode = (dynamic_cast<CElement*>(this->getParentNode()))->getElementByNameAscending(pName);
     }
 
-    if (pMatchingNode == NULL && m_pAttributeArray != NULL)
+    if (pMatchingNode == NULL)
     {
-        pMatchingNode =  m_pComplexTypeArray->getNodeByTypeAndNameDescending(eNodeType, pName);
+        pMatchingNode = (dynamic_cast<CElementArray*>(this->getParentNode()))->getNodeByTypeAndNameAscending(eNodeType, pName);
     }
-
 
     return pMatchingNode;
 
@@ -1046,4 +1045,63 @@ int CElementArray::getCountOfSiblingElements(const char *pXPath) const
     }
 
     return count;
+}
+
+const CXSDNodeBase* CElementArray::getNodeByTypeAndNameAscending(NODE_TYPES eNodeType, const char *pName) const
+{
+    assert(pName != NULL);
+
+    for (int idx = 1; idx < this->length() && eNodeType == XSD_ELEMENT; idx++)
+    {
+        if (strcmp ((static_cast<CElement*>(this->item(idx)))->getName(), pName) == 0)
+        {
+            return this->item(idx);
+        }
+    }
+
+    return (this->getParentNode()->getNodeByTypeAndNameAscending(eNodeType, pName);
+}
+
+const CXSDNodeBase* CElementArray::getNodeByTypeAndNameDescending(NODE_TYPES eNodeType, const char *pName) const
+{
+    assert(pName != NULL);
+
+    if (eNodeType == this->getNodeType())// && (pName != NULL ? !strcmp(pName, this->getNodeTypeStr()) : true))
+    {
+        return this;
+    }
+
+/*    for (int idx = 1; idx < this->length() && eNodeType == XSD_ELEMENT; idx++)
+    {
+        if (strcmp ((static_cast<CElement*>(this->item(idx)))->getName(), pName) == 0)
+        {
+            return this->item(idx);
+        }
+    }*/
+
+    return (this->getParentNode()->getNodeByTypeAndNameDescending(eNodeType, pName);
+}
+
+const CElement* CElementArray::getElementByNameAscending(const char *pName) const
+{
+    for (int idx = 1; idx < this->length() && eNodeType == XSD_ELEMENT; idx++)
+    {
+        if (strcmp ((static_cast<CElement*>(this->item(idx)))->getName(), pName) == 0)
+        {
+            return this->item(idx);
+        }
+    }
+}
+
+const CElement* CElementArray::getElementByNameDescending(const char *pName) const
+{
+    for (int idx = 1; idx < this->length() && eNodeType == XSD_ELEMENT; idx++)
+    {
+        if (strcmp ((static_cast<CElement*>(this->item(idx)))->getName(), pName) == 0)
+        {
+            return this->item(idx);
+        }
+    }
+
+    return NULL;
 }
