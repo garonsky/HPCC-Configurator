@@ -15,13 +15,13 @@ class CAttribute : public CXSDNodeWithType
 {
 public:
 
-    CAttribute(CXSDNodeBase* pParentNode, const char* pName = NULL) : CXSDNodeWithType::CXSDNodeWithType(pParentNode, XSD_ATTRIBUTE), m_strName(pName), m_pAnnotation(NULL),
-            m_strDefault(pDefault), m_strUse(pUse), m_pAnnotation(NULL), m_pSimpleTypeArray(NULL), m_pReverseKeyRefArray(NULL), m_pReverseKeyArray(NULL), m_bInstanceValueValid(false)
+    CAttribute(CXSDNodeBase* pParentNode, const char* pName = NULL) : CXSDNodeWithType::CXSDNodeWithType(pParentNode, XSD_ATTRIBUTE), m_strName(pName),
+            m_strDefault(""), m_strUse(""), m_pAnnotation(NULL), m_pSimpleTypeArray(NULL), m_pReverseKeyRefArray(NULL), m_pReverseKeyArray(NULL), m_bInstanceValueValid(false)
     {
     }
 
     CAttribute(CXSDNodeBase* pParentNode, const char* pName, const char* pType, const char* pDefault, const char* pUse) : CXSDNodeWithType::CXSDNodeWithType(pParentNode, XSD_ATTRIBUTE), m_strName(pName), m_pAnnotation(NULL),
-            m_strDefault(pDefault), m_strUse(pUse), m_pAnnotation(NULL), m_pSimpleTypeArray(NULL), m_pReverseKeyRefArray(NULL), m_pReverseKeyArray(NULL), m_bInstanceValueValid(false)
+            m_strDefault(pDefault), m_strUse(pUse), m_pSimpleTypeArray(NULL), m_pReverseKeyRefArray(NULL), m_bInstanceValueValid(false)
     {
     }
 
@@ -136,10 +136,10 @@ public:
 
     const CAttribute* findAttributeWithName(const char *pName, bool bCaseInsensitive = true) const;
 
-protected:
-
     static CAttributeArray* load(const char* pSchemaFile);
     static CAttributeArray* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
+
+protected:
 
     bool getCountOfValueMatches(const char *pValue) const;
 

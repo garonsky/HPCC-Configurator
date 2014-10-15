@@ -4,6 +4,8 @@
 #include "SchemaCommon.hpp"
 #include "jstring.hpp"
 
+class CSchemaUnique;
+
 class CUnique : public CXSDNode
 {
 public:
@@ -43,7 +45,7 @@ public:
 
 protected:
 
-    CUnique(CXSDNodeBase *pParentNode) : CXSDNode::CXSDNode(pParentNode, XSD_Unique)
+    CUnique(CXSDNodeBase *pParentNode) : CXSDNode::CXSDNode(pParentNode, XSD_UNIQUE)
     {
     }
 

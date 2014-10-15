@@ -43,6 +43,8 @@ public:
 
     static CKeyRef* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
+    bool checkConstraint(const char *pValue) const;
+
     GETTERSETTER(Name)
     GETTERSETTER(ID)
     GETTERSETTER(Refer)

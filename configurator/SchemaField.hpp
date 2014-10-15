@@ -4,6 +4,9 @@
 #include "SchemaCommon.hpp"
 #include "jstring.hpp"
 
+class CSchemaField;
+class CKey;
+
 class CField : public CXSDNode
 {
 public:
@@ -69,6 +72,7 @@ protected:
     {
     }
 
+    StringBuffer m_strXPath;
 };
 
 

@@ -1,6 +1,8 @@
 #include "SchemaKeyRef.hpp"
 #include "SchemaSelector.hpp"
 #include "SchemaCommon.hpp"
+#include "ConfigSchemaHelper.hpp"
+#include "SchemaMapManager.hpp"
 
 CKeyRef* CKeyRef::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
 {
@@ -82,6 +84,25 @@ void CKeyRef::dump(std::ostream& cout, unsigned int offset) const
     }
 
     QuickOutFooter(cout, XSD_KEYREF_STR, offset);
+}
+
+bool CKeyRef::checkConstraint(const char *pValue) const
+{
+    assert (pValue != NULL);
+
+    if (pNode == NULL)
+    {
+        return false;
+    }
+    else
+    {
+        StringBuffer strQName(this->getXSDXPath());
+        strQName.append("\/").append(this->getRefer());
+
+        CKey *pKey = CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getKeyFromXSDXPath(strQName.str());
+
+        return pKey->checkConstraint(pValue);
+    }
 }
 
 

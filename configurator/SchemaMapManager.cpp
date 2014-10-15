@@ -476,6 +476,39 @@ CElement* CSchemaMapManager::getElementFromXSDXPath(const char *pXPath) const
     }
 }
 
+void CSchemaMapManager::addMapOfXSDXPathToKey(const char* pXPath, CKey *pKey)
+{
+    assert (pKey != NULL);
+    assert (pXPath != NULL && *pXPath != 0);
+
+    if (pElement != NULL && pXPath != NULL && *pXPath != 0)
+    {
+        m_pStringToKeyPtrsMap->setValue(pKey, pElement);
+    }
+
+}
+
+CKey* CSchemaMapManager::getKeyFromXSDXPath(const char *pXPath) const
+{
+    assert(pXPath != NULL && *pXPath != 0);
+
+    if (pXPath != NULL && *pXPath != 0)
+    {
+        CKey **ppKey = m_pStringToKeyPtrsMap->getValue(pXPath);
+
+        assert(ppKey != NULL);
+
+        if (ppKey != NULL)
+        {
+            return *ppKey;
+        }
+        else
+        {
+            return NULL;
+        }
+    }
+}
+
 void CSchemaMapManager::addMapOfXPathToRestriction(const char*pXPath, CRestriction *pRestriction)
 {
     assert (pRestriction != NULL);

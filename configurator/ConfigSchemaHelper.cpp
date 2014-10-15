@@ -523,7 +523,7 @@ void CConfigSchemaHelper::processElementArr(CElement *pElement)
     for (int idx = 0; idx < length; idx++)
     {
         CElement *pElement = &(this->m_ElementArr.item(idx));
-        const char *pRef = pNodeWithBase->getRef();
+        const char *pRef = pElement->getRef();
 
         assert(pRef != NULL);
 

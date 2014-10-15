@@ -16,6 +16,7 @@ class CAttribute;
 class CRestriction;
 class CElementArray;
 class CElement;
+class CKey;
 
 class CSchemaMapManager
 {
@@ -60,6 +61,9 @@ public:
     void addMapOfXSDXPathToElement(const char* pXPath, CElement *pElement);
     CElement* getElementFromXSDXPath(const char *pXPath) const;
 
+    void addMapOfXSDXPathToKey(const char* pXPath, CKey *pKey);
+    CKey* getKeyFromXSDXPath(const char *pXPath) const;
+
     int getNumberOfComponents() const;
     CElement* getComponent(int index);
     int getIndexOfElement(const CElement *pElem);
@@ -99,6 +103,9 @@ protected:
 
     typedef MapStringTo<enum NODE_TYPES> MapStringToNodeTypeEnum;
     Owned<MapStringToNodeTypeEnum> m_pStringToEnumMap;
+
+    typedef MapStringTo<CKey*> MapStringToCKey;
+    Owned<MapStringToCKey> m_pStringToKeyPtrsMap;
 
     struct STypeStrings
     {

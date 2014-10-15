@@ -363,17 +363,22 @@ void CAttribute::setEnvValueFromXML(const char *p)
     {
         for (int idx = 0; this->m_pReverseKeyRefArray->length(); idx++)
         {
-            CKeyRef *pKeyRef = this->m_pReverseKeyRefArray->item(idx);
+            CKeyRef *pKeyRef = &(this->m_pReverseKeyRefArray->item(idx));
 
             assert(pKeyRef != NULL);
 
-            //pKeyRef
+            if (pKeyRef->checkConstraint(p) == false)
+            {
+                this->setInstanceAsValid(false);
+                assert (!"Constraint Violated");
 
-
+                return;
+            }
         }
     }
 
-    if (this->m_Re)
+    this->setInstanceValue(p);
+    this->setInstanceAsValid(true);
 }
 
 CAttribute* CAttribute::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
@@ -881,10 +886,10 @@ const CAttribute* CAttributeArray::findAttributeWithName(const char *pName, bool
     return NULL;
 }
 
-void CAttributeArray::traverseAndProcessNodes() const
+/*void CAttributeArray::traverseAndProcessNodes() const
 {
     QUICK_TRAVERSE_AND_PROCESS;
-}
+}*/
 
 
 bool CAttributeArray::getCountOfValueMatches(const char *pValue) const
