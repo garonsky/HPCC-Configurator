@@ -49,14 +49,14 @@ const char* CExtension::getXML(const char* /*pComponent*/)
 void CExtension::initExtension()
 {
     NODE_TYPES eNodeType[] = { XSD_SIMPLE_TYPE, XSD_SIMPLE_TYPE };
-    //CXSDNodeBase *pBaseNode = const_cast<CXSDNodeBase*>(this->getNodeByTypeAndNameAscending( (NODE_TYPES)(XSD_SIMPLE_TYPE | XSD_COMPLEX_TYPE), this->getBase()));
-    CXSDNodeBase *pBaseNode = const_cast<CXSDNodeBase*>(this->getNodeByTypeAndNameAscending( eNodeType, this->getBase()));
 
-//    assert(pBaseNode != NULL);  // temporary to catch built in types or not defined types
+    const CXSDNodeBase *pBaseNode = (dynamic_cast<const CXSDNodeBase*>(this));
 
     if (pBaseNode != NULL)
     {
-       this->setBaseNode(pBaseNode);
+        pBaseNode->getNodeByTypeAndNameAscending( eNodeType, this->getBase());
+
+       this->setBaseNode(const_cast<CXSDNodeBase*>(pBaseNode));
     }
 }
 

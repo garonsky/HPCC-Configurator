@@ -280,7 +280,7 @@ CElement* CSchemaMapManager::getElementWithName(const char* pName)
 
         assert(ppElement != NULL);
 
-        if (pElement != NULL)
+        if (ppElement != NULL)
         {
             return *ppElement;
         }
@@ -481,9 +481,9 @@ void CSchemaMapManager::addMapOfXSDXPathToKey(const char* pXPath, CKey *pKey)
     assert (pKey != NULL);
     assert (pXPath != NULL && *pXPath != 0);
 
-    if (pElement != NULL && pXPath != NULL && *pXPath != 0)
+    if (pKey != NULL && pXPath != NULL && *pXPath != 0)
     {
-        m_pStringToKeyPtrsMap->setValue(pKey, pElement);
+        m_pStringToKeyPtrsMap->setValue(pXPath, pKey);
     }
 
 }

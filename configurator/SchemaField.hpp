@@ -76,7 +76,7 @@ protected:
 };
 
 
-class CFieldArray : public CIArrayOf<CKey>, public InterfaceImpl, public CXSDNodeBase
+class CFieldArray : public CIArrayOf<CField>, public InterfaceImpl, public CXSDNodeBase
 {
 public:
 

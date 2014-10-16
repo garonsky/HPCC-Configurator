@@ -168,18 +168,6 @@ void CAttributeGroup::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
     }
 }
 
-void CAttributeGroup::traverseAndProcessNodes() const
-{
-    CXSDNodeBase::processEntryHandlers(this);
-
-    if (m_pAttributeArray != NULL)
-    {
-        m_pAttributeArray->traverseAndProcessNodes();
-    }
-
-    CXSDNodeBase::processExitHandlers(this);
-}
-
 const char* CAttributeGroup::getXML(const char* /*pComponent*/)
 {
     if (m_strXML.length() == 0 && m_pAttributeArray != NULL)

@@ -67,6 +67,8 @@ public:
         m_bInstanceValueValid = bValid;
     }
 
+    virtual void setEnvValueFromXML(const char *p);
+
 protected:
 
     void setAnnotation(CAnnotation *pAnnotation)
@@ -92,8 +94,6 @@ protected:
 
         m_pSimpleTypeArray = pSimpleTypeArray;
     }
-
-    virtual void setEnvValueFromXML(const char *p);
 
     CAnnotation *m_pAnnotation;
     CSimpleTypeArray *m_pSimpleTypeArray;

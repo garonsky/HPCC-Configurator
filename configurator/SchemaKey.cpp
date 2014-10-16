@@ -19,7 +19,7 @@ CKey* CKey::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, co
         return NULL;
     }
 
-    CKey *pKey = NULL;
+    CKey *pKey = new CKey(pParentNode);
 
     if (xpath != NULL && *xpath != 0)
     {
@@ -54,17 +54,16 @@ CKey* CKey::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, co
 
          StringBuffer strXPathExt(xpath);
          strXPathExt.append("/").append(XSD_TAG_FIELD);
-         m_pFieldArray = CFieldArray::load(pKey, pSchemaRoot, strXPathExt.str());
+         pKey->m_pFieldArray = CFieldArray::load(pKey, pSchemaRoot, strXPathExt.str());
 
          strXPathExt.clear().set(xpath);
          strXPathExt.append("/").append(XSD_TAG_SELECTOR);
-         m_pSelector = CSelector::load(pParentNode, pSchemaRoot, strXPathExt.str());
+         pKey->m_pSelector = CSelector::load(pKey, pSchemaRoot, strXPathExt.str());
 
-         assert(m_pFieldArray != NULL && m_pSelector != NULL);
+         assert(pKey->m_pFieldArray != NULL && pKey->m_pSelector != NULL);
 
          strXPathExt.append("/").append(XSD_TAG_ANNOTATION);
-         pElement->m_pAnnotation = CAnnotation::load(pElement, pSchemaRoot, strXPathExt.str());
-
+         pKey->m_pAnnotation = CAnnotation::load(pKey, pSchemaRoot, strXPathExt.str());
     }
 
     return pKey;
@@ -80,7 +79,7 @@ bool CKey::checkConstraint(const char *pValue) const
         {
             assert(!"Multiple fields not implemented");
 
-            const CField *m_pField = m_pFieldArray->item(idx);
+            CField *m_pField = &(m_pFieldArray->item(idx));
 
             assert(m_pField != NULL);
 
@@ -93,7 +92,7 @@ bool CKey::checkConstraint(const char *pValue) const
 
             strXSDPathForConstraint.appendf("/%s", this->m_pSelector->getXPath());
 
-            const CElement *pElement = CConfigSchemaHelper::getSchemaMapManager()->getElementFromXSDXPath(strXSDXPath.str());
+            const CElement *pElement = CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getElementFromXSDXPath(strXSDXPath.str());
 
             if (pElement == NULL)
             {

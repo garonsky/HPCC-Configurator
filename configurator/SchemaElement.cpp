@@ -30,7 +30,7 @@ const CXSDNodeBase* CElement::getNodeByTypeAndNameAscending(NODE_TYPES eNodeType
 
     if (eNodeType == XSD_ELEMENT)
     {
-        pMatchingNode = (dynamic_cast<CElement*>(this->getParentNode()))->getElementByNameAscending(pName);
+        pMatchingNode = (dynamic_cast<CElement*>(this->getParentNode()))->getNodeByTypeAndNameAscending(XSD_ELEMENT, pName);
     }
 
     if (pMatchingNode == NULL)
@@ -69,10 +69,10 @@ CElement* CElement::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchema
         return NULL;
     }
 
-    CElement *pElement = new CElement();
+    CElement *pElement = new CElement(pParentNode);
 
     pElement->setXSDXPath(xpath);
-    CConfigSchemaHelper::getSchemaMapManager()->addMapOfXSDXPathToElement(xpath, pElement);
+    CConfigSchemaHelper::getInstance()->getSchemaMapManager()->addMapOfXSDXPathToElement(xpath, pElement);
 
     IPropertyTree *pTree = pSchemaRoot->queryPropTree(xpath);
 
@@ -119,9 +119,9 @@ CElement* CElement::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchema
         {
             const char *pRef = iterAttrib->queryValue();
 
-            assert (pRef != NULL && *pRef != 0 && pElement->getAncestorNode(2) != XSD_SCHEMA);
+            assert (pRef != NULL && *pRef != 0 && pElement->getConstAncestorNode(2)->getNodeType() != XSD_SCHEMA);
 
-            if (pRef != NULL && *pRef != 0 && Element->getAncestorNode(2) != XSD_SCHEMA)
+            if (pRef != NULL && *pRef != 0 && pElement->getConstAncestorNode(2)->getNodeType() != XSD_SCHEMA)
             {
                 pElement->setRef(pRef);
                 CConfigSchemaHelper::getInstance()->addElementForRefProcessing(pElement);
@@ -189,8 +189,7 @@ const CElement* CElement::getTopMostElement(const CXSDNodeBase *pNode)
     return getTopMostElement(pNode->getParentNodeByType(XSD_ELEMENT));
 }
 
-
-const CXSDNodeBase* CElement::getNodeByTypeAndNameDescending(NODE_TYPES eNodeType, const char *pName) const
+/*const CXSDNodeBase* CElement::getNodeByTypeAndNameDescending(NODE_TYPES eNodeType, const char *pName) const
 {
     for (int idx = 0; idx < m_pAttributeArray->length(); idx++)
     {
@@ -219,7 +218,7 @@ const CXSDNodeBase* CElement::getNodeByTypeAndNameDescending(NODE_TYPES eNodeTyp
 
         return pAttribute;
     }
-}
+}*/
 
 const char* CElement::getXML(const char* /*pComponent*/)
 {
@@ -1053,13 +1052,13 @@ const CXSDNodeBase* CElementArray::getNodeByTypeAndNameAscending(NODE_TYPES eNod
 
     for (int idx = 1; idx < this->length() && eNodeType == XSD_ELEMENT; idx++)
     {
-        if (strcmp ((static_cast<CElement*>(this->item(idx)))->getName(), pName) == 0)
+        if (strcmp ((static_cast<CElement>(this->item(idx))).getName(), pName) == 0)
         {
-            return this->item(idx);
+            return &(this->item(idx));
         }
     }
 
-    return (this->getParentNode()->getNodeByTypeAndNameAscending(eNodeType, pName);
+    return (this->getParentNode()->getNodeByTypeAndNameAscending(eNodeType, pName));
 }
 
 const CXSDNodeBase* CElementArray::getNodeByTypeAndNameDescending(NODE_TYPES eNodeType, const char *pName) const
@@ -1079,27 +1078,27 @@ const CXSDNodeBase* CElementArray::getNodeByTypeAndNameDescending(NODE_TYPES eNo
         }
     }*/
 
-    return (this->getParentNode()->getNodeByTypeAndNameDescending(eNodeType, pName);
+    return (this->getParentNode()->getNodeByTypeAndNameDescending(eNodeType, pName));
 }
 
 const CElement* CElementArray::getElementByNameAscending(const char *pName) const
 {
-    for (int idx = 1; idx < this->length() && eNodeType == XSD_ELEMENT; idx++)
+    for (int idx = 1; idx < this->length() ;idx++)
     {
-        if (strcmp ((static_cast<CElement*>(this->item(idx)))->getName(), pName) == 0)
+        if (strcmp ((static_cast<CElement>(this->item(idx))).getName(), pName) == 0)
         {
-            return this->item(idx);
+            return &(this->item(idx));
         }
     }
 }
 
 const CElement* CElementArray::getElementByNameDescending(const char *pName) const
 {
-    for (int idx = 1; idx < this->length() && eNodeType == XSD_ELEMENT; idx++)
+    for (int idx = 1; idx < this->length(); idx++)
     {
-        if (strcmp ((static_cast<CElement*>(this->item(idx)))->getName(), pName) == 0)
+        if (strcmp ((static_cast<CElement>(this->item(idx))).getName(), pName) == 0)
         {
-            return this->item(idx);
+            return &(this->item(idx));
         }
     }
 
