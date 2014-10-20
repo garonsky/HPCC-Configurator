@@ -388,7 +388,7 @@ void CAttributeGroupArray::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
     QUICK_LOAD_ENV_XML(pEnvTree)
 }
 
-void CAttributeGroupArray::traverseAndProcessNodes() const
+/*void CAttributeGroupArray::traverseAndProcessNodes() const
 {
     QUICK_TRAVERSE_AND_PROCESS;
-}
+}*/

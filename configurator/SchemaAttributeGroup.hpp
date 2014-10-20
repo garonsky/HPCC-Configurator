@@ -64,7 +64,7 @@ public:
 
     virtual void loadXMLFromEnvXml(const IPropertyTree *pEnvTree);
 
-    virtual void traverseAndProcessNodes() const;
+    //virtual void traverseAndProcessNodes() const;
 
     static CAttributeGroup* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
@@ -116,7 +116,7 @@ public:
 
     virtual void loadXMLFromEnvXml(const IPropertyTree *pEnvTree);
 
-    virtual void traverseAndProcessNodes() const;
+    //virtual void traverseAndProcessNodes() const;
 
     static CAttributeGroupArray* load(const char* pSchemaFile);
     static CAttributeGroupArray* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);

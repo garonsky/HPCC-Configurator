@@ -53,7 +53,7 @@ protected:
 };
 
 
-class CUniqueArray : public CIArrayOf<CKey>, public InterfaceImpl, public CXSDNodeBase
+class CUniqueArray : public CIArrayOf<CUnique>, public InterfaceImpl, public CXSDNodeBase
 {
 public:
 

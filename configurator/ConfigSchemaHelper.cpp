@@ -595,7 +595,7 @@ void CConfigSchemaHelper::loadEnvFromConfig(const char *pEnvFile)
     }
 }
 
-void CConfigSchemaHelper::traverseAndProcessArray(const char *pXSDName)
+/*void CConfigSchemaHelper::traverseAndProcessArray(const char *pXSDName)
 {
     const char *pComponent = NULL;
     CSchema* pSchema = NULL;
@@ -619,7 +619,7 @@ void CConfigSchemaHelper::traverseAndProcessArray(const char *pXSDName)
             }
         }
     }
-}
+}*/
 
 void CConfigSchemaHelper::addToolTip(const char *js)
 {

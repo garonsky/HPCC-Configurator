@@ -26,7 +26,7 @@ public:
 
     virtual void populateEnvXPath(StringBuffer strXPath, unsigned int index = 1);
 
-    virtual void traverseAndProcessNodes() const;
+    //virtual void traverseAndProcessNodes() const;
 
     virtual const char* getXML(const char* /*pComponent*/);
 

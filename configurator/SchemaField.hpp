@@ -39,7 +39,7 @@ public:
         assert(!"Not Implemented");
     }
 
-    static CSchemaField* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
+    static CField* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
     GETTERSETTER(ID)
     SETTER(XPath)

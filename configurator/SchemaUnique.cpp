@@ -36,7 +36,6 @@ CUnique* CUnique::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRo
         {
             pUnique = new CUnique(pParentNode);
             pUnique->setXSDXPath(xpath);
-            pUnique->setXPath(pXPath);
         }
 
         const char *pID = pSchemaRoot->getPropTree(xpath)->queryProp(XML_ATTR_ID);
@@ -63,7 +62,7 @@ void CUnique::dump(std::ostream& cout, unsigned int offset) const
     QuickOutFooter(cout, XSD_UNIQUE_STR, offset);
 }
 
-CUniqueArray* CUnique::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
+CUniqueArray* CUniqueArray::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
 {
     assert(pSchemaRoot != NULL);
 
@@ -85,7 +84,7 @@ CUniqueArray* CUnique::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSch
     {
         strXPathExt.clear().append(xpath).appendf("[%d]",count);
 
-        CUnique *pUnique = CKey::load(pKeyArray, pSchemaRoot, strXPathExt.str());
+        CUnique *pUnique = CUnique::load(pUniqueArray, pSchemaRoot, strXPathExt.str());
 
         if (pUnique != NULL)
         {

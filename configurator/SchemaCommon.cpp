@@ -351,6 +351,19 @@ const CXSDNodeBase* CXSDNode::getParentNodeByType(NODE_TYPES eNodeType) const
   return NULL;
 }
 
+/*const CXSDNodeBase* CXSDNode::getNodeByTypeAndNameAscending(NODE_TYPES eNodeType, const char *pName, int length) const
+{
+    for (int i = 0; i < length; i++)
+    {
+      assert(this->m_eNodeType != eNodeType[i]);
+
+      if (this->getConstParentNode() != NULL)
+      {
+          return this->getConstParentNode()->getNodeByTypeAndNameAscending(eNodeType[i], pName);
+      }
+    }
+}*/
+
 const CXSDNodeBase* CXSDNodeBase::getNodeByTypeAndNameAscending(NODE_TYPES eNodeType[], const char *pName, int length) const
 {
   for (int i = 0; i < length; i++)

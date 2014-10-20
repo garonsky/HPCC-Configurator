@@ -302,7 +302,7 @@ void CSchema::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
     }
 }
 
-void CSchema::traverseAndProcessNodes() const
+/*void CSchema::traverseAndProcessNodes() const
 {
     CSchema::processEntryHandlers(this);
 
@@ -328,7 +328,7 @@ void CSchema::traverseAndProcessNodes() const
     }
 
     CSchema::processExitHandlers(this);
-}
+}*/
 
 const char* CSchema::getXML(const char* /*pComponent*/)
 {

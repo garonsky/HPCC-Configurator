@@ -510,7 +510,7 @@ public:
 
     virtual const CXSDNodeBase* getParentNodeByType(NODE_TYPES eNodeType) const;
 
-    virtual const CXSDNodeBase* getNodeByTypeAndNameAscending(NODE_TYPES eNodeType, const char *pName) const;
+    //virtual const CXSDNodeBase* getNodeByTypeAndNameAscending(NODE_TYPES eNodeType, const char *pName) const;
 
     //virtual const CXSDNodeBase* getNodeByTypeAndNameDescending(NODE_TYPES eNodeType, const char *pName) const;
 
