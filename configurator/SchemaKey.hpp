@@ -11,6 +11,8 @@ class CAnnotation;
 class CKey : public CXSDNode
 {
     friend class CKeyArray;
+    friend class CKeyRef;
+
 public:
 
     virtual ~CKey()

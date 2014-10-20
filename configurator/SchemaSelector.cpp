@@ -5,7 +5,7 @@ CSelector* CSelector::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSche
 {
     assert(pSchemaRoot != NULL);
     assert(pParentNode != NULL);
-    assert(pParentNode->getNodeType() == XSD_KEY || pParentNode->getNodeType() = XSD_KEYREF || pParentNode->getNodeType() = XSD_UNIQUE);
+    assert(pParentNode->getNodeType() == XSD_KEY || pParentNode->getNodeType() == XSD_KEYREF || pParentNode->getNodeType() == XSD_UNIQUE);
 
     if (pSchemaRoot == NULL || pParentNode == NULL)
     {

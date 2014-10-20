@@ -1,5 +1,5 @@
-#ifndef _SCHEMA_KeyRef_HPP_
-#define _SCHEMA_KeyRef_HPP_
+#ifndef _SCHEMA_KEYREF_HPP_
+#define _SCHEMA_KEYREF_HPP_
 
 #include "SchemaCommon.hpp"
 #include "jstring.hpp"

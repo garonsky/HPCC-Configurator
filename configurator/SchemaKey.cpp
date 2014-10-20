@@ -92,14 +92,14 @@ bool CKey::checkConstraint(const char *pValue) const
 
             strXSDPathForConstraint.appendf("/%s", this->m_pSelector->getXPath());
 
-            const CElement *pElement = CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getElementFromXSDXPath(strXSDXPath.str());
+            const CElement *pElement = CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getElementFromXSDXPath(strXSDPathForConstraint.str());
 
             if (pElement == NULL)
             {
                 return false;
             }
 
-            const CAttribute *pAttribute = pElement->getNodeByTypeAndNameDescending(XSD_ATTRIBUTE, m_pField->getXPath());  // needs to be first possible descendent
+            const CAttribute *pAttribute = dynamic_cast<const CAttribute*>(pElement->getNodeByTypeAndNameDescending(XSD_ATTRIBUTE, m_pField->getXPath()));  // needs to be first possible descendent
 
             if (pAttribute != NULL)
             {
@@ -183,7 +183,7 @@ CKeyArray* CKeyArray::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSche
     return pKeyArray;
 }
 
-virtual bool CKeyArray::checkConstraint(const char *pValue) const
+bool CKeyArray::checkConstraint(const char *pValue) const
 {
     assert(pValue != NULL);
 

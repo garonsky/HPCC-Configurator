@@ -2,6 +2,7 @@
 #define _SCHEMA_UNIQUE_HPP_
 
 #include "SchemaCommon.hpp"
+#include "SchemaKey.hpp"
 #include "jstring.hpp"
 
 class CSchemaUnique;
@@ -38,7 +39,7 @@ public:
         assert(!"Not Implemented");
     }
 
-    static CSchemaUnique* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
+    static CUnique* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
     GETTERSETTER(ID)
     GETTERSETTER(Name)

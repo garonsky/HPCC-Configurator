@@ -16,7 +16,7 @@ CKeyRef* CKeyRef::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRo
         return NULL;
     }
 
-    CKeyRef *pKeyRef = NULL;
+    CKeyRef *pKeyRef = new CKeyRef(pParentNode);
 
     if (xpath != NULL && *xpath != 0)
     {
@@ -51,11 +51,11 @@ CKeyRef* CKeyRef::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRo
 
          StringBuffer strXPathExt(xpath);
          strXPathExt.append("/").append(XSD_TAG_FIELD);
-         m_pFieldArray = CFieldArray::load(pKey, pSchemaRoot, strXPathExt.str());
+         pKeyRef->m_pFieldArray = CFieldArray::load(pKeyRef, pSchemaRoot, strXPathExt.str());
 
          strXPathExt.clear().set(xpath);
          strXPathExt.append("/").append(XSD_TAG_SELECTOR);
-         m_pSelector = CSelector::load(pParentNode, pSchemaRoot, strXPathExt.str());
+         pKeyRef->m_pSelector = CSelector::load(pKeyRef, pSchemaRoot, strXPathExt.str());
     }
 
     return pKeyRef;
@@ -90,14 +90,14 @@ bool CKeyRef::checkConstraint(const char *pValue) const
 {
     assert (pValue != NULL);
 
-    if (pNode == NULL)
+    if (pValue == NULL)
     {
-        return false;
+        return true;
     }
     else
     {
         StringBuffer strQName(this->getXSDXPath());
-        strQName.append("\/").append(this->getRefer());
+        strQName.append("/").append(this->getRefer());
 
         CKey *pKey = CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getKeyFromXSDXPath(strQName.str());
 
