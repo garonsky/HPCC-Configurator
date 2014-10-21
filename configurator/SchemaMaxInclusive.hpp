@@ -3,8 +3,10 @@
 
 #include "SchemaCommon.hpp"
 
-class CMaxInclusive : public CXSDNode
+class CMaxInclusive : public CXSDNodeWithRestrictions<CMaxInclusive>
 {
+    friend class CXSDNodeWithRestrictions<CMaxInclusive>;
+
 public:
 
     virtual ~CMaxInclusive()
@@ -13,39 +15,11 @@ public:
 
     static CMaxInclusive* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
-    virtual void dump(std::ostream& cout, unsigned int offset = 0) const;
-
-    virtual void getDocumentation(StringBuffer &strDoc) const
-    {
-        assert(!"Not Implemented");
-    }
-
-    virtual void getDojoJS(StringBuffer &strJS) const
-    {
-        assert(!"Not Implemented");
-    }
-
-    void getQML(StringBuffer &strQML, int idx = -1) const
-    {
-        assert(!"Not Implemented");
-    }
-
-    virtual const char* getXML(const char* /*pComponent*/)
-    {
-        assert(!"Not Implemented");
-    }
-
-    virtual void populateEnvXPath(StringBuffer strXPath, unsigned int index = 1)
-    {
-        assert(!"Not Implemented");
-    }
-
-    GETTERSETTER(Value)
     GETTERSETTERINT(MaxInclusive)
 
-private:
+protected:
 
-    CMaxInclusive(CXSDNodeBase* pParentNode = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_MAX_INCLUSIVE), m_nMaxInclusive(-1)
+    CMaxInclusive(CXSDNodeBase* pParentNode = NULL) : CXSDNodeWithRestrictions<CMaxInclusive>::CXSDNodeWithRestrictions(pParentNode, XSD_MAX_INCLUSIVE), m_nMaxInclusive(-1)
     {
     }
 };

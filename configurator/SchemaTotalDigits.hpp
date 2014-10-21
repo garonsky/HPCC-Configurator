@@ -3,8 +3,9 @@
 
 #include "SchemaCommon.hpp"
 
-class CTotalDigits : public CXSDNode
+class CTotalDigits : public CXSDNodeWithRestrictions<CTotalDigits>
 {
+    friend class CXSDNodeWithRestrictions<CTotalDigits>;
 public:
 
     virtual ~CTotalDigits()
@@ -13,44 +14,11 @@ public:
 
     static CTotalDigits* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
-    virtual void dump(std::ostream& cout, unsigned int offset = 0) const;
-
-    virtual void getDocumentation(StringBuffer &strDoc) const
-    {
-        assert(!"Not Implemented");
-    }
-
-    virtual void getDojoJS(StringBuffer &strJS) const
-    {
-        assert(!"Not Implemented");
-    }
-
-    void getQML(StringBuffer &strQML, int idx = -1) const
-    {
-        assert(!"Not Implemented");
-    }
-
-    virtual const char* getXML(const char* /*pComponent*/)
-    {
-        assert(!"Not Implemented");
-    }
-
-    virtual void populateEnvXPath(StringBuffer strXPath, unsigned int index = 1)
-    {
-        assert(!"Not Implemented");
-    }
-
-    virtual void loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
-    {
-        assert(!"Not Implemented");
-    }
-
-    GETTERSETTER(Value)
     GETTERSETTERINT(TotalDigits)
 
-private:
+protected:
 
-    CTotalDigits(CXSDNodeBase* pParentNode = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_TOTAL_DIGITS), m_nTotalDigits(-1)
+    CTotalDigits(CXSDNodeBase* pParentNode = NULL) : CXSDNodeWithRestrictions<CTotalDigits>::CXSDNodeWithRestrictions(pParentNode, XSD_TOTAL_DIGITS), m_nTotalDigits(-1)
     {
     }
 };

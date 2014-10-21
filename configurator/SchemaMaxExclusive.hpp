@@ -3,10 +3,9 @@
 
 #include "SchemaCommon.hpp"
 
-class CMaxExclusive : public CXSDNode
+class CMaxExclusive : public CXSDNodeWithRestrictions<CMaxExclusive>
 {
-    GETTERSETTER(Value)
-    GETTERSETTERINT(MaxExclusive)
+    friend class CXSDNodeWithRestrictions<CMaxExclusive>;
 
 public:
 
@@ -16,40 +15,14 @@ public:
 
     static CMaxExclusive* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
-    virtual void dump(std::ostream& cout, unsigned int offset = 0) const;
-
-    virtual void getDocumentation(StringBuffer &strDoc) const
-    {
-        assert(!"Not Implemented");
-    }
-
-    virtual void getDojoJS(StringBuffer &strJS) const
-    {
-        assert(!"Not Implemented");
-    }
-
-    void getQML(StringBuffer &strQML, int idx = -1) const
-    {
-        assert(!"Not Implemented");
-    }
-
-    virtual const char* getXML(const char* /*pComponent*/)
-    {
-        assert(!"Not Implemented");
-    }
-
-    virtual void populateEnvXPath(StringBuffer strXPath, unsigned int index = 1)
-    {
-        assert(!"Not Implemented");
-    }
-
 protected:
 
-private:
-
-    CMaxExclusive(CXSDNodeBase* pParentNode = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_MAX_EXCLUSIVE), m_nMaxExclusive(-1)
+    CMaxExclusive(CXSDNodeBase* pParentNode = NULL) : CXSDNodeWithRestrictions<CMaxExclusive>::CXSDNodeWithRestrictions(pParentNode, XSD_MAX_EXCLUSIVE), m_nMaxExclusive(-1)
     {
     }
+
+    GETTERSETTER(Value)
+    GETTERSETTERINT(MaxExclusive)
 };
 
 #endif // _SCHEMA_MAX_EXCLUSIVE_HPP_

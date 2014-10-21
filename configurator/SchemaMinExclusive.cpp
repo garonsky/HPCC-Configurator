@@ -13,8 +13,3 @@ CMinExclusive* CMinExclusive::load(CXSDNodeBase* pParentNode, const IPropertyTre
 
     return pMinExclusive;
 }
-
-/*void CMinExclusive::dump(std::ostream& cout, unsigned int offset) const
-{
-    assert(!"Not Implemented");
-}*/
