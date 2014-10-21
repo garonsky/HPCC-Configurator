@@ -1021,6 +1021,7 @@ CElementArray* CElementArray::load(CXSDNodeBase* pParentNode, const IPropertyTre
 
     if (pElemArray->length() == 0)
     {
+        delete pElemArray;
         return NULL;
     }
 

@@ -10,6 +10,7 @@ CSelector* CSelector::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSche
     if (pSchemaRoot == NULL || pParentNode == NULL)
     {
         // TODO: Throw Exception
+        assert(false);
         return NULL;
     }
 
@@ -32,6 +33,7 @@ CSelector* CSelector::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSche
          if (pXPath == NULL || *pXPath == 0)
          {
              assert(!"Throw Exception");
+             return NULL;
              // TODO: throw exception
          }
 

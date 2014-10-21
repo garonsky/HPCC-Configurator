@@ -6,6 +6,7 @@
 #include "ConfigSchemaHelper.hpp"
 #include "SchemaMapManager.hpp"
 #include "SchemaAttributes.hpp"
+#include "jptree.hpp"
 
 CKey* CKey::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
 {
@@ -54,10 +55,20 @@ CKey* CKey::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, co
 
          StringBuffer strXPathExt(xpath);
          strXPathExt.append("/").append(XSD_TAG_FIELD);
+
+         if (strXPathExt.charAt(0) == '@')
+         {
+             strXPathExt.remove(0,1); // remove '@'
+         }
+
          pKey->m_pFieldArray = CFieldArray::load(pKey, pSchemaRoot, strXPathExt.str());
 
          strXPathExt.clear().set(xpath);
          strXPathExt.append("/").append(XSD_TAG_SELECTOR);
+         if (strXPathExt.charAt(0) == '.')
+         {
+             strXPathExt.remove(0,2); // remove leading ./
+         }
          pKey->m_pSelector = CSelector::load(pKey, pSchemaRoot, strXPathExt.str());
 
          assert(pKey->m_pFieldArray != NULL && pKey->m_pSelector != NULL);

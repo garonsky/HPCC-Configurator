@@ -410,10 +410,7 @@ public:
 
     virtual const CXSDNodeBase* getParentNodeByType(NODE_TYPES eNodeType[], const CXSDNodeBase *pParent = NULL, int length = 1) const;
 
-    virtual const CXSDNodeBase* getParentNodeByType(NODE_TYPES eNodeType, const CXSDNodeBase *pParent = NULL) const
-    {
-        return getParentNodeByType(eNodeType, pParent);
-    }
+    virtual const CXSDNodeBase* getParentNodeByType(NODE_TYPES eNodeType, const CXSDNodeBase *pParent = NULL) const;
 
     virtual const CXSDNodeBase* getNodeByTypeAndNameAscending(NODE_TYPES eNodeType[], const char *pName, int length = 1) const;
     virtual const CXSDNodeBase* getNodeByTypeAndNameAscending(NODE_TYPES eNodeType, const char *pName) const
@@ -518,9 +515,105 @@ private:
 
 };
 
+template<class T>
+class CXSDNodeWithRestrictions : public CXSDNode
+{
+
+public:
+
+    CXSDNodeWithRestrictions(CXSDNodeBase* pParentNode, enum NODE_TYPES eNodeType) : CXSDNode::CXSDNode(pParentNode)
+    {
+    }
+
+    static T* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
+    {
+        assert(pSchemaRoot != NULL);
+
+        if (pSchemaRoot == NULL)
+        {
+            return NULL;
+        }
+
+        T *pT = NULL;
+
+        if (xpath != NULL && *xpath != 0)
+        {
+            IPropertyTree* pTree = pSchemaRoot->queryPropTree(xpath);
+
+            if (pTree == NULL)
+            {
+                return NULL;
+            }
+
+            pT = new T(pParentNode);
+
+            const char* pValue = pTree->queryProp(XML_ATTR_VALUE);
+
+            if (pValue != NULL && *pValue != 0)
+            {
+                pT->setValue(pValue);
+            }
+            else
+            {
+                assert(!"No Value set");
+                //TODO: throw? and delete?
+            }
+
+            pT->setXSDXPath(xpath);
+        }
+
+        return pT;
+    }
+
+    void dump(std::ostream& cout, unsigned int offset) const
+    {
+        offset += STANDARD_OFFSET_1;
+
+        QuickOutHeader(cout, XSD_MIN_INCLUSIVE_STR, offset);
+
+        QUICK_OUT(cout, Value, offset);
+
+        QuickOutFooter(cout, XSD_MIN_INCLUSIVE_STR, offset);
+    }
+
+    virtual void getDocumentation(StringBuffer &strDoc) const
+    {
+        assert(!"Not Implemented");
+    }
+
+    virtual void getDojoJS(StringBuffer &strJS) const
+    {
+        assert(!"Not Implemented");
+    }
+
+    void getQML(StringBuffer &strQML, int idx = -1) const
+    {
+        assert(!"Not Implemented");
+    }
+
+    virtual const char* getXML(const char* /*pComponent*/)
+    {
+        assert(!"Not Implemented");
+    }
+
+    virtual void populateEnvXPath(StringBuffer strXPath, unsigned int index = 1)
+    {
+        assert(!"Not Implemented");
+    }
+
+    virtual void loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
+    {
+        assert(!"Not Implemented");
+    }
+
+    GETTERSETTER(Value)
+
+};
+
 class CXSDNodeWithType : public CXSDNode
 {
     GETTERSETTER(Type)
+
 
 public:
 

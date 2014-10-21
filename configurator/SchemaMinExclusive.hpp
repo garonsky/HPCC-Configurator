@@ -3,8 +3,9 @@
 
 #include "SchemaCommon.hpp"
 
-class CMinExclusive : public CXSDNode
+class CMinExclusive : public CXSDNodeWithRestrictions<CMinExclusive>
 {
+    friend class CXSDNodeWithRestrictions<CMinExclusive>;
 public:
 
     virtual ~CMinExclusive()
@@ -13,7 +14,7 @@ public:
 
     static CMinExclusive* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
-    virtual void dump(std::ostream& cout, unsigned int offset = 0) const;
+    /*virtual void dump(std::ostream& cout, unsigned int offset = 0) const;
 
     virtual void getDocumentation(StringBuffer &strDoc) const
     {
@@ -30,7 +31,7 @@ public:
         assert(!"Not Implemented");
     }
 
-    virtual const char* getXML(const char* /*pComponent*/)
+    virtual const char* getXML(const char* pComponent)
     {
         assert(!"Not Implemented");
     }
@@ -43,16 +44,12 @@ public:
     virtual void loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
     {
         assert(!"Not Implemented");
-    }
-
-    GETTERSETTER(Value)
+    }*/
     GETTERSETTERINT(MinExclusive)
 
 protected:
 
-private:
-
-    CMinExclusive(CXSDNodeBase* pParentNode = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_MIN_EXCLUSIVE), m_nMinExclusive(-1)
+    CMinExclusive(CXSDNodeBase* pParentNode = NULL) : CXSDNodeWithRestrictions<CMinExclusive>::CXSDNodeWithRestrictions<CMinExclusive>(pParentNode, XSD_MIN_EXCLUSIVE), m_nMinExclusive(-1)
     {
     }
 };

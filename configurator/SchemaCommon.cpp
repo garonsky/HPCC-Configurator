@@ -53,6 +53,24 @@ CXSDNodeBase::CXSDNodeBase(CXSDNodeBase* pParentNode, NODE_TYPES eNodeType) : m_
    case(XSD_EXTENSION):
        strcpy(m_pNodeType, XSD_EXTENSION_STR);
        break;
+   case(XSD_FIELD):
+       strcpy(m_pNodeType, XSD_FIELD_STR);
+       break;
+   case(XSD_FIELD_ARRAY):
+       strcpy(m_pNodeType, XSD_FIELD_ARRAY_STR);
+       break;
+   case(XSD_KEY):
+       strcpy(m_pNodeType, XSD_KEY_STR);
+       break;
+   case(XSD_KEY_ARRAY):
+       strcpy(m_pNodeType, XSD_KEY_ARRAY_STR);
+       break;
+   case(XSD_KEYREF):
+       strcpy(m_pNodeType, XSD_KEYREF_STR);
+       break;
+   case(XSD_KEYREF_ARRAY):
+       strcpy(m_pNodeType, XSD_KEYREF_ARRAY_STR);
+       break;
    case(XSD_INCLUDE):
        strcpy(m_pNodeType, XSD_INCLUDE_STR);
        break;
@@ -103,6 +121,9 @@ CXSDNodeBase::CXSDNodeBase(CXSDNodeBase* pParentNode, NODE_TYPES eNodeType) : m_
        break;
    case(XSD_PATTERN):
        strcpy(m_pNodeType, XSD_PATTERN_STR);
+       break;
+   case(XSD_SELECTOR):
+       strcpy(m_pNodeType, XSD_SELECTOR_STR);
        break;
    case(XSD_TOTAL_DIGITS):
        strcpy(m_pNodeType, XSD_TOTAL_DIGITS_STR);
@@ -384,6 +405,22 @@ const CXSDNodeBase* CXSDNodeBase::getNodeByTypeAndNameDescending(NODE_TYPES eNod
     assert(false);  // Derived classes need to hande this
 
     return NULL;
+}
+
+const CXSDNodeBase* CXSDNodeBase::getParentNodeByType(NODE_TYPES eNodeType, const CXSDNodeBase *pParent) const
+{
+    if (this->getConstParentNode() == NULL)
+    {
+     //   assert (!"Why was I looking for this and it's not here?");
+    }
+    else if (this->getConstParentNode()->getNodeType() == eNodeType)
+    {
+        return this->getConstParentNode();
+    }
+    else
+    {
+        return this->getConstParentNode()->getParentNodeByType(eNodeType, pParent);
+    }
 }
 
 /*CXSDBuiltInDataType* CXSDBuiltInDataType::load(CXSDNodeBase *pParentNode, const IPropertyTree *pSchemaRoot, const char*  xpath)

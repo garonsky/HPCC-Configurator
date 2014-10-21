@@ -2,10 +2,19 @@
 
 CMinExclusive* CMinExclusive::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
 {
-    assert(!"Not Implemented");
+    CMinExclusive *pMinExclusive = CXSDNodeWithRestrictions::load(pParentNode, pSchemaRoot, xpath);
+
+    if (pMinExclusive == NULL)
+    {
+        return NULL;
+    }
+
+    pMinExclusive->setMinExclusive(pMinExclusive->getValue());
+
+    return pMinExclusive;
 }
 
-void CMinExclusive::dump(std::ostream& cout, unsigned int offset) const
+/*void CMinExclusive::dump(std::ostream& cout, unsigned int offset) const
 {
     assert(!"Not Implemented");
-}
+}*/

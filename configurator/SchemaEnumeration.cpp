@@ -242,6 +242,12 @@ CEnumerationArray* CEnumerationArray::load(CXSDNodeBase* pParentNode, const IPro
         count++;
     }
 
+    if (pEnumerationArray->length() == 0)
+    {
+        delete pEnumerationArray;
+        return NULL;
+    }
+
     SETPARENTNODE(pEnumerationArray, pParentNode);
 
     const CAttribute *pAttribute = dynamic_cast<const CAttribute*>(pEnumerationArray->getParentNodeByType(XSD_ATTRIBUTE));
@@ -258,11 +264,6 @@ CEnumerationArray* CEnumerationArray::load(CXSDNodeBase* pParentNode, const IPro
 
             pEnumerationArray->append(*pEnumeration);
         }
-    }
-
-    if (pEnumerationArray->length() == 0)
-    {
-        return NULL;
     }
 
     return pEnumerationArray;

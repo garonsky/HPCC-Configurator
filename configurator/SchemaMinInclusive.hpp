@@ -3,8 +3,9 @@
 
 #include "SchemaCommon.hpp"
 
-class CMinInclusive : public CXSDNode
+class CMinInclusive : public CXSDNodeWithRestrictions<CMinInclusive>
 {
+    friend class CXSDNodeWithRestrictions<CMinInclusive>;
 public:
 
     virtual ~CMinInclusive()
@@ -12,8 +13,6 @@ public:
     }
 
     static CMinInclusive* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
-
-    virtual void dump(std::ostream& cout, unsigned int offset = 0) const;
 
     virtual void getDocumentation(StringBuffer &strDoc) const
     {
@@ -45,12 +44,11 @@ public:
         assert(!"Not Implemented");
     }
 
-    GETTERSETTER(Value)
     GETTERSETTERINT(MinInclusive)
 
-private:
+protected:
 
-    CMinInclusive(CXSDNodeBase* pParentNode = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_MIN_INCLUSIVE), m_nMinInclusive(-1)
+    CMinInclusive(CXSDNodeBase* pParentNode = NULL) : CXSDNodeWithRestrictions<CMinInclusive>::CXSDNodeWithRestrictions(pParentNode, XSD_MIN_INCLUSIVE), m_nMinInclusive(-1)
     {
     }
 

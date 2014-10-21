@@ -2,16 +2,25 @@
 
 CMinInclusive* CMinInclusive::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
 {
-    assert(pSchemaRoot != NULL);
+
+    CMinInclusive *pMinInclusive = CXSDNodeWithRestrictions::load(pParentNode, pSchemaRoot, xpath);
+
+    if (pMinInclusive == NULL)
+    {
+        return NULL;
+    }
+
+    pMinInclusive->setMinInclusive(pMinInclusive->getValue());
+
+    return pMinInclusive;
+   /* assert(pSchemaRoot != NULL);
 
     if (pSchemaRoot == NULL)
     {
         return NULL;
     }
 
-    CMinInclusive *pMinInclusive = new CMinInclusive(pParentNode);
-
-    pMinInclusive->setXSDXPath(xpath);
+    CMinInclusive *pMinInclusive = NULL;
 
     if (xpath != NULL && *xpath != 0)
     {
@@ -19,8 +28,11 @@ CMinInclusive* CMinInclusive::load(CXSDNodeBase* pParentNode, const IPropertyTre
 
         if (pTree == NULL)
         {
-            return pMinInclusive;
+            return NULL;
         }
+
+        pMinInclusive = new CMinInclusive(pParentNode);
+        pMinInclusive->setXSDXPath(xpath);
 
         const char* pValue = pTree->queryProp(XML_ATTR_VALUE);
 
@@ -39,10 +51,10 @@ CMinInclusive* CMinInclusive::load(CXSDNodeBase* pParentNode, const IPropertyTre
         }
     }
 
-    return pMinInclusive;
+    return pMinInclusive;*/
 }
 
-void CMinInclusive::dump(std::ostream& cout, unsigned int offset) const
+/*void CMinInclusive::dump(std::ostream& cout, unsigned int offset) const
 {
     offset += STANDARD_OFFSET_1;
 
@@ -51,4 +63,4 @@ void CMinInclusive::dump(std::ostream& cout, unsigned int offset) const
     QUICK_OUT(cout, Value, offset);
 
     QuickOutFooter(cout, XSD_MIN_INCLUSIVE_STR, offset);
-}
+}*/

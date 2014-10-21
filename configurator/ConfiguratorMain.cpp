@@ -25,7 +25,7 @@ const char *pDefaultQMLExt =  ".qml";
 void usage()
 {
     std::cout << "configurator -use <xsd files>  -b <base dir path>" << std::endl;
-    std::cout << "Example Usage: ./configurator -use dali.xsd -b /opt/HPCCSystems/componentfiles/configxml -t /tmp " << std::endl;
+    std::cout << "Example Usage: ./configurator -use dali.xsd -b /opt/HPCCSystems/componentfiles/configxml -d -t /tmp " << std::endl;
     std::cout << "-d -doc                           : generate docs" << std::endl;
     std::cout << "-b -base <base dir path>          : base directory path to use with -use option and for xs:include references in xsd files" << std::endl;
     std::cout << "-e -extension <file extension>    : write docs or qml to files with appended extension (default " <<  pDefaultDocExt << ")" << std::endl;
@@ -77,6 +77,8 @@ void usage()
     memset(pBuildSetFileDir, 0, sizeof(pBuildSetFileDir));
     memset(pTargetDocDir, 0, sizeof(pTargetDocDir));
     memset(pOverrideSchema, 0, sizeof(pOverrideSchema));
+    memset(pBasePath, 0, sizeof(pBasePath));
+    memset(pEnvXMLPath, 0, sizeof(pEnvXMLPath));
     memset(pQMLFile,0, sizeof(pQMLFile));
 
     strncpy(pTargetDocExt, pDefaultDocExt, sizeof(pTargetDocExt));

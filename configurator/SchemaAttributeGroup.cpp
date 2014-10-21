@@ -304,6 +304,7 @@ CAttributeGroupArray* CAttributeGroupArray::load(CXSDNodeBase* pParentNode, cons
 
     if (pAttribGroupArray->length() == 0)
     {
+        delete pAttribGroupArray;
         return NULL;
     }
 
