@@ -10,7 +10,8 @@ bool CDojoHelper::IsElementATab(const CElement *pElement)
         return false;
     }
 
-    if (pElement->getMaxOccurs() != NULL && stricmp(pElement->getMaxOccurs(), "unbounded") == 0 && isViewType(pElement, "list") == false && isViewChildNodes(pElement) == true || CElement::isAncestorTopElement(pElement) == true)
+    if (pElement->getMaxOccurs() != NULL && stricmp(pElement->getMaxOccurs(), "unbounded") == 0 && isViewType(pElement, "list") == false \
+            && isViewChildNodes(pElement) == true || CElement::isAncestorTopElement(pElement) == true)
     {
         return true;
     }

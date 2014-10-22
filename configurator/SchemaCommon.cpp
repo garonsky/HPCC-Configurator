@@ -411,7 +411,8 @@ const CXSDNodeBase* CXSDNodeBase::getParentNodeByType(NODE_TYPES eNodeType, cons
 {
     if (this->getConstParentNode() == NULL)
     {
-     //   assert (!"Why was I looking for this and it's not here?");
+     ////   assert (!"Why was I looking for this and it's not here?");
+        return NULL;
     }
     else if (this->getConstParentNode()->getNodeType() == eNodeType)
     {

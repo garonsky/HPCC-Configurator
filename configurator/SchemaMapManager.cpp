@@ -174,9 +174,7 @@ CComplexType* CSchemaMapManager::getComplexTypeWithName(const char* pName)
 
     ppComplexType = (m_pComplexTypePtrsMap->getValue(pName));
 
-    assert(ppComplexType != NULL);
-
-    return *ppComplexType;
+    return (ppComplexType != NULL ? *ppComplexType : NULL);
 }
 
 void CSchemaMapManager::setComplexTypeWithName(const char* pName, CComplexType *pComplexType)

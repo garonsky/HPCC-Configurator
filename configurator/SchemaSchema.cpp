@@ -84,7 +84,7 @@ CSchema* CSchema::load(const char* pSchemaLocation, const IPropertyTree *pSchema
 
     CConfigSchemaHelper::getInstance()->processAttributeGroupArr();
     CConfigSchemaHelper::getInstance()->processExtensionArr();
-    CConfigSchemaHelper::getInstance()->processNodeWithTypeArr();
+    CConfigSchemaHelper::getInstance()->processNodeWithTypeArr(pSchema);
 
     return pSchema;
 }

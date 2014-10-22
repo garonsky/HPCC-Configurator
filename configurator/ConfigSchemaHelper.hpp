@@ -46,7 +46,7 @@ public:
     void processNodeWithBaseArr();
 
     void addNodeForTypeProcessing(CXSDNodeWithType *pNode);
-    void processNodeWithTypeArr();
+    void processNodeWithTypeArr(CXSDNodeBase *pParentNode = NULL);
     //void addRestrictionToBeProcessed(CRestriction *pRestriction);
     //void processRestrictionGroupArr();
 
