@@ -18,6 +18,8 @@ INCLUDE_DIRECTORIES(
         ${HPCC_CONFIGURATOR_SOURCE_DIR}/configurator_app
         ${HPCC_SOURCE_DIR}/system/jlib
         ${HPCC_SOURCE_DIR}/system/include
+	${HPCC_SOURCE_DIR}/deployment/deploy
+
 )
 
 ADD_DEFINITIONS( -D_USRDLL -DCONFIGURATOR_STATIC_LIB )

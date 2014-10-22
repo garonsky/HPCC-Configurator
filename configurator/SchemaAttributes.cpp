@@ -352,11 +352,26 @@ void CAttribute::traverseAndProcessNodes() const
 
 void CAttribute::setEnvValueFromXML(const char *p)
 {
-    assert( p != NULL);
-
     if (p == NULL)
     {
-        return;
+        if (this->getDefault() != NULL && *(this->getDefault()) != 0)
+        {
+            this->setInstanceValue(this->getDefault());
+            this->setInstanceAsValid(true);
+            return;
+        }
+
+        if (this->getUse() != NULL && stricmp(this->getUse(), TAG_REQUIRED) != 0)
+        {
+            return;
+        }
+        else
+        {
+            this->setInstanceAsValid(false);
+            assert (!"Missing attribute property, property not marked as optional");
+
+            return;
+        }
     }
 
     if (this->m_pReverseKeyRefArray != NULL)

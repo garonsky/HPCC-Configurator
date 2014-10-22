@@ -313,7 +313,15 @@ void CSchemaMapManager::setElementWithName(const char* pName, CElement *pElement
         {
             //m_pElementNamePtrsMap->remove(pName);
             //throw MakeExceptionFromMap(EX_STR_ATTRIBUTE_GROUP_ALREADY_DEFINED);
-            assert(!"Redefintion");
+
+            if (STRICTNESS_LEVEL >= DEFAULT_STRICTNESS)
+            {
+                assert(!"Redefintion");
+            }
+            else
+            {
+                PROGLOG("Symbol redefinition.  Possible miss processing xsd file. Ignoring..");
+            }
         }
 
         assert(m_pElementNamePtrsMap->getLinkCount() == 1);
