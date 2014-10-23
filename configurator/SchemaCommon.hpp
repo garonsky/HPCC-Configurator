@@ -146,6 +146,7 @@ enum NODE_TYPES
     XSD_DT_NON_POS_INTEGER,
     XSD_DT_NEG_INTEGER,
     XSD_DT_POS_INTEGER,
+    XSD_DT_BOOLEAN,
     XSD_ERROR
 };
 
@@ -198,6 +199,7 @@ static const char* XSD_DATA_TYPE_NON_NEGATIVE_INTEGER("xs:nonNegativeInteger");
 static const char* XSD_DATA_TYPE_NON_POSITIVE_INTEGER("xs:nonPositiveInteger");
 static const char* XSD_DATA_TYPE_NEGATIVE_INTEGER("xs:negativeInteger");
 static const char* XSD_DATA_TYPE_POSITIVE_INTEGER("xs:positiveInteger");
+static const char* XSD_DATA_TYPE_BOOLEAN(XSD_TAG_BOOLEAN);
 
 
 static const char* XSD_ANNOTATION_STR("Annotation");
@@ -258,6 +260,7 @@ static const char* XSD_DT_NON_NEG_INTEGER_STR("NonNegativeInteger");
 static const char* XSD_DT_NON_POS_INTEGER_STR("NonPositiveInteger");
 static const char* XSD_DT_POS_INTEGER_STR("PositiveInteger");
 static const char* XSD_DT_NEG_INTEGER_STR("NegativeInteger");
+static const char* XSD_DT_BOOLEAN_STR("Boolean");
 
 static const char* XML_ENV_VALUE_OPTIONAL("optional");
 static const char* XML_ENV_VALUE_REQUIRED("required");
@@ -614,7 +617,6 @@ class CXSDNodeWithType : public CXSDNode
 {
     GETTERSETTER(Type)
 
-
 public:
 
     CXSDNodeWithType(CXSDNodeBase* pParentNode, enum NODE_TYPES eNodeType) : CXSDNode::CXSDNode(pParentNode, eNodeType), m_pXSDNode(NULL)
@@ -670,9 +672,9 @@ public:
     virtual ~CXSDBuiltInDataType();
 
     virtual void dump(std::ostream& cout, unsigned int offset = 0) const;
-    //virtual void traverseAndProcessNodes() const = 0;
     virtual void getDocumentation(StringBuffer &strDoc) const;
     virtual void getDojoJS(StringBuffer &strJS) const;
+    virtual bool checkConstraint(const char *pValue) const;
 
 private:
 

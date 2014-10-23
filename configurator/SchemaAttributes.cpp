@@ -374,6 +374,21 @@ void CAttribute::setEnvValueFromXML(const char *p)
         }
     }
 
+    if (this->getTypeNode() != NULL)
+    {
+        const CXSDBuiltInDataType *pNodeBuiltInType = dynamic_cast<const CXSDBuiltInDataType*>(this->getTypeNode());
+
+        assert(pNodeBuiltInType != NULL);
+
+        if (pNodeBuiltInType != NULL && pNodeBuiltInType->checkConstraint(p) == false)
+        {
+            this->setInstanceAsValid(false);
+            assert (!"Invalid value for data type");
+
+            return;
+        }
+    }
+
     if (this->m_pReverseKeyRefArray != NULL)
     {
         for (int idx = 0; this->m_pReverseKeyRefArray->length(); idx++)
@@ -416,10 +431,6 @@ CAttribute* CAttribute::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSc
         if (strcmp(iterAttrib->queryName(), XML_ATTR_NAME) == 0)
         {
             pAttribute->setName(iterAttrib->queryValue());
-        }
-        else if (strcmp(iterAttrib->queryName(), XML_ATTR_TYPE) == 0)
-        {
-            pAttribute->setType(iterAttrib->queryValue());
         }
         else if (strcmp(iterAttrib->queryName(), XML_ATTR_DEFAULT) == 0)
         {

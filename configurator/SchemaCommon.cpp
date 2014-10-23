@@ -1,6 +1,8 @@
 #include "SchemaCommon.hpp"
 #include "ConfigSchemaHelper.hpp"
 #include "SchemaMapManager.hpp"
+#include "jregexp.hpp"
+#include <cstring>
 
 CXSDNodeBase::CXSDNodeBase(CXSDNodeBase* pParentNode, NODE_TYPES eNodeType) : m_pParentNode(pParentNode),  m_eNodeType(eNodeType)
 {
@@ -173,12 +175,16 @@ CXSDNodeBase::CXSDNodeBase(CXSDNodeBase* pParentNode, NODE_TYPES eNodeType) : m_
    case(XSD_DT_POS_INTEGER):
        strcpy(m_pNodeType, XSD_DATA_TYPE_POSITIVE_INTEGER);
        break;
+   case(XSD_DT_BOOLEAN):
+       strcpy(m_pNodeType, XSD_DATA_TYPE_BOOLEAN);
+       break;
    default:
        assert(!"Unknown XSD Type"); // should never get here
        strcpy(m_pNodeType, XSD_ERROR_STR);
        break;
    }
 }
+
 
 CXSDNodeBase::~CXSDNodeBase()
 {
@@ -510,4 +516,113 @@ void CXSDBuiltInDataType::getDocumentation(StringBuffer &strDoc) const
 void CXSDBuiltInDataType::getDojoJS(StringBuffer &strJS) const
 {
     assert(!"Not Implemented");
+}
+
+bool CXSDBuiltInDataType::checkConstraint(const char *pValue) const
+{
+    if (pValue == NULL || *pValue == 0)
+    {
+        return true;
+    }
+
+    enum NODE_TYPES eNodeType = this->getNodeType();
+
+    if (eNodeType >= XSD_DT_NORMALIZED_STRING && eNodeType < XSD_ERROR)
+    {
+        if (XSD_DT_NORMALIZED_STRING == eNodeType)
+        {
+            const char key[] = "\n\r\t";
+            if (strpbrk(pValue, key) != NULL)
+            {
+                return false;
+            }
+        }
+        else if (XSD_DT_STRING == eNodeType)
+        {
+            // all allowed
+        }
+        else if(XSD_DT_TOKEN == eNodeType)
+        {
+            const char key[] = "\n\r\t";
+            if (strpbrk(pValue, key) != NULL)
+            {
+                return false;
+            }
+            if (pValue[0] == ' ' || pValue[strlen(pValue)-1] == ' ' || strstr(pValue, "  ")); // leading/trailing space multiple spaces
+            {
+                return false;
+            }
+        }
+        else if(XSD_DT_DATE == eNodeType)
+        {
+            assert(!"not implemented");
+        }
+        else if(XSD_DT_TIME == eNodeType)
+        {
+            assert(!"not implemented");
+        }
+        else if(XSD_DT_DATE_TIME == eNodeType)
+        {
+            assert(!"not implemented");
+        }
+        else if(XSD_DT_DECIMAL == eNodeType)
+        {
+            assert(!"not implemented");
+        }
+        else if(XSD_DT_INT == eNodeType)
+        {
+            assert(!"not implemented");
+        }
+        else if(XSD_DT_INTEGER == eNodeType)
+        {
+            RegExpr expr("^(\\+|-)?\\d+$");
+
+            if (expr.find(pValue) && expr.findlen(0) == strlen(pValue) == false)
+            {
+                return false;
+            }
+        }
+        else if(XSD_DT_LONG == eNodeType)
+        {
+            assert(!"not implemented");
+        }
+        else if(XSD_DT_NON_NEG_INTEGER == eNodeType)
+        {
+            RegExpr expr("^\\d+$");
+
+            if (expr.find(pValue) && expr.findlen(0) == strlen(pValue) == false)
+            {
+                return false;
+            }
+        }
+        else if(XSD_DT_NON_POS_INTEGER == eNodeType)
+        {
+            RegExpr expr("^\\d-$");
+
+            if (expr.find(pValue) && expr.findlen(0) == strlen(pValue) == false)
+            {
+                return false;
+            }
+        }
+        else if(XSD_DT_NEG_INTEGER == eNodeType)
+        {
+            assert(!"not implemented");
+        }
+        else if(XSD_DT_POS_INTEGER == eNodeType)
+        {
+            assert(!"not implemented");
+        }
+        else if(XSD_DT_BOOLEAN == eNodeType)
+        {
+            if (stricmp(pValue,"true") != 0 && stricmp(pValue,"false") != 0)
+            {
+                return false;
+            }
+            else
+            {
+                assert("!Unknown datatype");
+            }
+        }
+    }
+    return true;
 }

@@ -150,7 +150,6 @@ void setValue(const char *pXPath, const char *pValue)
     assert(pAttribute != NULL);
 
     pAttribute->setEnvValueFromXML(pValue);
-    pAttribute->setInstanceAsValid();
 
     CConfigSchemaHelper::getInstance()->setEnvTreeProp(pXPath, pValue);
 }

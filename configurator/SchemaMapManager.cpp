@@ -61,6 +61,9 @@ CSchemaMapManager::CSchemaMapManager()
     m_enumArray[XSD_DT_NEG_INTEGER-XSD_DT_NORMALIZED_STRING][0] = XSD_DATA_TYPE_NORMALIZED_STRING;
     m_enumArray[XSD_DT_NEG_INTEGER-XSD_DT_NORMALIZED_STRING][1] = XSD_DT_NEG_INTEGER_STR;
 
+    m_enumArray[XSD_DT_BOOLEAN-XSD_DT_NORMALIZED_STRING][0] = XSD_DATA_TYPE_BOOLEAN;
+    m_enumArray[XSD_DT_BOOLEAN-XSD_DT_NORMALIZED_STRING][1] = XSD_DT_BOOLEAN_STR;
+
     //m_pStringToEnumMap.setown(new MapEnumToTypeStringStruct());
     m_pStringToEnumMap->setValue(XSD_DATA_TYPE_NORMALIZED_STRING, XSD_DT_NORMALIZED_STRING);
     m_pStringToEnumMap->setValue(XSD_DATA_TYPE_STRING, XSD_DT_STRING);
@@ -75,6 +78,7 @@ CSchemaMapManager::CSchemaMapManager()
     m_pStringToEnumMap->setValue(XSD_DATA_TYPE_NON_POSITIVE_INTEGER, XSD_DT_NON_POS_INTEGER);
     m_pStringToEnumMap->setValue(XSD_DATA_TYPE_NEGATIVE_INTEGER, XSD_DT_POS_INTEGER);
     m_pStringToEnumMap->setValue(XSD_DATA_TYPE_POSITIVE_INTEGER, XSD_DT_NEG_INTEGER);
+    m_pStringToEnumMap->setValue(XSD_DATA_TYPE_BOOLEAN, XSD_DT_BOOLEAN);
 }
 
 CSchemaMapManager::~CSchemaMapManager()
@@ -632,15 +636,19 @@ enum NODE_TYPES CSchemaMapManager::getEnumFromTypeName(const char *pTypeName) co
         return XSD_ERROR;
     }
 
-    enum NODE_TYPES eRet = *(m_pStringToEnumMap->getValue(pTypeName));
+    enum NODE_TYPES *eRet = (m_pStringToEnumMap->getValue(pTypeName));
 
-    if (eRet == XSD_ERROR)
+    if (eRet == NULL || *eRet == XSD_ERROR)
     {
-        assert(!"Unknown XSD built in data type");
+        if (STRICTNESS_LEVEL >= MAXIMUM_STRICTNESS)
+        {
+            assert(!"Unknown XSD built in data type");
+        }
         PROGLOG("Unknown XSD built in data type");
+        return XSD_ERROR;
     }
 
-    return eRet;
+    return *eRet;
 }
 
 const char* CSchemaMapManager::getTypeNameFromEnum(enum NODE_TYPES eType, bool bForDump) const

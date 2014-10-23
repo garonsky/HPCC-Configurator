@@ -118,63 +118,6 @@ protected:
 
 private:
 
-    template<typename T1, typename T2>
-    void clearArrays(T1 *a)
-    {
-        void *p = NULL;
-
-//        while (true)
-        //{
-            HashIterator iter(*a);
-
-            //iter.first();
-            //if (iter.isValid() == true)
-            ForEach(iter)
-            {
-                const char *pKey = static_cast<const char*>((&iter.query())->getKey());
-                T2 *pT2 = *(a->getValue(pKey));
-
-                assert(pT2->getLinkCount() == 1);
-                assert(pT2 != p);
-                p = NULL;
-
-                PROGLOG("Function: %s() at %s:%d", __func__, __FILE__, __LINE__);
-                PROGLOG("remove with key = %s pT2=%p pT2->xxcount->counter = %d", pKey, pT2, pT2->getLinkCount());
-
-                //a->remove(pKey);
-                //a->removeExact(&iter.query());
-                //pT2->Release();
-
-            }
-/*            else
-            {
-                break;
-            }
-        }*/
-            a->kill();
-    }
-
-    /*void clearArrays(StringMapOf<MAPPING> *pStringMap)
-    {
-        while (true)
-        {
-            HashIterator iter(*pStringMap);
-
-            iter.first();
-            if (iter.isValid() == true)
-            {
-                const char *pKey = static_cast<const char*>((&iter.query())->getKey());
-                InterfaceImpl *p = *(pStringMap->getValue(pKey));
-
-                p->Release();
-                pStringMap->remove(pKey);
-            }
-            else
-            {
-                break;
-            }
-        }
-    }*/
 };
 
 #endif // _SCHEMA_MAP_MANAGER_HPP_

@@ -62,14 +62,14 @@ public:
         return m_bInstanceValueValid;
     }
 
+    virtual void setEnvValueFromXML(const char *p);
+
+protected:
+
     void setInstanceAsValid(bool bValid = true)
     {
         m_bInstanceValueValid = bValid;
     }
-
-    virtual void setEnvValueFromXML(const char *p);
-
-protected:
 
     void setAnnotation(CAnnotation *pAnnotation)
     {

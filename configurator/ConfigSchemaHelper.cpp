@@ -443,10 +443,8 @@ void CConfigSchemaHelper::processNodeWithTypeArr(CXSDNodeBase *pParentNode)
 
             if (pNode == NULL)
             {
-                pNode = CXSDBuiltInDataType::create(pParentNode, pTypeName);
+                pNode = CXSDBuiltInDataType::create(pNodeWithType, pTypeName);
             }
-
-            assert(pNode != NULL);
 
             if (pNode != NULL)
             {
