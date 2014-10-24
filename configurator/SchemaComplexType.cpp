@@ -15,8 +15,6 @@
 #include "ExceptionStrings.hpp"
 #include "SchemaMapManager.hpp"
 
-
-
 const CXSDNodeBase* CComplexType::getNodeByTypeAndNameAscending(NODE_TYPES eNodeType, const char *pName) const
 {
     const CXSDNodeBase* pMatchingNode = NULL;
@@ -297,43 +295,6 @@ void CComplexType::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
         m_pAttributeGroupArray->loadXMLFromEnvXml(pEnvTree);
     }
 }
-
-/*void CComplexType::traverseAndProcessNodes() const
-{
-    CComplexType::processEntryHandlers(this);
-
-    if (m_pSequence != NULL)
-    {
-        m_pSequence->traverseAndProcessNodes();
-    }
-
-    if (m_pComplexContent != NULL)
-    {
-        m_pComplexContent->traverseAndProcessNodes();
-    }
-
-    if (m_pAttributeArray != NULL)
-    {
-        m_pAttributeArray->traverseAndProcessNodes();
-    }
-
-    if (m_pChoice != NULL)
-    {
-        m_pChoice->traverseAndProcessNodes();
-    }
-
-    if (m_pElementArray != NULL)
-    {
-        m_pElementArray->traverseAndProcessNodes();
-    }
-
-    if (m_pAttributeGroupArray != NULL)
-    {
-        m_pAttributeGroupArray->traverseAndProcessNodes();
-    }
-
-    CComplexType::processExitHandlers(this);
-}*/
 
 const char* CComplexType::getXML(const char* /*pComponent*/)
 {

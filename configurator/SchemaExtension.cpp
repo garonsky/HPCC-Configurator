@@ -48,7 +48,7 @@ const char* CExtension::getXML(const char* /*pComponent*/)
 
 void CExtension::initExtension()
 {
-    NODE_TYPES eNodeType[] = { XSD_SIMPLE_TYPE, XSD_SIMPLE_TYPE };
+    NODE_TYPES eNodeType[] = { XSD_SIMPLE_TYPE, XSD_SIMPLE_CONTENT };
 
     const CXSDNodeBase *pBaseNode = (dynamic_cast<const CXSDNodeBase*>(this));
 

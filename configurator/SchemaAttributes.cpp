@@ -13,6 +13,7 @@
 #include "ConfiguratorMain.hpp"
 #include "jlog.hpp"
 #include "SchemaKeyRef.hpp"
+#include "SchemaSimpleType.hpp"
 
 CAttribute::~CAttribute()
 {
@@ -378,8 +379,6 @@ void CAttribute::setEnvValueFromXML(const char *p)
     {
         const CXSDBuiltInDataType *pNodeBuiltInType = dynamic_cast<const CXSDBuiltInDataType*>(this->getTypeNode());
 
-        assert(pNodeBuiltInType != NULL);
-
         if (pNodeBuiltInType != NULL && pNodeBuiltInType->checkConstraint(p) == false)
         {
             this->setInstanceAsValid(false);
@@ -387,6 +386,14 @@ void CAttribute::setEnvValueFromXML(const char *p)
 
             return;
         }
+
+        if (this->getTypeNode()->getNodeType() == XSD_SIMPLE_TYPE)
+        {
+            const CSimpleType *pNodeSimpleType = dynamic_cast<const CSimpleType*>(this->getTypeNode());
+
+            //if (pNodeSimpleType != NULL && pNodeSimpleType->)
+        }
+
     }
 
     if (this->m_pReverseKeyRefArray != NULL)

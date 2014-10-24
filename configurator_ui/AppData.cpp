@@ -2,7 +2,7 @@
 #include "jlog.hpp"
 #include <cassert>
 
-// TODO: REMOVE REFERENCES TO SCHEAM
+// TODO: REMOVE REFERENCES TO SCHEMA
 #include "SchemaCommon.hpp"
 //
 

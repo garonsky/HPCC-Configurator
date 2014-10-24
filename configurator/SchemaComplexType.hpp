@@ -39,8 +39,6 @@ public:
 
     virtual void loadXMLFromEnvXml(const IPropertyTree *pEnvTree);
 
-    //virtual void traverseAndProcessNodes() const;
-
     virtual const char* getXML(const char* /*pComponent*/);
 
     virtual const CAttributeArray* getAttributeArray() const

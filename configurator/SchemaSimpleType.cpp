@@ -4,6 +4,7 @@
 #include "SchemaRestriction.hpp"
 #include "ConfigSchemaHelper.hpp"
 #include "SchemaMapManager.hpp"
+#include "jlib.hpp"
 
 
 CXSDNodeBase* CSimpleType::getNodeByTypeAndNameAscending(NODE_TYPES eNodeType, const char *pName)
@@ -174,6 +175,18 @@ const char* CSimpleType::getXML(const char* /*pComponent*/)
     return m_strXML.str();
 }
 
+
+bool CSimpleType::checkConstraint(const char *pValue) const
+{
+    if (this->getRestriction() == NULL)
+    {
+        return true;
+    }
+    else
+    {
+        return this->getRestriction()->checkConstraint(pValue);
+    }
+}
 
 void CSimpleTypeArray::dump(std::ostream& cout, unsigned int offset) const
 {

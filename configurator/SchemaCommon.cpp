@@ -185,7 +185,6 @@ CXSDNodeBase::CXSDNodeBase(CXSDNodeBase* pParentNode, NODE_TYPES eNodeType) : m_
    }
 }
 
-
 CXSDNodeBase::~CXSDNodeBase()
 {
 }

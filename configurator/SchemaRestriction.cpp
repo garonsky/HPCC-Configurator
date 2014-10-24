@@ -12,7 +12,7 @@
 #include "SchemaLength.hpp"
 #include "SchemaTotalDigits.hpp"
 #include "SchemaWhiteSpace.hpp"
-#include "SchemaAll.hpp"
+#include "SchemaSimpleContent.hpp"
 
 #define QUICK_LOAD_XSD_RESTRICTIONS(X, Y)       \
     strXPathExt.set(xpath);                     \
@@ -258,4 +258,45 @@ const char* CRestriction::getXML(const char* /*pComponent*/)
     }
 
     return m_strXML.str();
+}
+
+bool CRestriction::checkConstraint(const char *pValue) const
+{
+    const CXSDNodeBase *pNodeBase = this->getBaseNode();
+
+    assert(pNodeBase != NULL);
+
+    if (pNodeBase != NULL)
+    {
+         const CXSDBuiltInDataType *pNodeBuiltInType = dynamic_cast<const CXSDBuiltInDataType*>(pNodeBase);
+
+         if (pNodeBuiltInType != NULL && pNodeBuiltInType->checkConstraint(pValue) == false)
+         {
+             return false;
+         }
+
+         if (pNodeBase->getNodeType() == XSD_SIMPLE_TYPE)
+         {
+             const CSimpleType *pNodeSimpleType = dynamic_cast<const CSimpleType*>(pNodeBase);
+
+             if (pNodeSimpleType != NULL && pNodeSimpleType->checkConstraint(pValue) == false)
+             {
+                return false;
+             }
+         }
+         else if (pNodeBase->getNodeType() == XSD_SIMPLE_CONTENT)
+         {
+             const CSimpleContent *pNodeSimpleContent = dynamic_cast<const CSimpleContent*>(pNodeBase);
+
+             if (pNodeSimpleContent != NULL && pNodeSimpleContent->checkConstraint(pValue) == false)
+             {
+                return false;
+             }
+         }
+
+         assert(!"Unknown base node in restriction");
+         return false;
+    }
+
+    return true;
 }

@@ -40,7 +40,7 @@ public:
     GETTERSETTER(Name)
     GETTERSETTER(ID)
 
-    CRestriction* getRestriction()
+    const CRestriction* getRestriction() const
     {
         return m_pRestriction;
     }
@@ -55,6 +55,8 @@ public:
 
         m_pRestriction = pRestriction;
     }
+
+    bool checkConstraint(const char *pValue) const;
 
 protected:
 

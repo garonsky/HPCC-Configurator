@@ -128,6 +128,7 @@ enum NODE_TYPES
     XSD_MAX_LENGTH,
     XSD_PATTERN,
     XSD_SELECTOR,
+    XSD_SIMPLE_CONTENT,
     XSD_TOTAL_DIGITS,
     XSD_UNIQUE,
     XSD_UNIQUE_ARRAY,
@@ -152,55 +153,57 @@ enum NODE_TYPES
 
 static const char* DEFAULT_SCHEMA_DIRECTORY("/opt/HPCCSystems/componentfiles/configxml/");
 
-static const char* XSD_TAG_ANNOTATION("xs:annotation");
-static const char* XSD_TAG_APP_INFO("xs:appinfo");
-//static const char* XSD_TAG_ATTRIBUTE("xs:attribute");
-//static const char* XSD_TAG_ATTRIBUTE_GROUP("xs:attributeGroup");
-//static const char* XSD_TAG_CHOICE("xs:choice");
-//static const char* XSD_TAG_COMPLEX_CONTENT("xs:complexContent");
-//static const char* XSD_TAG_COMPLEX_TYPE("xs:complexType");
-static const char* XSD_TAG_DOCUMENTATION("xs:documentation");
-//static const char* XSD_TAG_ELEMENT("xs:element");
-static const char* XSD_TAG_EXTENSION("xs:extension");
-static const char* XSD_TAG_KEY("xs:key");
-static const char* XSD_TAG_KEYREF("xs:keyref");
-static const char* XSD_TAG_SELECTOR("xs:selector");
-static const char* XSD_TAG_FIELD("xs:field");
-static const char* XSD_TAG_INCLUDE("xs:include");
-static const char* XSD_TAG_RESTRICTION("xs:restriction");
-static const char* XSD_TAG_SCHEMA("");//xs:schema");
-//static const char* XSD_TAG_SEQUENCE("xs:sequence");
-static const char* XSD_TAG_SIMPLE_TYPE("xs:simpleType");
-static const char* XSD_TAG_ENUMERATION("xs:enumeration");
-static const char* XSD_TAG_FRACTION_DIGITS("xs:fractionDigits");
-static const char* XSD_TAG_LENGTH("xs:length");
-static const char* XSD_TAG_MAX_EXCLUSIVE("xs:maxExclusive");
-static const char* XSD_TAG_MAX_INCLUSIVE("xs:maxInclusive");
-static const char* XSD_TAG_MIN_EXCLUSIVE("xs:minExlusive");
-static const char* XSD_TAG_MIN_INCLUSIVE("xs:minExclusive");
-static const char* XSD_TAG_MAX_LENGTH("xs:maxLength");
-static const char* XSD_TAG_MIN_LENGTH("xs:minLength");
-static const char* XSD_TAG_PATTERN("xs:pattern");
-static const char* XSD_TAG_TOTAL_DIGITS("xs:totalDigits");
-static const char* XSD_TAG_UNQIUE("xs:unique");
-static const char* XSD_TAG_WHITE_SPACE("xs:whiteSpace");
+#define NAME_SPACE_FOR_XSD_SCHEMA   "xs:"
 
-static const char* XSD_DATA_TYPE_NORMALIZED_STRING("xs:normalizedString");
-static const char* XSD_DATA_TYPE_STRING("xs:string");
-static const char* XSD_DATA_TYPE_TOKEN("xs:token");
-static const char* XSD_DATA_TYPE_DATE("xs:date");
-static const char* XSD_DATA_TYPE_TIME("xs:time");
-static const char* XSD_DATA_TYPE_DATE_TIME("xs:dateTime");
-static const char* XSD_DATA_TYPE_DECIMAL("xs:decimal"); // A decimal value
-static const char* XSD_DATA_TYPE_INTEGER("xs:integer"); // An integer value
-static const char* XSD_DATA_TYPE_INT("xs:int"); // A signed 32-bit integer
-static const char* XSD_DATA_TYPE_LONG("xs:long"); // A signed 64-bit integer
-static const char* XSD_DATA_TYPE_NON_NEGATIVE_INTEGER("xs:nonNegativeInteger");
-static const char* XSD_DATA_TYPE_NON_POSITIVE_INTEGER("xs:nonPositiveInteger");
-static const char* XSD_DATA_TYPE_NEGATIVE_INTEGER("xs:negativeInteger");
-static const char* XSD_DATA_TYPE_POSITIVE_INTEGER("xs:positiveInteger");
-static const char* XSD_DATA_TYPE_BOOLEAN(XSD_TAG_BOOLEAN);
+static const char* XSD_TAG_ANNOTATION(NAME_SPACE_FOR_XSD_SCHEMA"annotation");
+static const char* XSD_TAG_APP_INFO(NAME_SPACE_FOR_XSD_SCHEMA"appinfo");
+//static const char* XSD_TAG_ATTRIBUTE(NAME_SPACE_FOR_XSD_SCHEMA"attribute");
+//static const char* XSD_TAG_ATTRIBUTE_GROUP(NAME_SPACE_FOR_XSD_SCHEMA"attributeGroup");
+//static const char* XSD_TAG_CHOICE(NAME_SPACE_FOR_XSD_SCHEMA"choice");
+//static const char* XSD_TAG_COMPLEX_CONTENT(NAME_SPACE_FOR_XSD_SCHEMA"complexContent");
+//static const char* XSD_TAG_COMPLEX_TYPE(NAME_SPACE_FOR_XSD_SCHEMA"complexType");
+static const char* XSD_TAG_DOCUMENTATION(NAME_SPACE_FOR_XSD_SCHEMA"documentation");
+//static const char* XSD_TAG_ELEMENT(NAME_SPACE_FOR_XSD_SCHEMA"element");
+static const char* XSD_TAG_EXTENSION(NAME_SPACE_FOR_XSD_SCHEMA"extension");
+static const char* XSD_TAG_KEY(NAME_SPACE_FOR_XSD_SCHEMA"key");
+static const char* XSD_TAG_KEYREF(NAME_SPACE_FOR_XSD_SCHEMA"keyref");
+static const char* XSD_TAG_SELECTOR(NAME_SPACE_FOR_XSD_SCHEMA"selector");
+static const char* XSD_TAG_FIELD(NAME_SPACE_FOR_XSD_SCHEMA"field");
+static const char* XSD_TAG_INCLUDE(NAME_SPACE_FOR_XSD_SCHEMA"include");
+static const char* XSD_TAG_RESTRICTION(NAME_SPACE_FOR_XSD_SCHEMA"restriction");
+static const char* XSD_TAG_SCHEMA("");
+static const char* XSD_TAG_SIMPLE_CONTENT(NAME_SPACE_FOR_XSD_SCHEMA"simpleContent");
+//static const char* XSD_TAG_SEQUENCE(NAME_SPACE_FOR_XSD_SCHEMA"sequence");
+static const char* XSD_TAG_SIMPLE_TYPE(NAME_SPACE_FOR_XSD_SCHEMA"simpleType");
+static const char* XSD_TAG_ENUMERATION(NAME_SPACE_FOR_XSD_SCHEMA"enumeration");
+static const char* XSD_TAG_FRACTION_DIGITS(NAME_SPACE_FOR_XSD_SCHEMA"fractionDigits");
+static const char* XSD_TAG_LENGTH(NAME_SPACE_FOR_XSD_SCHEMA"length");
+static const char* XSD_TAG_MAX_EXCLUSIVE(NAME_SPACE_FOR_XSD_SCHEMA"maxExclusive");
+static const char* XSD_TAG_MAX_INCLUSIVE(NAME_SPACE_FOR_XSD_SCHEMA"maxInclusive");
+static const char* XSD_TAG_MIN_EXCLUSIVE(NAME_SPACE_FOR_XSD_SCHEMA"minExlusive");
+static const char* XSD_TAG_MIN_INCLUSIVE(NAME_SPACE_FOR_XSD_SCHEMA"minExclusive");
+static const char* XSD_TAG_MAX_LENGTH(NAME_SPACE_FOR_XSD_SCHEMA"maxLength");
+static const char* XSD_TAG_MIN_LENGTH(NAME_SPACE_FOR_XSD_SCHEMA"minLength");
+static const char* XSD_TAG_PATTERN(NAME_SPACE_FOR_XSD_SCHEMA"pattern");
+static const char* XSD_TAG_TOTAL_DIGITS(NAME_SPACE_FOR_XSD_SCHEMA"totalDigits");
+static const char* XSD_TAG_UNQIUE(NAME_SPACE_FOR_XSD_SCHEMA"unique");
+static const char* XSD_TAG_WHITE_SPACE(NAME_SPACE_FOR_XSD_SCHEMA"whiteSpace");
 
+static const char* XSD_DATA_TYPE_NORMALIZED_STRING(NAME_SPACE_FOR_XSD_SCHEMA"normalizedString");
+static const char* XSD_DATA_TYPE_STRING(NAME_SPACE_FOR_XSD_SCHEMA"string");
+static const char* XSD_DATA_TYPE_TOKEN(NAME_SPACE_FOR_XSD_SCHEMA"token");
+static const char* XSD_DATA_TYPE_DATE(NAME_SPACE_FOR_XSD_SCHEMA"date");
+static const char* XSD_DATA_TYPE_TIME(NAME_SPACE_FOR_XSD_SCHEMA"time");
+static const char* XSD_DATA_TYPE_DATE_TIME(NAME_SPACE_FOR_XSD_SCHEMA"dateTime");
+static const char* XSD_DATA_TYPE_DECIMAL(NAME_SPACE_FOR_XSD_SCHEMA"decimal"); // A decimal value
+static const char* XSD_DATA_TYPE_INTEGER(NAME_SPACE_FOR_XSD_SCHEMA"integer"); // An integer value
+static const char* XSD_DATA_TYPE_INT(NAME_SPACE_FOR_XSD_SCHEMA"int"); // A signed 32-bit integer
+static const char* XSD_DATA_TYPE_LONG(NAME_SPACE_FOR_XSD_SCHEMA"long"); // A signed 64-bit integer
+static const char* XSD_DATA_TYPE_NON_NEGATIVE_INTEGER(NAME_SPACE_FOR_XSD_SCHEMA"nonNegativeInteger");
+static const char* XSD_DATA_TYPE_NON_POSITIVE_INTEGER(NAME_SPACE_FOR_XSD_SCHEMA"nonPositiveInteger");
+static const char* XSD_DATA_TYPE_NEGATIVE_INTEGER(NAME_SPACE_FOR_XSD_SCHEMA"negativeInteger");
+static const char* XSD_DATA_TYPE_POSITIVE_INTEGER(NAME_SPACE_FOR_XSD_SCHEMA"positiveInteger");
+static const char* XSD_DATA_TYPE_BOOLEAN(NAME_SPACE_FOR_XSD_SCHEMA"boolean");
 
 static const char* XSD_ANNOTATION_STR("Annotation");
 static const char* XSD_APP_INFO_STR("AppInfo");
@@ -240,6 +243,7 @@ static const char* XSD_RESTRICTION_STR("Restriction");
 static const char* XSD_SCHEMA_STR("Schema");
 static const char* XSD_SELECTOR_STR("Selector");
 static const char* XSD_SEQUENCE_STR("Sequence");
+static const char* XSD_SIMPLE_CONTENT_STR("SimpleContent");
 static const char* XSD_SIMPLE_TYPE_STR("SimpleType");
 static const char* XSD_SIMPLE_TYPE_ARRAY_STR("SimpleTypeArray");
 static const char* XSD_TOTAL_DIGITS_STR("TotalDigits");

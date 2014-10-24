@@ -30,3 +30,4 @@
 #include "SchemaTotalDigits.hpp"
 #include "SchemaUnique.hpp"
 #include "SchemaWhiteSpace.hpp"
+#include "SchemaSimpleContent.hpp"

@@ -41,6 +41,8 @@ public:
 
     virtual void loadXMLFromEnvXml(const IPropertyTree *pEnvTree);
 
+    bool checkConstraint(const char *pValue) const;
+
 /*    CEnumerationArray* getEnumerationArray()
     {
         return m_pEnumerationArray;
