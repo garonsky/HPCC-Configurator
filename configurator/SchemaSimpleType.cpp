@@ -96,7 +96,6 @@ void CSimpleType::traverseAndProcessNodes() const
 CSimpleType* CSimpleType::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
 {
     assert(pSchemaRoot != NULL);
-    assert(pParentNode != NULL);
 
     if (pSchemaRoot == NULL || pParentNode == NULL)
     {

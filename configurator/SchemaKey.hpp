@@ -36,10 +36,6 @@ public:
         assert(!"Not Implemented");
     }
 
-    //virtual void traverseAndProcessNodes() const;
-
-    //virtual const char* getXML(const char* /*pComponent*/);
-
     virtual void populateEnvXPath(StringBuffer strXPath, unsigned int index = 1)
     {
         assert(!"Not Implemented");
@@ -57,7 +53,7 @@ public:
 
 protected:
 
-    CKey(CXSDNodeBase* pParentNode) : CXSDNode::CXSDNode(pParentNode, XSD_KEY), m_pFieldArray(NULL), m_pSelector(NULL)
+    CKey(CXSDNodeBase* pParentNode) : CXSDNode::CXSDNode(pParentNode, XSD_KEY), m_pFieldArray(NULL), m_pSelector(NULL), m_pAnnotation(NULL)
     {
     }
 

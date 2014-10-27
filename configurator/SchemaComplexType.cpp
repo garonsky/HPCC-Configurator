@@ -14,6 +14,7 @@
 #include "DocumentationMarkup.hpp"
 #include "ExceptionStrings.hpp"
 #include "SchemaMapManager.hpp"
+#include "SchemaSimpleType.hpp"
 
 const CXSDNodeBase* CComplexType::getNodeByTypeAndNameAscending(NODE_TYPES eNodeType, const char *pName) const
 {
@@ -332,6 +333,7 @@ CComplexType* CComplexType::load(CXSDNodeBase* pParentNode, const IPropertyTree 
     CSequence *pSequence  = NULL;
     CAttributeGroupArray *pAttributeGroupArray = NULL;
     CAnnotation *pAnnotation = NULL;
+    CSimpleType *pSimpleType = NULL;
 
     if (pSchemaRoot == NULL)
     {
@@ -371,7 +373,10 @@ CComplexType* CComplexType::load(CXSDNodeBase* pParentNode, const IPropertyTree 
     strXPathExt.clear().append(xpath).append("/").append(XSD_TAG_ATTRIBUTE_GROUP);
     pAttributeGroupArray = CAttributeGroupArray::load(NULL, pSchemaRoot, strXPathExt.str());
 
-    CComplexType *pComplexType = new CComplexType(pParentNode, pName, pSequence, pComplexContent, pAttributeArray, pChoice, pElementArray, pAttributeGroupArray, pAnnotation);
+    strXPathExt.clear().append(xpath).append("/").append(XSD_TAG_SIMPLE_TYPE);
+    pSimpleType = CSimpleType::load(NULL, pSchemaRoot, strXPathExt.str());
+
+    CComplexType *pComplexType = new CComplexType(pParentNode, pName, pSequence, pComplexContent, pAttributeArray, pChoice, pElementArray, pAttributeGroupArray, pAnnotation, pSimpleType);
 
     pComplexType->setXSDXPath(xpath);
 
@@ -387,6 +392,7 @@ CComplexType* CComplexType::load(CXSDNodeBase* pParentNode, const IPropertyTree 
         SETPARENTNODE(pElementArray, pComplexType)
         SETPARENTNODE(pAttributeGroupArray, pComplexType)
         SETPARENTNODE(pAnnotation, pComplexType);
+        SETPARENTNODE(pSimpleType, pComplexType);
 
         if (pName != NULL)
         {

@@ -1,84 +1,162 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
-    <xs:element name="Hardware">
-
-        <xs:annotation>
-            <xs:documentation>Describes the HPCC Hardware Nodes</xs:documentation>
-        </xs:annotation>
-
-        <xs:key name="computerTypeKey">
-            <xs:selector xpath="./ComputerTypes"/>
-            <xs:field xpath="@Name"/>
-        </xs:key>
-
-  <xs:complexType>
-    <xs:sequence>
-  <xs:element name="to" type="xs:string"/>
-  <xs:element name="from" type="xs:string"/>
-  <xs:element name="heading" type="xs:string"/>
-  <xs:element name="body" type="xs:string"/>
+  <xs:element name="Hardware_NEW">
+    <xs:annotation>
+      <xs:documentation>Describes HPCC Hardware</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+       <xs:element name="ComputerType" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:appinfo>
+	      <title>Computer Types</title>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="name" use="required">
+               <xs:annotation>
+                <xs:appinfo>
+                  <title>Name</title>
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="manufacturer" type="xs:string" use="optional">
+              <xs:annotation>
+                <xs:appinfo>
+                  <title>Manufacturer</title>
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="computerType" type="xs:string" use="optional">
+              <xs:annotation>
+                <xs:appinfo>
+                  <title>Computer Type</title>
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="user" type="xs:string" use="optional">
+              <xs:annotation>
+                <xs:appinfo>
+                  <title>User</title>
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+	<xs:element name="Switches" maxOccurs="unbounded">
+               <xs:annotation>
+                <xs:appinfo>
+                  <title>Switches</title>
+                </xs:appinfo>
+              </xs:annotation>
+	      <xs:complexType>
+	          <xs:attribute name="name" type="xs:string" use="optional">
+							<xs:annotation>
+	               <xs:appinfo>
+					         <title>Name</title>
+	               </xs:appinfo>
+					   </xs:annotation>
+	           </xs:attribute>
+	     </xs:complexType>
+	</xs:element>
+	<xs:element name="Domains" maxOccurs="unbounded">
+               <xs:annotation>
+                <xs:appinfo>
+                  <title>Domains</title>
+                </xs:appinfo>
+              </xs:annotation>
+	     <xs:attribute name="name">
+		<xs:annotation>
+			<xs:appinfo>
+				<title>Name</title>
+			</xs:appinfo>
+		</xs:annotation>
+	     </xs:attribute>
+	     <xs:attribute name="snmpSecurityString">
+		<xs:annotation>
+			<xs:appinfo>
+				<title>SNMP Security String</title>
+			</xs:appinfo>
+		</xs:annotation>
+	     </xs:attribute>
+	</xs:element>
+			<xs:element name="Computers" maxOccurs="unbounded">
+               <xs:annotation>
+                <xs:appinfo>
+                  <title>Computers</title>
+                </xs:appinfo>
+               </xs:annotation>
+	       <xs:complexType>
+			<xs:attribute name="name">
+			    <xs:annotation>
+					<xs:appinfo>
+						<title>Name</title>
+					</xs:appinfo>
+					</xs:annotation>
+					</xs:attribute>
+			<xs:attribute name="domain">
+			    <xs:annotation>
+				<xs:appinfo>
+					<title>Domain</title>
+				</xs:appinfo>
+			    </xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="computerType">
+			    <xs:annotation>
+					<xs:appinfo>
+						<title>Computer Type</title>
+					</xs:appinfo>
+			</xs:annotation>
+					</xs:attribute>
+			<xs:attribute name="netAddress">
+			    <xs:annotation>
+				<xs:appinfo>
+					<title>Network Address</title>
+				</xs:appinfo>
+			    </xs:annotation>
+		     </xs:attribute>
+	       </xs:complexType>
+	</xs:element>
+	<xs:element name="NAS" maxOccurs="unbounded">
+	       <xs:complexType>
+			<xs:attribute name="name">
+				<xs:annotation>
+					<xs:appinfo>
+						<title>Name</title>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="mask">
+				<xs:annotation>
+					<xs:appinfo>
+						<title>Mask</title>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="directory">
+				<xs:annotation>
+					<xs:appinfo>
+						<title>Directory</title>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="subnet">
+				<xs:annotation>
+					<xs:appinfo>
+						<title>Subnet</title>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="trace">
+				<xs:annotation>
+					<xs:appinfo>
+						<title>Trace</title>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
     </xs:sequence>
-  </xs:complexType>
-
-        <!--xs:complexType>
-            <xs:sequence>
-                <xs:element name="ComputerTypes">
-                    <xs:annotation>
-                        <xs:documentation>Categories of HPCC Computer Hardware Nodes</xs:documentation>
-                        <xs:appinfo>
-                            <title>Computer Types</title>
-                            <tooltip>HPCC Computer Node Types</tooltip>
-                        </xs:appinfo>
-                    </xs:annotation>
-
-                    <xs:sequence>
-                        <xs:attribute name="Name">
-                            <xs:annotation>
-                                <xs:documentation>Name of Computer Type</xs:documentation>
-                            </xs:annotation>
-                            <xs:simpleType>
-                                <xs:restriction base="xs:string">
-                                    <xs:length value="100"/>
-                                </xs:restriction>
-                            </xs:simpleType>
-                        </xs:attribute>
-
-                        <xs:attribute name="Manufacturer">
-                            <xs:annotation>
-                                <xs:documentation>Name of Manufacturer of Computer Type</xs:documentation>
-                            </xs:annotation>
-                            <xs:simpleType>
-                                <xs:restriction base="xs:string">
-                                    <xs:length value="100"/>
-                                </xs:restriction>
-                            </xs:simpleType>
-                        </xs:attribute>
-
-                        <xs:attribute name="computerType">
-                            <xs:annotation>
-                                <xs:documentation>Computer Type</xs:documentation>
-                            </xs:annotation>
-                            <xs:simpleType>
-                                <xs:restriction base="xs:string">
-                                    <xs:length value="100"/>
-                                </xs:restriction>
-                            </xs:simpleType>
-                        </xs:attribute>
-
-                        <xs:attribute name="opSys">
-                            <xs:annotation>
-                                <xs:documentation>Computer Operating System</xs:documentation>
-                            </xs:annotation>
-                            <xs:simpleType>
-                                <xs:restriction base="xs:string">
-                                    <xs:length value="100"/>
-                                </xs:restriction>
-                            </xs:simpleType>
-                        </xs:attribute>
-	            </xs:sequence>
-                </xs:element>
-           </xs:sequence>
-        </xs:complexType-->
-
-    </xs:element>
+    </xs:complexType>
+   </xs:element>
 </xs:schema>
