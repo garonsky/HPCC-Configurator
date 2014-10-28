@@ -106,6 +106,9 @@ public:
 
     void addReverseKeyRef(const CKeyRef *pKeyRef);
 
+    bool isATab() const;
+    bool isLastTab(const int idx) const;
+
     /*virtual const CXSDNodeBase* getNodeByTypeAndNameDescending(NODE_TYPES eNodeType, const char *pName) const;*/
 
     static CElement* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);

@@ -541,6 +541,7 @@ void CElement::getDojoJS(StringBuffer &strJS) const
     }
 }
 
+#ifdef _USE_OLD_GET_QML_
 void CElement::getQML(StringBuffer &strQML, int idx) const
 {
     //TODO: Handle tree view
@@ -575,7 +576,7 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
         strQML.append(QML_TAB_VIEW_BEGIN);
         DEBUG_MARK_QML;
 
-        if (m_pAnnotation != NULL)
+        /*if (m_pAnnotation != NULL)
         {
             m_pAnnotation->getQML(strQML);
         }
@@ -583,7 +584,7 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
         if (m_pComplexTypeArray != NULL)
         {
             m_pComplexTypeArray->getQML(strQML);
-        }
+        }*/
 
         strQML.append(QML_TAB_VIEW_STYLE);
         DEBUG_MARK_QML;
@@ -699,6 +700,117 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
         }
     }
 }
+#else
+
+void CElement::getQML(StringBuffer &strQML, int idx) const
+{
+    // Handle HPCC Specific tag
+    if (m_pAnnotation != NULL && m_pAnnotation->getAppInfo() != NULL && m_pAnnotation->getAppInfo()->getViewType() != NULL)
+    {
+        if (stricmp(m_pAnnotation->getAppInfo()->getViewType(), "none") == 0)
+        {
+            return;
+        }
+    }
+
+    if (this->isTopLevelElement())  // handle qml imports etc...
+    {
+        strQML.append(QML_TAB_VIEW_BEGIN);
+        DEBUG_MARK_QML;
+
+        if (m_pAnnotation != NULL)
+        {
+            m_pAnnotation->getQML(strQML);
+        }
+
+        if (m_pComplexTypeArray != NULL)
+        {
+            m_pComplexTypeArray->getQML(strQML);
+        }
+
+        strQML.append(QML_TAB_VIEW_STYLE);
+        DEBUG_MARK_QML;
+        strQML.append(QML_TAB_VIEW_END);
+        DEBUG_MARK_QML;
+        strQML.append(QML_TAB_TEXT_STYLE);
+        DEBUG_MARK_QML
+
+        return;
+    }
+    else if (this->isATab())  // Tabs will be made for all elements in a sequence
+    {
+        if (idx == 0)
+        {
+            strQML.append(QML_TAB_VIEW_BEGIN);
+            DEBUG_MARK_QML;
+
+            strQML.append(QML_TAB_VIEW_BEGIN);
+            DEBUG_MARK_QML;
+        }
+        CQMLMarkupHelper::getTabQML(strQML, this->getTitle());
+        DEBUG_MARK_QML;
+
+
+        if (m_pAnnotation != NULL)
+        {
+            m_pAnnotation->getQML(strQML);
+        }
+
+        if (m_pComplexTypeArray != NULL)
+        {
+            m_pComplexTypeArray->getQML(strQML);
+        }
+
+
+        strQML.append(QML_TAB_END);
+        DEBUG_MARK_QML;
+
+        if (static_cast<CElementArray*>(this->getParentNode())->length()-1 == idx)
+        {
+            strQML.append(QML_TAB_VIEW_STYLE);
+            DEBUG_MARK_QML;
+            strQML.append(QML_TAB_VIEW_END);
+            DEBUG_MARK_QML;
+            strQML.append(QML_TAB_TEXT_STYLE);
+            DEBUG_MARK_QML;
+            strQML.append(QML_TAB_VIEW_END);
+            DEBUG_MARK_QML;
+        }
+    }
+}
+
+bool CElement::isATab() const
+{
+    // Any element that is in sequence of complex type will be a tab
+    if (this->getConstAncestorNode(2)->getNodeType() == XSD_SEQUENCE && this->getConstAncestorNode(3)->getNodeType() == XSD_COMPLEX_TYPE)
+    {
+        return true;
+    }
+    else
+    {
+        false;
+    }
+}
+
+bool CElement::isLastTab(const int idx) const
+{
+    assert(this->isATab() == true);
+
+    const CElementArray *pElementArray = dynamic_cast<const CElementArray*>(this->getConstParentNode());
+
+    if (pElementArray == NULL)
+    {
+        assert(!"Corrupt XSD??");
+        return false;
+    }
+
+    if (pElementArray->length()-1 == idx)
+    {
+        return true;
+    }
+}
+
+#endif // _USE_OLD_GET_QML_
 
 void CElement::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 {
@@ -841,7 +953,11 @@ void CElementArray::getQML(StringBuffer &strQML, int idx) const
 
             if (/*bIsTab ==*/ true)
             {
+#ifdef _USE_OLD_GET_QML_
                 (this->item(idx)).getQML(strQML, 0);
+#else
+                (this->item(idx)).getQML(strQML, idx);
+#endif
             }
             else
             {

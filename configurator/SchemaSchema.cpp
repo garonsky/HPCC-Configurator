@@ -4,6 +4,7 @@
 #include "ConfigSchemaHelper.hpp"
 #include "DocumentationMarkup.hpp"
 #include "SchemaMapManager.hpp"
+#include "QMLMarkup.hpp"
 
 CSchema::~CSchema()
 {
@@ -221,6 +222,12 @@ void CSchema::getDojoJS(StringBuffer &strJS) const
 
 void CSchema::getQML(StringBuffer &strQML, int idx) const
 {
+
+#ifndef _USE_OLD_GET_QML_
+    strQML.append(QML_START);
+    DEBUG_MARK_QML;
+#endif
+
     if (m_pElementArray != NULL)
     {
         m_pElementArray->getQML(strQML, idx);
@@ -241,6 +248,12 @@ void CSchema::getQML(StringBuffer &strQML, int idx) const
     {
         m_pIncludeArray->getQML(strQML);
     }
+
+#ifndef _USE_OLD_GET_QML_
+    strQML.append(QML_END);
+    DEBUG_MARK_QML;
+#endif
+
 }
 
 void  CSchema::populateEnvXPath(StringBuffer strXPath, unsigned int index)
