@@ -197,7 +197,8 @@ const char* getTableValue(const char *pXPath, int nRow)
 
         assert(pElement != NULL);
 
-        return pElement->getEnvValueFromXML();
+        //return pElement->getEnvValueFromXML();
+        return pAttribute->getInstanceValue();
     }
     else
     {
@@ -205,7 +206,8 @@ const char* getTableValue(const char *pXPath, int nRow)
 
         if (nRow == 1)
         {
-            return pAttribute->getEnvValueFromXML();
+            //return pAttribute->getEnvValueFromXML();
+            return pAttribute->getInstanceValue();
         }
         else
         {
@@ -237,7 +239,8 @@ const char* getTableValue(const char *pXPath, int nRow)
             }
 
 
-            return pAttribute->getEnvValueFromXML();
+            //return pAttribute->getEnvValueFromXML();
+            return pAttribute->getInstanceValue();
         }
     }
 }

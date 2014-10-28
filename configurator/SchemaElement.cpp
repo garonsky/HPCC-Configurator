@@ -59,7 +59,7 @@ const CXSDNodeBase* CElement::getNodeByTypeAndNameDescending(NODE_TYPES eNodeTyp
     return pMatchingNode;
 }
 
-CElement* CElement::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
+CElement* CElement::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath, bool bIsInXSD)
 {
     assert(pSchemaRoot != NULL);
     assert(pParentNode != NULL);
@@ -71,7 +71,9 @@ CElement* CElement::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchema
 
     CElement *pElement = new CElement(pParentNode);
 
+    pElement->setIsInXSD(bIsInXSD);
     pElement->setXSDXPath(xpath);
+
     CConfigSchemaHelper::getInstance()->getSchemaMapManager()->addMapOfXSDXPathToElement(xpath, pElement);
 
     IPropertyTree *pTree = pSchemaRoot->queryPropTree(xpath);
@@ -741,8 +743,8 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
     {
         if (idx == 0)
         {
-            strQML.append(QML_TAB_VIEW_BEGIN);
-            DEBUG_MARK_QML;
+//            strQML.append(QML_TAB_VIEW_BEGIN);
+//            DEBUG_MARK_QML;
 
             strQML.append(QML_TAB_VIEW_BEGIN);
             DEBUG_MARK_QML;
@@ -771,10 +773,10 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
             DEBUG_MARK_QML;
             strQML.append(QML_TAB_VIEW_END);
             DEBUG_MARK_QML;
-            strQML.append(QML_TAB_TEXT_STYLE);
-            DEBUG_MARK_QML;
-            strQML.append(QML_TAB_VIEW_END);
-            DEBUG_MARK_QML;
+            //strQML.append(QML_TAB_TEXT_STYLE);
+            //DEBUG_MARK_QML;
+            //strQML.append(QML_TAB_VIEW_END);
+            //DEBUG_MARK_QML;
         }
     }
 }
@@ -956,7 +958,10 @@ void CElementArray::getQML(StringBuffer &strQML, int idx) const
 #ifdef _USE_OLD_GET_QML_
                 (this->item(idx)).getQML(strQML, 0);
 #else
-                (this->item(idx)).getQML(strQML, idx);
+                if ((this->item(idx)).getIsInXSD() == true)
+                {
+                    (this->item(idx)).getQML(strQML, idx);
+                }
 #endif
             }
             else
@@ -1041,7 +1046,6 @@ void CElementArray::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
 
             strEnvXPath.appendf("[%d]",subIndex);
 
-            //if (pEnvTree->hasProp(strEnvXPath.str()) == false)
             if (pEnvTree->queryPropTree(strEnvXPath.str()) == NULL)
             {
                 break;
@@ -1050,7 +1054,7 @@ void CElementArray::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
             CElement *pElement = NULL;
             if (subIndex > 1)
             {
-                pElement = CElement::load(this, this->getSchemaRoot(), this->item(idx).getXSDXPath());
+                pElement = CElement::load(this, this->getSchemaRoot(), this->item(idx).getXSDXPath(), false);
                 pElement->populateEnvXPath(this->getEnvXPath(), subIndex);
                 pElement->setTopLevelElement(false);
 

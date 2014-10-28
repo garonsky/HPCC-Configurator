@@ -108,10 +108,14 @@ public:
 
     bool isATab() const;
     bool isLastTab(const int idx) const;
+    bool getIsInXSD() const
+    {
+        return m_bIsInXSD;
+    }
 
     /*virtual const CXSDNodeBase* getNodeByTypeAndNameDescending(NODE_TYPES eNodeType, const char *pName) const;*/
 
-    static CElement* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
+    static CElement* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath, bool bIsInXSD = true);
 
     GETTERSETTER(Name)
     GETTERSETTER(MaxOccurs)
@@ -123,8 +127,13 @@ public:
 protected:
 
     CElement(CXSDNodeBase* pParentNode, const char* pName = "") : CXSDNodeWithType::CXSDNodeWithType(pParentNode, XSD_ELEMENT), m_strMinOccurs(""), m_strMaxOccurs(""), m_strName(pName), m_pAnnotation(NULL),
-        m_pComplexTypeArray(NULL), m_pAttributeArray(NULL), m_pKeyArray(NULL), m_pKeyRefArray(NULL), m_pReverseKeyRefArray(NULL), m_pElementRefNode(NULL), m_bTopLevelElement(false), m_nParentIndex(-1)
+        m_pComplexTypeArray(NULL), m_pAttributeArray(NULL), m_pKeyArray(NULL), m_pKeyRefArray(NULL), m_pReverseKeyRefArray(NULL), m_pElementRefNode(NULL), m_bTopLevelElement(false), m_nParentIndex(-1), m_bIsInXSD(true)
     {
+    }
+
+    void setIsInXSD(bool b)
+    {
+        m_bIsInXSD = b;
     }
 
     CAnnotation * m_pAnnotation;
@@ -137,6 +146,7 @@ protected:
 
     bool m_bTopLevelElement;
     int m_nParentIndex;
+    bool m_bIsInXSD;
 
 
 private:

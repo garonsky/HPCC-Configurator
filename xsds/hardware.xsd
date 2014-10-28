@@ -6,37 +6,6 @@
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-
-      <xs:element name="Level1-Item1">
-	<xs:complexType>
-            <xs:attribute name="name" use="required"/>
-	</xs:complexType>
-      </xs:element>
-
-      <xs:element name="Level1-Item2" maxOccurs="unbounced">
-	<xs:complexType>
-		<xs:sequence>
-			<xs:element name="Level2-Item1" maxOccurs="unbounded"/>
-                        <xs:complexType>
-                            <xs:attribute name="name" use="required"/>
-                        </xs:complexType>
-			<xs:element name="Level2-Item2" maxOccurs="unbounded"/>
-			<xs:element name="Level2-Item3" maxOccurs="unbounded"/>
-			<xs:element name="Level2-Item4" maxOccurs="unbounded"/>
-			<xs:element name="Level3" maxOccurs="unbounced">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="Level3-Item1" maxOccurs="unbounded"/>
-						<xs:element name="Level3-Item2" maxOccurs="unbounded"/>
-						<xs:element name="Level3-Item3" maxOccurs="unbounded"/>
-						<xs:element name="Level3-Item4" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-		       </xs:element>
-            </xs:sequence>
-	</xs:complexType>
-       </xs:element>
-
        <xs:element name="ComputerType" maxOccurs="unbounded">
           <xs:annotation>
             <xs:appinfo>
@@ -75,41 +44,44 @@
           </xs:complexType>
         </xs:element>
 	<xs:element name="Switches" maxOccurs="unbounded">
-               <xs:annotation>
+            <xs:annotation>
                 <xs:appinfo>
-                  <title>Switches</title>
+                    <title>Switches</title>
                 </xs:appinfo>
-              </xs:annotation>
-	      <xs:complexType>
+            </xs:annotation>
+            <xs:complexType>
 	          <xs:attribute name="name" type="xs:string" use="optional">
-							<xs:annotation>
-	               <xs:appinfo>
-					         <title>Name</title>
-	               </xs:appinfo>
-					   </xs:annotation>
-	           </xs:attribute>
-	     </xs:complexType>
+                        <xs:annotation>
+                            <xs:appinfo>
+                                <title>Name</title>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:attribute>
+                </xs:complexType>
 	</xs:element>
+
 	<xs:element name="Domains" maxOccurs="unbounded">
-               <xs:annotation>
+            <xs:annotation>
                 <xs:appinfo>
-                  <title>Domains</title>
+                    <title>Domains</title>
                 </xs:appinfo>
-              </xs:annotation>
-	     <xs:attribute name="name">
-		<xs:annotation>
-			<xs:appinfo>
-				<title>Name</title>
-			</xs:appinfo>
-		</xs:annotation>
-	     </xs:attribute>
-	     <xs:attribute name="snmpSecurityString">
-		<xs:annotation>
-			<xs:appinfo>
-				<title>SNMP Security String</title>
-			</xs:appinfo>
-		</xs:annotation>
-	     </xs:attribute>
+             </xs:annotation>
+             <xs:complexType>
+                <xs:attribute name="name">
+                    <xs:annotation>
+                            <xs:appinfo>
+                                    <title>Name</title>
+                            </xs:appinfo>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="snmpSecurityString">
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <title>SNMP Security String</title>
+                        </xs:appinfo>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:complexType>
 	</xs:element>
 			<xs:element name="Computers" maxOccurs="unbounded">
                <xs:annotation>
