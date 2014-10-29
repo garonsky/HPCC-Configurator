@@ -104,7 +104,8 @@ public:
         return this->m_pElementRefNode;
     }
 
-    void addReverseKeyRef(const CKeyRef *pKeyRef);
+    //void addReverseKeyRef(const CKeyRef *pKeyRef);
+    //void addReverseKey(const CKeyRef *pKey);
 
     bool isATab() const;
     bool isLastTab(const int idx) const;

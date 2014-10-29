@@ -12,6 +12,7 @@
 #include "SchemaMapManager.hpp"
 #include "ConfiguratorMain.hpp"
 #include "jlog.hpp"
+#include "SchemaKey.hpp"
 #include "SchemaKeyRef.hpp"
 #include "SchemaSimpleType.hpp"
 
@@ -290,13 +291,14 @@ void CAttribute::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 {
     assert(this->getName() != NULL);
 
+    //strXPath.setLength(strXPath.length()-3);  // remove [N] from XPath;
     //strXPath.appendf("[%d]", index);
 
     strXPath.append("/").append("[@").append(this->getName()).append("]");
 
     this->setEnvXPath(strXPath.str());
 
-//    PROGLOG("Mapping attribute with XPATH of %s to %p", this->getEnvXPath(), this);
+    PROGLOG("Mapping attribute with XPATH of %s to %p", this->getEnvXPath(), this);
 
     CConfigSchemaHelper::getInstance()->getSchemaMapManager()->addMapOfXPathToAttribute(this->getEnvXPath(), this);
     CConfigSchemaHelper::getInstance()->appendAttributeXPath(this->getEnvXPath());
@@ -396,11 +398,11 @@ void CAttribute::setEnvValueFromXML(const char *p)
 
     }
 
-    if (this->m_pReverseKeyRefArray != NULL)
+    if (this->m_ReverseKeyRefArray.length() > 0)
     {
-        for (int idx = 0; this->m_pReverseKeyRefArray->length(); idx++)
+        for (int idx = 0; this->m_ReverseKeyRefArray.length(); idx++)
         {
-            CKeyRef *pKeyRef = &(this->m_pReverseKeyRefArray->item(idx));
+           CKeyRef *pKeyRef = static_cast<CKeyRef*>((this->m_ReverseKeyRefArray.item(idx)));
 
             assert(pKeyRef != NULL);
 
@@ -416,6 +418,26 @@ void CAttribute::setEnvValueFromXML(const char *p)
 
     this->setInstanceValue(p);
     this->setInstanceAsValid(true);
+}
+
+void CAttribute::appendReverseKeyRef(const CKeyRef *pKeyRef)
+{
+    assert(pKeyRef != NULL);
+
+    if (pKeyRef != NULL)
+    {
+        this->m_ReverseKeyRefArray.append(static_cast<void*>(const_cast<CKeyRef*>(pKeyRef)));
+    }
+}
+
+void CAttribute::appendReverseKey(const CKey *pKey)
+{
+    assert(pKey != NULL);
+
+    if (pKey != NULL)
+    {
+        this->m_ReverseKeyArray.append(static_cast<void*>(const_cast<CKey*>(pKey)));
+    }
 }
 
 CAttribute* CAttribute::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
@@ -858,7 +880,7 @@ void CAttributeArray::getQML(StringBuffer &strQML, int idx) const
 
 void CAttributeArray::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 {
-    assert(index == 1);  // Only 1 array of elements per node
+    //assert(index == 1);  // Only 1 array of elements per node
 
     this->setEnvXPath(strXPath);
 

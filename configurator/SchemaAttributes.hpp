@@ -10,18 +10,20 @@
 class CSimpleTypeArray;
 class CKeyRefArray;
 class CKeyArray;
+class CKey;
+class CKeyRef;
 
 class CAttribute : public CXSDNodeWithType
 {
 public:
 
     CAttribute(CXSDNodeBase* pParentNode, const char* pName = NULL) : CXSDNodeWithType::CXSDNodeWithType(pParentNode, XSD_ATTRIBUTE), m_strName(pName),
-            m_strDefault(""), m_strUse(""), m_pAnnotation(NULL), m_pSimpleTypeArray(NULL), m_pReverseKeyRefArray(NULL), m_pReverseKeyArray(NULL), m_bInstanceValueValid(false)
+            m_strDefault(""), m_strUse(""), m_pAnnotation(NULL), m_pSimpleTypeArray(NULL), m_bInstanceValueValid(false)
     {
     }
 
     CAttribute(CXSDNodeBase* pParentNode, const char* pName, const char* pType, const char* pDefault, const char* pUse) : CXSDNodeWithType::CXSDNodeWithType(pParentNode, XSD_ATTRIBUTE), m_strName(pName), m_pAnnotation(NULL),
-            m_strDefault(pDefault), m_strUse(pUse), m_pSimpleTypeArray(NULL), m_pReverseKeyRefArray(NULL), m_bInstanceValueValid(false)
+            m_strDefault(pDefault), m_strUse(pUse), m_pSimpleTypeArray(NULL), m_bInstanceValueValid(false)
     {
     }
 
@@ -64,6 +66,9 @@ public:
 
     virtual void setEnvValueFromXML(const char *p);
 
+    void appendReverseKey(const CKey *pKey);
+    void appendReverseKeyRef(const CKeyRef *pKeyRef);
+
 protected:
 
     void setInstanceAsValid(bool bValid = true)
@@ -97,8 +102,17 @@ protected:
 
     CAnnotation *m_pAnnotation;
     CSimpleTypeArray *m_pSimpleTypeArray;
-    CKeyRefArray *m_pReverseKeyRefArray;
-    CKeyArray *m_pReverseKeyArray;
+    //CIArrayOf< CKey> m_ReverseKeyArray;
+    //CIArrayOf< CKeyRef> m_ReverseKeyRefArray;
+    //MAKEValueArray(CKey, SchemaKeyArray)
+    //MAKEValueArray(CKeyRef, SchemaKeyRefArray)
+    //MAKEValueArray(void *,   jlib_decl SchemaKeyArray)
+    //MAKEValueArray(void *,   jlib_decl SchemaKeyRefArray)
+    PointerArray m_ReverseKeyArray;
+    PointerArray m_ReverseKeyRefArray;
+    //CKeyRefArray *const m_pReverseKeyRefArray;
+    //CKeyArray *const m_pReverseKeyArray;
+
     bool m_bInstanceValueValid;
 
 private:

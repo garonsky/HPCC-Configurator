@@ -822,6 +822,10 @@ void CElement::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 
     this->setEnvXPath(strXPath);
 
+
+    //strXPath.setLength(strXPath.length()-3);  // remove [N] from XPath;
+    //strXPath.appendf("[%d]", this->getParentIndex()+1);
+
     if (m_pComplexTypeArray != NULL)
     {
         m_pComplexTypeArray->populateEnvXPath(strXPath);
@@ -987,11 +991,17 @@ void CElementArray::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 
     StringBuffer mapKey(strXPath);
 
+    int elemCount = 1;
+
     for (int idx=0; idx < this->length(); idx++)
     {
-        (this->item(idx)).populateEnvXPath(strXPath, 1);
+        if ((this->item(idx)).getIsInXSD() == true)
+        {
+            elemCount = 1;
+        }
+        (this->item(idx)).populateEnvXPath(strXPath, elemCount++);
 
-        mapKey.setf("%s[%d]", this->getXSDXPath(), idx+1);
+        mapKey.setf("%s[%d]", this->getXSDXPath(), index);
 
         CConfigSchemaHelper::getInstance()->getSchemaMapManager()->addMapOfXPathToElementArray(mapKey.str(), this);
     }

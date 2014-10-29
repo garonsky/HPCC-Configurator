@@ -75,6 +75,26 @@ CKey* CKey::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, co
 
          strXPathExt.append("/").append(XSD_TAG_ANNOTATION);
          pKey->m_pAnnotation = CAnnotation::load(pKey, pSchemaRoot, strXPathExt.str());
+
+       /*CElement *pElement = dynamic_cast<CElement*>(pKey->getParentNodeByType(XSD_ELEMENT));
+
+         assert(pElement != NULL);
+
+         if (pElement != NULL && pKey->m_pFieldArray != NULL && pKey->m_pFieldArray->length() > 0 && pKey->m_pSelector != NULL)
+         {
+             StringBuffer strXPathOfKeyAttribute(pElement->getEnvXPath());
+             strXPathOfKeyAttribute.append("/").append(pKey->m_pSelector->getXPath()).append("/").append(pKey->m_pFieldArray->item(0).get);
+
+             CAttribute *pAttribute = CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getAttributeFromXPath(strXPathOfKeyAttribute.str());
+
+             assert(pElement != NULL);
+
+             if (pElement != NULL)
+             {
+                 //pElement->addReverseKey(pKey);
+                 pElement->get
+             }
+         }*/
     }
 
     return pKey;
@@ -99,11 +119,11 @@ bool CKey::checkConstraint(const char *pValue) const
                 return false;
             }
 
-            StringBuffer strXSDPathForConstraint(this->getXSDXPath());
+            StringBuffer strXPathForConstraintCheck(this->getEnvXPath());
 
-            strXSDPathForConstraint.appendf("/%s", this->m_pSelector->getXPath());
+            strXPathForConstraintCheck.appendf("/%s", this->m_pSelector->getXPath());
 
-            const CElement *pElement = CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getElementFromXSDXPath(strXSDPathForConstraint.str());
+            const CElement *pElement = CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getElementFromXPath(strXPathForConstraintCheck.str());
 
             if (pElement == NULL)
             {
