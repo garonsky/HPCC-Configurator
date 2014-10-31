@@ -50,9 +50,9 @@ public:
     void removeMapOfXPathToRestriction(const char*pXPath);
     CRestriction* getRestrictionFromXPath(const char* pXPath);
 
-    void addMapOfXPathToElementArray(const char* pXPath, CElementArray *pElementArray);
-    void removeMapOfXPathToElementArray(const char* pXPath);
-    CElementArray* getElementArrayFromXPath(const char* pXPath);
+    void addMapOfXSDXPathToElementArray(const char* pXPath, CElementArray *pElementArray);
+    void removeMapOfXSDXPathToElementArray(const char* pXPath);
+    CElementArray* getElementArrayFromXSDXPath(const char* pXPath);
 
     void addMapOfXPathToElement(const char* pXPath, CElement *pElement, bool bIsTopLevelElement = false);
     void removeMapOfXPathToElement(const char* pXPath);

@@ -235,32 +235,32 @@ void CComplexType::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 
     if (m_pSequence != NULL)
     {
-        m_pSequence->populateEnvXPath(strXPath);
+        m_pSequence->populateEnvXPath(strXPath, index);
     }
 
     if (m_pComplexContent != NULL)
     {
-        m_pComplexContent->populateEnvXPath(strXPath);
+        m_pComplexContent->populateEnvXPath(strXPath, index);
     }
 
     if (m_pAttributeArray != NULL)
     {
-        m_pAttributeArray->populateEnvXPath(strXPath);
+        m_pAttributeArray->populateEnvXPath(strXPath, index);
     }
 
     if (m_pChoice != NULL)
     {
-        m_pChoice->populateEnvXPath(strXPath);
+        m_pChoice->populateEnvXPath(strXPath, index);
     }
 
     if (m_pElementArray != NULL)
     {
-        m_pElementArray->populateEnvXPath(strXPath);
+        m_pElementArray->populateEnvXPath(strXPath, index);
     }
 
     if (m_pAttributeGroupArray != NULL)
     {
-        m_pAttributeGroupArray->populateEnvXPath(strXPath);
+        m_pAttributeGroupArray->populateEnvXPath(strXPath, index);
     }
 }
 
@@ -459,11 +459,12 @@ const char* CComplexTypeArray::getXML(const char* /*pComponent*/)
 
 void CComplexTypeArray::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 {
-    assert(index == 1);  // Only 1 array of elements per node
+    //assert(index == 1);  // Only 1 array of elements per node
 
     this->setEnvXPath(strXPath);
 
-    QUICK_ENV_XPATH(strXPath)
+    //QUICK_ENV_XPATH(strXPath)
+    QUICK_ENV_XPATH_WITH_INDEX(strXPath, index)
 }
 
 

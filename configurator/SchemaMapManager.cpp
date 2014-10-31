@@ -340,7 +340,14 @@ void CSchemaMapManager::addMapOfXPathToAttribute(const char*pXPath, CAttribute *
 
     // TODO:: throw exception if problems here
 
-    assert(m_pAttributePtrsMap->find(pXPath) == NULL);
+    CAttribute **ppAttribute = m_pAttributePtrsMap->getValue(pXPath);
+
+    if (ppAttribute != NULL && *ppAttribute != pAttribute)
+    {
+        assert(!"Assigning different node with same xpath! delete it first!");
+    }
+
+    //assert(m_pAttributePtrsMap->find(pXPath) == NULL || static_cast<void*>((*(m_pAttributePtrsMap->find(pXPath)))) == static_cast<void*>(pAttribute));
 
     // should I remove automatically?
 
@@ -373,7 +380,7 @@ CAttribute* CSchemaMapManager::getAttributeFromXPath(const char* pXPath)
     return *pAttribute;
 }
 
-void CSchemaMapManager::addMapOfXPathToElementArray(const char*pXPath, CElementArray *pElementArray)
+void CSchemaMapManager::addMapOfXSDXPathToElementArray(const char*pXPath, CElementArray *pElementArray)
 {
     assert (pElementArray != NULL);
     assert(pXPath != NULL && *pXPath != 0);
@@ -385,16 +392,17 @@ void CSchemaMapManager::addMapOfXPathToElementArray(const char*pXPath, CElementA
     }
 
 
+    PROGLOG("Mapping XSD XPath %s to %p elementarray", pXPath, pElementArray);
     m_pElementArrayPtrsMap->setValue(pXPath, pElementArray);
 }
 
-void CSchemaMapManager::removeMapOfXPathToElementArray(const char*pXPath)
+void CSchemaMapManager::removeMapOfXSDXPathToElementArray(const char*pXPath)
 {
     assert (m_pElementArrayPtrsMap->find(pXPath) != NULL);
     m_pElementArrayPtrsMap->remove(pXPath);
 }
 
-CElementArray* CSchemaMapManager::getElementArrayFromXPath(const char* pXPath)
+CElementArray* CSchemaMapManager::getElementArrayFromXSDXPath(const char* pXPath)
 {
     assert(pXPath != NULL && *pXPath != 0);
 
@@ -422,7 +430,7 @@ void CSchemaMapManager::addMapOfXPathToElement(const char* pXPath, CElement *pEl
 
     //assert(m_pElementPtrsMap->find(pXPath) == NULL);
 
-    //PROGLOG("Mapping XPath %s to %p element", pXPath, pElement);
+    PROGLOG("Mapping XPath %s to %p element", pXPath, pElement);
 
     assert(pElement->getLinkCount() == 1);
     m_pElementPtrsMap->setValue(pXPath, pElement);

@@ -47,8 +47,13 @@
 
 #define QUICK_ENV_XPATH(X) for (int idx=0; idx < this->length(); idx++)                 \
                             {                                                           \
-                                 (this->item(idx)).populateEnvXPath(X, idx+1);          \
+                                 (this->item(idx)).populateEnvXPath(X.str(), idx+1);          \
                             }
+#define QUICK_ENV_XPATH_WITH_INDEX(X,Y) for (int idx=0; idx < this->length(); idx++)                 \
+                            {                                                           \
+                                 (this->item(idx)).populateEnvXPath(X.str(), Y);          \
+                            }
+
 
 #define QUICK_LOAD_ENV_XML(X)   assert(X != NULL);                                        \
                                 for (int idx=0; idx < this->length(); idx++)              \

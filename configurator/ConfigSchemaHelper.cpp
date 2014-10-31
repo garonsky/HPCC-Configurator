@@ -748,7 +748,7 @@ int CConfigSchemaHelper::getElementArraySize(const char *pXPath) const
     assert(pXPath != NULL);
     assert(m_pSchemaMapManager != NULL);
 
-    CElementArray *pElementArray = m_pSchemaMapManager->getElementArrayFromXPath(pXPath);
+    CElementArray *pElementArray = m_pSchemaMapManager->getElementArrayFromXSDXPath(pXPath);
 
     if (pElementArray == NULL)
     {
@@ -770,12 +770,12 @@ const char* CConfigSchemaHelper::getAttributeXSDXPathFromEnvXPath(const char* pE
     return pAttribute->getXSDXPath();
 }
 
-const char* CConfigSchemaHelper::getElementArrayXSDXPathFromEnvXPath(const char* pEnvXPath) const
+const char* CConfigSchemaHelper::getElementArrayXSDXPathFromEnvXPath(const char* pXSDXPath) const
 {
-    assert(pEnvXPath != NULL);
+    assert(pXSDXPath != NULL);
     assert(m_pSchemaMapManager != NULL);
 
-    CElementArray *pElementArray = m_pSchemaMapManager->getElementArrayFromXPath(pEnvXPath);
+    CElementArray *pElementArray = m_pSchemaMapManager->getElementArrayFromXSDXPath(pXSDXPath);
 
     assert(pElementArray != NULL);
 

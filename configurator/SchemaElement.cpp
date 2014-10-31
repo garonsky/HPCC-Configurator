@@ -158,7 +158,7 @@ CElement* CElement::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchema
     }
     else
     {
-        pElement->setTitle(pElement->getName());
+::L        pElement->setTitle(pElement->getName());
     }
 
     strXPathExt.clear().append(xpath).append("/").append(XSD_TAG_KEY);
@@ -820,6 +820,7 @@ void CElement::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 
     strXPath.append("/").append(this->getName()).append("[").append(index).append("]");
 
+    PROGLOG("Setting element to envpath of %s", strXPath.str());
     this->setEnvXPath(strXPath);
 
 
@@ -828,17 +829,19 @@ void CElement::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 
     if (m_pComplexTypeArray != NULL)
     {
-        m_pComplexTypeArray->populateEnvXPath(strXPath);
+        m_pComplexTypeArray->populateEnvXPath(strXPath, index);
     }
     if (m_pAttributeArray != NULL)
     {
-        m_pAttributeArray->populateEnvXPath(strXPath);
+        m_pAttributeArray->populateEnvXPath(strXPath, index);
     }
 }
 
 void CElement::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
 {
+    //PROGLOG("Mapping element with XPATH of %s to %p", this->getEnvXPath(), this);
     CConfigSchemaHelper::getInstance()->getSchemaMapManager()->addMapOfXPathToElement(this->getEnvXPath(), this);
+
 
 /*    if (this->getConstAncestorNode(2)->getNodeType() == XSD_SCHEMA)
     {
@@ -887,23 +890,6 @@ void CElement::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
     {
         this->setInstanceName(pInstanceName);
     }
-}
-
-void CElement::traverseAndProcessNodes() const
-{
-    CXSDNodeBase::processEntryHandlers(this);
-
-    if (m_pAnnotation != NULL)
-    {
-        m_pAnnotation->traverseAndProcessNodes();
-    }
-
-    if (m_pComplexTypeArray != NULL)
-    {
-        m_pComplexTypeArray->traverseAndProcessNodes();
-    }
-
-    CXSDNodeBase::processExitHandlers(this);
 }
 
 bool CElement::isTopLevelElement() const
@@ -1003,7 +989,7 @@ void CElementArray::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 
         mapKey.setf("%s[%d]", this->getXSDXPath(), index);
 
-        CConfigSchemaHelper::getInstance()->getSchemaMapManager()->addMapOfXPathToElementArray(mapKey.str(), this);
+        CConfigSchemaHelper::getInstance()->getSchemaMapManager()->addMapOfXSDXPathToElementArray(mapKey.str(), this);
     }
 }
 
@@ -1065,10 +1051,29 @@ void CElementArray::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
             if (subIndex > 1)
             {
                 pElement = CElement::load(this, this->getSchemaRoot(), this->item(idx).getXSDXPath(), false);
-                pElement->populateEnvXPath(this->getEnvXPath(), subIndex);
+
+                //int nIndexOfElement =  (static_cast<CElementArray*>(pElement->getParentNode()))->getSiblingIndex(pElement->getXSDXPath(), pElement)+1;
+                int nIndexOfElement =  (static_cast<CElementArray*>(pElement->getParentNode()))->getCountOfSiblingElements(pElement->getXSDXPath())+1;
+                pElement->populateEnvXPath(this->getEnvXPath(), nIndexOfElement);
+
+                //StringBuffer strXSDXPath(pElement->getXSDXPath());
+                //CConfigSchemaHelper::stripXPathIndex(strXSDXPath);
+
+                //strXSDXPath.appendf("[%d]",subIndex);
+                //pElement->setXSDXPath(strXSDXPath.str());
+
+                PROGLOG("XSD Xpath to non-native element to %s", pElement->getXSDXPath());
+
                 pElement->setTopLevelElement(false);
 
+                //StringBuffer strMapKey;
+                //strMapKey.setf("%s[%d]", this->getXSDXPath(), index);
+
+                CConfigSchemaHelper::getInstance()->getSchemaMapManager()->addMapOfXPathToElement(pElement->getEnvXPath(), pElement);
+                CConfigSchemaHelper::getInstance()->getSchemaMapManager()->addMapOfXSDXPathToElementArray(pElement/*->getConstParentNode()*/->getXSDXPath(), (static_cast<CElementArray*>(pElement->getParentNode())));
+
                 this->append(*pElement);
+                PROGLOG("Added element %p with xsd xpath=%s array is size=%d with xpath of %s", pElement, pElement->getXSDXPath(),this->length(), this->getXSDXPath());
             }
             else
             {
@@ -1234,4 +1239,25 @@ const CElement* CElementArray::getElementByNameDescending(const char *pName) con
     }
 
     return NULL;
+}
+
+int CElementArray::getSiblingIndex(const char* pXSDXPath, const CElement* pElement)
+{
+    assert(pXSDXPath != NULL && *pXSDXPath != 0 && pElement != NULL);
+
+    int nSiblingIndex = 0;
+
+    for (int idx=0; idx < this->length(); idx++)
+    {
+        if (strcmp(this->item(idx).getXSDXPath(), pXSDXPath) == 0)
+        {
+            if (&(this->item(idx)) == pElement)
+            {
+                break;
+            }
+            nSiblingIndex++;
+        }
+    }
+
+    return nSiblingIndex;
 }

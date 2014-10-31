@@ -43,8 +43,6 @@ public:
 
     virtual void loadXMLFromEnvXml(const IPropertyTree *pEnvTree);
 
-    virtual void traverseAndProcessNodes() const;
-
     virtual bool isTopLevelElement() const;
 
     void setTopLevelElement(bool b = true)
@@ -114,8 +112,6 @@ public:
         return m_bIsInXSD;
     }
 
-    /*virtual const CXSDNodeBase* getNodeByTypeAndNameDescending(NODE_TYPES eNodeType, const char *pName) const;*/
-
     static CElement* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath, bool bIsInXSD = true);
 
     GETTERSETTER(Name)
@@ -160,8 +156,8 @@ private:
 
 class CElementArray : public CIArrayOf<CElement>, public InterfaceImpl, public CXSDNodeBase
 {
+    friend class CElement;
 public:
-
     CElementArray(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot = NULL) : CXSDNodeBase::CXSDNodeBase(pParentNode, XSD_ELEMENT_ARRAY), m_pSchemaRoot(pSchemaRoot)
     {
     }
@@ -213,7 +209,10 @@ public:
 
 protected:
 
+    int getSiblingIndex(const char* pXSDXPath, const CElement* pElement);
+
     const IPropertyTree *m_pSchemaRoot;
+
 
 private:
 

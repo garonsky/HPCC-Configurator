@@ -272,7 +272,7 @@ int getNumberOfRows(const char* pXPath)
 {
     assert(pXPath != NULL && *pXPath != 0);
 
-    //PROGLOG("Get number of rows for %s = %d", pXPath, CConfigSchemaHelper::getInstance()->getElementArraySize(pXPath));
+    PROGLOG("Get number of rows for %s = %d", pXPath, CConfigSchemaHelper::getInstance()->getElementArraySize(pXPath));
 
     return CConfigSchemaHelper::getInstance()->getElementArraySize(pXPath);
 }

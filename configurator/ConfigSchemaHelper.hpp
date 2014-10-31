@@ -102,7 +102,7 @@ public:
     }
 
     const char* getAttributeXSDXPathFromEnvXPath(const char* pEnvXPath) const;
-    const char* getElementArrayXSDXPathFromEnvXPath(const char* pEnvXPath) const;
+    const char* getElementArrayXSDXPathFromEnvXPath(const char* pXSDXPath) const;
 
     int getElementArraySize(const char *pXPath) const;
 

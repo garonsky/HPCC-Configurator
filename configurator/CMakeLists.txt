@@ -26,6 +26,7 @@ SET(  SRCS QMLMarkup.cpp QMLMarkup.hpp ConfiguratorMain.cpp ConfigFileComponentU
 )
 
 IF( CONFIGURATOR_STATIC_LIB )
+    MESSAGE( "-- CONFIGURATOR_STATIC_LIB=true" )
     MESSAGE( "-- configurator target is a library file (.so)" )
 
     ADD_DEFINITIONS( -D_USRDLL -DCONFIGURATOR_STATIC_LIB)
@@ -35,6 +36,7 @@ IF( CONFIGURATOR_STATIC_LIB )
     INSTALL( TARGETS configurator LIBRARY DESTINATION ${LIB_DIR} )
 
 ELSE()
+    MESSAGE( "-- CONFIGURATOR_STATIC_LIB=false" )
     MESSAGE( "-- configurator target is a binary executable" )
 
     ADD_DEFINITIONS( -D_CONSOLE )

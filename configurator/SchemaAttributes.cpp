@@ -291,8 +291,8 @@ void CAttribute::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 {
     assert(this->getName() != NULL);
 
-    //strXPath.setLength(strXPath.length()-3);  // remove [N] from XPath;
-    //strXPath.appendf("[%d]", index);
+    strXPath.setLength(strXPath.length()-3);  // remove [N] from XPath;
+    strXPath.appendf("[%d]", index);
 
     strXPath.append("/").append("[@").append(this->getName()).append("]");
 
@@ -300,7 +300,11 @@ void CAttribute::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 
     PROGLOG("Mapping attribute with XPATH of %s to %p", this->getEnvXPath(), this);
 
-    CConfigSchemaHelper::getInstance()->getSchemaMapManager()->addMapOfXPathToAttribute(this->getEnvXPath(), this);
+    //if (index > 1) //if not added as part of the initial XSD
+    {
+        CConfigSchemaHelper::getInstance()->getSchemaMapManager()->addMapOfXPathToAttribute(this->getEnvXPath(), this);
+    }
+
     CConfigSchemaHelper::getInstance()->appendAttributeXPath(this->getEnvXPath());
 
     if (this->m_pSimpleTypeArray != NULL)
@@ -884,7 +888,12 @@ void CAttributeArray::populateEnvXPath(StringBuffer strXPath, unsigned int index
 
     this->setEnvXPath(strXPath);
 
-    QUICK_ENV_XPATH(strXPath)
+ //   QUICK_ENV_XPATH(strXPath)
+    /*for (int idx=0; idx < this->length(); idx++)
+    {
+        (this->item(idx)).populateEnvXPath(strXPath.str(), index);
+    }*/
+    QUICK_ENV_XPATH_WITH_INDEX(strXPath, index)
 }
 
 void CAttributeArray::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)

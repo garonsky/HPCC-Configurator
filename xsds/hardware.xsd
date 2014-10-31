@@ -34,16 +34,16 @@
                 </xs:appinfo>
               </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="user" type="xs:string" use="optional">
+            <xs:attribute name="opSys" type="xs:string" use="optional">
               <xs:annotation>
                 <xs:appinfo>
-                  <title>User</title>
+                  <title>opSys</title>
                 </xs:appinfo>
               </xs:annotation>
             </xs:attribute>
           </xs:complexType>
         </xs:element>
-	<xs:element name="Switches" maxOccurs="unbounded">
+        <xs:element name="Switch" maxOccurs="unbounded">
             <xs:annotation>
                 <xs:appinfo>
                     <title>Switches</title>
@@ -60,7 +60,7 @@
                 </xs:complexType>
 	</xs:element>
 
-	<xs:element name="Domains" maxOccurs="unbounded">
+        <xs:element name="Domain" maxOccurs="unbounded">
             <xs:annotation>
                 <xs:appinfo>
                     <title>Domains</title>
@@ -83,7 +83,7 @@
                 </xs:attribute>
             </xs:complexType>
 	</xs:element>
-			<xs:element name="Computers" maxOccurs="unbounded">
+        <xs:element name="Computer" maxOccurs="unbounded">
                <xs:annotation>
                 <xs:appinfo>
                   <title>Computers</title>
