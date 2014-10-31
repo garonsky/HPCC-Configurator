@@ -1,4 +1,3 @@
-                                                                                                      
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
   <xs:element name="Hardware_NEW">
@@ -11,24 +10,39 @@
       <xs:element name="Level1-Item1">
 	<xs:complexType>
             <xs:attribute name="name" use="required"/>
+            <xs:attribute name="name2" use="required"/>
 	</xs:complexType>
       </xs:element>
 
-      <xs:element name="Level1-Item2" maxOccurs="unbounced">
+      <xs:element name="Level1-Item2" maxOccurs="unbounded">
 	<xs:complexType>
 		<xs:sequence>
-			<xs:element name="Level2-Item1" maxOccurs="unbounded"/>
-                        <xs:complexType>
-                            <xs:attribute name="name" use="required"/>
-                        </xs:complexType>
+                        <xs:element name="Level2-Item1" maxOccurs="unbounded">
+                            <xs:complexType>
+                                <xs:attribute name="name" use="required"/>
+                            </xs:complexType>
+                        </xs:element>
 			<xs:element name="Level2-Item2" maxOccurs="unbounded"/>
 			<xs:element name="Level2-Item3" maxOccurs="unbounded"/>
 			<xs:element name="Level2-Item4" maxOccurs="unbounded"/>
-			<xs:element name="Level3" maxOccurs="unbounced">
+                        <xs:element name="Level3" >
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="Level3-Item1" maxOccurs="unbounded"/>
+                                                <xs:element name="Level3-Item1">
+                                                    <xs:complexType>
+                                                        <xs:attribute name="name1" use="required"/>
+                                                        <xs:attribute name="name2" use="required"/>
+                                                        <xs:attribute name="name3" use="required"/>
+                                                        <xs:attribute name="name4" use="required"/>
+                                                    </xs:complexType>
+                                                </xs:element>
 						<xs:element name="Level3-Item2" maxOccurs="unbounded"/>
+                                                    <xs:complexType>
+                                                        <xs:attribute name="name1" use="required"/>
+                                                        <xs:attribute name="name2" use="required"/>
+                                                        <xs:attribute name="name3" use="required"/>
+                                                        <xs:attribute name="name4" use="required"/>
+                                                    </xs:complexType>
 						<xs:element name="Level3-Item3" maxOccurs="unbounded"/>
 						<xs:element name="Level3-Item4" maxOccurs="unbounded"/>
 					</xs:sequence>
@@ -97,6 +111,7 @@
                   <title>Domains</title>
                 </xs:appinfo>
               </xs:annotation>
+            <xs:complexType>
 	     <xs:attribute name="name">
 		<xs:annotation>
 			<xs:appinfo>
@@ -111,6 +126,7 @@
 			</xs:appinfo>
 		</xs:annotation>
 	     </xs:attribute>
+             </xs:complexType>
 	</xs:element>
 			<xs:element name="Computers" maxOccurs="unbounded">
                <xs:annotation>
@@ -192,4 +208,3 @@
     </xs:complexType>
    </xs:element>
 </xs:schema>
-~                                                                                                                                                          
