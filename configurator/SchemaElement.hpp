@@ -184,8 +184,6 @@ public:
 
     virtual void loadXMLFromEnvXml(const IPropertyTree *pEnvTree);
 
-    virtual void traverseAndProcessNodes() const;
-
     virtual const char* getXML(const char* /*pComponent*/);
 
     virtual int getCountOfSiblingElements(const char *pXPath) const;

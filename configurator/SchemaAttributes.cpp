@@ -340,23 +340,6 @@ void CAttribute::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
     }
 }
 
-void CAttribute::traverseAndProcessNodes() const
-{
-    CXSDNodeBase::processEntryHandlers(this);
-
-    if (m_pAnnotation != NULL)
-    {
-        m_pAnnotation->traverseAndProcessNodes();
-    }
-
-    if (m_pSimpleTypeArray != NULL)
-    {
-        m_pSimpleTypeArray->traverseAndProcessNodes();
-    }
-
-    CXSDNodeBase::processExitHandlers(this);
-}
-
 void CAttribute::setEnvValueFromXML(const char *p)
 {
     if (p == NULL)
@@ -949,12 +932,6 @@ const CAttribute* CAttributeArray::findAttributeWithName(const char *pName, bool
 
     return NULL;
 }
-
-/*void CAttributeArray::traverseAndProcessNodes() const
-{
-    QUICK_TRAVERSE_AND_PROCESS;
-}*/
-
 
 bool CAttributeArray::getCountOfValueMatches(const char *pValue) const
 {

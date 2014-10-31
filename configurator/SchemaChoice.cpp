@@ -134,16 +134,3 @@ void CChoice::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
         }
     }
 }
-
-
-void CChoice::traverseAndProcessNodes() const
-{
-    CXSDNodeBase::processEntryHandlers(this);
-
-    if (m_pElementArray != NULL)
-    {
-        m_pElementArray->traverseAndProcessNodes();
-    }
-
-    CXSDNodeBase::processExitHandlers(this);
-}

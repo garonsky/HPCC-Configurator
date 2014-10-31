@@ -26,8 +26,6 @@ public:
 
     virtual void getQML(StringBuffer &strQML, int idx = -1) const;
 
-    virtual void traverseAndProcessNodes() const;
-
     virtual const char* getXML(const char* /*pComponent*/);
 
     virtual void populateEnvXPath(StringBuffer strXPath, unsigned int index = 1);

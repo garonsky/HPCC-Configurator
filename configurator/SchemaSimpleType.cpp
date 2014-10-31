@@ -81,18 +81,6 @@ void CSimpleType::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
     }
 }
 
-void CSimpleType::traverseAndProcessNodes() const
-{
-    CSimpleType::processEntryHandlers(this);
-
-    if (m_pRestriction != NULL)
-    {
-        m_pRestriction->traverseAndProcessNodes();
-    }
-
-    CSimpleType::processExitHandlers(this);
-}
-
 CSimpleType* CSimpleType::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
 {
     assert(pSchemaRoot != NULL);
@@ -199,11 +187,6 @@ void CSimpleTypeArray::dump(std::ostream& cout, unsigned int offset) const
     QUICK_OUT_ARRAY(cout, offset);
 
     QuickOutFooter(cout, XSD_SIMPLE_TYPE_ARRAY_STR, offset);
-}
-
-void CSimpleTypeArray::traverseAndProcessNodes() const
-{
-    QUICK_TRAVERSE_AND_PROCESS;
 }
 
 CSimpleTypeArray* CSimpleTypeArray::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)

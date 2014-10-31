@@ -72,12 +72,6 @@ void CEnumeration::getQML(StringBuffer &strQML, int idx) const
     DEBUG_MARK_QML;
 }
 
-void CEnumeration::traverseAndProcessNodes() const
-{
-    CXSDNodeBase::processEntryHandlers(this);
-    CXSDNodeBase::processExitHandlers(this);
-}
-
 const char* CEnumeration::getXML(const char* /*pComponent*/)
 {
     assert(!"Not Implemented");
@@ -144,11 +138,6 @@ void CEnumerationArray::getDojoJS(StringBuffer &strJS) const
 void CEnumerationArray::getQML(StringBuffer &strQML, int idx) const
 {
     QUICK_QML_ARRAY(strQML);
-}
-
-void CEnumerationArray::traverseAndProcessNodes() const
-{
-    QUICK_TRAVERSE_AND_PROCESS;
 }
 
 const char* CEnumerationArray::getXML(const char* /*pComponent*/)

@@ -116,15 +116,3 @@ void CSequence::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
         p_mElementArray->loadXMLFromEnvXml(pEnvTree);
     }
 }
-
-void CSequence::traverseAndProcessNodes() const
-{
-    CXSDNodeBase::processEntryHandlers(this);
-
-    if (p_mElementArray != NULL)
-    {
-        p_mElementArray->traverseAndProcessNodes();
-    }
-
-    CXSDNodeBase::processExitHandlers(this);
-}

@@ -55,8 +55,6 @@ public:
 
     virtual void loadXMLFromEnvXml(const IPropertyTree *pEnvTree);
 
-    virtual void traverseAndProcessNodes() const;
-
     static CAttribute* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath = NULL);
 
     bool isInstanceValueValid()
@@ -143,8 +141,6 @@ public:
     virtual void populateEnvXPath(StringBuffer strXPath, unsigned int index = 1);
 
     virtual void loadXMLFromEnvXml(const IPropertyTree *pEnvTree);
-
-    //virtual void traverseAndProcessNodes() const;
 
     virtual const char* getXML(const char* /*pComponent*/);
 

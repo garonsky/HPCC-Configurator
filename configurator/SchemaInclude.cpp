@@ -35,20 +35,6 @@ void CInclude::getQML(StringBuffer &strQML, int idx) const
 
 }
 
-void CInclude::traverseAndProcessNodes() const
-{
-    CXSDNodeBase::processEntryHandlers(this);
-
-
-    // TODO:: Do we need to traverse external schemas?
-/*    if (this->getIncludeSchema() != NULL)
-    {
-        this->getIncludeSchema()->traverseAndProcessNodes();
-    }*/
-
-    CXSDNodeBase::processExitHandlers(this);
-}
-
 const char* CInclude::getXML(const char* /*pComponent*/)
 {
     if (m_strXML.length() == 0)
@@ -180,9 +166,4 @@ void CIncludeArray::getDojoJS(StringBuffer &strJS) const
 void CIncludeArray::getQML(StringBuffer &strQML, int idx) const
 {
     QUICK_QML_ARRAY(strQML);
-}
-
-void CIncludeArray::traverseAndProcessNodes() const
-{
-    QUICK_TRAVERSE_AND_PROCESS;
 }

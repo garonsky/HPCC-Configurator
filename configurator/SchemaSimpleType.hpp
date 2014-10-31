@@ -31,8 +31,6 @@ public:
 
     virtual void loadXMLFromEnvXml(const IPropertyTree *pEnvTree);
 
-    virtual void traverseAndProcessNodes() const;
-
     virtual const char* getXML(const char* /*pComponent*/);
 
     static CSimpleType* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
@@ -96,8 +94,6 @@ public:
     virtual void populateEnvXPath(StringBuffer strXPath, unsigned int index = 1);
 
     virtual void loadXMLFromEnvXml(const IPropertyTree *pEnvTree);
-
-    virtual void traverseAndProcessNodes() const;
 
     static CSimpleTypeArray* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 

@@ -158,7 +158,7 @@ CElement* CElement::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchema
     }
     else
     {
-::L        pElement->setTitle(pElement->getName());
+        pElement->setTitle(pElement->getName());
     }
 
     strXPathExt.clear().append(xpath).append("/").append(XSD_TAG_KEY);
@@ -993,11 +993,6 @@ void CElementArray::populateEnvXPath(StringBuffer strXPath, unsigned int index)
     }
 }
 
-void CElementArray::traverseAndProcessNodes() const
-{
-    QUICK_TRAVERSE_AND_PROCESS;
-}
-
 const char* CElementArray::getXML(const char* /*pComponent*/)
 {
     if (m_strXML.length() == 0)
@@ -1054,7 +1049,7 @@ void CElementArray::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
 
                 //int nIndexOfElement =  (static_cast<CElementArray*>(pElement->getParentNode()))->getSiblingIndex(pElement->getXSDXPath(), pElement)+1;
                 int nIndexOfElement =  (static_cast<CElementArray*>(pElement->getParentNode()))->getCountOfSiblingElements(pElement->getXSDXPath())+1;
-                pElement->populateEnvXPath(this->getEnvXPath(), nIndexOfElement);
+                pElement->populateEnvXPath(this->getEnvXPath(), subIndex);
 
                 //StringBuffer strXSDXPath(pElement->getXSDXPath());
                 //CConfigSchemaHelper::stripXPathIndex(strXSDXPath);
@@ -1063,6 +1058,7 @@ void CElementArray::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
                 //pElement->setXSDXPath(strXSDXPath.str());
 
                 PROGLOG("XSD Xpath to non-native element to %s", pElement->getXSDXPath());
+                PROGLOG("XML Xpath to non-native element to %s", pElement->getEnvXPath());
 
                 pElement->setTopLevelElement(false);
 
@@ -1083,6 +1079,10 @@ void CElementArray::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
                 {
                     pElement->setTopLevelElement(true);
                 }
+
+                CConfigSchemaHelper::getInstance()->getSchemaMapManager()->addMapOfXSDXPathToElementArray(pElement/*->getConstParentNode()*/->getXSDXPath(), (static_cast<CElementArray*>(pElement->getParentNode())));
+                PROGLOG("Added element %p with xsd xpath=%s array is size=%d with xpath of %s", pElement, pElement->getXSDXPath(),this->length(), this->getXSDXPath());
+                //this->append(*pElement);
             }
             pElement->loadXMLFromEnvXml(pEnvTree);
 

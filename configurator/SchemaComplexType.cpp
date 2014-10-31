@@ -430,11 +430,6 @@ void CComplexTypeArray::getQML(StringBuffer &strQML, int idx) const
    QUICK_QML_ARRAY(strQML);
 }
 
-void CComplexTypeArray::traverseAndProcessNodes() const
-{
-    QUICK_TRAVERSE_AND_PROCESS;
-}
-
 const char* CComplexTypeArray::getXML(const char* /*pComponent*/)
 {
     if (m_strXML.length() == 0)

@@ -23,8 +23,6 @@ public:
 
     virtual void getQML(StringBuffer &strQML, int idx = -1) const;
 
-    virtual void traverseAndProcessNodes() const;
-
     virtual const char* getXML(const char* /*pComponent*/);
 
     GETTERSETTER(SchemaLocation)
@@ -76,8 +74,6 @@ public:
     virtual void getDojoJS(StringBuffer &strJS) const;
 
     virtual void getQML(StringBuffer &strQML, int idx = -1) const;
-
-    void traverseAndProcessNodes() const;
 
     virtual const char* getXML(const char* /*pComponent*/);
 

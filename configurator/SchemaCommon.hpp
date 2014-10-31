@@ -1,7 +1,6 @@
 ﻿#ifndef _SCHEMA_COMMON_HPP_
 #define _SCHEMA_COMMON_HPP_
 
-
 #include <iostream>
 #include "jiface.hpp"
 #include "jstring.hpp"
@@ -9,7 +8,6 @@
 #include "jlog.hpp"
 #include "ExceptionStrings.hpp"
 #include "XMLTags.h"
-
 
 #define MINIMUM_STRICTNESS  0
 #define DEFAULT_STRICTNESS  5
@@ -60,16 +58,6 @@
                                 {                                                         \
                                      (this->item(idx)).loadXMLFromEnvXml(X);              \
                                 }
-
-
-#define QUICK_TRAVERSE_AND_PROCESS
-//#define QUICK_TRAVERSE_AND_PROCESS  for (int idx=0; idx < this->length(); idx++)        \
-{                                                                                       \
-    CXSDNodeBase::processEntryHandlers(this);                                           \
-    this->item(idx).traverseAndProcessNodes();                                          \
-    CXSDNodeBase::processExitHandlers(this);                                            \
-}
-
 
 #define GETTER(X) virtual const char* get##X() const { return m_str##X.str(); }
 #define SETTER(X) virtual void set##X(const char* p) { m_str##X.clear().append(p); }
@@ -518,10 +506,6 @@ public:
     virtual bool checkSelf(NODE_TYPES eNodeType, const char *pName, const char* pCompName) const;
 
     virtual const CXSDNodeBase* getParentNodeByType(NODE_TYPES eNodeType) const;
-
-    //virtual const CXSDNodeBase* getNodeByTypeAndNameAscending(NODE_TYPES eNodeType, const char *pName) const;
-
-    //virtual const CXSDNodeBase* getNodeByTypeAndNameDescending(NODE_TYPES eNodeType, const char *pName) const;
 
 private:
 
