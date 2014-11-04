@@ -38,7 +38,14 @@
                            {                                                            \
                                 (this->item(idx)).getQML(X);                            \
                            }
+#define LAST_ONLY -1
+#define LAST_AND_FIRST  -2
 #define QUICK_QML_ARRAY2(X)     for (int idx=0; idx < this->length(); idx++)            \
+                                {                                                       \
+                                    (this->item(idx)).getQML(X, idx == this->length()-1 && idx == 0 ? LAST_AND_FIRST : (idx == this->length()-1 ? LAST_ONLY : idx));                   \
+                                }
+
+#define QUICK_QML_ARRAY3(X)     for (int idx=0; idx < this->length(); idx++)            \
                                 {                                                       \
                                     (this->item(idx)).getQML(X, idx);                   \
                                 }
@@ -281,6 +288,7 @@ static const char* TAG_AUTOGENDEFAULTVALUE("autogendefaultvalue");
 static const char* TAG_AUTOGENDEFAULTVALUEFORMULTINODE("autogendefaultformultinode");
 static const char* TAG_XPATH("xpath");
 static const char* TAG_DOC_ID("docid");
+static const char* TAG_UNBOUNDED("unbounded");
 
 #define TAG_OPTIONAL                    "optional"
 #define TAG_REQUIRED                    "required"

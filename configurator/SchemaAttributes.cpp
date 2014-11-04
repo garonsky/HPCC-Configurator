@@ -206,6 +206,7 @@ void CAttribute::getDojoJS(StringBuffer &strJS) const
     }*/
 }
 
+#ifdef _USE_OLD_GET_QML_
 void CAttribute::getQML(StringBuffer &strQML, int idx) const
 {
     assert(this->getConstParentNode() != NULL);
@@ -286,6 +287,80 @@ void CAttribute::getQML(StringBuffer &strQML, int idx) const
         }
     }
 }
+#else // _USE_OLD_GET_QML_
+
+void CAttribute::getQML(StringBuffer &strQML, int idx) const
+{
+    assert(this->getConstParentNode() != NULL && this->getConstParentNode()->getNodeType() == XSD_ATTRIBUTE_ARRAY);
+
+
+    // HPCC-Specific  TODO: Remove HPCC specific stuff
+    const char* pViewType = NULL;
+
+    if (m_pAnnotation != NULL && m_pAnnotation->getAppInfo() != NULL)
+    {
+        const CAppInfo *pAppInfo = NULL;
+
+        pAppInfo = m_pAnnotation->getAppInfo();
+        pViewType = pAppInfo->getViewType();
+    }
+
+    if (pViewType != NULL && stricmp("hidden", pViewType) == 0) // HPCC-Specific
+    {
+        return; // HIDDEN
+    }
+    // HPCC-Specifc end
+
+    const CElement *pElement = dynamic_cast<const CElement*>(this->getParentNodeByType(XSD_ELEMENT));
+
+    if (pElement != NULL && stricmp(pElement->getMaxOccurs(), TAG_UNBOUNDED) == 0)
+    {
+        CQMLMarkupHelper::getTableViewColumn(strQML, this->getTitle(), this->getEnvXPath());
+        DEBUG_MARK_QML;
+    }
+    else
+    {
+        strQML.append(QML_ROW_BEGIN).append(QML_RECTANGLE_DEFAULT_COLOR_SCHEME_1_BEGIN);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_TEXT_BEGIN_2).append("\"  ").append(this->getTitle()).append("\"").append(QML_TEXT_END_2);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_RECTANGLE_LIGHT_STEEEL_BLUE_END);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_TEXT_FIELD_BEGIN);
+
+        StringBuffer strTextArea("textarea");
+        CQMLMarkupHelper::getRandomID(&strTextArea);
+
+        strQML.append(QML_APP_DATA_GET_VALUE_BEGIN).append(this->getEnvXPath()).append(QML_APP_DATA_GET_VALUE_END);
+
+        strQML.append(QML_ON_ACCEPTED);
+        strQML.append(QML_APP_DATA_SET_VALUE_BEGIN).append(this->getEnvXPath()).append("\", ").append(strTextArea.str()).append(QML_APP_DATA_SET_VALUE_END);
+
+        strQML.append(QML_TEXT_FIELD_ID_BEGIN).append(strTextArea).append(QML_TEXT_FIELD_ID_END);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_TEXT_FIELD_PLACE_HOLDER_TEXT_BEGIN);
+        strQML.append("\"").append(this->getDefault()).append("\"");
+        strQML.append(QML_TEXT_FIELD_PLACE_HOLDER_TEXT_END);
+        DEBUG_MARK_QML;
+
+        if (this->getAnnotation()->getAppInfo() != NULL) // check for tooltip
+        {
+            CQMLMarkupHelper::getToolTipQML(strQML, this->getAnnotation()->getAppInfo()->getToolTip(), strTextArea.str());
+        }
+
+        strQML.append(QML_TEXT_FIELD_END);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_ROW_END);
+        DEBUG_MARK_QML;
+    }
+}
+
+#endif // _USE_OLD_GET_QML_
 
 void CAttribute::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 {
@@ -774,7 +849,7 @@ void CAttributeArray::getQML(StringBuffer &strQML, int idx) const
 
         CConfigSchemaHelper::getInstance(0)->incTables();
 
-        QUICK_QML_ARRAY(strQML);
+        QUICK_QML_ARRAY2(strQML);
         DEBUG_MARK_QML;
 
         strQML.append(QML_TABLE_VIEW_END);
@@ -850,7 +925,7 @@ void CAttributeArray::getQML(StringBuffer &strQML, int idx) const
 
             CConfigSchemaHelper::getInstance(0)->incTables();
 
-            QUICK_QML_ARRAY(strQML);
+            QUICK_QML_ARRAY2(strQML);
 
             strQML.append(QML_TABLE_VIEW_END);
             DEBUG_MARK_QML;
@@ -860,7 +935,7 @@ void CAttributeArray::getQML(StringBuffer &strQML, int idx) const
         }
         else
         {
-            QUICK_QML_ARRAY(strQML);
+            QUICK_QML_ARRAY2(strQML);
         }
     }
 }

@@ -250,7 +250,7 @@ void CSchema::getQML(StringBuffer &strQML, int idx) const
     }
 
 #ifndef _USE_OLD_GET_QML_
-    strQML.append(QML_END).append(QML_END);  //TODO:  Revist the need for this
+    strQML.append(QML_END);//.append(QML_END);  //TODO:  Revist the need for this  --  unbounded tables?
     DEBUG_MARK_QML;
 #endif
 

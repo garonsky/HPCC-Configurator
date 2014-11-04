@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:element name="Sample_Attributes1">
+
+        <xs:annotation>
+            <xs:documentation>Demonstrates simples variants of attributes</xs:documentation>
+        </xs:annotation>
+
+        <xs:complexType>
+            <xs:attribute name="attribute1"/>
+            <xs:attribute name="attribute2"/>
+            <xs:attribute name="attribute3"/>
+            <xs:attribute name="attribute4"/>
+        </xs:complexType>
+
+
+    </xs:element>
+</xs:schema>

@@ -323,6 +323,7 @@
   </Build>
  </Programs>
  <Software>
+ <Sample_Attributes1 attribute1="attribute1" attribute2="attribute2" attribute3="attribute3" attribute4="attribute4"/>
  <Hardware_NEW2>
      <ComputerType name="name1" manufacturer="manu1" computerType="typ1" opSys="user1" />
      <ComputerType name="name2" manufacturer="manu1" computerType="typ1" opSys="user1" />
@@ -343,8 +344,15 @@
      <Switch name="Switc2h"/>
      <NAS trace="trace1"/>
      <NAS trace="trace2" subnet="192.168.0.255"/>
+     <Level1-Item1  name="req1" name2="reg1">
+            <Level2-Item1 nameA1="reqA1" nameA2="regA1"/>
+     </Level1-Item1>
  </Hardware_NEW2>
     <Hardware_NEW>
+       <Instance name="instance1"/>
+       <Instance name="instance2"/>
+       <Instance name="instance3"/>
+       <Instance name="instance4"/>
         <ComputerType name="name1" manufacturer="manu1" computerType="typ1" opSys="user1" />
         <ComputerType name="name2" manufacturer="manu1" computerType="typ1" opSys="user1" />
         <ComputerType name="name3" manufacturer="manu1" computerType="typ1" opSys="user1" />

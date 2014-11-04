@@ -6,20 +6,36 @@
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-
+      <xs:element name="Instance" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:appinfo>
+            <viewType>instance</viewType>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="Level1-Item1">
 	<xs:complexType>
             <xs:attribute name="name" use="required"/>
-            <xs:attribute name="name2" use="required"/>
+            <xs:attribute name="name2" use="required">
+            <xs:annotation>
+              <xs:appinfo>
+                <tooltip>NAME 2 tip</tooltip>
+              </xs:appinfo>
+            </xs:annotation>
+            </xs:attribute>
 	</xs:complexType>
       </xs:element>
 
       <xs:element name="Level1-Item2" maxOccurs="unbounded">
 	<xs:complexType>
 		<xs:sequence>
-                        <xs:element name="Level2-Item1" maxOccurs="unbounded">
+                        <xs:element name="Level2-Item1">
                             <xs:complexType>
-                                <xs:attribute name="name" use="required"/>
+                                <xs:attribute name="nameA1" use="required"/>
+                                <xs:attribute name="nameA2" use="required"/>
+                                <xs:attribute name="nameA3" use="required"/>
+                                <xs:attribute name="nameA4" use="required"/>
+                                <xs:attribute name="nameA5" use="required"/>
                             </xs:complexType>
                         </xs:element>
 			<xs:element name="Level2-Item2" maxOccurs="unbounded"/>
@@ -30,10 +46,10 @@
 					<xs:sequence>
                                                 <xs:element name="Level3-Item1">
                                                     <xs:complexType>
-                                                        <xs:attribute name="name1" use="required"/>
-                                                        <xs:attribute name="name2" use="required"/>
-                                                        <xs:attribute name="name3" use="required"/>
-                                                        <xs:attribute name="name4" use="required"/>
+                                                        <xs:attribute name="name1X" use="required"/>
+                                                        <xs:attribute name="name2X" use="required"/>
+                                                        <xs:attribute name="name3X" use="required"/>
+                                                        <xs:attribute name="name4X" use="required"/>
                                                     </xs:complexType>
                                                 </xs:element>
 						<xs:element name="Level3-Item2" maxOccurs="unbounded"/>

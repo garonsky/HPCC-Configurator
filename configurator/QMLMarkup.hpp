@@ -33,12 +33,12 @@ static const char* QML_ON_CURRENT_INDEX_CHANGED("\n\
 
 static const char* QML_START("\
  import QtQuick 2.1\n\
- import QtQuick.Controls 1.0\n\
+ import QtQuick.Controls 1.2\n\
  import QtQuick.Controls.Styles 1.0\n\
  import QtQuick.Particles 2.0\n\
  import QtQuick.Layouts 1.0\n\
  \n\
- Item {\n\
+    Item {\n\
      id: root\n\
      width: 900\n\
      height: 700\n\
@@ -103,7 +103,8 @@ static const char* QML_TAB_VIEW_STYLE("\
                 }\n\
 //                frame: Rectangle { color: \"steelblue\" }\n\
                 frame: Rectangle { color: \"#98A9B1\" }\n\
-      }\n");
+      }\n\
+    }\n");
 
 static const char* QML_TAB_BEGIN("\
     Tab {\n");
