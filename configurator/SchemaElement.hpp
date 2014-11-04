@@ -14,6 +14,7 @@ class CAttributeArray;
 class CKeyArray;
 class CKeyRefArray;
 class CKeyRef;
+class CSchema;
 
 static const char* DEFAULT_ELEMENT_ARRAY_XPATH(".");
 
@@ -74,6 +75,8 @@ public:
     {
         return m_pComplexTypeArray;
     }
+
+    const CSchema* getConstSchemaNode() const;
 
     static const CXSDNodeBase* getAncestorElement(const CXSDNodeBase *pNode)
     {

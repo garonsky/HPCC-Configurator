@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
-  <xs:element name="Hardware_NEW">
+  <xs:element name="Hardware_NEW2">
     <xs:annotation>
       <xs:documentation>Describes HPCC Hardware</xs:documentation>
     </xs:annotation>
@@ -89,7 +89,7 @@
             </xs:attribute>
           </xs:complexType>
         </xs:element>
-	<xs:element name="Switches" maxOccurs="unbounded">
+        <xs:element name="Switches" maxOccurs="unbounded">
                <xs:annotation>
                 <xs:appinfo>
                   <title>Switches</title>
@@ -105,7 +105,7 @@
 	           </xs:attribute>
 	     </xs:complexType>
 	</xs:element>
-	<xs:element name="Domains" maxOccurs="unbounded">
+        <xs:element name="Domains" maxOccurs="unbounded">
                <xs:annotation>
                 <xs:appinfo>
                   <title>Domains</title>
@@ -128,7 +128,7 @@
 	     </xs:attribute>
              </xs:complexType>
 	</xs:element>
-			<xs:element name="Computers" maxOccurs="unbounded">
+                        <xs:element name="Computers" maxOccurs="unbounded">
                <xs:annotation>
                 <xs:appinfo>
                   <title>Computers</title>
@@ -165,7 +165,7 @@
 		     </xs:attribute>
 	       </xs:complexType>
 	</xs:element>
-	<xs:element name="NAS" maxOccurs="unbounded">
+        <xs:element name="NAS" maxOccurs="unbounded">
 	       <xs:complexType>
 			<xs:attribute name="name">
 				<xs:annotation>
@@ -190,7 +190,7 @@
 			</xs:attribute>
 			<xs:attribute name="subnet">
 				<xs:annotation>
-					<xs:appinfo>
+                                        <xs:appinfo>
 						<title>Subnet</title>
 					</xs:appinfo>
 				</xs:annotation>

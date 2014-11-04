@@ -263,6 +263,7 @@ void  CSchema::populateEnvXPath(StringBuffer strXPath, unsigned int index)
     if (m_pElementArray != NULL)
     {
         m_pElementArray->populateEnvXPath(strXPath);
+        CConfigSchemaHelper::getInstance()->getSchemaMapManager()->addMapOfXSDXPathToElementArray(m_pElementArray->getXSDXPath(), m_pElementArray);
     }
     if (m_pAttributeGroupArray != NULL)
     {

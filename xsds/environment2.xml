@@ -323,6 +323,27 @@
   </Build>
  </Programs>
  <Software>
+ <Hardware_NEW2>
+     <ComputerType name="name1" manufacturer="manu1" computerType="typ1" opSys="user1" />
+     <ComputerType name="name2" manufacturer="manu1" computerType="typ1" opSys="user1" />
+     <ComputerType name="name3" manufacturer="manu1" computerType="typ1" opSys="user1" />
+     <ComputerType name="name4" manufacturer="manu1" computerType="typ1" opSys="user1" />
+     <Switches name="switch1"/>
+     <Domains name="domain1" snmpSecurityString="setting1"/>
+     <Computer computerType="linuxmachine"
+               domain="localdomain"
+               name="localhost"
+               netAddress="."/>
+     <ComputerType computerType="linuxmachine"
+                   manufacturer="unknown"
+                   name="linuxmachine"
+                   opSys="linux"/>
+     <Domain name="localdomain" snmpSecurityString="123"/>
+     <Switch name="Switc1h"/>
+     <Switch name="Switc2h"/>
+     <NAS trace="trace1"/>
+     <NAS trace="trace2" subnet="192.168.0.255"/>
+ </Hardware_NEW2>
     <Hardware_NEW>
         <ComputerType name="name1" manufacturer="manu1" computerType="typ1" opSys="user1" />
         <ComputerType name="name2" manufacturer="manu1" computerType="typ1" opSys="user1" />

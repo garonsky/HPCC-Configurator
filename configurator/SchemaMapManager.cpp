@@ -472,17 +472,27 @@ void CSchemaMapManager::addMapOfXSDXPathToElement(const char* pXPath, CElement *
 
     if (pElement != NULL && pXPath != NULL && *pXPath != 0)
     {
-        m_pXSDToElementPtrsMap->setValue(pXPath, pElement);
+        StringBuffer strFullXPath;
+
+        strFullXPath.appendf("%s-%s",pElement->getConstSchemaNode()->getXSDXPath(), pXPath);
+
+        m_pXSDToElementPtrsMap->setValue(strFullXPath.str(), pElement);
     }
 }
 
 CElement* CSchemaMapManager::getElementFromXSDXPath(const char *pXPath) const
 {
+    assert(!"not implemented");
     assert(pXPath != NULL && *pXPath != 0);
 
     if (pXPath != NULL && *pXPath != 0)
     {
+        //StringBuffer strFullXPath;
+
+        //strFullXPath.appendf("%s-%s",this->getConstSchemaNode()->getXSDXPath(), pXPath);
+
         CElement **ppElement = m_pElementPtrsMap->getValue(pXPath);
+        //CElement **ppElement = m_pElementPtrsMap->getValue(strFullXPath.str());
 
         assert(ppElement != NULL);
 

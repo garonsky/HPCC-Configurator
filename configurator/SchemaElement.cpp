@@ -74,7 +74,7 @@ CElement* CElement::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchema
     pElement->setIsInXSD(bIsInXSD);
     pElement->setXSDXPath(xpath);
 
-    CConfigSchemaHelper::getInstance()->getSchemaMapManager()->addMapOfXSDXPathToElement(xpath, pElement);
+//  CConfigSchemaHelper::getInstance()->getSchemaMapManager()->addMapOfXSDXPathToElement(xpath, pElement);
 
     IPropertyTree *pTree = pSchemaRoot->queryPropTree(xpath);
 
@@ -94,7 +94,7 @@ CElement* CElement::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchema
             if (pName != NULL && *pName != 0)
             {
                 pElement->setName(pName);
-                CConfigSchemaHelper::getInstance()->getSchemaMapManager()->setElementWithName(pName, pElement);
+                //CConfigSchemaHelper::getInstance()->getSchemaMapManager()->setElementWithName(pName, pElement);
             }
         }
         else if (strcmp(iterAttrib->queryName(), XML_ATTR_MAXOCCURS) == 0)
@@ -189,6 +189,13 @@ const CElement* CElement::getTopMostElement(const CXSDNodeBase *pNode)
     }
 
     return getTopMostElement(pNode->getParentNodeByType(XSD_ELEMENT));
+}
+
+const CSchema* CElement::getConstSchemaNode() const
+{
+    const CSchema *pSchema = dynamic_cast<const CSchema*>(CElement::getTopMostElement(this)->getParentNodeByType(XSD_SCHEMA));
+
+    return pSchema;
 }
 
 /*const CXSDNodeBase* CElement::getNodeByTypeAndNameDescending(NODE_TYPES eNodeType, const char *pName) const
@@ -820,7 +827,7 @@ void CElement::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 
     strXPath.append("/").append(this->getName()).append("[").append(index).append("]");
 
-    PROGLOG("Setting element to envpath of %s", strXPath.str());
+    PROGLOG("Setting element to envpath of %s, previous path: %s", strXPath.str(), this->getEnvXPath());
     this->setEnvXPath(strXPath);
 
 
@@ -973,23 +980,37 @@ void CElementArray::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 {
     assert(index == 1);  // Only 1 array of elements per node
 
+    //strXPath.append("[1]");
     this->setEnvXPath(strXPath);
 
-    StringBuffer mapKey(strXPath);
+    //StringBuffer mapKey(strXPath);
 
     int elemCount = 1;
 
     for (int idx=0; idx < this->length(); idx++)
     {
-        if ((this->item(idx)).getIsInXSD() == true)
+//        if ((this->item(idx)).getIsInXSD() == true)
+        //if (idx == 0)
         {
-            elemCount = 1;
+  //          elemCount = 1;
+//            mapKey.setf("%s[%d]", this->getXSDXPath(), elemCount);
+
+//            CConfigSchemaHelper::getInstance()->getSchemaMapManager()->addMapOfXSDXPathToElementArray(mapKey.str(), this);
         }
-        (this->item(idx)).populateEnvXPath(strXPath, elemCount++);
+        //(this->item(idx)).populateEnvXPath(strXPath, elemCount++);
+        if (this->item(idx).getIsInXSD() == true)
+        {
+            elemCount == 1;
+        }
+        else
+        {
+            elemCount++;
+        }
 
-        mapKey.setf("%s[%d]", this->getXSDXPath(), index);
+        this->item(idx).populateEnvXPath(strXPath, elemCount);
 
-        CConfigSchemaHelper::getInstance()->getSchemaMapManager()->addMapOfXSDXPathToElementArray(mapKey.str(), this);
+        //mapKey.setf("%s[%d]", this->getXSDXPath(), index);
+
     }
 }
 
