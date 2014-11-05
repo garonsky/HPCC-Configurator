@@ -44,8 +44,53 @@ static const char* QML_START("\
      height: 700\n\
 ");
 
+static const char* QML_VERTICAL_SCROLL_BAR("\n\
+           ScrollBar {\n\
+               id: verticalScrollBar\n\
+               width: 12; height: view.height-12\n\
+               anchors.right: view.right\n\
+               opacity: 0\n\
+               orientation: Qt.Vertical\n\
+               position: view.visibleArea.yPosition\n\
+               pageSize: view.visibleArea.heightRatio\n\
+                    }\n");
+
+static const char* QML_HORIZONTAL_SCROLL_BAR("\n\
+           ScrollBar {\n\
+              id: horizontalScrollBar\n\
+              width: view.width-12; height: 12\n\
+              anchors.bottom: view.bottom\n\
+              opacity: 0\n\
+              orientation: Qt.Horizontal\n\
+              position: view.visibleArea.xPosition\n\
+              pageSize: view.visibleArea.widthRatio\n\
+                    }\n");
+
+static const char* QML_FLICKABLE_BEGIN("\n\
+           Flickable { id: view \n\
+                       anchors.fill: parent\n\
+                       contentWidth: 1024\n\
+                       contentHeight: 1024\n\
+                       ");
+
+static const char* QML_FLICKABLE_END("\n\
+                        }\n");
+
+static const char* QML_SCROLL_BAR_TRANSITIONS("\n\
+           states: State {\n\
+               name: \"ShowBars\"\n\
+               when: view.movingVertically || view.movingHorizontally\n\
+               PropertyChanges { target: verticalScrollBar; opacity: 1 }\n\
+               PropertyChanges { target: horizontalScrollBar; opacity: 1 }\n\
+           }\n\
+           transitions: Transition {\n\
+               NumberAnimation { properties: \"opacity\"; duration: 400 }\n\
+           }\n");
+
+//static const char* QML_HORIZONTAL_SCROLL_BAR_TRANSITION();
+
 static const char* QML_END("\
-        }\n\
+}\n\
 ");
 
 static const char* QML_TEXT_FIELD_STYLE("\
@@ -75,11 +120,12 @@ static const char* QML_TAB_VIEW_BEGIN("\n\
         Layout.row: 5\n\
         Layout.columnSpan: 3\n\
         Layout.fillWidth: true\n\
-        implicitHeight: 700\n\
-        implicitWidth: 1600\n\
+        //implicitHeight: 1600\n\
+        implicitWidth: 530\n\
 ");
 
-static const char* QML_TAB_VIEW_END("}\n");
+static const char* QML_TAB_VIEW_END("\
+    }\n");
 
 
 static const char* QML_TAB_VIEW_STYLE("\
@@ -103,8 +149,7 @@ static const char* QML_TAB_VIEW_STYLE("\
                 }\n\
 //                frame: Rectangle { color: \"steelblue\" }\n\
                 frame: Rectangle { color: \"#98A9B1\" }\n\
-      }\n\
-    }\n");
+      }\n");
 
 static const char* QML_TAB_BEGIN("\
     Tab {\n");
@@ -258,7 +303,7 @@ static const char* QML_GRID_LAYOUT_BEGIN("\
           GridLayout {\n\
               rowSpacing: 1\n\
               columnSpacing: 1\n\
-              columns: 3\n\
+              columns: 1\n\
               flow: GridLayout.LeftToRight\n");
 
 static const char* QML_GRID_LAYOUT_BEGIN_1("\

@@ -7,10 +7,70 @@
         </xs:annotation>
 
         <xs:complexType>
-            <xs:attribute name="attribute1"/>
+            <xs:sequence>
+            <xs:element name="Level1-Item1">
+              <xs:complexType>
+                  <xs:attribute name="name" use="required"/>
+                  <xs:attribute name="name2" use="required">
+                  <xs:annotation>
+                    <xs:appinfo>
+                      <tooltip>NAME 2 tip</tooltip>
+                    </xs:appinfo>
+                  </xs:annotation>
+                  </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="Attributes">
+            <xs:attribute name="1"/>
+            <xs:attribute name="a11"/>
+            <xs:attribute name="2"/>
+            <xs:attribute name="3"/>
+            <xs:attribute name="4"/>
+            <xs:attribute name="5"/>
+            <xs:attribute name="6"/>
+            <xs:attribute name="7"/>
+            <xs:attribute name="8"/>
+            <xs:attribute name="9"/>
+            <xs:attribute name="01"/>
+            <xs:attribute name="11"/>
+            <xs:attribute name="12"/>
+            <xs:attribute name="13"/>
+            <xs:attribute name="14"/>
+            <xs:attribute name="15"/>
+            <xs:attribute name="16"/>
+            <xs:attribute name="17"/>
+            <xs:attribute name="18"/>
+            <xs:attribute name="20"/>
+            <xs:attribute name="19"/>
+            <xs:attribute name="21"/>
+            <xs:attribute name="22"/>
+            <xs:attribute name="23"/>
+            <xs:attribute name="43"/>
+            <xs:attribute name="244"/>
+            <xs:attribute name="attriebute3"/>
+            <xs:attribute name="attribeute4"/>
+            <xs:attribute name="attribetute123"/>
+            <xs:attribute name="attributxe2"/>
+            <xs:attribute name="attribut22e3"/>
+            <xs:attribute name="attribute34"/>
+            <xs:attribute name="attributfdsfe5"/>
+            <xs:attribute name="attribeut34e6"/>
+            <xs:attribute name="attrietebuteas3"/>
+            <xs:attribute name="attrifbutedf4"/>
+            <xs:attribute name="attribuewtesdg1"/>
+            <xs:attribute name="attribffutefdg2"/>
+            <xs:attribute name="attributfdhe3"/>
+            <xs:attribute name="attrittbutdfhge4"/>
+            <xs:attribute name="attributewdfhge1"/>
             <xs:attribute name="attribute2"/>
-            <xs:attribute name="attribute3"/>
-            <xs:attribute name="attribute4"/>
+            <xs:attribute name="attriberrtyhrtute3"/>
+            <xs:attribute name="attributasdfsaryte4"/>
+            <xs:attribute name="attridsbtrtute1"/>
+            <xs:attribute name="attrdfdsfibtryute2"/>
+            <xs:attribute name="attrisddsr32432bute3"/>
+            <xs:attribute name="attrdsfdittbute4"/>
+            </xs:element>
+            </xs:sequence>
         </xs:complexType>
 
 

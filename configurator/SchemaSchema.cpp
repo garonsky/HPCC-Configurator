@@ -226,6 +226,14 @@ void CSchema::getQML(StringBuffer &strQML, int idx) const
 #ifndef _USE_OLD_GET_QML_
     strQML.append(QML_START);
     DEBUG_MARK_QML;
+    strQML.append(QML_VERTICAL_SCROLL_BAR);
+    DEBUG_MARK_QML;
+    strQML.append(QML_HORIZONTAL_SCROLL_BAR);
+    DEBUG_MARK_QML;
+    strQML.append(QML_SCROLL_BAR_TRANSITIONS);
+    DEBUG_MARK_QML;
+    strQML.append(QML_FLICKABLE_BEGIN);
+    DEBUG_MARK_QML;
 #endif
 
     if (m_pElementArray != NULL)
@@ -250,7 +258,9 @@ void CSchema::getQML(StringBuffer &strQML, int idx) const
     }
 
 #ifndef _USE_OLD_GET_QML_
-    strQML.append(QML_END);//.append(QML_END);  //TODO:  Revist the need for this  --  unbounded tables?
+    strQML.append(QML_FLICKABLE_END);
+    DEBUG_MARK_QML;
+    strQML.append(QML_END);
     DEBUG_MARK_QML;
 #endif
 

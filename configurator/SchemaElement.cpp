@@ -741,8 +741,8 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
         DEBUG_MARK_QML;
         strQML.append(QML_TAB_VIEW_END);
         DEBUG_MARK_QML;
-        strQML.append(QML_TAB_TEXT_STYLE);
-        DEBUG_MARK_QML
+        //strQML.append(QML_TAB_TEXT_STYLE);
+        //DEBUG_MARK_QML
 
         return;
     }
