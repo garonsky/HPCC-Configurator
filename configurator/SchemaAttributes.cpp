@@ -879,6 +879,9 @@ void CAttributeArray::getQML(StringBuffer &strQML, int idx) const
                 strQML.append(QML_GRID_LAYOUT_END);
                 DEBUG_MARK_QML;
 
+                strQML.append(QML_FLICKABLE_END);
+                DEBUG_MARK_QML;
+
                 strQML.append(QML_TAB_END);
                 DEBUG_MARK_QML;
             }
@@ -894,6 +897,9 @@ void CAttributeArray::getQML(StringBuffer &strQML, int idx) const
             QUICK_QML_ARRAY(strQML);
 
             strQML.append(QML_GRID_LAYOUT_END);
+            DEBUG_MARK_QML;
+
+            strQML.append(QML_FLICKABLE_END);
             DEBUG_MARK_QML;
 
             strQML.append(QML_TAB_END);
@@ -935,7 +941,19 @@ void CAttributeArray::getQML(StringBuffer &strQML, int idx) const
         }
         else
         {
+         //   strQML.append(QML_TAB_VIEW_HEIGHT).append((this->length()+1)*25);
+        //            DEBUG_MARK_QML;
+            CQMLMarkupHelper::setImplicitHeight(((this->length()) * 26)+30);
+            DEBUG_MARK_QML;
+
+            DEBUG_MARK_QML;
+            strQML.append(QML_GRID_LAYOUT_BEGIN);
+
+            DEBUG_MARK_QML;
             QUICK_QML_ARRAY2(strQML);
+
+            strQML.append(QML_TAB_END);
+            DEBUG_MARK_QML;
         }
     }
 }

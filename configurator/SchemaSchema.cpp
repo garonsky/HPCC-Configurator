@@ -232,8 +232,8 @@ void CSchema::getQML(StringBuffer &strQML, int idx) const
     DEBUG_MARK_QML;
     strQML.append(QML_SCROLL_BAR_TRANSITIONS);
     DEBUG_MARK_QML;
-    strQML.append(QML_FLICKABLE_BEGIN);
-    DEBUG_MARK_QML;
+    //strQML.append(QML_FLICKABLE_BEGIN);
+    //DEBUG_MARK_QML;
 #endif
 
     if (m_pElementArray != NULL)
@@ -258,8 +258,8 @@ void CSchema::getQML(StringBuffer &strQML, int idx) const
     }
 
 #ifndef _USE_OLD_GET_QML_
-    strQML.append(QML_FLICKABLE_END);
-    DEBUG_MARK_QML;
+    //strQML.append(QML_FLICKABLE_END);
+    //DEBUG_MARK_QML;
     strQML.append(QML_END);
     DEBUG_MARK_QML;
 #endif

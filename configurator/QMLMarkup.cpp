@@ -8,11 +8,16 @@
 #include "SchemaAppInfo.hpp"
 #include "SchemaAnnotation.hpp"
 
-void CQMLMarkupHelper::getTabQML(StringBuffer &strJS, const char *pName)
+int CQMLMarkupHelper::glImplicitHeight = -1;
+
+void CQMLMarkupHelper::getTabQML(StringBuffer &strQML, const char *pName)
 {
     assert(pName != NULL);
 
-    strJS.append(QML_TAB_BEGIN).append(QML_TAB_TITLE_BEGIN).append(pName).append(QML_TAB_TITLE_END);
+    strQML.append(QML_TAB_BEGIN);
+    strQML.append(QML_TAB_TITLE_BEGIN).append(pName).append(QML_TAB_TITLE_END);
+    strQML.append(QML_FLICKABLE_BEGIN);
+    DEBUG_MARK_QML;
 }
 
 void CQMLMarkupHelper::getComboBoxListElement(const char* pLabel, StringBuffer &strID, const char* pDefault)

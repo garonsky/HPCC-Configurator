@@ -15,6 +15,7 @@
 #include "ExceptionStrings.hpp"
 #include "SchemaMapManager.hpp"
 #include "SchemaSimpleType.hpp"
+#include "QMLMarkup.hpp"
 
 const CXSDNodeBase* CComplexType::getNodeByTypeAndNameAscending(NODE_TYPES eNodeType, const char *pName) const
 {
@@ -210,6 +211,7 @@ void CComplexType::getQML(StringBuffer &strQML, int idx) const
 
     if (m_pAttributeArray != NULL)
     {
+        DEBUG_MARK_QML;
         m_pAttributeArray->getQML(strQML);
     }
 

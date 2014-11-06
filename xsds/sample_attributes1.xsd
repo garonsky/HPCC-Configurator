@@ -10,8 +10,34 @@
             <xs:sequence>
             <xs:element name="Level1-Item1">
               <xs:complexType>
-                  <xs:attribute name="name" use="required"/>
-                  <xs:attribute name="name2" use="required">
+              <xs:attribute name="aaname2" use="required"/>
+              <xs:attribute name="abname2" use="required"/>
+              <xs:attribute name="acname2" use="required"/>
+              <xs:attribute name="adname2" use="required"/>
+              <xs:attribute name="aename2" use="required"/>
+              <xs:attribute name="afname2" use="required"/>
+              <xs:attribute name="agname2" use="required"/>
+              <xs:attribute name="ahname2" use="required"/>
+              <xs:attribute name="ajname2" use="required"/>
+              <xs:attribute name="akname2" use="required"/>
+              <xs:attribute name="alname2" use="required"/>
+              <xs:attribute name="amname2" use="required"/>
+              <xs:attribute name="anname2" use="required"/>
+<xs:attribute name="aname2" use="required"/>
+<xs:attribute name="bname2" use="required"/>
+<xs:attribute name="cname2" use="required"/>
+<xs:attribute name="dname2" use="required"/>
+<xs:attribute name="ename2" use="required"/>
+<xs:attribute name="fname2" use="required"/>
+<xs:attribute name="gname2" use="required"/>
+<xs:attribute name="hname2" use="required"/>
+<xs:attribute name="jname2" use="required"/>
+<xs:attribute name="kname2" use="required"/>
+<xs:attribute name="lname2" use="required"/>
+<xs:attribute name="mname2" use="required"/>
+<xs:attribute name="nname2" use="required"/>
+<xs:attribute name="oname2" use="required"/>
+              <xs:attribute name="name2" use="required">
                   <xs:annotation>
                     <xs:appinfo>
                       <tooltip>NAME 2 tip</tooltip>
@@ -20,7 +46,8 @@
                   </xs:attribute>
               </xs:complexType>
             </xs:element>
-            <xs:element name="Attributes">
+            <xs:element name="Attributes" maxOccurs="unbounded">
+                          <xs:complexType>
             <xs:attribute name="1"/>
             <xs:attribute name="a11"/>
             <xs:attribute name="2"/>
@@ -69,6 +96,19 @@
             <xs:attribute name="attrdfdsfibtryute2"/>
             <xs:attribute name="attrisddsr32432bute3"/>
             <xs:attribute name="attrdsfdittbute4"/>
+            </xs:complexType>
+            </xs:element>
+            <xs:element name="Level2-Item1">
+                <xs:complexType>
+                <xs:element name="Level3-Item1">
+                    <xs:sequence>
+                    <xs:complexType>
+                        <xs:attribute name="attrdsfdittbute41"/>
+                        <xs:attribute name="attrdsfdittbute42"/>
+                    </xs:complexType>
+                    </xs:sequence>
+                </xs:element>
+                </xs:complexType>
             </xs:element>
             </xs:sequence>
         </xs:complexType>

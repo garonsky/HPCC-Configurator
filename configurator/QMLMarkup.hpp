@@ -70,7 +70,7 @@ static const char* QML_FLICKABLE_BEGIN("\n\
            Flickable { id: view \n\
                        anchors.fill: parent\n\
                        contentWidth: 1024\n\
-                       contentHeight: 1024\n\
+                       contentHeight: 24\n\
                        ");
 
 static const char* QML_FLICKABLE_END("\n\
@@ -120,9 +120,11 @@ static const char* QML_TAB_VIEW_BEGIN("\n\
         Layout.row: 5\n\
         Layout.columnSpan: 3\n\
         Layout.fillWidth: true\n\
-        //implicitHeight: 1600\n\
         implicitWidth: 530\n\
+        /*implicitHeight: 1600*/\n\
 ");
+static const char* QML_TAB_VIEW_HEIGHT("\
+        implicitHeight: ");
 
 static const char* QML_TAB_VIEW_END("\
     }\n");
@@ -481,7 +483,19 @@ public:
 
     static bool isTableRequired(const CAttribute *pAttrib);
 
-};
+    static int getImplicitHeight()
+    {
+        return CQMLMarkupHelper::glImplicitHeight;
+    }
 
+    static void setImplicitHeight(int val)
+    {
+        CQMLMarkupHelper::glImplicitHeight = val;
+    }
+
+protected:
+
+    static int glImplicitHeight;
+};
 
 #endif // _QMLMARKUP_HPP_

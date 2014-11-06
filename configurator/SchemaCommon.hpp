@@ -47,6 +47,7 @@
 
 #define QUICK_QML_ARRAY3(X)     for (int idx=0; idx < this->length(); idx++)            \
                                 {                                                       \
+                                    DEBUG_MARK_QML;                                     \
                                     (this->item(idx)).getQML(X, idx);                   \
                                 }
 

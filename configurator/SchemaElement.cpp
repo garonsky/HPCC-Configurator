@@ -750,9 +750,6 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
     {
         if (idx == 0)
         {
-//            strQML.append(QML_TAB_VIEW_BEGIN);
-//            DEBUG_MARK_QML;
-
             strQML.append(QML_TAB_VIEW_BEGIN);
             DEBUG_MARK_QML;
         }
@@ -770,12 +767,15 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
             m_pComplexTypeArray->getQML(strQML);
         }
 
-
+        strQML.append(QML_FLICKABLE_END);
+        DEBUG_MARK_QML;
         strQML.append(QML_TAB_END);
         DEBUG_MARK_QML;
 
         if (static_cast<CElementArray*>(this->getParentNode())->length()-1 == idx)
         {
+            strQML.append(QML_TAB_VIEW_HEIGHT).append(CQMLMarkupHelper::getImplicitHeight());
+            DEBUG_MARK_QML;
             strQML.append(QML_TAB_VIEW_STYLE);
             DEBUG_MARK_QML;
             strQML.append(QML_TAB_VIEW_END);
