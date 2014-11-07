@@ -69,9 +69,12 @@ static const char* QML_HORIZONTAL_SCROLL_BAR("\n\
 static const char* QML_FLICKABLE_BEGIN("\n\
            Flickable { id: view \n\
                        anchors.fill: parent\n\
-                       contentWidth: 1024\n\
-                       contentHeight: 24\n\
+                       contentWidth: 512\n\
+                       /*contentHeight: 24\n*/\
                        ");
+
+static const char* QML_FLICKABLE_HEIGHT("\n\
+                       contentHeight: ");
 
 static const char* QML_FLICKABLE_END("\n\
                         }\n");

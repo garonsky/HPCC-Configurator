@@ -764,9 +764,11 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
 
         if (m_pComplexTypeArray != NULL)
         {
-            m_pComplexTypeArray->getQML(strQML);
+            m_pComplexTypeArray->getQML(strQML,idx);
         }
 
+        strQML.append(QML_FLICKABLE_HEIGHT).append(CQMLMarkupHelper::getImplicitHeight() * 1.5);
+        DEBUG_MARK_QML;
         strQML.append(QML_FLICKABLE_END);
         DEBUG_MARK_QML;
         strQML.append(QML_TAB_END);
@@ -786,19 +788,51 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
             //DEBUG_MARK_QML;
         }
     }
+    /*else
+    {
+        strQML.append(QML_GRID_LAYOUT_BEGIN_1);
+        DEBUG_MARK_QML;
+
+        if (m_pAnnotation != NULL)
+        {
+            m_pAnnotation->getQML(strQML);
+        }
+
+        if (m_pComplexTypeArray != NULL)
+        {
+            m_pComplexTypeArray->getQML(strQML,idx);
+        }
+
+        strQML.append(QML_GRID_LAYOUT_END);
+        DEBUG_MARK_QML;
+    }*/
+
 }
 
 bool CElement::isATab() const
 {
+/*    if (stricmp(this->getMaxOccurs(), TAG_UNBOUNDED) == 0)
+    {
+        return false;
+    }
     // Any element that is in sequence of complex type will be a tab
-    if (this->getConstAncestorNode(2)->getNodeType() == XSD_SEQUENCE && this->getConstAncestorNode(3)->getNodeType() == XSD_COMPLEX_TYPE)
+    else*/ if (this->getConstAncestorNode(2)->getNodeType() == XSD_SEQUENCE && this->getConstAncestorNode(3)->getNodeType() == XSD_COMPLEX_TYPE)
     {
         return true;
     }
-    else
+    else if (/*this->getConstAncestorNode(2)->getNodeType == XSD_COMPLEX_TYPE &&*/ this->getConstAncestorNode(3)->getNodeType() == XSD_ELEMENT)
     {
-        false;
+        const CElement *pElement = dynamic_cast<const CElement*>(this->getConstAncestorNode(3));
+
+        assert(pElement != NULL);
+
+        if (pElement != NULL)
+        {
+            return pElement->isATab();
+        }
+
     }
+    return false;
 }
 
 bool CElement::isLastTab(const int idx) const
