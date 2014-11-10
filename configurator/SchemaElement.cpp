@@ -724,8 +724,8 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
 
     if (this->isTopLevelElement())  // handle qml imports etc...
     {
-        strQML.append(QML_TAB_VIEW_BEGIN);
-        DEBUG_MARK_QML;
+        //strQML.append(QML_TAB_VIEW_BEGIN);
+        //DEBUG_MARK_QML;
 
         if (m_pAnnotation != NULL)
         {
@@ -737,10 +737,10 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
             m_pComplexTypeArray->getQML(strQML);
         }
 
-        strQML.append(QML_TAB_VIEW_STYLE);
-        DEBUG_MARK_QML;
-        strQML.append(QML_TAB_VIEW_END);
-        DEBUG_MARK_QML;
+        //strQML.append(QML_TAB_VIEW_STYLE);
+        //DEBUG_MARK_QML;
+        //strQML.append(QML_TAB_VIEW_END);
+        //DEBUG_MARK_QML;
         //strQML.append(QML_TAB_TEXT_STYLE);
         //DEBUG_MARK_QML
 
@@ -774,7 +774,8 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
         strQML.append(QML_TAB_END);
         DEBUG_MARK_QML;
 
-        if (static_cast<CElementArray*>(this->getParentNode())->length()-1 == idx)
+        //if (static_cast<CElementArray*>(this->getParentNode())->length()-1 == idx)
+        if (static_cast<CElementArray*>(this->getParentNode())->getCountOfElementsInXSD()-1 == idx && this->isATab() == true)
         {
             strQML.append(QML_TAB_VIEW_HEIGHT).append(CQMLMarkupHelper::getImplicitHeight());
             DEBUG_MARK_QML;
@@ -1012,7 +1013,7 @@ void CElementArray::getQML(StringBuffer &strQML, int idx) const
 
 void CElementArray::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 {
-    assert(index == 1);  // Only 1 array of elements per node
+    //assert(index == 1);  // Only 1 array of elements per node
 
     //strXPath.append("[1]");
     this->setEnvXPath(strXPath);
@@ -1315,4 +1316,21 @@ int CElementArray::getSiblingIndex(const char* pXSDXPath, const CElement* pEleme
     }
 
     return nSiblingIndex;
+}
+
+void CElement::setIsInXSD(bool b)
+{
+    m_bIsInXSD = b;
+
+    if (m_bIsInXSD == true)
+    {
+        CElementArray *pElemArray = dynamic_cast<CElementArray*>(this->getParentNode());
+
+        assert(pElemArray != NULL);
+
+        if (pElemArray != NULL)
+        {
+            pElemArray->incCountOfElementsInXSD();
+        }
+    }
 }

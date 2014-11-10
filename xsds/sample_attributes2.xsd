@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:element name="Sample_Attributes1">
+
+        <xs:annotation>
+            <xs:documentation>Demonstrates simples variants of attributes</xs:documentation>
+        </xs:annotation>
+
+        <xs:complexType>
+            <xs:sequence>
+
+                <xs:element name="Level1-Item1">
+                  <xs:complexType>
+                      <xs:attribute name="aa1name2" use="optional"/>
+                      <xs:attribute name="ab2name2" use="optional"/>
+                      <xs:attribute name="ac3name2" use="optional"/>
+                      <xs:attribute name="onamed14e2x" use="optional"/>
+                      <xs:attribute name="name2" use="optional">
+                          <xs:annotation>
+                            <xs:appinfo>
+                              <tooltip>NAME 2 tip</tooltip>
+                            </xs:appinfo>
+                          </xs:annotation>
+                      </xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+
+                <xs:element name="Attributes" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:attribute name="a11"/>
+                        <xs:attribute name="attrdsfdittbute4" use="optional"/>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="tab3">
+                    <xs:complexType>
+                        <xs:attribute name="tab3-1" use="optional"/>
+                        <xs:attribute name="tab3-2" use="optional"/>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="tab4">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="tab5">
+                                <xs:complexType>
+                                    <xs:attribute name="tab5-1" use="optional"/>
+                                    <xs:attribute name="tab5-2" use="optional"/>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="tab6">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="tab6-sub"  maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:attribute name="tab6-1" use="optional"/>
+                                                <xs:attribute name="tab6-2" use="optional"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="tab6-sub1"  maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:attribute name="tab61-1" use="optional"/>
+                                                <xs:attribute name="tab61-2" use="optional"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="tab8">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="tab7">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="tab9">
+                                            <xs:complexType>
+                                                <xs:attribute name="tab9-1" use="optional"/>
+                                                <xs:attribute name="tab9-2" use="optional"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

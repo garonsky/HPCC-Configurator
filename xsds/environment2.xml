@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-## Default environment file single-node OpenHPCC installation
--->
-
+<!-- Edited with THE CONFIGURATOR -->
 <Environment>
  <EnvSettings>
   <configs>/etc/HPCCSystems</configs>
@@ -12,13 +9,13 @@
   <log>/var/log/HPCCSystems</log>
   <path>/opt/HPCCSystems</path>
   <pid>/var/run/HPCCSystems</pid>
+  <ports>
+   <mpEnd>7500</mpEnd>
+   <mpStart>7101</mpStart>
+  </ports>
   <runtime>/var/lib/HPCCSystems</runtime>
   <sourcedir>/etc/HPCCSystems/source</sourcedir>
   <user>hpcc</user>
-  <ports>
-   <mpStart>7101</mpStart>
-   <mpEnd>7500</mpEnd>
-  </ports>
  </EnvSettings>
  <Hardware>
   <Computer computerType="linuxmachine"
@@ -46,10 +43,10 @@
              schema="dali.xsd"/>
    <BuildSet installSet="deploy_map.xml"
              name="dfuplus"
+             overide="no"
              path="componentfiles/dfuplus"
              processName="DfuplusProcess"
-             schema="dfuplus.xsd"
-             overide="no"/>
+             schema="dfuplus.xsd"/>
    <BuildSet installSet="deploy_map.xml"
              name="dfuserver"
              path="componentfiles/dfuserver"
@@ -66,13 +63,16 @@
              path="componentfiles/eclagent"
              processName="EclAgentProcess"
              schema="eclagent_config.xsd"/>
-   <BuildSet installSet="deploy_map.xml" name="eclminus" path="componentfiles/eclminus" overide="no"/>
+   <BuildSet installSet="deploy_map.xml"
+             name="eclminus"
+             overide="no"
+             path="componentfiles/eclminus"/>
    <BuildSet installSet="deploy_map.xml"
              name="eclplus"
+             overide="no"
              path="componentfiles/eclplus"
              processName="EclPlusProcess"
-             schema="eclplus.xsd"
-             overide="no"/>
+             schema="eclplus.xsd"/>
    <BuildSet installSet="eclccserver_deploy_map.xml"
              name="eclccserver"
              path="componentfiles/configxml"
@@ -111,11 +111,11 @@
                           path="ThorQueueAccess"
                           resource="ThorQueueAccess"
                           service="ws_smc"/>
-      <AuthenticateFeature description="Access to roxie control commands"
-                           path="RoxieControlAccess"
-                           resource="RoxieControlAccess"
-                           service="ws_smc"/>
-      <AuthenticateFeature description="Access to super computer environment"
+     <AuthenticateFeature description="Access to roxie control commands"
+                          path="RoxieControlAccess"
+                          resource="RoxieControlAccess"
+                          service="ws_smc"/>
+     <AuthenticateFeature description="Access to super computer environment"
                           path="ConfigAccess"
                           resource="ConfigAccess"
                           service="ws_config"/>
@@ -231,9 +231,9 @@
              schema="ftslave_linux.xsd"/>
    <BuildSet installSet="deploy_map.xml"
              name="hqltest"
+             overide="no"
              path="componentfiles/hqltest"
-             processName="HqlTestProcess"
-             overide="no"/>
+             processName="HqlTestProcess"/>
    <BuildSet deployable="no"
              installSet="deploy_map.xml"
              name="ldapServer"
@@ -253,16 +253,16 @@
    <BuildSet deployable="no"
              installSet="deploy_map.xml"
              name="SiteCertificate"
+             overide="no"
              path="componentfiles/SiteCertificate"
              processName="SiteCertificate"
-             schema="SiteCertificate.xsd"
-             overide="no"/>
+             schema="SiteCertificate.xsd"/>
    <BuildSet installSet="deploy_map.xml"
              name="soapplus"
+             overide="no"
              path="componentfiles/soapplus"
              processName="SoapPlusProcess"
-             schema="soapplus.xsd"
-             overide="no"/>
+             schema="soapplus.xsd"/>
    <BuildSet installSet="deploy_map.xml"
              name="thor"
              path="componentfiles/thor"
@@ -323,56 +323,6 @@
   </Build>
  </Programs>
  <Software>
- <Sample_Attributes1 attribute1="attribute1" attribute2="attribute2" attribute3="attribute3" attribute4="attribute4"/>
- <Hardware_NEW2>
-     <ComputerType name="name1" manufacturer="manu1" computerType="typ1" opSys="user1" />
-     <ComputerType name="name2" manufacturer="manu1" computerType="typ1" opSys="user1" />
-     <ComputerType name="name3" manufacturer="manu1" computerType="typ1" opSys="user1" />
-     <ComputerType name="name4" manufacturer="manu1" computerType="typ1" opSys="user1" />
-     <Switches name="switch1"/>
-     <Domains name="domain1" snmpSecurityString="setting1"/>
-     <Computer computerType="linuxmachine"
-               domain="localdomain"
-               name="localhost"
-               netAddress="."/>
-     <ComputerType computerType="linuxmachine"
-                   manufacturer="unknown"
-                   name="linuxmachine"
-                   opSys="linux"/>
-     <Domain name="localdomain" snmpSecurityString="123"/>
-     <Switch name="Switc1h"/>
-     <Switch name="Switc2h"/>
-     <NAS trace="trace1"/>
-     <NAS trace="trace2" subnet="192.168.0.255"/>
-     <Level1-Item1  name="req1" name2="reg1">
-            <Level2-Item1 nameA1="reqA1" nameA2="regA1"/>
-     </Level1-Item1>
- </Hardware_NEW2>
-    <Hardware_NEW>
-       <Instance name="instance1"/>
-       <Instance name="instance2"/>
-       <Instance name="instance3"/>
-       <Instance name="instance4"/>
-        <ComputerType name="name1" manufacturer="manu1" computerType="typ1" opSys="user1" />
-        <ComputerType name="name2" manufacturer="manu1" computerType="typ1" opSys="user1" />
-        <ComputerType name="name3" manufacturer="manu1" computerType="typ1" opSys="user1" />
-        <ComputerType name="name4" manufacturer="manu1" computerType="typ1" opSys="user1" />
-        <Switches name="switch1"/>
-        <Domains name="domain1" snmpSecurityString="setting1"/>
-        <Computer computerType="linuxmachine"
-                  domain="localdomain"
-                  name="localhost"
-                  netAddress="."/>
-        <ComputerType computerType="linuxmachine"
-                      manufacturer="unknown"
-                      name="linuxmachine"
-                      opSys="linux"/>
-        <Domain name="localdomain" snmpSecurityString="123"/>
-        <Switch name="Switc1h"/>
-        <Switch name="Switc2h"/>
-        <NAS trace="trace1"/>
-        <NAS trace="trace2" subnet="192.168.0.255"/>
-    </Hardware_NEW>
   <DafilesrvProcess build="_"
                     buildSet="dafilesrv"
                     description="DaFileSrv process"
@@ -449,30 +399,30 @@
              netAddress="."/>
   </EclAgentProcess>
   <EclCCServerProcess build="_"
-                    buildSet="eclccserver"
-                    daliServers="mydali"
-                    description="EclCCServer process"
-                    enableSysLog="true"
-                    maxEclccProcesses="4"
-                    name="myeclccserver"
-                    traceLevel="1">
+                      buildSet="eclccserver"
+                      daliServers="mydali"
+                      description="EclCCServer process"
+                      enableSysLog="true"
+                      maxEclccProcesses="4"
+                      name="myeclccserver"
+                      traceLevel="1">
    <Instance computer="localhost"
              directory="/var/lib/HPCCSystems/myeclccserver"
              name="s1"
              netAddress="."/>
    <Option name="maxCompileThreads" value="2"/>
   </EclCCServerProcess>
-   <EclSchedulerProcess build="_"
-                buildSet="eclscheduler"
-                daliServers="mydali"
-                description="EclScheduler process"
-                name="myeclscheduler">
+  <EclSchedulerProcess build="_"
+                       buildSet="eclscheduler"
+                       daliServers="mydali"
+                       description="EclScheduler process"
+                       name="myeclscheduler">
    <Instance computer="localhost"
-               directory="/var/lib/HPCCSystems/myeclscheduler"
-               name="s1"
-               netAddress="."/>
+             directory="/var/lib/HPCCSystems/myeclscheduler"
+             name="s1"
+             netAddress="."/>
   </EclSchedulerProcess>
-   <EspProcess build="_"
+  <EspProcess build="_"
               buildSet="esp"
               componentfilesDir="/opt/HPCCSystems/componentfiles"
               daliServers="mydali"
@@ -665,9 +615,9 @@
              name="s1"
              netAddress="."/>
   </EspProcess>
-  <EspService allowNewRoxieOnDemandQuery="false"
+  <EspService ActivityInfoCacheSeconds="10"
+              allowNewRoxieOnDemandQuery="false"
               AWUsCacheTimeout="15"
-              ActivityInfoCacheSeconds="10"
               build="_"
               buildSet="espsmc"
               description="ESP services for SMC"
@@ -699,11 +649,11 @@
                          path="ThorQueueAccess"
                          resource="ThorQueueAccess"
                          service="ws_smc"/>
-     <AuthenticateFeature description="Access to roxie control commands"
-                          path="RoxieControlAccess"
-                          resource="RoxieControlAccess"
-                          service="ws_smc"/>
-     <AuthenticateFeature description="Access to super computer environment"
+    <AuthenticateFeature description="Access to roxie control commands"
+                         path="RoxieControlAccess"
+                         resource="RoxieControlAccess"
+                         service="ws_smc"/>
+    <AuthenticateFeature description="Access to super computer environment"
                          path="ConfigAccess"
                          resource="ConfigAccess"
                          service="ws_config"/>
@@ -844,6 +794,79 @@
              netAddress="."
              program="/opt/HPCCSystems/bin/ftslave"/>
   </FTSlaveProcess>
+  <Hardware_NEW>
+   <Computer computerType="linuxmachine"
+             domain="localdomain"
+             name="localhost"
+             netAddress="."/>
+   <ComputerType computerType="typ1"
+                 manufacturer="manu1"
+                 name="name1"
+                 opSys="user1"/>
+   <ComputerType computerType="typ1"
+                 manufacturer="manu1"
+                 name="name2"
+                 opSys="user1"/>
+   <ComputerType computerType="typ1"
+                 manufacturer="manu1"
+                 name="name3"
+                 opSys="user1"/>
+   <ComputerType computerType="typ1"
+                 manufacturer="manu1"
+                 name="name4"
+                 opSys="user1"/>
+   <ComputerType computerType="linuxmachine"
+                 manufacturer="unknown"
+                 name="linuxmachine"
+                 opSys="linux"/>
+   <Domain name="localdomain" snmpSecurityString="123"/>
+   <Domains name="domain1" snmpSecurityString="setting1"/>
+   <Instance name="instance1"/>
+   <Instance name="instance2"/>
+   <Instance name="instance3"/>
+   <Instance name="instance4"/>
+   <NAS trace="trace1"/>
+   <NAS subnet="192.168.0.255" trace="trace2"/>
+   <Switch name="Switc1h"/>
+   <Switch name="Switc2h"/>
+   <Switches name="switch1"/>
+  </Hardware_NEW>
+  <Hardware_NEW2>
+   <Computer computerType="linuxmachine"
+             domain="localdomain"
+             name="localhost"
+             netAddress="."/>
+   <ComputerType computerType="typ1"
+                 manufacturer="manu1"
+                 name="name1"
+                 opSys="user1"/>
+   <ComputerType computerType="typ1"
+                 manufacturer="manu1"
+                 name="name2"
+                 opSys="user1"/>
+   <ComputerType computerType="typ1"
+                 manufacturer="manu1"
+                 name="name3"
+                 opSys="user1"/>
+   <ComputerType computerType="typ1"
+                 manufacturer="manu1"
+                 name="name4"
+                 opSys="user1"/>
+   <ComputerType computerType="linuxmachine"
+                 manufacturer="unknown"
+                 name="linuxmachine"
+                 opSys="linux"/>
+   <Domain name="localdomain" snmpSecurityString="123"/>
+   <Domains name="domain1" snmpSecurityString="setting1"/>
+   <Level1-Item1 name="req1" name2="reg1">
+    <Level2-Item1 nameA1="reqA1" nameA2="regA1"/>
+   </Level1-Item1>
+   <NAS trace="trace1"/>
+   <NAS subnet="192.168.0.255" trace="trace2"/>
+   <Switch name="Switc1h"/>
+   <Switch name="Switc2h"/>
+   <Switches name="switch1"/>
+  </Hardware_NEW2>
   <RoxieCluster allFilesDynamic="true"
                 blindLogging="false"
                 blobCacheMem="0"
@@ -978,17 +1001,26 @@
                      numThreads="30"
                      port="9876"
                      requestArrayThreads="5"/>
-   <RoxieFarmProcess  aclName=""
-                      listenQueue="200"
-                      name="farm2"
-                      numThreads="30"
-                      port="0"
-                      requestArrayThreads="5"/>
-   <RoxieServerProcess 
-                       computer="localhost"
-                       name="s1"
-                       netAddress="."/>
+   <RoxieFarmProcess aclName=""
+                     listenQueue="200"
+                     name="farm2"
+                     numThreads="30"
+                     port="0"
+                     requestArrayThreads="5"/>
+   <RoxieServerProcess computer="localhost" name="s1" netAddress="."/>
   </RoxieCluster>
+  <Sample_Attributes1 attribute1="attribute1"
+                      attribute2="attribute2"
+                      attribute3="attribute3"
+                      attribute4="attribute4">
+   <Attributes a11="a1"/>
+   <Attributes a11="a2"/>
+   <Attributes a11="a3"/>
+   <Attributes a11="a4"/>
+   <Attributes a11="new"/>
+   <Level1-Item1 aa1name2="5" ab2name2="3" ac3name2="2"/>
+   <tab3 tab3-1="val1" tab3-2="val2" />
+  </Sample_Attributes1>
   <SashaServerProcess autoRestartInterval="0"
                       build="_"
                       buildSet="sasha"
@@ -1071,15 +1103,15 @@
   </ThorCluster>
   <Topology build="_" buildSet="topology" name="topology">
    <Cluster name="hthor" prefix="hthor">
+    <EclAgentProcess process="myeclagent"/>
     <EclCCServerProcess process="myeclccserver"/>
     <EclSchedulerProcess process="myeclscheduler"/>
-    <EclAgentProcess process="myeclagent"/>
    </Cluster>
    <Cluster name="thor" prefix="thor">
-    <ThorCluster process="mythor"/>
+    <EclAgentProcess process="myeclagent"/>
     <EclCCServerProcess process="myeclccserver"/>
     <EclSchedulerProcess process="myeclscheduler"/>
-    <EclAgentProcess process="myeclagent"/>
+    <ThorCluster process="mythor"/>
    </Cluster>
    <Cluster name="roxie" prefix="roxie">
     <EclCCServerProcess process="myeclccserver"/>
@@ -1087,10 +1119,10 @@
     <RoxieCluster process="myroxie"/>
    </Cluster>
    <Cluster name="thor_roxie" prefix="thor">
-    <ThorCluster process="mythor"/>
     <EclCCServerProcess process="myeclccserver"/>
     <EclSchedulerProcess process="myeclscheduler"/>
     <RoxieCluster process="myroxie"/>
+    <ThorCluster process="mythor"/>
    </Cluster>
   </Topology>
  </Software>

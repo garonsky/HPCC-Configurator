@@ -131,7 +131,8 @@ int getValue(const char *pXPath, char *pValue)
 
     if (pAttribute->isInstanceValueValid() == true)
     {
-        strcpy(pValue, pAttribute->getEnvValueFromXML());
+        //strcpy(pValue, pAttribute->getEnvValueFromXML());
+        strcpy(pValue, pAttribute->getInstanceValue());
     }
     else
     {

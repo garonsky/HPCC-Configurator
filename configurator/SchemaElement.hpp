@@ -15,6 +15,7 @@ class CKeyArray;
 class CKeyRefArray;
 class CKeyRef;
 class CSchema;
+class CElementArray;
 
 static const char* DEFAULT_ELEMENT_ARRAY_XPATH(".");
 
@@ -115,6 +116,11 @@ public:
         return m_bIsInXSD;
     }
 
+    int getCountOfElementsInXSD() const
+    {
+
+    }
+
     static CElement* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath, bool bIsInXSD = true);
 
     GETTERSETTER(Name)
@@ -127,14 +133,12 @@ public:
 protected:
 
     CElement(CXSDNodeBase* pParentNode, const char* pName = "") : CXSDNodeWithType::CXSDNodeWithType(pParentNode, XSD_ELEMENT), m_strMinOccurs(""), m_strMaxOccurs(""), m_strName(pName), m_pAnnotation(NULL),
-        m_pComplexTypeArray(NULL), m_pAttributeArray(NULL), m_pKeyArray(NULL), m_pKeyRefArray(NULL), m_pReverseKeyRefArray(NULL), m_pElementRefNode(NULL), m_bTopLevelElement(false), m_nParentIndex(-1), m_bIsInXSD(true)
+        m_pComplexTypeArray(NULL), m_pAttributeArray(NULL), m_pKeyArray(NULL), m_pKeyRefArray(NULL), m_pReverseKeyRefArray(NULL), m_pElementRefNode(NULL), m_bTopLevelElement(false),\
+        m_nParentIndex(-1), m_bIsInXSD(true)
     {
     }
 
-    void setIsInXSD(bool b)
-    {
-        m_bIsInXSD = b;
-    }
+    void setIsInXSD(bool b);
 
     CAnnotation * m_pAnnotation;
     CComplexTypeArray* m_pComplexTypeArray;
@@ -148,7 +152,6 @@ protected:
     int m_nParentIndex;
     bool m_bIsInXSD;
 
-
 private:
 
     /*CElement() : CXSDNodeWithType::CXSDNodeWithType(NULL, XSD_ELEMENT), m_strMinOccurs(""), m_strMaxOccurs(""), m_strName(""), m_pAnnotation(NULL),
@@ -161,7 +164,8 @@ class CElementArray : public CIArrayOf<CElement>, public InterfaceImpl, public C
 {
     friend class CElement;
 public:
-    CElementArray(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot = NULL) : CXSDNodeBase::CXSDNodeBase(pParentNode, XSD_ELEMENT_ARRAY), m_pSchemaRoot(pSchemaRoot)
+    CElementArray(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot = NULL) : CXSDNodeBase::CXSDNodeBase(pParentNode, XSD_ELEMENT_ARRAY),\
+        m_pSchemaRoot(pSchemaRoot), m_nCountOfElementsInXSD(0)
     {
     }
 
@@ -204,6 +208,16 @@ public:
         return m_pSchemaRoot;
     }
 
+    int getCountOfElementsInXSD() const
+    {
+        return m_nCountOfElementsInXSD;
+    }
+
+    void incCountOfElementsInXSD()
+    {
+        m_nCountOfElementsInXSD++;
+    }
+
     static CElementArray* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath = DEFAULT_ELEMENT_ARRAY_XPATH);
 
     static CElementArray* load(const char *pSchemaFile);
@@ -213,6 +227,7 @@ protected:
     int getSiblingIndex(const char* pXSDXPath, const CElement* pElement);
 
     const IPropertyTree *m_pSchemaRoot;
+    int m_nCountOfElementsInXSD;
 
 
 private:
