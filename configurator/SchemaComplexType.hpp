@@ -62,6 +62,11 @@ public:
         return m_pSimpleType;
     }
 
+    virtual const CElementArray* getConstElementArray() const
+    {
+        return m_pElementArray;
+    }
+
     static CComplexType* load(CXSDNodeBase* pRootNode, const IPropertyTree *pSchemaRoot, const char* xpath = NULL);
 
 protected:

@@ -393,16 +393,16 @@ const char* getComponentNameInConfiguration(int idx, void *pData)
 
         const CAttribute *pAttribute = NULL;
 
-        if (pElement->getAttributeArray() != NULL)
+        /*if (pElement->getAttributeArray() != NULL)
         {
             pAttribute = pElement->getAttributeArray()->findAttributeWithName("name");
 
             return pAttribute->getName();
         }
         else
-        {
+        {*/
             return NULL;
-        }
+        //}
     }
 
     assert(false);
