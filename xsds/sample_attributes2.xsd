@@ -9,7 +9,7 @@
         <xs:complexType>
             <xs:sequence>
 
-                <xs:element name="Level1-Item1">
+                <!--xs:element name="Level1-Item1">
                   <xs:complexType>
                       <xs:attribute name="aa1name2" use="optional"/>
                       <xs:attribute name="ab2name2" use="optional"/>
@@ -23,9 +23,9 @@
                           </xs:annotation>
                       </xs:attribute>
                   </xs:complexType>
-                </xs:element>
+                </xs:element-->
 
-                <xs:element name="Attributes" maxOccurs="unbounded">
+                <!--xs:element name="Attributes" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:attribute name="a11"/>
                         <xs:attribute name="attrdsfdittbute4" use="optional"/>
@@ -37,9 +37,99 @@
                         <xs:attribute name="tab3-1" use="optional"/>
                         <xs:attribute name="tab3-2" use="optional"/>
                     </xs:complexType>
-                </xs:element>
+                </xs:element-->
 
                 <xs:element name="tab4">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="tab5">
+                                <xs:complexType>
+                                    <xs:attribute name="tab5-1" use="optional"/>
+                                    <xs:attribute name="tab5-2" use="optional"/>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="tab4">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="tab6">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="tab6-sub"  maxOccurs="unbounded">
+                                                        <xs:complexType>
+                                                                <xs:attribute name="tab6-1" use="optional"/>
+                                                                <xs:attribute name="tab6-2" use="optional"/>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="tab6b">
+                                            <xs:attribute name="tab6-1" use="optional"/>
+                                            <xs:attribute name="tab6-2" use="optional"/>
+                                        </xs:element>
+                                        <xs:element name="tab6c">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="tab7" maxOccurs="unbounded">
+                                                        <xs:complexType>
+                                                            <xs:attribute name="tab6c-1" use="optional"/>
+                                                            <xs:attribute name="tab6c-2" use="optional"/>
+                                                            <xs:attribute name="tab6c-3" use="optional"/>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                    <xs:element name="tab7x" maxOccurs="unbounded">
+                                                        <xs:complexType>
+                                                            <xs:attribute name="tab6xc-1" use="optional"/>
+                                                            <xs:attribute name="tab6xc-2" use="optional"/>
+                                                            <xs:attribute name="tab6xc-3" use="optional"/>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                    <xs:element name="tab7x1" maxOccurs="unbounded">
+                                                        <xs:complexType>
+                                                            <xs:attribute name="tab6xc-a2" use="optional"/>
+                                                            <xs:attribute name="tab6xc-af" use="optional"/>
+                                                            <xs:attribute name="tab6xc-a3" use="optional"/>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="tab8">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="tab8a">
+                                                        <xs:complexType>
+                                                            <xs:attribute name="tab8aa-1" use="optional"/>
+                                                            <xs:attribute name="tab8ab-2" use="optional"/>
+                                                            <xs:attribute name="tab8ac-1" use="optional"/>
+                                                            <xs:attribute name="tab8ad-2" use="optional"/>
+                                                            <xs:attribute name="tab8ae-1" use="optional"/>
+                                                            <xs:attribute name="tab8af-2" use="optional"/>
+                                                            <xs:attribute name="tab8ag-1" use="optional"/>
+                                                            <xs:attribute name="tab8ah-2" use="optional"/>
+                                                            <xs:attribute name="tab8ai-1" use="optional"/>
+                                                            <xs:attribute name="tab8aj-2" use="optional"/>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                    <xs:element name="tab7x1f" maxOccurs="unbounded">
+                                                        <xs:complexType>
+                                                            <xs:attribute name="tab6xc-a2f" use="optional"/>
+                                                            <xs:attribute name="tab6xc-aff" use="optional"/>
+                                                            <xs:attribute name="tab6xc-a3f" use="optional"/>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tab7"/>
+
+                <!--xs:element name="tab4">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="tab5">
@@ -86,7 +176,7 @@
                             </xs:element>
                         </xs:sequence>
                     </xs:complexType>
-                </xs:element>
+                </xs:element-->
 
 
             </xs:sequence>

@@ -1019,7 +1019,18 @@
    <Attributes a11="a4"/>
    <Attributes a11="new"/>
    <Level1-Item1 aa1name2="5" ab2name2="3" ac3name2="2"/>
-   <tab3 tab3-1="val1" tab3-2="val2" />
+   <tab3 tab3-1="val1" tab3-2="val2"/>
+   <tab4>
+    <tab4>
+       <tab6c>
+        <tab7 tab6c-1="hello1"/>
+       </tab6c>
+        </tab4>
+    <tab5 tab5-1="deep1"/>
+    <tab6>
+     <tab6-sub tab6-2="deep2"/>
+    </tab6>
+   </tab4>
   </Sample_Attributes1>
   <SashaServerProcess autoRestartInterval="0"
                       build="_"

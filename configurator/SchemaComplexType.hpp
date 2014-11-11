@@ -67,6 +67,8 @@ public:
         return m_pElementArray;
     }
 
+    bool hasChildElements() const;
+
     static CComplexType* load(CXSDNodeBase* pRootNode, const IPropertyTree *pSchemaRoot, const char* xpath = NULL);
 
 protected:

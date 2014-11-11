@@ -6,6 +6,7 @@
 #include "jlib.hpp"
 #include "jarray.hpp"
 #include "SchemaCommon.hpp"
+#include "SchemaComplexType.hpp"
 
 class CAnnotation;
 class CComplexTypeArray;
@@ -122,10 +123,7 @@ public:
         return m_bIsInXSD;
     }
 
-    int getCountOfElementsInXSD() const
-    {
-
-    }
+    bool hasChildElements() const;
 
     static CElement* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath, bool bIsInXSD = true);
 

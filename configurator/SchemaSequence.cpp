@@ -116,3 +116,15 @@ void CSequence::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
         p_mElementArray->loadXMLFromEnvXml(pEnvTree);
     }
 }
+
+bool CSequence::hasChildElements() const
+{
+    if (this->p_mElementArray->length() > 0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}

@@ -730,7 +730,7 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
         }
     }
 
-    if (this->isTopLevelElement())  // handle qml imports etc...
+    /*if (this->isTopLevelElement())  // handle qml imports etc...
     {
         //strQML.append(QML_TAB_VIEW_BEGIN);
         //DEBUG_MARK_QML;
@@ -754,14 +754,18 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
 
         return;
     }
-    else if (this->isATab())  // Tabs will be made for all elements in a sequence
+    else */if (this->isATab())  // Tabs will be made for all elements in a sequence
     {
         if (idx == 0)
         {
             strQML.append(QML_TAB_VIEW_BEGIN);
             DEBUG_MARK_QML;
+            //strQML.append(QML_GRID_LAYOUT_BEGIN_1);
+            //DEBUG_MARK_QML;
         }
         CQMLMarkupHelper::getTabQML(strQML, this->getTitle());
+        DEBUG_MARK_QML;
+        strQML.append(QML_GRID_LAYOUT_BEGIN_1);
         DEBUG_MARK_QML;
 
 
@@ -775,6 +779,9 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
             m_pComplexTypeArray->getQML(strQML,idx);
         }
 
+        strQML.append(QML_GRID_LAYOUT_END);
+        DEBUG_MARK_QML;
+
         strQML.append(QML_FLICKABLE_HEIGHT).append(CQMLMarkupHelper::getImplicitHeight() * 1.5);
         DEBUG_MARK_QML;
         strQML.append(QML_FLICKABLE_END);
@@ -782,9 +789,12 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
         strQML.append(QML_TAB_END);
         DEBUG_MARK_QML;
 
-        //if (static_cast<CElementArray*>(this->getParentNode())->length()-1 == idx)
-        if (static_cast<CElementArray*>(this->getParentNode())->getCountOfElementsInXSD()-1 == idx && this->isATab() == true)
+
+        if (static_cast<CElementArray*>(this->getParentNode())->length()-1 == idx)
+        //if (static_cast<CElementArray*>(this->getParentNode())->getCountOfElementsInXSD()-1 == idx)
         {
+            //strQML.append(QML_GRID_LAYOUT_END);
+            //DEBUG_MARK_QML;
             strQML.append(QML_TAB_VIEW_HEIGHT).append(CQMLMarkupHelper::getImplicitHeight());
             DEBUG_MARK_QML;
             strQML.append(QML_TAB_VIEW_STYLE);
@@ -799,10 +809,10 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
     }
     else
     {
-        /*if (0 == idx)
+        if (0 == idx)
         {
-            strQML.append(QML_GRID_LAYOUT_BEGIN_1);
-            DEBUG_MARK_QML;
+            //strQML.append(QML_GRID_LAYOUT_BEGIN_1);
+            //DEBUG_MARK_QML;
         }
 
         if (m_pAnnotation != NULL)
@@ -817,15 +827,24 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
 
         if (static_cast<CElementArray*>(this->getParentNode())->getCountOfElementsInXSD()-1 == idx)
         {
-            strQML.append(QML_GRID_LAYOUT_END);
-            DEBUG_MARK_QML;
-        }*/
+            //strQML.append(QML_GRID_LAYOUT_END);
+            //DEBUG_MARK_QML;
+        }
     }
 
 }
 
 bool CElement::isATab() const
 {
+    if (this->getConstAncestorNode(2)->getNodeType() != XSD_SCHEMA && (this->hasChildElements() == true || \
+                                                                       (this->hasChildElements() == false && strcmp(this->getMaxOccurs(), TAG_UNBOUNDED) != 0)))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 /*    if (stricmp(this->getMaxOccurs(), TAG_UNBOUNDED) == 0)
     {
         return false;
@@ -1363,4 +1382,23 @@ void CElement::setIsInXSD(bool b)
             pElemArray->incCountOfElementsInXSD();
         }
     }
+}
+
+bool CElement::hasChildElements() const
+{
+    const CComplexTypeArray* pComplexTypeArray = this->getComplexTypeArray();
+
+    if (pComplexTypeArray != NULL && pComplexTypeArray->length() != 0)
+    {
+        int nLen = pComplexTypeArray->length();
+
+        for (int i = 0; i < nLen; i++)
+        {
+            if (pComplexTypeArray->item(i).hasChildElements() == true)
+            {
+                return true;
+            }
+        }
+    }
+    return false;
 }

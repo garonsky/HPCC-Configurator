@@ -211,8 +211,11 @@ void CComplexType::getQML(StringBuffer &strQML, int idx) const
 
     if (m_pAttributeArray != NULL)
     {
+        strQML.append(QML_GRID_LAYOUT_BEGIN_1);
         DEBUG_MARK_QML;
         m_pAttributeArray->getQML(strQML);
+        strQML.append(QML_TAB_END);
+        DEBUG_MARK_QML;
     }
 
     if (m_pChoice != NULL)
@@ -322,6 +325,16 @@ const char* CComplexType::getXML(const char* /*pComponent*/)
     }
 
     return m_strXML.str();
+}
+
+bool CComplexType::hasChildElements() const
+{
+    if (this->m_pSequence != NULL)
+    {
+        return m_pSequence->hasChildElements();
+    }
+
+    return false;
 }
 
 CComplexType* CComplexType::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
