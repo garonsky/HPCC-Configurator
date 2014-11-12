@@ -47,6 +47,11 @@ public:
         return m_pAttributeArray;
     }
 
+    virtual const CAttributeGroupArray* getAttributeGroupArray() const
+    {
+        return m_pAttributeGroupArray;
+    }
+
     virtual const CSequence* getSequence() const
     {
         return m_pSequence;

@@ -732,8 +732,12 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
 
     /*if (this->isTopLevelElement())  // handle qml imports etc...
     {
-        //strQML.append(QML_TAB_VIEW_BEGIN);
-        //DEBUG_MARK_QML;
+        strQML.append(QML_TAB_VIEW_BEGIN);
+        DEBUG_MARK_QML;
+        CQMLMarkupHelper::getTabQML(strQML, this->getTitle());
+        DEBUG_MARK_QML;
+        strQML.append(QML_GRID_LAYOUT_BEGIN_1);
+        DEBUG_MARK_QML;
 
         if (m_pAnnotation != NULL)
         {
@@ -745,16 +749,16 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
             m_pComplexTypeArray->getQML(strQML);
         }
 
-        //strQML.append(QML_TAB_VIEW_STYLE);
-        //DEBUG_MARK_QML;
-        //strQML.append(QML_TAB_VIEW_END);
-        //DEBUG_MARK_QML;
-        //strQML.append(QML_TAB_TEXT_STYLE);
-        //DEBUG_MARK_QML
+        strQML.append(QML_TAB_VIEW_STYLE);
+        DEBUG_MARK_QML;
+        strQML.append(QML_TAB_VIEW_END);
+        DEBUG_MARK_QML;
+        strQML.append(QML_TAB_TEXT_STYLE);
+        DEBUG_MARK_QML
 
         return;
     }
-    else */if (this->isATab())  // Tabs will be made for all elements in a sequence
+    else */if (this->isATab())/// || this->isTopLevelElement() == true)  // Tabs will be made for all elements in a sequence
     {
         if (idx == 0)
         {
@@ -763,7 +767,7 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
             //strQML.append(QML_GRID_LAYOUT_BEGIN_1);
             //DEBUG_MARK_QML;
         }
-        CQMLMarkupHelper::getTabQML(strQML, this->getTitle());
+        CQMLMarkupHelper::getTabQML(strQML, /*this->isTopLevelElement() == true ? "Attributes" : */this->getTitle());
         DEBUG_MARK_QML;
         strQML.append(QML_GRID_LAYOUT_BEGIN_1);
         DEBUG_MARK_QML;
@@ -790,8 +794,7 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
         DEBUG_MARK_QML;
 
 
-        if (static_cast<CElementArray*>(this->getParentNode())->length()-1 == idx)
-        //if (static_cast<CElementArray*>(this->getParentNode())->getCountOfElementsInXSD()-1 == idx)
+        if (static_cast<CElementArray*>(this->getParentNode())->getCountOfElementsInXSD()-1 == idx)
         {
             //strQML.append(QML_GRID_LAYOUT_END);
             //DEBUG_MARK_QML;
@@ -799,8 +802,23 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
             DEBUG_MARK_QML;
             strQML.append(QML_TAB_VIEW_STYLE);
             DEBUG_MARK_QML;
-            strQML.append(QML_TAB_VIEW_END);
-            DEBUG_MARK_QML;
+
+            const CComplexType *pComplexType = dynamic_cast<const CComplexType*>(this->getConstAncestorNode(3));
+
+            if (pComplexType != NULL)
+            {
+                if ((pComplexType->getAttributeArray() != NULL && pComplexType->getAttributeArray()->length() > 0) ||\
+                        (pComplexType->getAttributeGroupArray() != NULL && pComplexType->getAttributeGroupArray()->length() > 0))
+                {
+                    DEBUG_MARK_QML;
+                }
+
+            }
+            else
+            {
+                strQML.append(QML_TAB_VIEW_END);
+                DEBUG_MARK_QML;
+            }
             //strQML.append(QML_TAB_TEXT_STYLE);
             //DEBUG_MARK_QML;
             //strQML.append(QML_TAB_VIEW_END);
@@ -836,8 +854,15 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
 
 bool CElement::isATab() const
 {
-    if (this->getConstAncestorNode(2)->getNodeType() != XSD_SCHEMA && (this->hasChildElements() == true || \
-                                                                       (this->hasChildElements() == false && strcmp(this->getMaxOccurs(), TAG_UNBOUNDED) != 0)))
+    const CComplexTypeArray *pComplexTypArray = this->getComplexTypeArray();
+    const CAttributeGroupArray *pAttributeGroupArray = (pComplexTypArray != NULL && pComplexTypArray->length() > 0) ? pComplexTypArray->item(0).getAttributeGroupArray() : NULL;
+    const CAttributeArray *pAttributeArray = (pComplexTypArray != NULL && pComplexTypArray->length() > 0) ? pComplexTypArray->item(0).getAttributeArray() : NULL;
+
+    if (this->getConstAncestorNode(2)->getNodeType() != XSD_SCHEMA && \
+            (this->hasChildElements() == true || \
+             (this->hasChildElements() == false && (static_cast<const CElementArray*>(this->getConstParentNode()))->anyElementsHaveMaxOccursGreaterThanOne() == false)/* || \
+             (this->isTopLevelElement() == true && (pAttributeGroupArray != NULL || pAttributeArray != NULL))*/))
+
     {
         return true;
     }
@@ -1367,6 +1392,21 @@ int CElementArray::getSiblingIndex(const char* pXSDXPath, const CElement* pEleme
     return nSiblingIndex;
 }
 
+
+bool CElementArray::anyElementsHaveMaxOccursGreaterThanOne() const
+{
+    int len = this->length();
+
+    for (int i = 0; i < len; i++)
+    {
+        if ((this->item(i)).getMaxOccursInt() > 1 || this->item(i).getMaxOccursInt() == -1)
+        {
+            return true;
+
+        }
+    }
+    return false;
+}
 void CElement::setIsInXSD(bool b)
 {
     m_bIsInXSD = b;

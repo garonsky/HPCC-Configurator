@@ -211,11 +211,11 @@ void CComplexType::getQML(StringBuffer &strQML, int idx) const
 
     if (m_pAttributeArray != NULL)
     {
-        strQML.append(QML_GRID_LAYOUT_BEGIN_1);
-        DEBUG_MARK_QML;
+//        strQML.append(QML_GRID_LAYOUT_BEGIN_1);
+//        DEBUG_MARK_QML;
         m_pAttributeArray->getQML(strQML);
-        strQML.append(QML_TAB_END);
-        DEBUG_MARK_QML;
+//        strQML.append(QML_TAB_END);
+//        DEBUG_MARK_QML;
     }
 
     if (m_pChoice != NULL)
@@ -228,10 +228,10 @@ void CComplexType::getQML(StringBuffer &strQML, int idx) const
         m_pElementArray->getQML(strQML);
     }
 
-    if (m_pAttributeGroupArray != NULL)
+    /*if (m_pAttributeGroupArray != NULL)
     {
         m_pAttributeGroupArray->getQML(strQML);
-    }
+    }*/
 }
 
 void CComplexType::populateEnvXPath(StringBuffer strXPath, unsigned int index)

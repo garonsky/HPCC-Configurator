@@ -817,6 +817,7 @@ void CAttributeArray::getDojoJS(StringBuffer &strJS) const
     }
 }
 
+#ifdef _USE_OLD_GET_QML_
 void CAttributeArray::getQML(StringBuffer &strQML, int idx) const
 {
     assert(this->getConstParentNode() != NULL);
@@ -946,18 +947,133 @@ void CAttributeArray::getQML(StringBuffer &strQML, int idx) const
             CQMLMarkupHelper::setImplicitHeight(((this->length()) * 26)+30);
             DEBUG_MARK_QML;
 
-            DEBUG_MARK_QML;
-            strQML.append(QML_GRID_LAYOUT_BEGIN);
+            //strQML.append(QML_GRID_LAYOUT_BEGIN);
+            //DEBUG_MARK_QML;
 
-            DEBUG_MARK_QML;
             QUICK_QML_ARRAY2(strQML);
+            DEBUG_MARK_QML;
 
             strQML.append(QML_TAB_END);
             DEBUG_MARK_QML;
         }
     }
 }
+#else // _USE_OLD_GET_QML_
 
+void CAttributeArray::getQML(StringBuffer &strQML, int idx) const
+{
+    assert(strQML.length() > 0);  // can't start the qml
+
+    const CElement *pElem = dynamic_cast<const CElement*>(this->getConstAncestorNode(3));
+
+    assert(pElem != NULL);
+    assert(pElem->getNodeType() == XSD_ELEMENT);
+
+    if (pElem->isTopLevelElement() == true)
+    {
+        //strQML.append(QML_TAB_VIEW_BEGIN);
+        //DEBUG_MARK_QML;
+        CQMLMarkupHelper::getTabQML(strQML, "Attributes");
+        DEBUG_MARK_QML;
+        strQML.append(QML_GRID_LAYOUT_BEGIN_1);
+        DEBUG_MARK_QML;
+        QUICK_QML_ARRAY2(strQML);
+        DEBUG_MARK_QML;
+        strQML.append(QML_GRID_LAYOUT_END);
+        DEBUG_MARK_QML;
+        strQML.append(QML_FLICKABLE_HEIGHT).append(CQMLMarkupHelper::getImplicitHeight() * 1.5);
+        DEBUG_MARK_QML;
+        strQML.append(QML_FLICKABLE_END);
+        DEBUG_MARK_QML;
+        strQML.append(QML_TAB_END);
+        DEBUG_MARK_QML;
+        strQML.append(QML_TAB_VIEW_END);
+        DEBUG_MARK_QML;
+    }
+    else if (pElem->isATab() == true)
+    {
+        //strQML.append(QML_GRID_LAYOUT_BEGIN);
+        //DEBUG_MARK_QML;
+
+        QUICK_QML_ARRAY2(strQML);
+        DEBUG_MARK_QML;
+
+        //strQML.append(QML_GRID_LAYOUT_END);
+        DEBUG_MARK_QML;
+
+        //strQML.append(QML_FLICKABLE_END);
+        //DEBUG_MARK_QML;
+    }
+    else if (pElem->getMaxOccursInt() != 1 || pElem->getMinOccursInt() > 1)  // table
+    {
+        const char *pName = pElem->getName();
+
+        assert(pName != NULL);
+        assert(pName[0] != 0);
+
+        strQML.append(QML_ROW_BEGIN);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_TABLE_VIEW_BEGIN);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_MODEL).append(modelNames[CConfigSchemaHelper::getInstance(0)->getNumberOfTables()]).append(QML_STYLE_NEW_LINE);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_PROPERTY_STRING_TABLE_BEGIN).append(modelNames[CConfigSchemaHelper::getInstance(0)->getNumberOfTables()]).append(QML_PROPERTY_STRING_TABLE_PART_1).append(pElem->getXSDXPath()).append(QML_PROPERTY_STRING_TABLE_END);
+        DEBUG_MARK_QML;
+
+        CConfigSchemaHelper::getInstance(0)->incTables();
+
+        QUICK_QML_ARRAY2(strQML);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_TABLE_VIEW_END);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_ROW_END);
+        DEBUG_MARK_QML;
+    }
+    else
+    {
+        //assert(!"add more logic");
+        //QUICK_QML_ARRAY2(strQML);
+
+        strQML.append(QML_ROW_BEGIN);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_TABLE_VIEW_BEGIN);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_MODEL).append(modelNames[CConfigSchemaHelper::getInstance(0)->getNumberOfTables()]).append(QML_STYLE_NEW_LINE);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_PROPERTY_STRING_TABLE_BEGIN).append(modelNames[CConfigSchemaHelper::getInstance(0)->getNumberOfTables()])\
+                .append(QML_PROPERTY_STRING_TABLE_PART_1).append(pElem->getXSDXPath()).append(QML_PROPERTY_STRING_TABLE_END);
+        DEBUG_MARK_QML;
+
+        CConfigSchemaHelper::getInstance(0)->incTables();
+
+        for (int idx=0; idx < this->length(); idx++)
+        {
+            (this->item(idx)).getQML(strQML);
+            DEBUG_MARK_QML;
+        }
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_TABLE_VIEW_END);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_ROW_END);
+        DEBUG_MARK_QML;
+
+        //strQML.append(QML_TAB_END);
+        //DEBUG_MARK_QML;
+    }
+
+}
+
+#endif //_USE_OLD_GET_QML_
 void CAttributeArray::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 {
     //assert(index == 1);  // Only 1 array of elements per node

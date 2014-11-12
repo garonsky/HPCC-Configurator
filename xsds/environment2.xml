@@ -795,41 +795,16 @@
              program="/opt/HPCCSystems/bin/ftslave"/>
   </FTSlaveProcess>
   <Hardware_NEW>
-   <Computer computerType="linuxmachine"
+     <Computer computerType="linuxmachine"
              domain="localdomain"
              name="localhost"
              netAddress="."/>
-   <ComputerType computerType="typ1"
-                 manufacturer="manu1"
-                 name="name1"
-                 opSys="user1"/>
-   <ComputerType computerType="typ1"
-                 manufacturer="manu1"
-                 name="name2"
-                 opSys="user1"/>
-   <ComputerType computerType="typ1"
-                 manufacturer="manu1"
-                 name="name3"
-                 opSys="user1"/>
-   <ComputerType computerType="typ1"
-                 manufacturer="manu1"
-                 name="name4"
-                 opSys="user1"/>
    <ComputerType computerType="linuxmachine"
                  manufacturer="unknown"
                  name="linuxmachine"
                  opSys="linux"/>
-   <Domain name="localdomain" snmpSecurityString="123"/>
-   <Domains name="domain1" snmpSecurityString="setting1"/>
-   <Instance name="instance1"/>
-   <Instance name="instance2"/>
-   <Instance name="instance3"/>
-   <Instance name="instance4"/>
-   <NAS trace="trace1"/>
-   <NAS subnet="192.168.0.255" trace="trace2"/>
-   <Switch name="Switc1h"/>
-   <Switch name="Switc2h"/>
-   <Switches name="switch1"/>
+   <Domain name="localdomain" snmpSecurityString=""/>
+   <Switch name="Switch"/>
   </Hardware_NEW>
   <Hardware_NEW2>
    <Computer computerType="linuxmachine"

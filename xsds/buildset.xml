@@ -33,12 +33,12 @@
 </Software>
 <Programs>
   <Build name="_" url="/opt/HPCCSystems">
-    <!--BuildSet installSet="deploy_map.xml"
+    <BuildSet installSet="deploy_map.xml"
              name="hardware"
              path="componentfiles/hardware"
              processName="Hardware"
              schema="hardware.xsd"/>
-    <BuildSet installSet="deploy_map.xml"
+    <!--BuildSet installSet="deploy_map.xml"
              name="sample"
              path="componentfiles/sample"
              processName="Sample"
@@ -57,13 +57,13 @@
              name="dafilesrv"
              path="componentfiles/dafilesrv"
              processName="DafilesrvProcess"
-             schema="dafilesrv.xsd"/>
-   <BuildSet installSet="deploy_map.xml"
+             schema="dafilesrv.xsd"/-->
+   <!--BuildSet installSet="deploy_map.xml"
              name="dali"
              path="componentfiles/dali"
              processName="DaliServerProcess"
-             schema="dali.xsd"/>
-   <BuildSet installSet="deploy_map.xml"
+             schema="dali.xsd"/-->
+   <!--BuildSet installSet="deploy_map.xml"
              name="dfuplus"
              path="componentfiles/dfuplus"
              processName="DfuplusProcess"

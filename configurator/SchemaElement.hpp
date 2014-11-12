@@ -125,6 +125,24 @@ public:
 
     bool hasChildElements() const;
 
+    int getMaxOccursInt() const
+    {
+        if (strcmp(m_strMaxOccurs.str(), TAG_UNBOUNDED) == 0)
+        {
+            return -1;
+        }
+        else
+        {
+            return atoi(m_strMaxOccurs.str());
+        }
+    }
+
+    int getMinOccursInt() const
+    {\
+        return atoi(m_strMinOccurs.str());
+        //return m_nMinOccurs;
+    }
+
     static CElement* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath, bool bIsInXSD = true);
 
     GETTERSETTER(Name)
@@ -136,9 +154,9 @@ public:
 
 protected:
 
-    CElement(CXSDNodeBase* pParentNode, const char* pName = "") : CXSDNodeWithType::CXSDNodeWithType(pParentNode, XSD_ELEMENT), m_strMinOccurs(""), m_strMaxOccurs(""), m_strName(pName), m_pAnnotation(NULL),
+    CElement(CXSDNodeBase* pParentNode, const char* pName = "") : CXSDNodeWithType::CXSDNodeWithType(pParentNode, XSD_ELEMENT), m_strMinOccurs("1"), m_strMaxOccurs("1"), m_strName(pName), m_pAnnotation(NULL),
         m_pComplexTypeArray(NULL)/*, m_pAttributeArray(NULL)*/, m_pKeyArray(NULL), m_pKeyRefArray(NULL), m_pReverseKeyRefArray(NULL), m_pElementRefNode(NULL), m_pSimpleType(NULL),\
-        m_bTopLevelElement(false), m_nParentIndex(-1), m_bIsInXSD(true)
+        m_bTopLevelElement(false), m_nParentIndex(-1), m_bIsInXSD(true)//, m_nMaxOccurs(1), m_nMinOccurs(1)
     {
     }
 
@@ -156,6 +174,8 @@ protected:
     bool m_bTopLevelElement;
     int m_nParentIndex;
     bool m_bIsInXSD;
+    //int m_nMaxOccurs;
+    //int m_nMinOccurs;
 
 private:
 
@@ -222,6 +242,8 @@ public:
     {
         m_nCountOfElementsInXSD++;
     }
+
+    bool anyElementsHaveMaxOccursGreaterThanOne() const;
 
     static CElementArray* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath = DEFAULT_ELEMENT_ARRAY_XPATH);
 
