@@ -266,6 +266,53 @@ void CSchema::getQML(StringBuffer &strQML, int idx) const
 
 }
 
+virtual CSchema::getQML2(StringBuffer &strQML, int idx) const
+{
+    DEBUG_MARK_QML;
+    strQML.append(QML_START);
+    DEBUG_MARK_QML;
+    strQML.append(QML_VERTICAL_SCROLL_BAR);
+    DEBUG_MARK_QML;
+    strQML.append(QML_HORIZONTAL_SCROLL_BAR);
+    DEBUG_MARK_QML;
+    strQML.append(QML_SCROLL_BAR_TRANSITIONS);
+    DEBUG_MARK_QML;
+    strQML.append(QML_TAB_VIEW_BEGIN);
+    DEBUG_MARK_QML;
+
+    if (m_pElementArray != NULL)
+    {
+        m_pElementArray->setUIType(QML_UI_TAB);
+        m_pElementArray->getQML(strQML, idx);
+    }
+    if (m_pComplexTypeArray != NULL)
+    {
+        assert(!"Is this valid?");
+        m_pComplexTypeArray->getQML(strQML);
+    }
+    if (m_pAttributeGroupArray != NULL)
+    {
+        assert(!"Is this valid?");
+        m_pAttributeGroupArray->getQML(strQML);
+    }
+    if (m_pSimpleTypeArray != NULL)
+    {
+        assert(!"Is this valid?");
+        m_pSimpleTypeArray->getQML(strQML);
+    }
+    if (m_pIncludeArray != NULL)
+    {
+        assert(!"Is this valid?");
+        m_pIncludeArray->getQML(strQML);
+    }
+
+    DEBUG_MARK_QML;
+    strQML.append(QML_TAB_END);
+    DEBUG_MARK_QML;
+    strQML.append(QML_END);
+    DEBUG_MARK_QML;
+}
+
 void  CSchema::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 {
     strXPath.append("./").append(XML_TAG_SOFTWARE);

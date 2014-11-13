@@ -23,6 +23,7 @@ public:
     virtual void getDojoJS(StringBuffer &strJS) const;
 
     virtual void getQML(StringBuffer &strQML, int idx = -1) const;
+    virtual void getQML2(StringBuffer &strQML, int idx = -1) const;
 
     virtual void populateEnvXPath(StringBuffer strXPath, unsigned int index = 1);
 

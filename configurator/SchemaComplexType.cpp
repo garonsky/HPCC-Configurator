@@ -8,13 +8,11 @@
 #include "SchemaAttributes.hpp"
 #include "SchemaChoice.hpp"
 #include "SchemaComplexType.hpp"
-#include "SchemaElement.hpp"
 #include "SchemaSchema.hpp"
 #include "ConfigSchemaHelper.hpp"
 #include "DocumentationMarkup.hpp"
 #include "ExceptionStrings.hpp"
 #include "SchemaMapManager.hpp"
-#include "SchemaSimpleType.hpp"
 #include "QMLMarkup.hpp"
 
 const CXSDNodeBase* CComplexType::getNodeByTypeAndNameAscending(NODE_TYPES eNodeType, const char *pName) const
@@ -234,6 +232,48 @@ void CComplexType::getQML(StringBuffer &strQML, int idx) const
     }*/
 }
 
+void CComplexType::getQML2(StringBuffer &strQML, int idx) const
+{
+    DEBUG_MARK_QML;
+    if (m_pSequence != NULL)
+    {
+        DEBUG_MARK_QML;
+        m_pSequence->setUIType(QML_UI_TAB_CONTENTS);
+        m_pSequence->getQML2(strQML);
+        DEBUG_MARK_QML;
+    }
+
+    if (m_pComplexContent != NULL)
+    {
+        DEBUG_MARK_QML;
+        m_pComplexContent->getQML2(strQML);
+        DEBUG_MARK_QML;
+    }
+
+    if (m_pAttributeArray != NULL)
+    {
+        DEBUG_MARK_QML;
+        m_pAttributeArray->setUIType(QML_UI_TAB);
+        m_pAttributeArray->getQML2(strQML);
+        DEBUG_MARK_QML;
+    }
+
+    if (m_pChoice != NULL)
+    {
+        m_pChoice->getQML2(strQML);
+    }
+
+    if (m_pElementArray != NULL)
+    {
+        m_pElementArray->getQML2(strQML);
+    }
+
+    if (m_pAttributeGroupArray != NULL)
+    {
+        m_pAttributeGroupArray->getQML2(strQML);
+    }
+}
+
 void CComplexType::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 {
     this->setEnvXPath(strXPath);
@@ -348,7 +388,6 @@ CComplexType* CComplexType::load(CXSDNodeBase* pParentNode, const IPropertyTree 
     CSequence *pSequence  = NULL;
     CAttributeGroupArray *pAttributeGroupArray = NULL;
     CAnnotation *pAnnotation = NULL;
-    CSimpleType *pSimpleType = NULL;
 
     if (pSchemaRoot == NULL)
     {
@@ -382,16 +421,10 @@ CComplexType* CComplexType::load(CXSDNodeBase* pParentNode, const IPropertyTree 
     strXPathExt.clear().append(xpath).append("/").append(XSD_TAG_CHOICE);
     pChoice = CChoice::load(NULL, pSchemaRoot, strXPathExt.str());
 
-    strXPathExt.clear().append(xpath).append("/").append(XSD_TAG_ELEMENT);
-    pElementArray = CElementArray::load(NULL, pSchemaRoot, strXPathExt.str());
-
     strXPathExt.clear().append(xpath).append("/").append(XSD_TAG_ATTRIBUTE_GROUP);
     pAttributeGroupArray = CAttributeGroupArray::load(NULL, pSchemaRoot, strXPathExt.str());
 
-    strXPathExt.clear().append(xpath).append("/").append(XSD_TAG_SIMPLE_TYPE);
-    pSimpleType = CSimpleType::load(NULL, pSchemaRoot, strXPathExt.str());
-
-    CComplexType *pComplexType = new CComplexType(pParentNode, pName, pSequence, pComplexContent, pAttributeArray, pChoice, pElementArray, pAttributeGroupArray, pAnnotation, pSimpleType);
+    CComplexType *pComplexType = new CComplexType(pParentNode, pName, pSequence, pComplexContent, pAttributeArray, pChoice, pAttributeGroupArray, pAnnotation);
 
     pComplexType->setXSDXPath(xpath);
 
@@ -404,10 +437,8 @@ CComplexType* CComplexType::load(CXSDNodeBase* pParentNode, const IPropertyTree 
         SETPARENTNODE(pComplexContent, pComplexType)
         SETPARENTNODE(pAttributeArray, pComplexType)
         SETPARENTNODE(pChoice, pComplexType)
-        SETPARENTNODE(pElementArray, pComplexType)
         SETPARENTNODE(pAttributeGroupArray, pComplexType)
         SETPARENTNODE(pAnnotation, pComplexType);
-        SETPARENTNODE(pSimpleType, pComplexType);
 
         if (pName != NULL)
         {
@@ -443,6 +474,15 @@ void CComplexTypeArray::getDojoJS(StringBuffer &strJS) const
 void CComplexTypeArray::getQML(StringBuffer &strQML, int idx) const
 {
    QUICK_QML_ARRAY(strQML);
+}
+
+void CComplexTypeArray::getQML2(StringBuffer &strQML, int idx) const
+{
+    for (int idx=0; idx < this->length(); idx++)
+    {
+        (this->item(idx)).setUIType(this->getUIType());
+        (this->item(idx)).getQML2(strQML);
+    }
 }
 
 const char* CComplexTypeArray::getXML(const char* /*pComponent*/)

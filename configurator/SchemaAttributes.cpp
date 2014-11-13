@@ -1074,6 +1074,13 @@ void CAttributeArray::getQML(StringBuffer &strQML, int idx) const
 }
 
 #endif //_USE_OLD_GET_QML_
+
+
+void CAttributeArray::getQML2(StringBuffer &strQML, int idx = -1) const
+{
+
+}
+
 void CAttributeArray::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 {
     //assert(index == 1);  // Only 1 array of elements per node

@@ -38,6 +38,12 @@
                            {                                                            \
                                 (this->item(idx)).getQML(X);                            \
                            }
+
+#define QUICK_QML_ARRAY4(X,Y) for (int idx=0; idx < this->length(); idx++)                 \
+                           {\
+                                (this->item(idx)).setUIType(Y);                         \
+                                (this->item(idx)).getQML(X);                            \
+                           }
 #define LAST_ONLY -1
 #define LAST_AND_FIRST  -2
 #define QUICK_QML_ARRAY2(X)     for (int idx=0; idx < this->length(); idx++)            \
@@ -59,7 +65,6 @@
                             {                                                           \
                                  (this->item(idx)).populateEnvXPath(X.str(), Y);          \
                             }
-
 
 #define QUICK_LOAD_ENV_XML(X)   assert(X != NULL);                                        \
                                 for (int idx=0; idx < this->length(); idx++)              \
@@ -150,6 +155,17 @@ enum NODE_TYPES
     XSD_DT_POS_INTEGER,
     XSD_DT_BOOLEAN,
     XSD_ERROR
+};
+
+enum QML_UI_TYPE
+{
+    QML_UI_UNKNOWN = 0,
+    QML_UI_TEXT_FIELD,
+    QML_UI_DROP_DOWN,
+    QML_UI_TABLE,
+    QML_UI_TAB,
+    QML_UI_TAB_CONTENTS,
+    QML_UI_LABEL
 };
 
 static const char* DEFAULT_SCHEMA_DIRECTORY("/opt/HPCCSystems/componentfiles/configxml/");
@@ -468,6 +484,10 @@ public:
     {
     }
 
+    virtual void getQML2(StringBuffer &strQML, int idx = -1) const
+    {
+    }
+
     virtual void populateEnvXPath(StringBuffer strXPath, unsigned int index = 1)
     {
     }
@@ -475,6 +495,18 @@ public:
     virtual void loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
     {
     }
+
+    virtual QML_UI_TYPE getUIType() const
+    {
+        return m_eUIType;
+    }
+
+    virtual void setUIType(QML_UI_TYPE eUI_Type)
+    {
+        m_eUIType = eUIType;
+    }
+
+
 
     static void addEntryHandler(CXSDNodeHandler &Handler)
     {
@@ -496,6 +528,7 @@ protected:
     StringBuffer                m_strXML;
     NODE_TYPES                  m_eNodeType;
     char                        m_pNodeType[1024];
+    QML_UI_TYPE                     m_eUIType;
     static CIArrayOf<CXSDNodeHandler>  s_callBackEntryHandlersArray;
     static CIArrayOf<CXSDNodeHandler>  s_callBackExitHandlersArray;
 

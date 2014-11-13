@@ -851,6 +851,53 @@ void CElement::getQML(StringBuffer &strQML, int idx) const
     }
 
 }
+#endif
+
+void CElement::getQML2(StringBuffer &strQML, int idx) const
+{
+    // Handle HPCC Specific tag
+    if (m_pAnnotation != NULL && m_pAnnotation->getAppInfo() != NULL && m_pAnnotation->getAppInfo()->getViewType() != NULL)
+    {
+        if (stricmp(m_pAnnotation->getAppInfo()->getViewType(), "none") == 0)
+        {
+            return;
+        }
+    }
+
+    if (this->getUIType() == QML_UI_TAB)
+    {
+        CQMLMarkupHelper::getTabQML(strQML, this->getTitle());
+        DEBUG_MARK_QML;
+        strQML.append(QML_GRID_LAYOUT_BEGIN_1);
+        DEBUG_MARK_QML;
+
+        if (m_pAnnotation != NULL)
+        {
+            DEBUG_MARK_QML;
+            m_pAnnotation->setUIType(QML_UI_TAB);
+            m_pAnnotation->getQML2(strQML);
+            DEBUG_MARK_QML;
+        }
+
+        if (m_pComplexTypeArray != NULL)
+        {
+            DEBUG_MARK_QML;
+            m_pComplexTypeArray->setUIType(QML_UI_TAB_CONTENTS);
+            m_pComplexTypeArray->getQML2(strQML,idx);
+            DEBUG_MARK_QML;
+        }
+
+        strQML.append(QML_GRID_LAYOUT_END);
+        DEBUG_MARK_QML;
+        strQML.append(QML_FLICKABLE_HEIGHT).append(CQMLMarkupHelper::getImplicitHeight() * 1.5);
+        DEBUG_MARK_QML;
+        strQML.append(QML_FLICKABLE_END);
+        DEBUG_MARK_QML;
+        strQML.append(QML_TAB_END);
+        DEBUG_MARK_QML;
+    }
+
+}
 
 bool CElement::isATab() const
 {
@@ -1083,6 +1130,19 @@ void CElementArray::getQML(StringBuffer &strQML, int idx) const
             (this->item(idx)).getQML(strQML);
         }
     }*/
+}
+
+void CElementArray::getQML2(StringBuffer &strQML, int idx) const
+{
+    assert(this->getUIType() != QML_UI_UNKNOWN);
+
+    if (this->getUIType() == QML_UI_TAB)
+    {
+        for (i = 0; i < this->length(); i++)
+        {
+            (this->item(i)).setUIType(QML_UI_TAB_CONTENTS);
+        }
+    }
 }
 
 void CElementArray::populateEnvXPath(StringBuffer strXPath, unsigned int index)

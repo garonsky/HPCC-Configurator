@@ -10,10 +10,8 @@ class CAttributeArray;
 class IPropertyTree;
 class CChoice;
 class CComplexType;
-class CElementArray;
 class CAttributeGroupArray;
 class CAnnotation;
-class CSimpleType;
 
 class CComplexType : public CXSDNode
 {
@@ -35,6 +33,7 @@ public:
     virtual void getDojoJS(StringBuffer &strJS) const;
 
     virtual void getQML(StringBuffer &strQML, int idx = -1) const;
+    virtual void getQML2(StringBuffer &strQML, int idx = -1) const;
 
     virtual void populateEnvXPath(StringBuffer strXPath, unsigned int index = 1);
 
@@ -62,16 +61,6 @@ public:
         return m_pAnnotation;
     }
 
-    virtual CSimpleType* getSimpleType() const
-    {
-        return m_pSimpleType;
-    }
-
-    virtual const CElementArray* getConstElementArray() const
-    {
-        return m_pElementArray;
-    }
-
     bool hasChildElements() const;
 
     static CComplexType* load(CXSDNodeBase* pRootNode, const IPropertyTree *pSchemaRoot, const char* xpath = NULL);
@@ -79,20 +68,18 @@ public:
 protected:
 
     CComplexType(CXSDNodeBase* pParentNode, const char* pName = NULL, CSequence *pSequence = NULL, CComplexContent *pComplexContent = NULL, CAttributeArray *pAttributeArray = NULL, \
-        CChoice *pChoice = NULL, CElementArray *pElementArray = NULL, CAttributeGroupArray *pAttributeGroupArray = NULL, CAnnotation *pAnnotation = NULL, CSimpleType *m_pSimpleType = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_COMPLEX_TYPE), \
+        CChoice *pChoice = NULL, CAttributeGroupArray *pAttributeGroupArray = NULL, CAnnotation *pAnnotation = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_COMPLEX_TYPE), \
         m_strName(pName), m_pSequence(pSequence), m_pComplexContent(pComplexContent), m_pAttributeArray(pAttributeArray), m_pChoice(pChoice), \
-        m_pElementArray(pElementArray), m_pAttributeGroupArray(pAttributeGroupArray), m_pAnnotation(pAnnotation), m_pSimpleType(m_pSimpleType)
+        m_pAttributeGroupArray(pAttributeGroupArray), m_pAnnotation(pAnnotation)
     {
     }
 
     CSequence*              m_pSequence;
     CComplexContent*        m_pComplexContent;
     CAttributeArray*        m_pAttributeArray;
-    CElementArray*          m_pElementArray;
     CChoice*                m_pChoice;
     CAttributeGroupArray*   m_pAttributeGroupArray;
     CAnnotation*            m_pAnnotation;
-    CSimpleType*            m_pSimpleType;
 
 private:
 
@@ -121,6 +108,7 @@ public:
     virtual void getDojoJS(StringBuffer &strJS) const;
 
     virtual void getQML(StringBuffer &strQML, int idx = -1) const;
+    virtual void getQML2(StringBuffer &strQML, int idx = -1) const;
 
     virtual void populateEnvXPath(StringBuffer strXPath, unsigned int index = 1);
 
