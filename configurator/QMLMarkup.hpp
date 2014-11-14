@@ -77,7 +77,7 @@ static const char* QML_FLICKABLE_HEIGHT("\n\
                        contentHeight: ");
 
 static const char* QML_FLICKABLE_END("\n\
-                        }\n");
+                        } // QML_FLICKABLE_END\n");
 
 static const char* QML_SCROLL_BAR_TRANSITIONS("\n\
            states: State {\n\
@@ -130,7 +130,7 @@ static const char* QML_TAB_VIEW_HEIGHT("\
         implicitHeight: ");
 
 static const char* QML_TAB_VIEW_END("\
-    }\n");
+    } // QML_TAB_VIEW_END");
 
 
 static const char* QML_TAB_VIEW_STYLE("\
@@ -163,7 +163,7 @@ static const char* QML_TAB_TITLE_BEGIN("\
          title: \"");
 static const char* QML_TAB_TITLE_END("\"\n");
 static const char* QML_TAB_END("\
-    }\n");
+    } // QML_TAB_END\n");
 
 static const char* QML_TAB_TEXT_STYLE("\
 \n\
@@ -198,7 +198,7 @@ static const char* QML_ROW_BEGIN("\
         Row {\n");
 
 static const char* QML_ROW_END("\n\
-        }\n");
+        } // QML_ROW_END\n");
 
 static const char* QML_RECTANGLE_LIGHT_STEEEL_BLUE_BEGIN("\
          Rectangle {\n\
@@ -235,7 +235,7 @@ static const char* QML_TEXT_END("\"\n\
             }\n\
         width: childrenRect.width\n\
         height: childrenRect.height\n\
-         }\n");
+         } // QML_TEXT_END\n");
 
 static const char* QML_TEXT_BEGIN_2("\
           Text {\n\
@@ -249,7 +249,7 @@ static const char* QML_TEXT_BEGIN_2("\
                  text: ");
 
 static const char* QML_TEXT_END_2("\n\
-           }\n");
+           } // QML_TEXT_END_2 \n");
 
 static const char* QML_TEXT_FIELD_PLACE_HOLDER_TEXT_BEGIN("\n\
         placeholderText: ");
@@ -278,7 +278,7 @@ static const char* QML_TEXT_FIELD_ID_BEGIN("\
 static const char* QML_TEXT_FIELD_ID_END("\n");
 
 static const char* QML_TEXT_FIELD_END("\n\
-          }\n");
+          } // QML_TEXT_FIELD_END\n");
 
 static const char* QML_LIST_MODEL_BEGIN("\
               model: ListModel {\n");
@@ -319,7 +319,7 @@ static const char* QML_GRID_LAYOUT_BEGIN_1("\
              flow: GridLayout.LeftToRight\n");
 
 static const char* QML_GRID_LAYOUT_END("\
-          }\n");
+          } // QML_GRID_LAYOUT_END");
 
 static const char* QML_TOOLTIP_TEXT_BEGIN("\
 \n\

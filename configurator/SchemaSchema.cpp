@@ -266,7 +266,7 @@ void CSchema::getQML(StringBuffer &strQML, int idx) const
 
 }
 
-virtual CSchema::getQML2(StringBuffer &strQML, int idx) const
+void CSchema::getQML2(StringBuffer &strQML, int idx) const
 {
     DEBUG_MARK_QML;
     strQML.append(QML_START);
@@ -277,37 +277,47 @@ virtual CSchema::getQML2(StringBuffer &strQML, int idx) const
     DEBUG_MARK_QML;
     strQML.append(QML_SCROLL_BAR_TRANSITIONS);
     DEBUG_MARK_QML;
-    strQML.append(QML_TAB_VIEW_BEGIN);
-    DEBUG_MARK_QML;
+    //strQML.append(QML_TAB_VIEW_BEGIN);
+    //DEBUG_MARK_QML;
 
     if (m_pElementArray != NULL)
     {
-        m_pElementArray->setUIType(QML_UI_TAB);
-        m_pElementArray->getQML(strQML, idx);
+        DEBUG_MARK_QML;
+        m_pElementArray->setUIType(QML_UI_EMPTY);
+        m_pElementArray->getQML2(strQML, idx);
+        DEBUG_MARK_QML;
     }
     if (m_pComplexTypeArray != NULL)
     {
+        DEBUG_MARK_QML;
         assert(!"Is this valid?");
-        m_pComplexTypeArray->getQML(strQML);
+        m_pComplexTypeArray->getQML2(strQML);
+        DEBUG_MARK_QML;
     }
     if (m_pAttributeGroupArray != NULL)
     {
+        DEBUG_MARK_QML;
         assert(!"Is this valid?");
-        m_pAttributeGroupArray->getQML(strQML);
+        m_pAttributeGroupArray->getQML2(strQML);
+        DEBUG_MARK_QML;
     }
     if (m_pSimpleTypeArray != NULL)
     {
-        assert(!"Is this valid?");
-        m_pSimpleTypeArray->getQML(strQML);
+        //assert(!"Is this valid?");
+        DEBUG_MARK_QML;
+        m_pSimpleTypeArray->getQML2(strQML);
+        DEBUG_MARK_QML;
     }
     if (m_pIncludeArray != NULL)
     {
-        assert(!"Is this valid?");
-        m_pIncludeArray->getQML(strQML);
+        //assert(!"Is this valid?");
+        DEBUG_MARK_QML;
+        m_pIncludeArray->getQML2(strQML);
+        DEBUG_MARK_QML;
     }
 
-    DEBUG_MARK_QML;
-    strQML.append(QML_TAB_END);
+    //DEBUG_MARK_QML;
+    //strQML.append(QML_TAB_END);
     DEBUG_MARK_QML;
     strQML.append(QML_END);
     DEBUG_MARK_QML;

@@ -866,6 +866,8 @@ void CElement::getQML2(StringBuffer &strQML, int idx) const
 
     if (this->getUIType() == QML_UI_TAB)
     {
+        strQML.append(QML_TAB_VIEW_BEGIN);
+        DEBUG_MARK_QML;
         CQMLMarkupHelper::getTabQML(strQML, this->getTitle());
         DEBUG_MARK_QML;
         strQML.append(QML_GRID_LAYOUT_BEGIN_1);
@@ -882,7 +884,7 @@ void CElement::getQML2(StringBuffer &strQML, int idx) const
         if (m_pComplexTypeArray != NULL)
         {
             DEBUG_MARK_QML;
-            m_pComplexTypeArray->setUIType(QML_UI_TAB_CONTENTS);
+            m_pComplexTypeArray->setUIType(QML_UI_TEXT_FIELD);
             m_pComplexTypeArray->getQML2(strQML,idx);
             DEBUG_MARK_QML;
         }
@@ -895,6 +897,40 @@ void CElement::getQML2(StringBuffer &strQML, int idx) const
         DEBUG_MARK_QML;
         strQML.append(QML_TAB_END);
         DEBUG_MARK_QML;
+        strQML.append(QML_TAB_VIEW_STYLE);
+        DEBUG_MARK_QML;
+        strQML.append(QML_TAB_VIEW_END);
+        DEBUG_MARK_QML;
+        strQML.append(QML_TAB_TEXT_STYLE);
+        DEBUG_MARK_QML;
+    }
+    else if (this->getUIType() == QML_UI_TABLE)
+    {
+        strQML.append(QML_TABLE_VIEW_BEGIN);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_MODEL).append(modelNames[CConfigSchemaHelper::getInstance(0)->getNumberOfTables()]).append(QML_STYLE_NEW_LINE);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_PROPERTY_STRING_TABLE_BEGIN).append(modelNames[CConfigSchemaHelper::getInstance(0)->getNumberOfTables()]).append(QML_PROPERTY_STRING_TABLE_PART_1).append(this->getXSDXPath()).append(QML_PROPERTY_STRING_TABLE_END);
+        DEBUG_MARK_QML;
+
+        CConfigSchemaHelper::getInstance(0)->incTables();
+
+        if (m_pComplexTypeArray != NULL)
+        {
+            DEBUG_MARK_QML;
+            m_pComplexTypeArray->getQML2(strQML);
+        }
+
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_TABLE_VIEW_END);
+        DEBUG_MARK_QML;
+    }
+    else if (this->getUIType == QML_UI_EMPTY)
+    {
+
     }
 
 }
@@ -959,7 +995,6 @@ bool CElement::isLastTab(const int idx) const
     }
 }
 
-#endif // _USE_OLD_GET_QML_
 
 void CElement::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 {
@@ -1022,7 +1057,6 @@ void CElement::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
         {
         }
     }*/
-
     if (m_pSimpleType != NULL)
     {
         try
@@ -1138,10 +1172,27 @@ void CElementArray::getQML2(StringBuffer &strQML, int idx) const
 
     if (this->getUIType() == QML_UI_TAB)
     {
-        for (i = 0; i < this->length(); i++)
+        for (int i = 0; i < this->length(); i++)
         {
-            (this->item(i)).setUIType(QML_UI_TAB_CONTENTS);
+            if ((this->item(i)).hasChildElements() == true)
+            {
+                (this->item(i)).setUIType(QML_UI_TAB);
+            }
+            else if ((this->item(i)).getMaxOccursInt() > 1)
+            {
+                (this->item(i)).setUIType(QML_UI_TABLE);
+            }
+            else
+            {
+                (this->item(i)).setUIType(QML_UI_TEXT_FIELD);
+            }
+            (this->item(i)).getQML2(strQML,i);
         }
+    }
+    else if (this->getUIType() == QML_UI_EMPTY)
+    {
+        this->item(0).setUIType(QML_UI_EMPTY);
+        this->item(0).getQML2(strQML,0);
     }
 }
 

@@ -28,11 +28,6 @@ const CXSDNodeBase* CComplexType::getNodeByTypeAndNameAscending(NODE_TYPES eNode
     {
         pMatchingNode =  m_pSequence->getNodeByTypeAndNameAscending(eNodeType, pName);
     }
-    if (pMatchingNode != NULL && m_pElementArray != NULL)
-    {
-        pMatchingNode = m_pElementArray->getNodeByTypeAndNameAscending(eNodeType, pName);
-    }
-    //if (pMatchingNode != NULL && )
 
     return pMatchingNode;
 }
@@ -55,10 +50,6 @@ const CXSDNodeBase* CComplexType::getNodeByTypeAndNameDescending(NODE_TYPES eNod
         pMatchingNode = m_pComplexContent->getNodeByTypeAndNameDescending(eNodeType, pName);
     }
     if (pMatchingNode == NULL && m_pAttributeArray != NULL)
-    {
-        pMatchingNode = m_pSequence->getNodeByTypeAndNameDescending(eNodeType, pName);
-    }
-    if (pMatchingNode == NULL && m_pElementArray != NULL)
     {
         pMatchingNode = m_pSequence->getNodeByTypeAndNameDescending(eNodeType, pName);
     }
@@ -97,11 +88,6 @@ void CComplexType::dump(std::ostream& cout, unsigned int offset) const
     if (m_pChoice != NULL)
     {
         m_pChoice->dump(cout, offset);
-    }
-
-    if (m_pElementArray != NULL)
-    {
-        m_pElementArray->dump(cout, offset);
     }
 
     if (m_pAttributeGroupArray != NULL)
@@ -148,14 +134,6 @@ void CComplexType::getDocumentation(StringBuffer &strDoc) const
         m_pChoice->getDocumentation(strDoc);
     }
 
-    if (m_pElementArray != NULL)
-    {
-        strDoc.append(DM_SECT3_BEGIN);
-        DEBUG_MARK_STRDOC;
-        m_pElementArray->getDocumentation(strDoc);
-        strDoc.append(DM_SECT3_END);
-    }
-
     if (m_pAttributeGroupArray != NULL)
     {
         m_pAttributeGroupArray->getDocumentation(strDoc);
@@ -182,11 +160,6 @@ void CComplexType::getDojoJS(StringBuffer &strJS) const
     if (m_pChoice != NULL)
     {
         m_pChoice->getDojoJS(strJS);
-    }
-
-    if (m_pElementArray != NULL)
-    {
-        m_pElementArray->getDojoJS(strJS);
     }
 
     if (m_pAttributeGroupArray != NULL)
@@ -221,11 +194,6 @@ void CComplexType::getQML(StringBuffer &strQML, int idx) const
         m_pChoice->getQML(strQML);
     }
 
-    if (m_pElementArray != NULL)
-    {
-        m_pElementArray->getQML(strQML);
-    }
-
     /*if (m_pAttributeGroupArray != NULL)
     {
         m_pAttributeGroupArray->getQML(strQML);
@@ -253,7 +221,7 @@ void CComplexType::getQML2(StringBuffer &strQML, int idx) const
     if (m_pAttributeArray != NULL)
     {
         DEBUG_MARK_QML;
-        m_pAttributeArray->setUIType(QML_UI_TAB);
+        m_pAttributeArray->setUIType(this->getUIType());
         m_pAttributeArray->getQML2(strQML);
         DEBUG_MARK_QML;
     }
@@ -261,11 +229,6 @@ void CComplexType::getQML2(StringBuffer &strQML, int idx) const
     if (m_pChoice != NULL)
     {
         m_pChoice->getQML2(strQML);
-    }
-
-    if (m_pElementArray != NULL)
-    {
-        m_pElementArray->getQML2(strQML);
     }
 
     if (m_pAttributeGroupArray != NULL)
@@ -298,11 +261,6 @@ void CComplexType::populateEnvXPath(StringBuffer strXPath, unsigned int index)
         m_pChoice->populateEnvXPath(strXPath, index);
     }
 
-    if (m_pElementArray != NULL)
-    {
-        m_pElementArray->populateEnvXPath(strXPath, index);
-    }
-
     if (m_pAttributeGroupArray != NULL)
     {
         m_pAttributeGroupArray->populateEnvXPath(strXPath, index);
@@ -331,11 +289,6 @@ void CComplexType::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
         m_pChoice->loadXMLFromEnvXml(pEnvTree);
     }
 
-    if (m_pElementArray != NULL)
-    {
-        m_pElementArray->loadXMLFromEnvXml(pEnvTree);
-    }
-
     if (m_pAttributeGroupArray != NULL)
     {
         m_pAttributeGroupArray->loadXMLFromEnvXml(pEnvTree);
@@ -357,10 +310,6 @@ const char* CComplexType::getXML(const char* /*pComponent*/)
         if (m_pChoice != NULL)
         {
             m_strXML.append(m_pChoice->getXML(NULL));
-        }
-        if (m_pElementArray != NULL)
-        {
-            m_strXML.append(m_pElementArray->getXML(NULL));
         }
     }
 

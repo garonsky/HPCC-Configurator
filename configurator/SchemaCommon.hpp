@@ -46,9 +46,14 @@
                            }
 #define LAST_ONLY -1
 #define LAST_AND_FIRST  -2
-#define QUICK_QML_ARRAY2(X)     for (int idx=0; idx < this->length(); idx++)            \
+/*#define QUICK_QML_ARRAY2(X)     for (int idx=0; idx < this->length(); idx++)            \
                                 {                                                       \
                                     (this->item(idx)).getQML(X, idx == this->length()-1 && idx == 0 ? LAST_AND_FIRST : (idx == this->length()-1 ? LAST_ONLY : idx));                   \
+                                }*/
+
+#define QUICK_QML_ARRAY2(X)     for (int idx=0; idx < this->length(); idx++)            \
+                                {                                                       \
+                                    (this->item(idx)).getQML2(X, idx == this->length()-1 && idx == 0 ? LAST_AND_FIRST : (idx == this->length()-1 ? LAST_ONLY : idx));                   \
                                 }
 
 #define QUICK_QML_ARRAY3(X)     for (int idx=0; idx < this->length(); idx++)            \
@@ -163,9 +168,11 @@ enum QML_UI_TYPE
     QML_UI_TEXT_FIELD,
     QML_UI_DROP_DOWN,
     QML_UI_TABLE,
+    QML_UI_TABLE_CONTENTS,
     QML_UI_TAB,
     QML_UI_TAB_CONTENTS,
-    QML_UI_LABEL
+    QML_UI_LABEL,
+    QML_UI_EMPTY
 };
 
 static const char* DEFAULT_SCHEMA_DIRECTORY("/opt/HPCCSystems/componentfiles/configxml/");
@@ -503,10 +510,9 @@ public:
 
     virtual void setUIType(QML_UI_TYPE eUI_Type)
     {
-        m_eUIType = eUIType;
+        assert(m_eUIType == QML_UI_UNKNOWN);
+        m_eUIType = eUI_Type;
     }
-
-
 
     static void addEntryHandler(CXSDNodeHandler &Handler)
     {

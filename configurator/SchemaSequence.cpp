@@ -99,6 +99,15 @@ void CSequence::getQML(StringBuffer &strQML, int idx) const
     }
 }
 
+void CSequence::getQML2(StringBuffer &strQML, int idx) const
+{
+    if (p_mElementArray != NULL)
+    {
+        p_mElementArray->setUIType(QML_UI_TAB_CONTENTS);
+        p_mElementArray->getQML2(strQML);
+    }
+}
+
 void CSequence::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 {
     if (p_mElementArray != NULL)

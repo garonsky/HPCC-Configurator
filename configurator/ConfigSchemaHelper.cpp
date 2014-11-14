@@ -235,7 +235,7 @@ const char* CConfigSchemaHelper::printQML(const char* comp, int nIdx) const
              if (pSchema != NULL)
              {
                  //pSchema->loadXMLFromEnvXml(CConfigSchemaHelper::getConstEnvPropertyTree());
-                 pSchema->getQML(strQML, nIdx);
+                 pSchema->getQML2(strQML, nIdx);
                  return strQML.str();
              }
         }

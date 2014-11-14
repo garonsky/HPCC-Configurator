@@ -4,7 +4,7 @@
 #include "jregexp.hpp"
 #include <cstring>
 
-CXSDNodeBase::CXSDNodeBase(CXSDNodeBase* pParentNode, NODE_TYPES eNodeType) : m_pParentNode(pParentNode),  m_eNodeType(eNodeType)
+CXSDNodeBase::CXSDNodeBase(CXSDNodeBase* pParentNode, NODE_TYPES eNodeType) : m_pParentNode(pParentNode),  m_eNodeType(eNodeType), m_eUIType(QML_UI_UNKNOWN)
 {
    assert(eNodeType != XSD_ERROR);
 
