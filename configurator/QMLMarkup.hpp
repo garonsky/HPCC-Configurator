@@ -448,14 +448,16 @@ static const char* QML_TOOLTIP_TEXT_END("\
 
 static const char* QML_TABLE_VIEW_BEGIN("\
     TableView {\n\
-        width: 800\n");
+        width: 800\n\
+        Layout.preferredHeight: 200\n\
+        Layout.preferredWidth: 800\n");
 
 static const char* QML_TABLE_VIEW_END("\n\
     }\n");
 
 static const char* QML_TABLE_VIEW_COLUMN_BEGIN("\
         TableViewColumn {\n\
-            width: 200\n");
+            width: 120\n");
 
 static const char* QML_TABLE_VIEW_COLUMN_END("\
         }\n");

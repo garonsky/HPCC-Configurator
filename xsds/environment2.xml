@@ -794,7 +794,7 @@
              netAddress="."
              program="/opt/HPCCSystems/bin/ftslave"/>
   </FTSlaveProcess>
-  <Hardware_NEW>
+  <Hardware_NEW attrib1name="gleb1">
      <Computer computerType="linuxmachine"
              domain="localdomain"
              name="localhost"
@@ -804,7 +804,15 @@
                  name="linuxmachine"
                  opSys="linux"/>
    <Domain name="localdomain" snmpSecurityString=""/>
-   <Switch name="Switch"/>
+   <Switches name="Switch">
+        <Deep2>
+            <Switch5>
+                <deep6>
+                    <table1 name7="hi1"/>
+                </deep6>
+            </Switch5>
+        </Deep2>
+   </Switches>
   </Hardware_NEW>
   <Hardware_NEW2>
    <Computer computerType="linuxmachine"
