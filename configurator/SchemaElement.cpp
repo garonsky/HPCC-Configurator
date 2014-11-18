@@ -864,48 +864,20 @@ void CElement::getQML2(StringBuffer &strQML, int idx) const
         }
     }
 
-    if (this->getUIType() == QML_UI_TAB)
+    if (this->getParentNode()->getUIType() == QML_UI_EMPTY)
     {
-        strQML.append(QML_TAB_VIEW_BEGIN);
-        DEBUG_MARK_QML;
-        CQMLMarkupHelper::getTabQML(strQML, this->getTitle());
-        DEBUG_MARK_QML;
-        strQML.append(QML_GRID_LAYOUT_BEGIN_1);
-        DEBUG_MARK_QML;
-
-        if (m_pAnnotation != NULL)
+        this->setUIType(QML_UI_TAB);
+        if (m_pComplexTypeArray != NULL && m_pComplexTypeArray->length() > 0)
         {
-            DEBUG_MARK_QML;
-            m_pAnnotation->setUIType(QML_UI_TAB);
-            m_pAnnotation->getQML2(strQML);
-            DEBUG_MARK_QML;
+            DEBUG_MARK_QML2(this);
+            m_pComplexTypeArray->getQML2(strQML);
+            DEBUG_MARK_QML2(this);
         }
-
-        if (m_pComplexTypeArray != NULL)
-        {
-            DEBUG_MARK_QML;
-            m_pComplexTypeArray->setUIType(QML_UI_TEXT_FIELD);
-            m_pComplexTypeArray->getQML2(strQML,idx);
-            DEBUG_MARK_QML;
-        }
-
-        strQML.append(QML_GRID_LAYOUT_END);
-        DEBUG_MARK_QML;
-        strQML.append(QML_FLICKABLE_HEIGHT).append(CQMLMarkupHelper::getImplicitHeight() * 1.5);
-        DEBUG_MARK_QML;
-        strQML.append(QML_FLICKABLE_END);
-        DEBUG_MARK_QML;
-        strQML.append(QML_TAB_END);
-        DEBUG_MARK_QML;
-        strQML.append(QML_TAB_VIEW_STYLE);
-        DEBUG_MARK_QML;
-        strQML.append(QML_TAB_VIEW_END);
-        DEBUG_MARK_QML;
-        strQML.append(QML_TAB_TEXT_STYLE);
-        DEBUG_MARK_QML;
     }
-    else if (this->getUIType() == QML_UI_TABLE)
+    else if (this->getMaxOccursInt() > 1 && this->hasChildElements() == false) // must be a table
     {
+        this->setUIType(QML_UI_TABLE);
+
         strQML.append(QML_TABLE_VIEW_BEGIN);
         DEBUG_MARK_QML;
 
@@ -921,19 +893,203 @@ void CElement::getQML2(StringBuffer &strQML, int idx) const
         {
             DEBUG_MARK_QML;
             m_pComplexTypeArray->getQML2(strQML);
+            DEBUG_MARK_QML;
         }
 
         DEBUG_MARK_QML;
+        strQML.append(QML_TABLE_VIEW_END);
+        DEBUG_MARK_QML;
 
+    }
+    else if (this->hasChildElements() == false && this->getConstParentNode()->getUIType() == QML_UI_TAB && this->getMaxOccursInt() > 1) // must be table
+    {
+        this->setUIType(QML_UI_TABLE);
+
+        strQML.append(QML_TABLE_VIEW_BEGIN);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_MODEL).append(modelNames[CConfigSchemaHelper::getInstance(0)->getNumberOfTables()]).append(QML_STYLE_NEW_LINE);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_PROPERTY_STRING_TABLE_BEGIN).append(modelNames[CConfigSchemaHelper::getInstance(0)->getNumberOfTables()]).append(QML_PROPERTY_STRING_TABLE_PART_1).append(this->getXSDXPath()).append(QML_PROPERTY_STRING_TABLE_END);
+        DEBUG_MARK_QML;
+
+        CConfigSchemaHelper::getInstance(0)->incTables();
+
+        if (m_pComplexTypeArray != NULL)
+        {
+            DEBUG_MARK_QML;
+            m_pComplexTypeArray->getQML2(strQML);
+            DEBUG_MARK_QML;
+        }
+
+        DEBUG_MARK_QML;
         strQML.append(QML_TABLE_VIEW_END);
         DEBUG_MARK_QML;
     }
-    else if (this->getUIType == QML_UI_EMPTY)
+    else // must be a tab
+    {
+        const CElement *pElem = dynamic_cast<const CElement*>(this->getAncestorElement(this));
+
+        if (idx == 0 && pElem->isTopLevelElement() == false)
+        {
+            strQML.append(QML_TAB_VIEW_BEGIN);
+            DEBUG_MARK_QML;
+        }
+        this->setUIType(QML_UI_TAB);
+
+        CQMLMarkupHelper::getTabQML(strQML, this->getTitle());
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_GRID_LAYOUT_BEGIN);
+        DEBUG_MARK_QML;
+
+        m_pComplexTypeArray->getQML2(strQML);
+        DEBUG_MARK_QML2(this);
+
+        strQML.append(QML_GRID_LAYOUT_END);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_FLICKABLE_END);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_TAB_END);
+        DEBUG_MARK_QML;
+
+        if (this->isLastTab(idx) == true && pElem->isTopLevelElement() == false)
+        {
+            strQML.append(QML_TAB_VIEW_STYLE);
+            DEBUG_MARK_QML;
+            strQML.append(QML_TAB_VIEW_END);
+            DEBUG_MARK_QML;
+            strQML.append(QML_TAB_TEXT_STYLE);
+            DEBUG_MARK_QML;
+        }
+    }
+}
+    /*else if (this->hasChildElements() == true || this->getMaxOccursInt() == 1)
+    {
+        this->setUIType(QML_UI_TAB);
+
+        CQMLMarkupHelper::getTabQML(strQML, this->getTitle());
+        DEBUG_MARK_QML;
+        strQML.append(QML_GRID_LAYOUT_BEGIN_1);
+        DEBUG_MARK_QML;
+
+        if (m_pAnnotation != NULL)
+        {
+            DEBUG_MARK_QML2(this);
+            m_pAnnotation->getQML2(strQML);
+            DEBUG_MARK_QML2(this);
+        }
+
+        if (m_pComplexTypeArray != NULL && m_pComplexTypeArray->length() > 0)
+        {
+            if (this->hasChildElements() == true)
+            {
+                strQML.append(QML_TAB_VIEW_BEGIN);
+                DEBUG_MARK_QML
+
+                DEBUG_MARK_QML2(this);
+                m_pComplexTypeArray->getQML2(strQML);
+                DEBUG_MARK_QML2(this);
+            }
+            else
+            {
+
+            }
+
+            if (this->hasChildElements() == true)
+            {
+                strQML.append(QML_TAB_VIEW_STYLE);
+                DEBUG_MARK_QML;
+                strQML.append(QML_TAB_VIEW_END);
+                DEBUG_MARK_QML;
+                strQML.append(QML_TAB_TEXT_STYLE);
+                DEBUG_MARK_QML;
+            }
+        }
+
+        strQML.append(QML_GRID_LAYOUT_END);
+        DEBUG_MARK_QML;
+        strQML.append(QML_FLICKABLE_HEIGHT).append(CQMLMarkupHelper::getImplicitHeight() * 1.5);
+        DEBUG_MARK_QML;
+        strQML.append(QML_FLICKABLE_END);
+        DEBUG_MARK_QML;
+        strQML.append(QML_TAB_END);
+        DEBUG_MARK_QML;
+    }
+    else if (this->getMaxOccursInt() > 1)
+    {
+        this->setUIType(QML_UI_TABLE);
+
+        strQML.append(QML_TABLE_VIEW_BEGIN);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_MODEL).append(modelNames[CConfigSchemaHelper::getInstance(0)->getNumberOfTables()]).append(QML_STYLE_NEW_LINE);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_PROPERTY_STRING_TABLE_BEGIN).append(modelNames[CConfigSchemaHelper::getInstance(0)->getNumberOfTables()]).append(QML_PROPERTY_STRING_TABLE_PART_1).append(this->getXSDXPath()).append(QML_PROPERTY_STRING_TABLE_END);
+        DEBUG_MARK_QML;
+
+        CConfigSchemaHelper::getInstance(0)->incTables();
+
+        if (m_pComplexTypeArray != NULL)
+        {
+            DEBUG_MARK_QML;
+            m_pComplexTypeArray->getQML2(strQML);
+            DEBUG_MARK_QML;
+        }
+
+        DEBUG_MARK_QML;
+        strQML.append(QML_TABLE_VIEW_END);
+        DEBUG_MARK_QML;
+    }
+    else if (this->getUIType() == QML_UI_EMPTY)
+    {
+        DEBUG_MARK_QML;
+
+        if (m_pComplexTypeArray != NULL)
+        {*/
+            /*strQML.append(QML_TAB_VIEW_BEGIN);
+            DEBUG_MARK_QML;
+            CQMLMarkupHelper::getTabQML(strQML, this->getTitle());
+            DEBUG_MARK_QML;
+            strQML.append(QML_GRID_LAYOUT_BEGIN_1);
+            DEBUG_MARK_QML;*/
+
+         /*   DEBUG_MARK_QML;
+            //m_pComplexTypeArray->setUIType(QML_UI_TEXT_FIELD);
+            //m_pComplexTypeArray->setUIType(QML_UI_TAB);
+            m_pComplexTypeArray->getQML2(strQML,idx);
+            DEBUG_MARK_QML;
+
+            /*strQML.append(QML_GRID_LAYOUT_END);
+            DEBUG_MARK_QML;
+            strQML.append(QML_FLICKABLE_HEIGHT).append(CQMLMarkupHelper::getImplicitHeight() * 1.5);
+            DEBUG_MARK_QML;
+            strQML.append(QML_FLICKABLE_END);
+            DEBUG_MARK_QML;
+            strQML.append(QML_TAB_END);
+            DEBUG_MARK_QML;
+            strQML.append(QML_TAB_VIEW_STYLE);
+            DEBUG_MARK_QML;
+            strQML.append(QML_TAB_VIEW_END);
+            DEBUG_MARK_QML;
+            strQML.append(QML_TAB_TEXT_STYLE);
+            DEBUG_MARK_QML;
+        }
+    }
+    else if (this->getConstParentNode()->getUIType() == QML_UI_TAB)
     {
 
     }
+    else
+    {
+        assert(!"what am i?");
+    }
 
-}
+}*/
 
 bool CElement::isATab() const
 {
@@ -1168,31 +1324,47 @@ void CElementArray::getQML(StringBuffer &strQML, int idx) const
 
 void CElementArray::getQML2(StringBuffer &strQML, int idx) const
 {
-    assert(this->getUIType() != QML_UI_UNKNOWN);
+    //assert(this->getUIType() != QML_UI_UNKNOWN);
 
-    if (this->getUIType() == QML_UI_TAB)
+    DEBUG_MARK_QML;
+    if (this->getParentNode()->getUIType() == QML_UI_TAB)
     {
+        DEBUG_MARK_QML;
+        this->setUIType(QML_UI_TAB);
+        //strQML.append(QML_TAB_VIEW_BEGIN);
+        //DEBUG_MARK_QML;
         for (int i = 0; i < this->length(); i++)
         {
             if ((this->item(i)).hasChildElements() == true)
             {
-                (this->item(i)).setUIType(QML_UI_TAB);
+                DEBUG_MARK_QML;
+                //(this->item(i)).setUIType(QML_UI_TAB);
             }
             else if ((this->item(i)).getMaxOccursInt() > 1)
             {
-                (this->item(i)).setUIType(QML_UI_TABLE);
+                DEBUG_MARK_QML;
+                //(this->item(i)).setUIType(QML_UI_TABLE);
             }
             else
             {
-                (this->item(i)).setUIType(QML_UI_TEXT_FIELD);
+                DEBUG_MARK_QML;
+                //(this->item(i)).setUIType(QML_UI_TEXT_FIELD);
             }
+            DEBUG_MARK_QML;
             (this->item(i)).getQML2(strQML,i);
         }
+        //strQML.append(QML_TAB_VIEW_STYLE);
+        //DEBUG_MARK_QML;
+        //strQML.append(QML_TAB_VIEW_END);
+        //DEBUG_MARK_QML;
+        //strQML.append(QML_TAB_TEXT_STYLE);
+        //DEBUG_MARK_QML;
     }
     else if (this->getUIType() == QML_UI_EMPTY)
     {
-        this->item(0).setUIType(QML_UI_EMPTY);
+        DEBUG_MARK_QML;
         this->item(0).getQML2(strQML,0);
+        DEBUG_MARK_QML;
     }
 }
 

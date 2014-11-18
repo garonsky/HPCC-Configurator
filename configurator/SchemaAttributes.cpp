@@ -364,8 +364,60 @@ void CAttribute::getQML(StringBuffer &strQML, int idx) const
 
 void CAttribute::getQML2(StringBuffer &strQML, int idx) const
 {
+    if (this->getParentNode()->getUIType() == QML_UI_TABLE_CONTENTS)
+    {
+        this->setUIType(QML_UI_TABLE_CONTENTS);
+        CQMLMarkupHelper::getTableViewColumn(strQML, this->getTitle(), this->getEnvXPath());
+        DEBUG_MARK_QML;
+    }
+    else if (this->getParentNode()->getUIType() == QML_UI_TAB_CONTENTS)
+    {
+        this->setUIType(QML_UI_TEXT_FIELD);
+        strQML.append(QML_ROW_BEGIN).append(QML_RECTANGLE_DEFAULT_COLOR_SCHEME_1_BEGIN);
+        DEBUG_MARK_QML;
 
-    if (this->getUIType() == QML_UI_TEXT_FIELD)
+        strQML.append(QML_TEXT_BEGIN_2).append("\"  ").append(this->getTitle()).append("\"").append(QML_TEXT_END_2);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_RECTANGLE_LIGHT_STEEEL_BLUE_END);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_TEXT_FIELD_BEGIN);
+
+        StringBuffer strTextArea("textarea");
+        CQMLMarkupHelper::getRandomID(&strTextArea);
+
+        strQML.append(QML_APP_DATA_GET_VALUE_BEGIN).append(this->getEnvXPath()).append(QML_APP_DATA_GET_VALUE_END);
+
+        strQML.append(QML_ON_ACCEPTED);
+        strQML.append(QML_APP_DATA_SET_VALUE_BEGIN).append(this->getEnvXPath()).append("\", ").append(strTextArea.str()).append(QML_APP_DATA_SET_VALUE_END);
+
+        strQML.append(QML_TEXT_FIELD_ID_BEGIN).append(strTextArea).append(QML_TEXT_FIELD_ID_END);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_TEXT_FIELD_PLACE_HOLDER_TEXT_BEGIN);
+        strQML.append("\"").append(this->getDefault()).append("\"");
+        strQML.append(QML_TEXT_FIELD_PLACE_HOLDER_TEXT_END);
+        DEBUG_MARK_QML;
+
+        if (this->getAnnotation()->getAppInfo() != NULL) // check for tooltip
+        {
+            CQMLMarkupHelper::getToolTipQML(strQML, this->getAnnotation()->getAppInfo()->getToolTip(), strTextArea.str());
+        }
+
+        strQML.append(QML_TEXT_FIELD_END);
+        DEBUG_MARK_QML;
+
+        strQML.append(QML_ROW_END);
+        DEBUG_MARK_QML;
+    }
+    else
+    {
+        assert(!"what am i?");
+    }
+}
+
+    /*if (this->getUIType() == QML_UI_TEXT_FIELD)
     {
 
         strQML.append(QML_ROW_BEGIN).append(QML_RECTANGLE_DEFAULT_COLOR_SCHEME_1_BEGIN);
@@ -414,8 +466,8 @@ void CAttribute::getQML2(StringBuffer &strQML, int idx) const
     else
     {
         assert(!"Why here");
-    }
-}
+    }*/
+//}
 
 void CAttribute::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 {
@@ -1132,22 +1184,99 @@ void CAttributeArray::getQML(StringBuffer &strQML, int idx) const
 
 void CAttributeArray::getQML2(StringBuffer &strQML, int idx) const
 {
-    if (this->getUIType() == QML_UI_TEXT_FIELD)
+    if (this->getParentNode()->getUIType() == QML_UI_TABLE)
     {
-        //strQML.append(QML_TABLE_VIEW_BEGIN);
-        //DEBUG_MARK_QML;
+        this->setUIType(QML_UI_TABLE_CONTENTS);
+
+        for (int i = 0; i < this->length(); i++)
+        {
+            DEBUG_MARK_QML2(this);
+            (this->item(i)).getQML2(strQML);
+        }
+
+        DEBUG_MARK_QML2(this);
+    }
+    else if (this->getParentNode()->getUIType() == QML_UI_TAB)
+    {
+        this->setUIType(QML_UI_TAB_CONTENTS);
+
+        const CElement* pElem = dynamic_cast<const CElement*>(this->getParentNodeByType(XSD_ELEMENT));
+
+        assert(pElem != NULL);
+
+        if (pElem->isTopLevelElement() == true)
+        {
+            CQMLMarkupHelper::getTabQML(strQML, "Attributes");
+            DEBUG_MARK_QML;
+            strQML.append(QML_GRID_LAYOUT_BEGIN_1);
+            DEBUG_MARK_QML;
+        }
+
+        for (int i = 0; i < this->length(); i++)
+        {
+            DEBUG_MARK_QML2(this);
+            (this->item(i)).getQML2(strQML);
+        }
+
+        if (pElem->isTopLevelElement() == true)
+        {
+            strQML.append(QML_GRID_LAYOUT_END);
+            DEBUG_MARK_QML;
+            strQML.append(QML_FLICKABLE_HEIGHT).append(CQMLMarkupHelper::getImplicitHeight() * 1.5);
+            DEBUG_MARK_QML;
+            strQML.append(QML_FLICKABLE_END);
+            DEBUG_MARK_QML;
+            strQML.append(QML_TAB_END);
+            DEBUG_MARK_QML;
+        }
+
+        DEBUG_MARK_QML2(this);
+    }
+    else
+    {
+        assert(!"what am i?");
+    }
+
+}
+/*    bool bSetAsTextField = false;
+
+    if (this->getUIType() == QML_UI_TAB)
+    {
+        CQMLMarkupHelper::getTabQML(strQML, "Attributes");
+        DEBUG_MARK_QML;
+        strQML.append(QML_GRID_LAYOUT_BEGIN_1);
+        DEBUG_MARK_QML;
+
+        bSetAsTextField = true;
+
+
     }
     for (int i = 0; i < this->length(); i++)
     {
-        (this->item(i)).setUIType(this->getUIType());
+        if (bSetAsTextField == false)
+        {
+            (this->item(i)).setUIType(QML_UI_TABLE_CONTENTS);
+            DEBUG_MARK_QML;
+        }
+        else
+        {
+            (this->item(i)).setUIType(QML_UI_TEXT_FIELD);
+            DEBUG_MARK_QML;
+        }
         (this->item(i)).getQML2(strQML,idx);
     }
-    if (this->getUIType() == QML_UI_TEXT_FIELD)
+    if (this->getUIType() == QML_UI_TAB)
     {
-        //strQML.append(QML_TABLE_VIEW_END);
-        //DEBUG_MARK_QML;
-    }
-}
+        strQML.append(QML_GRID_LAYOUT_END);
+        DEBUG_MARK_QML;
+        strQML.append(QML_FLICKABLE_HEIGHT).append(CQMLMarkupHelper::getImplicitHeight() * 1.5);
+        DEBUG_MARK_QML;
+        strQML.append(QML_FLICKABLE_END);
+        DEBUG_MARK_QML;
+        strQML.append(QML_TAB_END);
+        DEBUG_MARK_QML;
+    }*/
+//}
 
 void CAttributeArray::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 {

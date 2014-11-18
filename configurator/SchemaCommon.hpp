@@ -89,8 +89,10 @@
 //#define DEBUG_MARK_STRDOC strDoc.append(__FILE__).append(":").append(__LINE__).append("\n");
 #define DEBUG_MARK_STRDOC
 #define DEBUG_MARK_COMMENT(X) X.append("//  ").append(__FILE__).append(":").append(__LINE__).append("\n");
+#define DEBUG_MARK_COMMENT2(X,Y) X.append("//  UIType=").append(Y->getUIType()).append("  ").append(__FILE__).append(":").append(__LINE__).append("\n");
 #define DEBUG_MARK_STRJS DEBUG_MARK_COMMENT(strJS)
 #define DEBUG_MARK_QML DEBUG_MARK_COMMENT(strQML)
+#define DEBUG_MARK_QML2(X) DEBUG_MARK_COMMENT2(strQML, X)
 //#define DEBUG_MARK_QML
 //#define DEBUG_MARK_STRJS
 
@@ -508,9 +510,9 @@ public:
         return m_eUIType;
     }
 
-    virtual void setUIType(QML_UI_TYPE eUI_Type)
+    virtual void setUIType(QML_UI_TYPE eUI_Type) const
     {
-        assert(m_eUIType == QML_UI_UNKNOWN);
+        //assert(m_eUIType == QML_UI_UNKNOWN);
         m_eUIType = eUI_Type;
     }
 
@@ -534,7 +536,7 @@ protected:
     StringBuffer                m_strXML;
     NODE_TYPES                  m_eNodeType;
     char                        m_pNodeType[1024];
-    QML_UI_TYPE                     m_eUIType;
+    mutable QML_UI_TYPE                     m_eUIType;
     static CIArrayOf<CXSDNodeHandler>  s_callBackEntryHandlersArray;
     static CIArrayOf<CXSDNodeHandler>  s_callBackExitHandlersArray;
 

@@ -7,6 +7,7 @@
 #include "jarray.hpp"
 #include "SchemaCommon.hpp"
 #include "SchemaComplexType.hpp"
+#include <climits>
 
 class CAnnotation;
 class CComplexTypeArray;
@@ -126,7 +127,7 @@ public:
     {
         if (strcmp(m_strMaxOccurs.str(), TAG_UNBOUNDED) == 0)
         {
-            return -1;
+            return __SHRT_MAX__;
         }
         else
         {

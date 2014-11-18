@@ -184,7 +184,20 @@ void CComplexType::getQML(StringBuffer &strQML, int idx) const
     {
 //        strQML.append(QML_GRID_LAYOUT_BEGIN_1);
 //        DEBUG_MARK_QML;
+        if (this->getUIType() == QML_UI_TABLE)
+        {
+            DEBUG_MARK_QML;
+            m_pAttributeArray->setUIType(QML_UI_TABLE_CONTENTS);
+            DEBUG_MARK_QML;
+        }
         m_pAttributeArray->getQML(strQML);
+
+        if (this->getUIType() == QML_UI_TABLE)
+        {
+            DEBUG_MARK_QML;
+            strQML.append(QML_TABLE_VIEW_END);
+            DEBUG_MARK_QML;
+        }
 //        strQML.append(QML_TAB_END);
 //        DEBUG_MARK_QML;
     }
@@ -202,11 +215,57 @@ void CComplexType::getQML(StringBuffer &strQML, int idx) const
 
 void CComplexType::getQML2(StringBuffer &strQML, int idx) const
 {
-    DEBUG_MARK_QML;
+    if (this->getParentNode()->getUIType() == QML_UI_TABLE)
+    {
+        DEBUG_MARK_QML2(this);
+        this->setUIType(QML_UI_TABLE);
+
+        if (m_pAttributeArray != NULL && m_pAttributeArray->length() > 0)
+        {
+            DEBUG_MARK_QML;
+            m_pAttributeArray->getQML2(strQML);
+            DEBUG_MARK_QML;
+        }
+    }
+    else if (this->getParentNode()->getUIType() == QML_UI_TAB)
+    {
+        DEBUG_MARK_QML2(this);
+        this->setUIType(QML_UI_TAB);
+
+        if (m_pSequence != NULL)
+        {
+            DEBUG_MARK_QML2(this);
+            m_pSequence->getQML2(strQML);
+            DEBUG_MARK_QML2(this);
+        }
+        DEBUG_MARK_QML2(this);
+
+        if (m_pAttributeArray != NULL && m_pAttributeArray->length() > 0)
+        {
+            DEBUG_MARK_QML;
+            m_pAttributeArray->getQML2(strQML);
+            DEBUG_MARK_QML;
+        }
+
+        DEBUG_MARK_QML2(this);
+    }
+    else
+    {
+        assert(!"what am i?");
+    }
+}
+/*
+
+    if ((m_pSequence != NULL || (m_pAttributeArray != NULL && m_pAttributeArray->length() > 0)) && this->getUIType() != QML_UI_TABLE)
+    {
+        strQML.append(QML_TAB_VIEW_BEGIN);
+        DEBUG_MARK_QML;
+    }
+
     if (m_pSequence != NULL)
     {
         DEBUG_MARK_QML;
-        m_pSequence->setUIType(QML_UI_TAB_CONTENTS);
+        m_pSequence->setUIType(QML_UI_TAB);
         m_pSequence->getQML2(strQML);
         DEBUG_MARK_QML;
     }
@@ -220,11 +279,33 @@ void CComplexType::getQML2(StringBuffer &strQML, int idx) const
 
     if (m_pAttributeArray != NULL)
     {
+        //strQML.append(QML_TAB_VIEW_BEGIN);
+        //DEBUG_MARK_QML;
+        /*CQMLMarkupHelper::getTabQML(strQML, "Attributes");
+        DEBUG_MARK_QML;
+        strQML.append(QML_GRID_LAYOUT_BEGIN_1);
+        DEBUG_MARK_QML;*/
+/*
         DEBUG_MARK_QML;
         m_pAttributeArray->setUIType(this->getUIType());
         m_pAttributeArray->getQML2(strQML);
         DEBUG_MARK_QML;
-    }
+
+        /*strQML.append(QML_GRID_LAYOUT_END);
+        DEBUG_MARK_QML;
+        strQML.append(QML_FLICKABLE_HEIGHT).append(CQMLMarkupHelper::getImplicitHeight() * 1.5);
+        DEBUG_MARK_QML;
+        strQML.append(QML_FLICKABLE_END);
+        DEBUG_MARK_QML;
+        strQML.append(QML_TAB_END);
+        DEBUG_MARK_QML;*/
+        /*strQML.append(QML_TAB_VIEW_STYLE);
+        DEBUG_MARK_QML;
+        strQML.append(QML_TAB_VIEW_END);
+        DEBUG_MARK_QML;
+        strQML.append(QML_TAB_TEXT_STYLE);
+        DEBUG_MARK_QML;*/
+  /*  }
 
     if (m_pChoice != NULL)
     {
@@ -235,7 +316,17 @@ void CComplexType::getQML2(StringBuffer &strQML, int idx) const
     {
         m_pAttributeGroupArray->getQML2(strQML);
     }
-}
+
+    if ((m_pSequence != NULL || (m_pAttributeArray != NULL && m_pAttributeArray->length() > 0) && this->getUIType() != QML_UI_TABLE_CONTENTS))
+    {
+        strQML.append(QML_TAB_VIEW_STYLE);
+        DEBUG_MARK_QML;
+        strQML.append(QML_TAB_VIEW_END);
+        DEBUG_MARK_QML;
+        strQML.append(QML_TAB_TEXT_STYLE);
+        DEBUG_MARK_QML;
+    }
+}*/
 
 void CComplexType::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 {
@@ -427,10 +518,28 @@ void CComplexTypeArray::getQML(StringBuffer &strQML, int idx) const
 
 void CComplexTypeArray::getQML2(StringBuffer &strQML, int idx) const
 {
+    if (this->getParentNode()->getUIType() == QML_UI_TAB)
+    {
+        DEBUG_MARK_QML;
+        this->setUIType(QML_UI_TAB);
+    }
+    else if (this->getParentNode()->getUIType() == QML_UI_TABLE)
+    {
+        this->setUIType(QML_UI_TABLE);
+        DEBUG_MARK_QML;
+    }
+    else
+    {
+        assert(!"what am i?");
+    }
+
+    DEBUG_MARK_QML;
+
     for (int idx=0; idx < this->length(); idx++)
     {
-        (this->item(idx)).setUIType(this->getUIType());
+        DEBUG_MARK_QML;
         (this->item(idx)).getQML2(strQML);
+        DEBUG_MARK_QML;
     }
 }
 

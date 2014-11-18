@@ -448,7 +448,7 @@ static const char* QML_TOOLTIP_TEXT_END("\
 
 static const char* QML_TABLE_VIEW_BEGIN("\
     TableView {\n\
-        width: 1200\n");
+        width: 800\n");
 
 static const char* QML_TABLE_VIEW_END("\n\
     }\n");

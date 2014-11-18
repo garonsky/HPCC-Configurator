@@ -103,7 +103,7 @@ void CSequence::getQML2(StringBuffer &strQML, int idx) const
 {
     if (p_mElementArray != NULL)
     {
-        p_mElementArray->setUIType(QML_UI_TAB_CONTENTS);
+        this->setUIType(this->getParentNode()->getUIType());
         p_mElementArray->getQML2(strQML);
     }
 }

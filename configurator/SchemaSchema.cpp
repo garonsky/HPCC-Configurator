@@ -271,14 +271,14 @@ void CSchema::getQML2(StringBuffer &strQML, int idx) const
     DEBUG_MARK_QML;
     strQML.append(QML_START);
     DEBUG_MARK_QML;
-    strQML.append(QML_VERTICAL_SCROLL_BAR);
+    /*strQML.append(QML_VERTICAL_SCROLL_BAR);
     DEBUG_MARK_QML;
     strQML.append(QML_HORIZONTAL_SCROLL_BAR);
     DEBUG_MARK_QML;
     strQML.append(QML_SCROLL_BAR_TRANSITIONS);
+    DEBUG_MARK_QML;*/
+    strQML.append(QML_TAB_VIEW_BEGIN);
     DEBUG_MARK_QML;
-    //strQML.append(QML_TAB_VIEW_BEGIN);
-    //DEBUG_MARK_QML;
 
     if (m_pElementArray != NULL)
     {
@@ -315,9 +315,13 @@ void CSchema::getQML2(StringBuffer &strQML, int idx) const
         m_pIncludeArray->getQML2(strQML);
         DEBUG_MARK_QML;
     }
+    strQML.append(QML_TAB_VIEW_STYLE);
+    DEBUG_MARK_QML;
+    strQML.append(QML_TAB_VIEW_END);
+    DEBUG_MARK_QML;
+    strQML.append(QML_TAB_TEXT_STYLE);
+    DEBUG_MARK_QML;
 
-    //DEBUG_MARK_QML;
-    //strQML.append(QML_TAB_END);
     DEBUG_MARK_QML;
     strQML.append(QML_END);
     DEBUG_MARK_QML;

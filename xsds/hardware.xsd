@@ -62,8 +62,9 @@
                         <xs:sequence>
                                 <xs:element name="Deep">
                                     <xs:complexType>
-                                        <xs:element name="Switch" maxOccurs="unbounded">
-                                            <xs:complexType>
+                                        <xs:sequence>
+                                            <xs:element name="Switch" maxOccurs="unbounded">
+                                                <xs:complexType>
                                                 <xs:attribute name="name" type="xs:string" use="optional">
                                                     <xs:annotation>
                                                         <xs:appinfo>
@@ -71,10 +72,85 @@
                                                         </xs:appinfo>
                                                     </xs:annotation>
                                                 </xs:attribute>
-                                            </xs:complexType>
-                                        </xs:element>
+                                                </xs:complexType>
+                                            </xs:element>
+                                        </xs:sequence>
                                     </xs:complexType>
-                            </xs:element>
+                                </xs:element>
+                                <xs:element name="Deep2">
+                                    <xs:complexType>
+                                        <xs:sequence>
+                                            <xs:element name="Switch2">
+                                                <xs:complexType>
+                                                    <xs:attribute name="name3" type="xs:string" use="optional">
+                                                        <xs:annotation>
+                                                            <xs:appinfo>
+                                                                <title>Name2s</title>
+                                                            </xs:appinfo>
+                                                        </xs:annotation>
+                                                    </xs:attribute>
+                                                </xs:complexType>
+                                            </xs:element>
+                                            <xs:element name="Switch4">
+                                                <xs:complexType>
+                                                <xs:attribute name="name515" type="xs:string" use="optional"/>
+                                                    <xs:attribute name="name55" type="xs:string" use="optional">
+                                                        <xs:annotation>
+                                                            <xs:appinfo>
+                                                                <title>Names5</title>
+                                                            </xs:appinfo>
+                                                        </xs:annotation>
+                                                    </xs:attribute>
+                                                </xs:complexType>
+                                            </xs:element>
+                                            <xs:element name="Switch5">
+                                                <xs:complexType>
+                                                    <xs:sequence>
+                                                        <xs:element name="deep5">
+                                                            <xs:complexType>
+                                                                <xs:attribute name="name3" type="xs:string" use="optional">
+                                                                    <xs:annotation>
+                                                                        <xs:appinfo>
+                                                                            <title>Name2s</title>
+                                                                        </xs:appinfo>
+                                                                    </xs:annotation>
+                                                                </xs:attribute>
+                                                            </xs:complexType>
+                                                        </xs:element>
+                                                        <xs:element name="deep6">
+                                                            <xs:complexType>
+                                                                <xs:sequence>
+                                                                    <xs:element name="table1" maxOccurs="unbounded">
+                                                                        <xs:complexType>
+                                                                            <xs:attribute name="name7" type="xs:string" use="optional">
+                                                                                <xs:annotation>
+                                                                                    <xs:appinfo>
+                                                                                        <title>Name7</title>
+                                                                                    </xs:appinfo>
+                                                                                </xs:annotation>
+                                                                            </xs:attribute>
+                                                                        </xs:complexType>
+                                                                    </xs:element>
+                                                                    <xs:element name="table2" maxOccurs="unbounded">
+                                                                        <xs:complexType>
+                                                                            <xs:attribute name="name8" type="xs:string" use="optional">
+                                                                                <xs:annotation>
+                                                                                    <xs:appinfo>
+                                                                                        <title>Name8</title>
+                                                                                    </xs:appinfo>
+                                                                                </xs:annotation>
+                                                                            </xs:attribute>
+                                                                        </xs:complexType>
+                                                                    </xs:element>
+                                                                </xs:sequence>
+                                                            </xs:complexType>
+                                                        </xs:element>
+                                                    </xs:sequence>
+                                                </xs:complexType>
+                                            </xs:element>
+                                        </xs:sequence>
+                                    </xs:complexType>
+                                </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -203,8 +279,13 @@
         </xs:complexType>
     </xs:element>
 
+            <!--xs:element name="Gleb">
+                <xs:attribute
+            </xs:element-->
             </xs:sequence>
             <xs:attribute name="attrib1name"/>
+            <xs:attribute name="attrib2name"/>
+            <xs:attribute name="attrib3name"/>
         </xs:complexType>
    </xs:element>
 </xs:schema>
