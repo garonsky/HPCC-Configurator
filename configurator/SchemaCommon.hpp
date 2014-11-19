@@ -512,7 +512,7 @@ public:
 
     virtual void setUIType(QML_UI_TYPE eUI_Type) const
     {
-        //assert(m_eUIType == QML_UI_UNKNOWN);
+        assert(m_eUIType == QML_UI_UNKNOWN || m_eUIType == eUI_Type);
         m_eUIType = eUI_Type;
     }
 

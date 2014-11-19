@@ -931,11 +931,24 @@ void CElement::getQML2(StringBuffer &strQML, int idx) const
     {
         const CElement *pElem = dynamic_cast<const CElement*>(this->getAncestorElement(this));
 
-        if (idx == 0 && pElem->isTopLevelElement() == false)
+        if (pElem->isTopLevelElement() == false)
+        {
+            //strQML.append(QML_ROW_BEGIN);
+            DEBUG_MARK_QML;
+
+            if (idx == 0)
+            {
+                strQML.append(QML_TAB_VIEW_BEGIN);
+                DEBUG_MARK_QML;
+            }
+        }
+
+/*        if (idx == 0 && pElem->isTopLevelElement() == false)
         {
             strQML.append(QML_TAB_VIEW_BEGIN);
             DEBUG_MARK_QML;
-        }
+        }*/
+
         this->setUIType(QML_UI_TAB);
 
         CQMLMarkupHelper::getTabQML(strQML, this->getTitle());
@@ -944,8 +957,18 @@ void CElement::getQML2(StringBuffer &strQML, int idx) const
         strQML.append(QML_GRID_LAYOUT_BEGIN);
         DEBUG_MARK_QML;
 
-        m_pComplexTypeArray->getQML2(strQML);
-        DEBUG_MARK_QML2(this);
+        strQML.append(QML_ROW_BEGIN);
+        DEBUG_MARK_QML;
+
+        if (m_pComplexTypeArray != NULL && m_pComplexTypeArray->length() > 0)
+        {
+            m_pComplexTypeArray->getQML2(strQML);
+            DEBUG_MARK_QML2(this);
+        }
+
+        strQML.append(QML_ROW_END);
+        DEBUG_MARK_QML;
+
 
         strQML.append(QML_GRID_LAYOUT_END);
         DEBUG_MARK_QML;
@@ -956,15 +979,34 @@ void CElement::getQML2(StringBuffer &strQML, int idx) const
         strQML.append(QML_TAB_END);
         DEBUG_MARK_QML;
 
-        if (this->isLastTab(idx) == true && pElem->isTopLevelElement() == false)
+        const CElementArray *pElementArray = dynamic_cast<const CElementArray*>(this->getConstParentNode());
+
+        assert(pElementArray != NULL);
+
+        if (pElementArray != NULL && pElementArray->length()-1 == idx && pElem->isTopLevelElement() == false)
         {
             strQML.append(QML_TAB_VIEW_STYLE);
             DEBUG_MARK_QML;
+
             strQML.append(QML_TAB_VIEW_END);
             DEBUG_MARK_QML;
+
+            if (pElem->isTopLevelElement() == false)
+            {
+                //strQML.append(QML_ROW_END);
+                DEBUG_MARK_QML;
+            }
+
             strQML.append(QML_TAB_TEXT_STYLE);
             DEBUG_MARK_QML;
         }
+        else
+        {
+            //strQML.append(QML_ROW_END);
+            DEBUG_MARK_QML;
+        }
+
+
     }
 }
     /*else if (this->hasChildElements() == true || this->getMaxOccursInt() == 1)

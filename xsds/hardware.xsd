@@ -8,7 +8,7 @@
         <xs:complexType>
             <xs:sequence>
 
-                <xs:element name="ComputerType">
+                <!--xs:element name="ComputerType">
                 <xs:annotation>
                     <xs:appinfo>
                         <title>Computer Types</title>
@@ -50,7 +50,7 @@
                             </xs:element>
                         </xs:sequence>
                       </xs:complexType>
-                    </xs:element>
+                    </xs:element-->
 
                 <xs:element name="Switches">
                     <xs:annotation>
@@ -60,7 +60,7 @@
                     </xs:annotation>
                     <xs:complexType>
                         <xs:sequence>
-                                <xs:element name="Deep">
+                                <!--xs:element name="Deep">
                                     <xs:complexType>
                                         <xs:sequence>
                                             <xs:element name="Switch" maxOccurs="unbounded">
@@ -76,7 +76,7 @@
                                             </xs:element>
                                         </xs:sequence>
                                     </xs:complexType>
-                                </xs:element>
+                                </xs:element-->
                                 <xs:element name="Deep2">
                                     <xs:complexType>
                                         <xs:sequence>
@@ -106,7 +106,7 @@
                                             <xs:element name="Switch5">
                                                 <xs:complexType>
                                                     <xs:sequence>
-                                                        <xs:element name="deep5">
+                                                        <!--xs:element name="deep5">
                                                             <xs:complexType>
                                                                 <xs:attribute name="name3" type="xs:string" use="optional">
                                                                     <xs:annotation>
@@ -116,11 +116,11 @@
                                                                     </xs:annotation>
                                                                 </xs:attribute>
                                                             </xs:complexType>
-                                                        </xs:element>
+                                                        </xs:element-->
                                                         <xs:element name="deep6">
                                                             <xs:complexType>
                                                                 <xs:sequence>
-                                                                    <xs:element name="table1" maxOccurs="unbounded">
+                                                                    <xs:element name="table1">
                                                                         <xs:complexType>
                                                                             <xs:attribute name="name7" type="xs:string" use="optional">
                                                                                 <xs:annotation>
@@ -131,7 +131,8 @@
                                                                             </xs:attribute>
                                                                         </xs:complexType>
                                                                     </xs:element>
-                                                                    <xs:element name="table2" maxOccurs="unbounded">
+                                                                    <xs:element name="Switch6a"/>
+                                                                    <!--xs:element name="table2" maxOccurs="unbounded">
                                                                         <xs:complexType>
                                                                             <xs:attribute name="name8" type="xs:string" use="optional">
                                                                                 <xs:annotation>
@@ -141,21 +142,27 @@
                                                                                 </xs:annotation>
                                                                             </xs:attribute>
                                                                         </xs:complexType>
-                                                                    </xs:element>
+                                                                    </xs:element-->
                                                                 </xs:sequence>
+                                                                <!--xs:attribute name="name8" type="xs:string" use="optional"/-->
                                                             </xs:complexType>
+
                                                         </xs:element>
+                                                        <xs:element name="deep7"/>
                                                     </xs:sequence>
+                                                      <xs:attribute name="name8" type="xs:string" use="optional"/>
                                                 </xs:complexType>
                                             </xs:element>
+                                            <xs:element name="Switch5a"/>
                                         </xs:sequence>
                                     </xs:complexType>
                                 </xs:element>
                         </xs:sequence>
+                        <xs:attribute name="name9" type="xs:string" use="optional"/>
                     </xs:complexType>
                 </xs:element>
 
-                <xs:element name="Domains">
+                <!--xs:element name="Domains">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="Domain" maxOccurs="unbounded">
@@ -277,13 +284,19 @@
                 </xs:element>
             </xs:sequence>
         </xs:complexType>
-    </xs:element>
+    </xs:element-->
 
             <!--xs:element name="Gleb">
                 <xs:attribute
             </xs:element-->
             </xs:sequence>
-            <xs:attribute name="attrib1name"/>
+            <xs:attribute name="attrib1name">
+                <xs:annotation>
+                                                        <xs:appinfo>
+                                                            <toolTip>Manufacturer</toolTip>
+                                                        </xs:appinfo>
+                                                    </xs:annotation>
+                                                    </xs:attribute>
             <xs:attribute name="attrib2name"/>
             <xs:attribute name="attrib3name"/>
         </xs:complexType>

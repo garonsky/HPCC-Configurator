@@ -216,7 +216,7 @@ static const char* QML_RECTANGLE_BEGIN("\n\
 static const char* QML_RECTANGLE_END("\n\
             width: childrenRect.width\n\
             height: childrenRect.height\n\
-          }\n");
+          } // QML_RECTANGLE_END \n");
 
 static const char* QML_RECTANGLE_LIGHT_STEEEL_BLUE_END(QML_RECTANGLE_END);
 
@@ -453,14 +453,14 @@ static const char* QML_TABLE_VIEW_BEGIN("\
         Layout.preferredWidth: 800\n");
 
 static const char* QML_TABLE_VIEW_END("\n\
-    }\n");
+    } // QML_TABLE_VIEW_END\n");
 
 static const char* QML_TABLE_VIEW_COLUMN_BEGIN("\
         TableViewColumn {\n\
             width: 120\n");
 
 static const char* QML_TABLE_VIEW_COLUMN_END("\
-        }\n");
+        }// QML_TABLE_VIEW_COLUMN_END\n");
 
 static const char* QML_TABLE_VIEW_COLUMN_TITLE_BEGIN("\
             title: \"");
