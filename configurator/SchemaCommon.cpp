@@ -313,7 +313,7 @@ const CXSDNodeBase* CXSDNodeBase::getParentNodeByType(NODE_TYPES eNodeType[], co
    return NULL;  // nothing found
 }*/
 
-void CXSDNodeBase::processEntryHandlers(const CXSDNodeBase *pBase)
+/*void CXSDNodeBase::processEntryHandlers(const CXSDNodeBase *pBase)
 {
     assert(pBase != NULL);
 
@@ -341,7 +341,7 @@ void CXSDNodeBase::processExitHandlers(const CXSDNodeBase *pBase)
     {
         s_callBackExitHandlersArray.item(idx).onEventExit(pBase);
     }
-}
+}*/
 
 
 CXSDNode::CXSDNode(CXSDNodeBase *pParentNode, NODE_TYPES pNodeType) : CXSDNodeBase::CXSDNodeBase(pParentNode, pNodeType)

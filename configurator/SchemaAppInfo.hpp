@@ -34,7 +34,7 @@ public:
 
     virtual void loadXMLFromEnvXml(const IPropertyTree *pEnvTree);
 
-    virtual void traverseAndProcessNodes() const;
+    //virtual void traverseAndProcessNodes() const;
 
     static CAppInfo* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 

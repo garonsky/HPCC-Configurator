@@ -235,11 +235,11 @@ CRestriction* CRestriction::load(CXSDNodeBase* pParentNode, const IPropertyTree 
     return pRestriction;
 }
 
-void  CRestriction::traverseAndProcessNodes() const
+/*void  CRestriction::traverseAndProcessNodes() const
 {
     CXSDNodeBase::processEntryHandlers(this);
     CXSDNodeBase::processExitHandlers(this);
-}
+}*/
 
 const char* CRestriction::getXML(const char* /*pComponent*/)
 {

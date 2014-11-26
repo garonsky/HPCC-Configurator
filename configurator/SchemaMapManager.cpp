@@ -18,6 +18,7 @@ CSchemaMapManager::CSchemaMapManager()
     m_pElementArrayPtrsMap.setown(new MapStringToCElementArray);
     m_pStringToEnumMap.setown(new MapStringToNodeTypeEnum);
     m_pStringToKeyPtrsMap.setown(new MapStringToCKey);
+    m_pStringToNodeBaseMap.setown(new MapStringToCNodeBase);
 
     m_enumArray[XSD_DT_NORMALIZED_STRING][0] = XSD_DATA_TYPE_NORMALIZED_STRING;
     m_enumArray[XSD_DT_NORMALIZED_STRING][1] = XSD_DT_NORMALIZED_STRING_STR;

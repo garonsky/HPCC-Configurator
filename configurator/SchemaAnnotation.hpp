@@ -17,7 +17,7 @@ public:
 
     virtual void dump(std::ostream& cout, unsigned int offset = 0) const;
 
-    virtual void traverseAndProcessNodes() const;
+    //virtual void traverseAndProcessNodes() const;
 
     const CDocumentation* getDocumentation() const
     {

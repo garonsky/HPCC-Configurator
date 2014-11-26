@@ -71,6 +71,9 @@ public:
     enum NODE_TYPES getEnumFromTypeName(const char *pTypeName) const;
     const char* getTypeNameFromEnum(enum NODE_TYPES, bool bForDump = false) const;
 
+    //void addXSDXPathToMap(const char *pXSDXPath, const CXSDNodeBase* pNodeBase);
+    //void removeXSDXPathFromMap(const char *pXSDXPath);
+
 protected:
 
     typedef MapStringTo<CSchema*> MapStringToCSchema;
@@ -107,14 +110,14 @@ protected:
     typedef MapStringTo<CKey*> MapStringToCKey;
     Owned<MapStringToCKey> m_pStringToKeyPtrsMap;
 
+    typedef MapStringTo<CXSDNodeBase*> MapStringToCNodeBase;
+    Owned<MapStringToCNodeBase> m_pStringToNodeBaseMap;
+
     struct STypeStrings
     {
         const char *pXSDTypeString;
         const char *pDumpTypeString;
     };
-
-    /*typedef MapBetween<enum NODE_TYPES, enum NODE_TYPES, STypeStrings, STypeStrings> MapEnumToTypeStringStruct;
-    Owned<MapEnumToTypeStringStruct> m_pStringToEnumMap;*/
 
 private:
 

@@ -29,8 +29,6 @@ configurator/EnvironmentModel.cpp
 configurator/EnvironmentModel.hpp
 configurator/ExceptionStrings.cpp
 configurator/ExceptionStrings.hpp
-configurator/NodeHandlerDocumentation.cpp
-configurator/NodeHandlerDocumentation.hpp
 configurator/QMLMarkup.cpp
 configurator/QMLMarkup.hpp
 configurator/SchemaAll.hpp
@@ -122,3 +120,6 @@ configurator_ui/ConfiguratorUI.cpp
 configurator_ui/ConfiguratorUI.hpp
 configurator/CMakeLists.txt
 CMakeLists.txt
+configurator_app/MainWindow.ui
+configurator/ConfigMessages.hpp
+configurator/ConfigMessages.cpp

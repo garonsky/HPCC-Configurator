@@ -53,7 +53,7 @@ void CAnnotation::dump(std::ostream& cout, unsigned int offset) const
     QuickOutFooter(cout, XSD_ANNOTATION_STR, offset);
 }
 
-void CAnnotation::traverseAndProcessNodes() const
+/*void CAnnotation::traverseAndProcessNodes() const
 {
      CXSDNodeBase::processEntryHandlers(this);
 
@@ -68,7 +68,7 @@ void CAnnotation::traverseAndProcessNodes() const
      }
 
      CXSDNodeBase::processExitHandlers(this);
-}
+}*/
 
 void CAnnotation::getDocumentation(StringBuffer &strDoc) const
 {

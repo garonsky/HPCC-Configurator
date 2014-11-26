@@ -3,7 +3,6 @@
 #include "WizardBase.hpp"
 #include "ConfigSchemaHelper.hpp"
 #include "SchemaCommon.hpp"
-#include "NodeHandlerDocumentation.hpp"
 #include "ExceptionStrings.hpp"
 #include <iostream>
 #include "jfile.hpp"
@@ -15,8 +14,8 @@
 
 #define BUFF_SIZE 1024
 
-CIArrayOf<CXSDNodeHandler>  CXSDNodeBase::s_callBackEntryHandlersArray;
-CIArrayOf<CXSDNodeHandler>  CXSDNodeBase::s_callBackExitHandlersArray;
+//CIArrayOf<CXSDNodeHandler>  CXSDNodeBase::s_callBackEntryHandlersArray;
+//CIArrayOf<CXSDNodeHandler>  CXSDNodeBase::s_callBackExitHandlersArray;
 
 const char *pDefaultDocExt =  ".mod.xml";
 const char *pDefaultQMLExt =  ".qml";

@@ -6,6 +6,7 @@
 #include "jstring.hpp"
 #include "jlib.hpp"
 #include "jlog.hpp"
+#include "jarray.hpp"
 #include "ExceptionStrings.hpp"
 #include "XMLTags.h"
 
@@ -404,7 +405,7 @@ private:
 };
 
 
-class CXSDNodeBase;
+/*class CXSDNodeBase;
 
 class CXSDNodeHandler : public CInterface
 {
@@ -413,7 +414,7 @@ public:
     virtual void onEventEntry(const CXSDNodeBase *pNode) const = 0;
     virtual void onEventExit(const CXSDNodeBase *pNode) const = 0;
 
-};
+};*/
 
 class CXSDNodeBase
 {
@@ -516,7 +517,7 @@ public:
         m_eUIType = eUI_Type;
     }
 
-    static void addEntryHandler(CXSDNodeHandler &Handler)
+/*    static void addEntryHandler(CXSDNodeHandler &Handler)
     {
         s_callBackEntryHandlersArray.append(Handler);
     }
@@ -524,21 +525,23 @@ public:
     static void addExitHandler(CXSDNodeHandler &Handler)
     {
         s_callBackExitHandlersArray.append(Handler);
-    }
+    }*/
 
 protected:
 
-    static void processEntryHandlers(const CXSDNodeBase *pBase);
+    /*static void processEntryHandlers(const CXSDNodeBase *pBase);
 
-    static void processExitHandlers(const CXSDNodeBase *pBase);
+    static void processExitHandlers(const CXSDNodeBase *pBase);*/
 
     CXSDNodeBase*               m_pParentNode;
     StringBuffer                m_strXML;
     NODE_TYPES                  m_eNodeType;
     char                        m_pNodeType[1024];
     mutable QML_UI_TYPE                     m_eUIType;
-    static CIArrayOf<CXSDNodeHandler>  s_callBackEntryHandlersArray;
-    static CIArrayOf<CXSDNodeHandler>  s_callBackExitHandlersArray;
+
+    //MAKEValueArray(StringBuffer, StringBuffer);
+/*    static CIArrayOf<CXSDNodeHandler>  s_callBackEntryHandlersArray;
+    static CIArrayOf<CXSDNodeHandler>  s_callBackExitHandlersArray;*/
 
 private:
 

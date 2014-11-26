@@ -658,6 +658,22 @@ bool saveConfigurationFile()
     return bRetVal;
 }
 
+int getNumberOfMessages()
+{
+
+}
+
+const char* getMessage(int idx)
+{
+
+}
+
+int getTypeOfMessage(int idx)
+{
+
+}
+
+
 
 /*void* getComponent(void *pComponent, int idx)
 {
