@@ -9,6 +9,7 @@
 #include "SchemaCommon.hpp"
 #include "ConfiguratorMain.hpp"
 #include "EnvironmentModel.hpp"
+#include "ConfigNotifications.hpp"
 #include <iostream>
 #include "jlog.hpp"
 
@@ -658,22 +659,43 @@ bool saveConfigurationFile()
     return bRetVal;
 }
 
-int getNumberOfMessages()
+int getNumberOfNotificationTypes()
 {
+    int nRetVal = 0;
 
+    nRetVal = CNotificationManager::getInstance()->getNumberOfNotificationTypes();
+
+    return nRetVal;
 }
 
-const char* getMessage(int idx)
+const char* getNotificationTypeName(int type)
 {
+    const char *pRet = NULL;
 
+    pRet = CNotificationManager::getInstance()->getNotificationTypeName(type);
+
+    return pRet;
 }
 
-int getTypeOfMessage(int idx)
+int getNumberOfNotifications(int type)
 {
+    int nRetVal = 0;
+    enum ENotificationType eType = static_cast<ENotificationType>(type);
 
+    nRetVal = CNotificationManager::getInstance()->getNumberOfNotifications(eType);
+
+    return nRetVal;
 }
 
+const char* getNotification(int type, int idx)
+{
+    const char *pRet = NULL;
+    enum ENotificationType eType = static_cast<ENotificationType>(type);
 
+    pRet = CNotificationManager::getInstance()->getNotification(eType, idx);
+
+    return pRet;
+}
 
 /*void* getComponent(void *pComponent, int idx)
 {

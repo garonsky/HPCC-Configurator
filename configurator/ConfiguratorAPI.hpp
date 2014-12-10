@@ -165,9 +165,12 @@ extern "C" const char* getDocBookByIndex(int idx);
 extern "C" const char* getDojoByIndex(int idx);
 
 extern "C" bool saveConfigurationFile();
-extern "C" int getNumberOfMessages();
-extern "C" const char* getMessage(int idx);
-extern "C" int getTypeOfMessage(int idx);
+
+extern "C" int getNumberOfNotificationTypes();
+extern "C" const char* getNotificationTypeName(int type);
+extern "C" int getNumberOfNotifications(int type);
+extern "C" const char* getNotification(int type, int idx);
+
 
 /*extern "C" void closeConfigurationFile();
 

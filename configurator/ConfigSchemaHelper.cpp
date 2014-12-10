@@ -53,11 +53,12 @@ CConfigSchemaHelper* CConfigSchemaHelper::getInstance(const char* pBuildSetFileN
     return s_pCConfigSchemaHelper;
 }
 
-CConfigSchemaHelper::CConfigSchemaHelper(const char* pBuildSetFile, const char* pBuildSetDir, const char* pDefaultDirOverride) : m_pBasePath(NULL), m_nTables(0), m_pEnvPropertyTree(NULL), m_pSchemaMapManager(NULL)
+CConfigSchemaHelper::CConfigSchemaHelper(const char* pBuildSetFile, const char* pBuildSetDir, const char* pDefaultDirOverride) : m_pBasePath(NULL), m_nTables(0),\
+    m_pEnvPropertyTree(NULL), m_pSchemaMapManager(NULL)
 {
     assert(pBuildSetFile != NULL);
     assert(pBuildSetDir != NULL);
-    assert(m_pSchemaMapManager == NULL);
+
 
     CBuildSetManager::getInstance(pBuildSetFile, pBuildSetDir);
 

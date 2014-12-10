@@ -35,6 +35,27 @@ MainWindow::MainWindow(QWidget *parent) :
     m_pAppData = new ApplicationData();
     m_pTableDataModel = new TableDataModel[MAX_ARRAY_X];
 
+    QTableWidgetItem *item = new QTableWidgetItem("item1");
+    QTableWidgetItem *item2 = new QTableWidgetItem("item2");
+    item->setText("HI");
+    this->ui->notificationTableWidget->setColumnCount(1);
+    this->ui->notificationTableWidget->setRowCount(1);
+
+    this->ui->notificationTableWidget->setItem(0,0,item);
+    this->ui->notificationTableWidget->setHorizontalHeaderItem(0,item2);
+    this->ui->notificationTableWidget->horizontalHeaderItem(0)->setText(CONFIGURATOR_API::getNotificationTypeName(0));
+    //this->ui->notificationTableWidget
+    //this->ui->notificationTableWidget = new QTableWidget(this);
+    //this->ui->notificationTableWidget->horizontalHeaderItem(0)->setText("Whatever");
+    /*m_pTableWidget->setRowCount(10);
+    m_pTableWidget->setColumnCount(3);
+    m_TableHeader<<"#"<<"Name"<<"Text";
+    m_pTableWidget->setHorizontalHeaderLabels(m_TableHeader);
+    m_pTableWidget->verticalHeader()->setVisible(false);*/
+    //this->ui->notificationTableWidget->setColumnCount(1);
+
+
+
     /*m_pThread = new QThread();
     m_pWorker = new CWorker();
 

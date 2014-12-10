@@ -1,9 +1,6 @@
 #include "SchemaMapManager.hpp"
 #include "SchemaAll.hpp"
 
-#define SET_ENUM_ARRAY(X) m_enumArray[XSD_DT_##X][0] = XSD_DATA_TYPE_##X; \
-                          m_enumArray[XSD_DT_##X][1] = XSD_DT_##X_STR;
-
 CSchemaMapManager::CSchemaMapManager()
 {
     m_pSchemaPtrMap.setown(new MapStringToCSchema());

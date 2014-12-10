@@ -121,5 +121,6 @@ configurator_ui/ConfiguratorUI.hpp
 configurator/CMakeLists.txt
 CMakeLists.txt
 configurator_app/MainWindow.ui
-configurator/ConfigMessages.hpp
-configurator/ConfigMessages.cpp
+configurator/ConfigNotifications.hpp
+configurator/ConfigNotifications.cpp
+configurator_app/CMakeLists.txt
