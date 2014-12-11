@@ -517,31 +517,13 @@ public:
         m_eUIType = eUI_Type;
     }
 
-/*    static void addEntryHandler(CXSDNodeHandler &Handler)
-    {
-        s_callBackEntryHandlersArray.append(Handler);
-    }
-
-    static void addExitHandler(CXSDNodeHandler &Handler)
-    {
-        s_callBackExitHandlersArray.append(Handler);
-    }*/
-
 protected:
-
-    /*static void processEntryHandlers(const CXSDNodeBase *pBase);
-
-    static void processExitHandlers(const CXSDNodeBase *pBase);*/
 
     CXSDNodeBase*               m_pParentNode;
     StringBuffer                m_strXML;
     NODE_TYPES                  m_eNodeType;
     char                        m_pNodeType[1024];
     mutable QML_UI_TYPE                     m_eUIType;
-
-    //MAKEValueArray(StringBuffer, StringBuffer);
-/*    static CIArrayOf<CXSDNodeHandler>  s_callBackEntryHandlersArray;
-    static CIArrayOf<CXSDNodeHandler>  s_callBackExitHandlersArray;*/
 
 private:
 
