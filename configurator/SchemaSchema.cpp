@@ -297,7 +297,6 @@ void CSchema::getQML2(StringBuffer &strQML, int idx) const
     if (m_pAttributeGroupArray != NULL)
     {
         DEBUG_MARK_QML;
-        assert(!"Is this valid?");
         m_pAttributeGroupArray->getQML2(strQML);
         DEBUG_MARK_QML;
     }

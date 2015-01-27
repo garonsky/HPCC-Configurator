@@ -371,6 +371,14 @@ void CAttributeGroupArray::getQML(StringBuffer &strQML, int idx) const
     QUICK_QML_ARRAY(strQML);
 }
 
+void CAttributeGroupArray::getQML2(StringBuffer &strQML, int idx) const
+{
+    for (int idx=0; idx < this->length(); idx++)
+    {
+        (this->item(idx)).getQML2(strQML);
+    }
+}
+
 void CAttributeGroupArray::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 {
     assert(index == 1);  // Only 1 array of elements per node

@@ -879,7 +879,7 @@
                 defaultPrefetchProjectPreload="10"
                 defaultSLAPriorityTimeLimit="0"
                 defaultSLAPriorityTimeWarning="5000"
-                defaultStripLeadingWhitespace="1"
+                defaultStripLeadingWhitespace="true"
                 description="Roxie cluster"
                 directory="/var/lib/HPCCSystems/myroxie"
                 diskReadBufferSize="65536"
