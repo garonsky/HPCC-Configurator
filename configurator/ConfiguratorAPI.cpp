@@ -226,7 +226,7 @@ const char* getTableValue(const char *pXPath, int nRow)
             //int offset = strlen(itoa(nRow, pTemp, 10)) - 1;
 
             //strXPath.append((String(strXPathOrignal).substring(strXPath.length()-offset, strXPathOrignal.length()))->toCharArray());
-            strXPath.append((String(strXPathOrignal).substring(strXPathOrignal.length()-offset-1, strXPathOrignal.length()))->toCharArray());
+            strXPath.append((String(strXPathOrignal).substring(strXPathOrignal.length()-offset-1, strXPathOrignal.length()))->str());
 
             pAttribute =  CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getAttributeFromXPath(strXPath.str());
 
