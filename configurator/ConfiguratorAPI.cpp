@@ -190,9 +190,9 @@ const char* getTableValue(const char *pXPath, int nRow)
             char pTemp[64];
             int offset = strlen(itoa(nRow, pTemp, 10)) - 1;
 
-            strXPath.append((String(strXPathOrignal).substring(strXPath.length()-offset, strXPathOrignal.length()))->str());
+            strXPath.append((String(strXPathOrignal).substring(strXPath.length()-offset, strXPathOrignal.length()))->toCharArray());
 
-            pAttribute =  CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getAttributeFromXPath(strXPath.str());
+            pAttribute =  CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getAttributeFromXPath(strXPath.toCharArray());
 
             assert(pAttribute != NULL);
 
