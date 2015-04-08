@@ -58,7 +58,6 @@ void CEnumeration::dump(std::ostream &cout, unsigned int offset) const
 void CEnumeration::getDocumentation(StringBuffer &strDoc) const
 {
     strDoc.appendf("* %s %s\n", this->getValue(), DM_LINE_BREAK);
-
 }
 
 void CEnumeration::getDojoJS(StringBuffer &strJS) const
@@ -239,7 +238,9 @@ CEnumerationArray* CEnumerationArray::load(CXSDNodeBase* pParentNode, const IPro
 
     SETPARENTNODE(pEnumerationArray, pParentNode);
 
-    const CAttribute *pAttribute = dynamic_cast<const CAttribute*>(pEnumerationArray->getParentNodeByType(XSD_ATTRIBUTE));
+
+    // No need to create a blank entry in the docs
+    /*const CAttribute *pAttribute = dynamic_cast<const CAttribute*>(pEnumerationArray->getParentNodeByType(XSD_ATTRIBUTE));
 
     if (pAttribute != NULL)
     {
@@ -253,7 +254,7 @@ CEnumerationArray* CEnumerationArray::load(CXSDNodeBase* pParentNode, const IPro
 
             pEnumerationArray->append(*pEnumeration);
         }
-    }
+    }*/
 
     return pEnumerationArray;
 }

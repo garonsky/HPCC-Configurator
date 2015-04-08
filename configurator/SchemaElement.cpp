@@ -394,11 +394,11 @@ void CElement::getDocumentation(StringBuffer &strDoc) const
 
         if (pGrandParentNode->getNodeType() == XSD_CHOICE)
         {
-            strDoc.appendf("%s%s%s", DM_PARA_BEGIN, this->getName(), DM_PARA_END);
+            strDoc.appendf("%s%s%s", DM_PARA_BEGIN, this->getTitle(), DM_PARA_END);
         }
         else
         {
-            strDoc.appendf("%s%s%s", DM_TITLE_BEGIN, this->getName(), DM_TITLE_END);
+            strDoc.appendf("%s%s%s", DM_TITLE_BEGIN, this->getTitle(), DM_TITLE_END);
         }
 
         DEBUG_MARK_STRDOC;

@@ -26,6 +26,7 @@ public:
     GETTERSETTER(XPath)
     GETTERSETTER(DocTableID)
 
+
     virtual void dump(std::ostream &cout, unsigned int offset = 0) const;
 
     virtual void getDocumentation(StringBuffer &strDoc) const;
@@ -34,15 +35,26 @@ public:
 
     virtual void loadXMLFromEnvXml(const IPropertyTree *pEnvTree);
 
+    bool getDocLineBreak() const
+    {
+        return m_bDocLineBreak;
+    }
+
     //virtual void traverseAndProcessNodes() const;
 
     static CAppInfo* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);
 
 protected:
 
-    CAppInfo(CXSDNodeBase* pParentNode, const char *pViewType = NULL, const char *pColIndex = NULL, const char* pToolTip = NULL, const char* pTitle = NULL, const char* pWidth = NULL, const char* pAutoGenForWizard = NULL, const char* pAutoGenDefaultValue = NULL, const char* pAutoGenDefaultForMultiNode = NULL, const char* pViewChildNodes = NULL, const char* pXPath = NULL, const char* pDocTableID = NULL) : CXSDNodeBase::CXSDNodeBase(pParentNode, XSD_APP_INFO), m_strViewType(pViewType), m_strColIndex(pColIndex), m_strToolTip(pToolTip), m_strTitle(pTitle), m_strWidth(pWidth), m_strAutoGenForWizard(pAutoGenForWizard), m_strAutoGenDefaultValue(pAutoGenDefaultValue), m_strAutoGenDefaultValueForMultiNode(pAutoGenDefaultForMultiNode), m_strViewChildNodes(pViewChildNodes), m_strXPath(pXPath), m_strDocTableID(pDocTableID)
+    CAppInfo(CXSDNodeBase* pParentNode, const char *pViewType = NULL, const char *pColIndex = NULL, const char* pToolTip = NULL, const char* pTitle = NULL, const char* pWidth = NULL, const char* pAutoGenForWizard = NULL,\
+             const char* pAutoGenDefaultValue = NULL, const char* pAutoGenDefaultForMultiNode = NULL, const char* pViewChildNodes = NULL, const char* pXPath = NULL, const char* pDocTableID = NULL, bool bDocLineBreak = false)\
+        : CXSDNodeBase::CXSDNodeBase(pParentNode, XSD_APP_INFO), m_strViewType(pViewType), m_strColIndex(pColIndex), m_strToolTip(pToolTip), m_strTitle(pTitle), m_strWidth(pWidth), m_strAutoGenForWizard(pAutoGenForWizard),\
+          m_strAutoGenDefaultValue(pAutoGenDefaultValue), m_strAutoGenDefaultValueForMultiNode(pAutoGenDefaultForMultiNode), m_strViewChildNodes(pViewChildNodes), m_strXPath(pXPath), m_strDocTableID(pDocTableID),\
+          m_bDocLineBreak(bDocLineBreak)
     {
     }
+
+    bool m_bDocLineBreak;
 
 private:
 

@@ -113,7 +113,14 @@ void CAttribute::getDocumentation(StringBuffer &strDoc) const
         strDoc.appendf("<%s>%s</%s>\n", DM_TABLE_ENTRY, strDocTemp.str(), DM_TABLE_ENTRY);
     }
 
-    strDoc.appendf("<%s>%s</%s>\n", DM_TABLE_ENTRY, pRequired, DM_TABLE_ENTRY);
+    if (m_pAnnotation != NULL && m_pAnnotation->getAppInfo() != NULL && m_pAnnotation->getAppInfo()->getDocLineBreak() == true)
+    {
+        strDoc.appendf("<%s>%s%s</%s>\n", DM_TABLE_ENTRY, DM_LINE_BREAK2, pRequired, DM_TABLE_ENTRY);
+    }
+    else
+    {
+        strDoc.appendf("<%s>%s</%s>\n", DM_TABLE_ENTRY, pRequired, DM_TABLE_ENTRY);
+    }
     strDoc.appendf("</%s>\n", DM_TABLE_ROW);
 }
 

@@ -48,6 +48,9 @@ CAppInfo* CAppInfo::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchema
     StringBuffer strXPathDocID(xpath);
     strXPathDocID.append("/").append(TAG_DOC_ID);
 
+    StringBuffer strXPathDocLineBreak(xpath);
+    strXPathDocLineBreak.append("/").append(TAG_DOC_USE_LINE_BREAK);
+
     StringBuffer strViewType;
     StringBuffer strColIndex;
     StringBuffer strToolTip;
@@ -59,6 +62,7 @@ CAppInfo* CAppInfo::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchema
     StringBuffer strViewChildNodes;
     StringBuffer strXPath;
     StringBuffer strDocTableID;
+    bool bDocLineBreak = false;
 
     if (pSchemaRoot->queryPropTree(strXPathViewType.str()) != NULL)
     {
@@ -104,9 +108,12 @@ CAppInfo* CAppInfo::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchema
     {
         strDocTableID.append(pSchemaRoot->queryPropTree(strXPathDocID.str())->queryProp(""));
     }
+    if (pSchemaRoot->queryPropTree(strXPathDocLineBreak.str()) != NULL)
+    {
+        bDocLineBreak = true;
+    }
 
-
-    CAppInfo *pAppInfo = new CAppInfo(pParentNode, strViewType.str(),  strColIndex.str(), strToolTip.str(), strTitle.str(), strWidth.str(), strAutoGenForWizard.str(), strAutoGenDefaultValue.str(), NULL, strViewChildNodes.str(), strXPath.str(), strDocTableID.str());
+    CAppInfo *pAppInfo = new CAppInfo(pParentNode, strViewType.str(),  strColIndex.str(), strToolTip.str(), strTitle.str(), strWidth.str(), strAutoGenForWizard.str(), strAutoGenDefaultValue.str(), NULL, strViewChildNodes.str(), strXPath.str(), strDocTableID.str(), bDocLineBreak);
 
     pAppInfo->setXSDXPath(xpath);
 
