@@ -2,6 +2,7 @@
 #include "SchemaCommon.hpp"
 #include "jstring.hpp"
 #include "jutil.hpp"
+#include "jarray.hpp"
 #include "jdebug.hpp"
 #include "SchemaAttributes.hpp"
 #include "SchemaElement.hpp"
@@ -9,6 +10,7 @@
 #include "SchemaAnnotation.hpp"
 
 int CQMLMarkupHelper::glImplicitHeight = -1;
+
 
 void CQMLMarkupHelper::getTabQML(StringBuffer &strQML, const char *pName)
 {
@@ -157,4 +159,53 @@ bool CQMLMarkupHelper::isTableRequired(const CAttribute *pAttrib)
     {
         return false;
     }
+}
+
+void CQMLMarkupHelper::buildAccordionStart(StringBuffer &strQML, const char * title, const char * altTitle, int idx)
+{
+    assert(title != NULL);
+    strQML.append("AccordionItem {\n\
+                            title: \"").append(title).append("\"\n");
+    if(strlen(altTitle)){
+        strQML.append("altTitle: \"").append(altTitle).append("\"\n");
+    }
+    strQML.append("index: ").append(idx).append("\n\
+                            contentModel: VisualItemModel {\n");
+}
+void CQMLMarkupHelper::buildColumns(StringBuffer &strQML, StructArrayOf<StringBuffer> &roles, StructArrayOf<StringBuffer> &titles)
+{  
+    /*
+    Sample QML for Column Instance
+    columnNames: [{role:"key",title:"key"}, {role:"value",title:"value"},{role:"alphabet",title:"Alpha"}]
+     */
+    assert(roles.length() == titles.length());
+    strQML.append("columnNames: [");
+    for(int i = 0; i < roles.length(); i++){
+        strQML.append("{ role:\"").append(roles[i]).append("\", title:\"").append(titles[i]).append("\" }");
+        if(i != roles.length() - 1)
+            strQML.append(",");
+    }
+    strQML.append("]\n");
+}
+
+void CQMLMarkupHelper::buildRole(StringBuffer &strQML, const char * role, StructArrayOf<StringBuffer> &values, const char * type, const char * tooltip, const char * placeholder)
+{
+    StringBuffer escapedToolTip = tooltip;
+    escapedToolTip.replaceString("\"","\\\"");
+    StringBuffer escapedPlaceholder = placeholder;
+    escapedPlaceholder.replaceString("\"","\\\"");
+    strQML.append(role);
+    strQML.append(": ListElement { \n");
+    strQML.append("value:[");
+    for(int i = 0; i < values.length(); i++){
+        strQML.append("ListElement {value: \"");
+        strQML.append(values[i]);
+        strQML.append("\"}");
+        if(i != values.length()-1)
+            strQML.append(",");
+    }
+    strQML.append("]\n");
+    strQML.append("type: \"").append(type).append("\"\n");
+    strQML.append("tooltip: \"").append(escapedToolTip).append("\"\n");
+    strQML.append("placeholder: \"").append(escapedPlaceholder).append("\"}\n");
 }

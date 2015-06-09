@@ -151,7 +151,8 @@ void MainWindow::on_treeView_clicked(const QModelIndex &index)
 {
     QUrl url;
     //QString qstrQML(CONFIGURATOR_API::getQML(index.internalPointer()));
-    QString qstrFileName("/tmp/");
+    //QString qstrFileName("/tmp/");
+    QString qstrFileName("qml/");
     qstrFileName.append(CONFIGURATOR_API::getFileName(index.internalPointer()));
     qstrFileName.append(".qml");
 

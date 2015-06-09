@@ -1,4 +1,5 @@
 #include "jptree.hpp"
+#include "jarray.hpp"
 #include "SchemaCommon.hpp"
 #include "SchemaAttributes.hpp"
 #include "SchemaAppInfo.hpp"
@@ -19,6 +20,16 @@
 CAttribute::~CAttribute()
 {
     //CConfigSchemaHelper::getInstance()->getSchemaMapManager()->removeMapOfXPathToAttribute(this->getEnvXPath());
+}
+
+bool CAttribute::isHidden(){
+    if(this->getAnnotation()->getAppInfo() != NULL){
+        if(!stricmp(this->getAnnotation()->getAppInfo()->getViewType(),"hidden")){
+            return true;
+        }
+    }
+    
+    return false;
 }
 
 const char* CAttribute::getTitle() const
@@ -424,57 +435,28 @@ void CAttribute::getQML2(StringBuffer &strQML, int idx) const
     }
 }
 
-    /*if (this->getUIType() == QML_UI_TEXT_FIELD)
-    {
-
-        strQML.append(QML_ROW_BEGIN).append(QML_RECTANGLE_DEFAULT_COLOR_SCHEME_1_BEGIN);
-        DEBUG_MARK_QML;
-
-        strQML.append(QML_TEXT_BEGIN_2).append("\"  ").append(this->getTitle()).append("\"").append(QML_TEXT_END_2);
-        DEBUG_MARK_QML;
-
-        strQML.append(QML_RECTANGLE_LIGHT_STEEEL_BLUE_END);
-        DEBUG_MARK_QML;
-
-        strQML.append(QML_TEXT_FIELD_BEGIN);
-
-        StringBuffer strTextArea("textarea");
-        CQMLMarkupHelper::getRandomID(&strTextArea);
-
-        strQML.append(QML_APP_DATA_GET_VALUE_BEGIN).append(this->getEnvXPath()).append(QML_APP_DATA_GET_VALUE_END);
-
-        strQML.append(QML_ON_ACCEPTED);
-        strQML.append(QML_APP_DATA_SET_VALUE_BEGIN).append(this->getEnvXPath()).append("\", ").append(strTextArea.str()).append(QML_APP_DATA_SET_VALUE_END);
-
-        strQML.append(QML_TEXT_FIELD_ID_BEGIN).append(strTextArea).append(QML_TEXT_FIELD_ID_END);
-        DEBUG_MARK_QML;
-
-        strQML.append(QML_TEXT_FIELD_PLACE_HOLDER_TEXT_BEGIN);
-        strQML.append("\"").append(this->getDefault()).append("\"");
-        strQML.append(QML_TEXT_FIELD_PLACE_HOLDER_TEXT_END);
-        DEBUG_MARK_QML;
-
-        if (this->getAnnotation()->getAppInfo() != NULL) // check for tooltip
-        {
-            CQMLMarkupHelper::getToolTipQML(strQML, this->getAnnotation()->getAppInfo()->getToolTip(), strTextArea.str());
+void CAttribute::getQML3(StringBuffer &strQML, const char * role, int idx) const
+{
+    /*
+    Sample QML Returned by Attribute
+        value: ListElement {
+            value: [ListElement{value: "A Masterpiece"}] // Or multiple for ComboBoxes
+            type: "field" 
+            tooltip:"Hey"
+            placeholder: "kay" 
         }
-
-        strQML.append(QML_TEXT_FIELD_END);
-        DEBUG_MARK_QML;
-
-        strQML.append(QML_ROW_END);
-        DEBUG_MARK_QML;
+     */
+    DEBUG_MARK_QML;
+    StringBuffer name(role == NULL ? this->getName() : role);
+    StructArrayOf<StringBuffer> values;
+    values.append(this->getEnvXPath());
+    if(this->getAnnotation()->getAppInfo() != NULL){
+        CQMLMarkupHelper::buildRole(strQML, name, values, this->getAnnotation()->getAppInfo()->getViewType(),this->getAnnotation()->getAppInfo()->getToolTip(),this->getDefault());
+    } else {
+        CQMLMarkupHelper::buildRole(strQML, name, values);
     }
-    else if (this->getUIType() == QML_UI_TABLE_CONTENTS)
-    {
-        CQMLMarkupHelper::getTableViewColumn(strQML, this->getTitle(), this->getEnvXPath());
-        DEBUG_MARK_QML;
-    }
-    else
-    {
-        assert(!"Why here");
-    }*/
-//}
+    DEBUG_MARK_QML
+}
 
 void CAttribute::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 {
@@ -1249,45 +1231,52 @@ void CAttributeArray::getQML2(StringBuffer &strQML, int idx) const
     }
 
 }
-/*    bool bSetAsTextField = false;
 
-    if (this->getUIType() == QML_UI_TAB)
-    {
-        CQMLMarkupHelper::getTabQML(strQML, "Attributes");
-        DEBUG_MARK_QML;
-        strQML.append(QML_GRID_LAYOUT_BEGIN_1);
-        DEBUG_MARK_QML;
-
-        bSetAsTextField = true;
-
-
-    }
-    for (int i = 0; i < this->length(); i++)
-    {
-        if (bSetAsTextField == false)
-        {
-            (this->item(i)).setUIType(QML_UI_TABLE_CONTENTS);
-            DEBUG_MARK_QML;
+void CAttributeArray::getQML3(StringBuffer &strQML, int idx) const
+{
+    /*
+        Sample QML returned by AttributeArray
+        ListElement {
+            value: ListElement {value: [ListElement{value: "A Masterpiece"}] type: "field"; tooltip:"Hey" }
+            key: ListElement {value: [ListElement{value: "Gabriel"}]}
         }
-        else
-        {
-            (this->item(i)).setUIType(QML_UI_TEXT_FIELD);
-            DEBUG_MARK_QML;
+     */
+    DEBUG_MARK_QML;
+    // If UI is LIST, each AttributeArray.getQML3() call needs to effectively return a row
+    if(this->getUIType() == QML_UI_TABLE_LIST){
+        strQML.append(QML_TABLE_ROW_START);
+        for(int i = 0; i < this->length(); i++){
+            (this->item(i)).getQML3(strQML);
         }
-        (this->item(i)).getQML2(strQML,idx);
+        strQML.append(QML_TABLE_ROW_END);
+    // Otherwise, assume Key/Val and generate your own table
+    } else {
+        StructArrayOf<StringBuffer> roles;
+        StructArrayOf<StringBuffer> titles;
+        strQML.append(QML_TABLE_START);
+        
+        // Builds Columns
+        roles.append("key");
+        titles.append("key");
+        roles.append("value");
+        titles.append("value");
+        CQMLMarkupHelper::buildColumns(strQML, roles, titles);
+        strQML.append(QML_TABLE_CONTENT_START);
+        // build Rows
+        for (int i = 0; i < this->length(); i++)
+        {
+            if((this->item(i)).isHidden()) continue;
+            strQML.append(QML_TABLE_ROW_START);
+            StructArrayOf<StringBuffer> key;
+            key.append(this->item(i).getTitle());
+            CQMLMarkupHelper::buildRole(strQML, "key", key);
+            (this->item(i)).getQML3(strQML, "value");
+            strQML.append(QML_TABLE_ROW_END);
+        }
+    strQML.append(QML_DOUBLE_END_BRACKET);
     }
-    if (this->getUIType() == QML_UI_TAB)
-    {
-        strQML.append(QML_GRID_LAYOUT_END);
-        DEBUG_MARK_QML;
-        strQML.append(QML_FLICKABLE_HEIGHT).append(CQMLMarkupHelper::getImplicitHeight() * 1.5);
-        DEBUG_MARK_QML;
-        strQML.append(QML_FLICKABLE_END);
-        DEBUG_MARK_QML;
-        strQML.append(QML_TAB_END);
-        DEBUG_MARK_QML;
-    }*/
-//}
+    DEBUG_MARK_QML;
+}
 
 void CAttributeArray::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 {
@@ -1355,6 +1344,14 @@ const CAttribute* CAttributeArray::findAttributeWithName(const char *pName, bool
     }
 
     return NULL;
+}
+const void CAttributeArray::getAttributeNames(StructArrayOf<StringBuffer> &names, StructArrayOf<StringBuffer> &titles) const{
+    for(int i = 0; i < this->length(); i++){
+        if(!this->item(i).isHidden()){
+            names.append(this->item(i).getName());
+            titles.append(this->item(i).getTitle());
+        }
+    }
 }
 
 bool CAttributeArray::getCountOfValueMatches(const char *pValue) const

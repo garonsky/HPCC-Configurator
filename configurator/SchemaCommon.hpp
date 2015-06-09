@@ -175,7 +175,10 @@ enum QML_UI_TYPE
     QML_UI_TAB,
     QML_UI_TAB_CONTENTS,
     QML_UI_LABEL,
-    QML_UI_EMPTY
+    QML_UI_EMPTY,
+
+    QML_UI_TABLE_LIST,
+    QML_UI_TABLE_KEYVAL
 };
 
 static const char* DEFAULT_SCHEMA_DIRECTORY("/opt/HPCCSystems/componentfiles/configxml/");
@@ -499,6 +502,10 @@ public:
     {
     }
 
+    virtual void getQML3(StringBuffer &strQML, int idx = -1) const
+    {
+    }
+
     virtual void populateEnvXPath(StringBuffer strXPath, unsigned int index = 1)
     {
     }
@@ -514,7 +521,7 @@ public:
 
     virtual void setUIType(QML_UI_TYPE eUI_Type) const
     {
-        assert(m_eUIType == QML_UI_UNKNOWN || m_eUIType == eUI_Type);
+        //assert(m_eUIType == QML_UI_UNKNOWN || m_eUIType == eUI_Type);
         m_eUIType = eUI_Type;
     }
 

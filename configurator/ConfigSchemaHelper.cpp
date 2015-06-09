@@ -236,7 +236,9 @@ const char* CConfigSchemaHelper::printQML(const char* comp, int nIdx) const
              if (pSchema != NULL)
              {
                  //pSchema->loadXMLFromEnvXml(CConfigSchemaHelper::getConstEnvPropertyTree());
-                 pSchema->getQML2(strQML, nIdx);
+                 //pSchema->getQML2(strQML, nIdx);
+                 pSchema->getQML3(strQML, nIdx);
+
                  return strQML.str();
              }
         }
@@ -728,7 +730,7 @@ const char* CConfigSchemaHelper::getTableValue(const char* pXPath,  int nRow) co
             char pTemp[64];
             int offset = strlen(itoa(nRow, pTemp, 10)) - 1;
 
-            strXPath.append((String(strXPathOrignal).substring(strXPath.length()-offset, strXPathOrignal.length()))->str());
+            strXPath.append((String(strXPathOrignal).substring(strXPath.length()-offset, strXPathOrignal.length())));
             //strXPath.append((String(strXPathOrignal).substring(strXPath.length()-offset, strXPathOrignal.length()))->toCharArray());
 
             pAttribute = m_pSchemaMapManager->getAttributeFromXPath(strXPath.str());

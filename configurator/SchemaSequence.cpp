@@ -108,6 +108,14 @@ void CSequence::getQML2(StringBuffer &strQML, int idx) const
     }
 }
 
+void CSequence::getQML3(StringBuffer &strQML, int idx) const
+{   
+    if (p_mElementArray != NULL)
+    {
+        p_mElementArray->getQML3(strQML);
+    }
+}
+
 void CSequence::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 {
     if (p_mElementArray != NULL)

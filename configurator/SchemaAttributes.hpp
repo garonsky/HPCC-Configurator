@@ -1,7 +1,7 @@
 #ifndef _SCHEMA_ATTRIBUTES_HPP_
 #define _SCHEMA_ATTRIBUTES_HPP_
 
-#include "jhash.hpp"
+#include "jarray.hpp"
 #include "jatomic.hpp"
 #include "XMLTags.h"
 #include "SchemaCommon.hpp"
@@ -51,6 +51,7 @@ public:
 
     virtual void getQML(StringBuffer &strQML, int idx = -1) const;
     virtual void getQML2(StringBuffer &strQML, int idx = -1) const;
+    virtual void getQML3(StringBuffer &strQML, const char * role = NULL, int idx = -1) const;
 
     virtual void populateEnvXPath(StringBuffer strXPath, unsigned int index = 1);
 
@@ -62,6 +63,8 @@ public:
     {
         return m_bInstanceValueValid;
     }
+
+    bool isHidden();
 
     virtual void setEnvValueFromXML(const char *p);
 
@@ -139,6 +142,7 @@ public:
 
     virtual void getQML(StringBuffer &strQML, int idx = -1) const;
     virtual void getQML2(StringBuffer &strQML, int idx = -1) const;
+    virtual void getQML3(StringBuffer &strQML, int idx = -1) const;
 
     virtual void populateEnvXPath(StringBuffer strXPath, unsigned int index = 1);
 
@@ -147,6 +151,7 @@ public:
     virtual const char* getXML(const char* /*pComponent*/);
 
     const CAttribute* findAttributeWithName(const char *pName, bool bCaseInsensitive = true) const;
+    const void getAttributeNames(StructArrayOf<StringBuffer> &names, StructArrayOf<StringBuffer> &titles) const;
 
     static CAttributeArray* load(const char* pSchemaFile);
     static CAttributeArray* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);

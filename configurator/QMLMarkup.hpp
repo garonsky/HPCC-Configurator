@@ -1,8 +1,12 @@
 #ifndef _QMLMARKUP_HPP_
 #define _QMLMARKUP_HPP_
 
+//#include "jarray.hpp"
 class StringBuffer;
 class CAttribute;
+template <typename CLASS>
+class StructArrayOf;
+   
 
 static const char* QML_TABLE_DATA_MODEL(" tableDataModel\n");
 static const char* QML_PROPERTY_STRING_TABLE_BEGIN("\
@@ -467,9 +471,62 @@ static const char* QML_TABLE_VIEW_COLUMN_TITLE_BEGIN("\
 
 static const char* QML_TABLE_VIEW_COLUMN_TITLE_END("\"\n");
 
+// New Constants
+static const char* QML_FILE_START("\
+import QtQuick 2.1                                  \n\
+import QtQuick.Controls 1.2                         \n\
+import QtQuick.Controls.Styles 1.0                  \n\
+import QtQuick.Particles 2.0                        \n\
+import QtQuick.Layouts 1.0                          \n\
+Item {                                              \n\
+    id: gRoot                                       \n\
+    width: 900                                      \n\
+    height: 700                                     \n\
+    property alias root: gRoot                      \n\
+    ScrollView{                                     \n\
+        id: scrollRoot                              \n\
+        anchors.fill: parent                        \n\
+        ListView{                                   \n\
+            id: listRoot                            \n\
+            property int nest: 0                    \n\
+            property int visibility: 0              \n\
+            anchors.fill: parent                    \n\
+            spacing: 4                              \n\
+            model: configModel                      \n\
+            opacity: !visibility                    \n\
+            transitions: Transition {               \n\
+                NumberAnimation {                   \n\
+                    properties: 'opacity'           \n\
+                    easing.type: Easing.InOutQuad   \n\
+                    duration: 1000                  \n\
+                }                                   \n\
+            }                                       \n\
+        }                                           \n\
+    }                                               \n\
+    VisualItemModel {                               \n\
+        id: configModel");
+static const char * QML_DOUBLE_END_BRACKET("}\n}\n");
+// Always start content before column
+static const char * QML_TABLE_START("Table{                 \n");
+static const char * QML_TABLE_CONTENT_START("tableContent: ListModel {                      \n");
+static const char * QML_TABLE_ROW_START("ListElement {");
+static const char * QML_TABLE_ROW_END("}\n");
+static const char * QML_TABLE_CONTENT_END("}\n");
+static const char * QML_TABLE_END("}\n");
+// Table ends can be replaced with DOUBLE_END_BRACKET in appropriate situations (if buildColumns are done before Content)
+
+// NewConstants end;
 class CQMLMarkupHelper
 {
 public:
+    // New Helper Functions
+    static void buildAccordionStart(StringBuffer &strQML, const char * title, const char * altTitle = "", int idx = -5);
+    // End Accordion with QML_DOUBLE_END_BRACKET
+
+    static void buildColumns(StringBuffer &strQML, StructArrayOf<StringBuffer> &roles, StructArrayOf<StringBuffer> &titles);
+    static void buildRole(StringBuffer &strQML, const char * role, StructArrayOf<StringBuffer> &values, const char * type = "text", const char * tooltip = "", const char * placeholder = "");
+    // NewHelperFunctions end;
+
     static void getTabQML(StringBuffer &strQML, const char *pName);
 
     static void getComboBoxListElement(const char* pLabel, StringBuffer &strID, const char* pDefault = "");

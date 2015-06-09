@@ -326,6 +326,49 @@ void CSchema::getQML2(StringBuffer &strQML, int idx) const
     DEBUG_MARK_QML;
 }
 
+void CSchema::getQML3(StringBuffer &strQML, int idx) const
+{
+    // Generates QML ListModel
+    DEBUG_MARK_QML;
+    strQML.append(QML_FILE_START);
+
+    if (m_pElementArray != NULL)
+    {
+        DEBUG_MARK_QML;
+        m_pElementArray->getQML3(strQML, idx);
+        DEBUG_MARK_QML;
+    }
+    /*if (m_pComplexTypeArray != NULL)
+    {
+        DEBUG_MARK_QML;
+        assert(!"Is this valid?");
+        m_pComplexTypeArray->getQML2(strQML);
+        DEBUG_MARK_QML;
+    }
+    if (m_pAttributeGroupArray != NULL)
+    {
+        DEBUG_MARK_QML;
+        m_pAttributeGroupArray->getQML2(strQML);
+        DEBUG_MARK_QML;
+    }
+    if (m_pSimpleTypeArray != NULL)
+    {
+        //assert(!"Is this valid?");
+        DEBUG_MARK_QML;
+        m_pSimpleTypeArray->getQML2(strQML);
+        DEBUG_MARK_QML;
+    }
+    if (m_pIncludeArray != NULL)
+    {
+        //assert(!"Is this valid?");
+        DEBUG_MARK_QML;
+        m_pIncludeArray->getQML2(strQML);
+        DEBUG_MARK_QML;
+    }*/
+
+    strQML.append(QML_DOUBLE_END_BRACKET);
+}
+
 void  CSchema::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 {
     strXPath.append("./").append(XML_TAG_SOFTWARE);

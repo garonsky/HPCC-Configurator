@@ -122,15 +122,16 @@ int initialize(int argc, char *argv[])
 
 int getValue(const char *pXPath, char *pValue)
 {
-    int counter = 0;
-    itoa(counter, pValue, 10);
-    counter++;
-
+    // By Default, return xPath as value.
+    strcpy(pValue, pXPath);
     CAttribute *pAttribute = CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getAttributeFromXPath(pXPath);
 
-    assert(pAttribute != NULL);
-
-    if (pAttribute->isInstanceValueValid() == true)
+    //assert(pAttribute != NULL);
+    if(pAttribute == NULL)
+    {
+        std::cout << pXPath << " is an Invalid xPath, returning xPath as value" << std::endl;
+    }
+    else if (pAttribute->isInstanceValueValid() == true)
     {
         //strcpy(pValue, pAttribute->getEnvValueFromXML());
         strcpy(pValue, pAttribute->getInstanceValue());
@@ -226,7 +227,7 @@ const char* getTableValue(const char *pXPath, int nRow)
             //int offset = strlen(itoa(nRow, pTemp, 10)) - 1;
 
             //strXPath.append((String(strXPathOrignal).substring(strXPath.length()-offset, strXPathOrignal.length()))->toCharArray());
-            strXPath.append((String(strXPathOrignal).substring(strXPathOrignal.length()-offset-1, strXPathOrignal.length()))->str());
+            strXPath.append((String(strXPathOrignal).substring(strXPathOrignal.length()-offset-1, strXPathOrignal.length())));
 
             pAttribute =  CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getAttributeFromXPath(strXPath.str());
 
