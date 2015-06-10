@@ -137,7 +137,7 @@ public:
         m_nTables = 0;
     }
 
-    bool saveConfigurtionFile() const;
+    bool saveConfigurationFile() const;
 
 protected:
 
