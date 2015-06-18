@@ -480,7 +480,11 @@ void CAttribute::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 {
     assert(this->getName() != NULL);
 
-    strXPath.setLength(strXPath.length()-3);  // remove [N] from XPath;
+    const char *pChar = strrchr(strXPath.str(),'[');
+
+    assert(pChar != NULL && strlen(pChar) >= 3);
+
+    strXPath.setLength(strXPath.length()-strlen(pChar));  // remove [N] from XPath;
     strXPath.appendf("[%d]", index);
 
     strXPath.append("/").append("[@").append(this->getName()).append("]");
