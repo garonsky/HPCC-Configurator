@@ -451,9 +451,16 @@ void CAttribute::getQML3(StringBuffer &strQML, const char * role, int idx) const
     StructArrayOf<StringBuffer> values;
     values.append(this->getEnvXPath());
     if(this->getAnnotation()->getAppInfo() != NULL){
-        CQMLMarkupHelper::buildRole(strQML, name, values, this->getAnnotation()->getAppInfo()->getViewType(),this->getAnnotation()->getAppInfo()->getToolTip(),this->getDefault());
+        const char * viewType = this->getAnnotation()->getAppInfo()->getViewType();
+        if( viewType != NULL){
+            if(!stricmp(viewType,"readonly"))
+                viewType = "text";
+            else
+                viewType = "field";
+        } else viewType = "field";
+        CQMLMarkupHelper::buildRole(strQML, name, values, viewType, this->getAnnotation()->getAppInfo()->getToolTip(), this->getDefault());
     } else {
-        CQMLMarkupHelper::buildRole(strQML, name, values);
+        CQMLMarkupHelper::buildRole(strQML, name, values, "field");
     }
     DEBUG_MARK_QML
 }

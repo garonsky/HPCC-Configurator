@@ -1035,7 +1035,7 @@ void CElement::getQML3(StringBuffer &strQML, int idx) const
             /*if(!stricmp(getMaxOccurs(),"unbounded")) // If unbounded, print index
                 CQMLMarkupHelper::buildAccordionStart(strQML, this->getTitle(), altTitle, idx);
             else // Otherwise, don't*/
-                CQMLMarkupHelper::buildAccordionStart(strQML, this->getTitle(), altTitle);
+            CQMLMarkupHelper::buildAccordionStart(strQML, this->getTitle(), altTitle);
             DEBUG_MARK_QML;
             m_pComplexTypeArray->getQML3(strQML);
             strQML.append(QML_DOUBLE_END_BRACKET);

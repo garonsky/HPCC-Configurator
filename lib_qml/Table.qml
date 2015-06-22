@@ -23,7 +23,18 @@ Item{
 	Component {
 		id: fieldCol
 		TextField{
-			text: (value ? (typeof ApplicationData != 'undefined' ? (ApplicationData.getValue(value) ? ApplicationData.getValue(value) : value) : value) : "")
+			text: {
+                var result = value;
+                if (typeof ApplicationData != 'undefined' && value){
+                    result = ApplicationData.getValue(value);
+                    console.log(value + "|" + result)
+                    if(!result){
+                        console.log("I didn't like the result: ", result)
+                        result = ""
+                    }
+                }
+                return result;
+            }
 			placeholderText: placeholder
 			onEditingFinished: {
 				if(typeof ApplicationData != 'undefined')
@@ -47,7 +58,6 @@ Item{
 					}
 				}
 				return result;
-				//return (value ? (typeof ApplicationData != 'undefined' ? (ApplicationData.getValue(value) ? (ApplicationData.getValue(value) != "lol" ? ApplicationData.getValue(value) : value ) : value) : value) : (placeholder ? placeholder : ""))
 			}
 		}
 	}

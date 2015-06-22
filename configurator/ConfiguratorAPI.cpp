@@ -129,17 +129,19 @@ int getValue(const char *pXPath, char *pValue)
     //assert(pAttribute != NULL);
     if(pAttribute == NULL)
     {
-        std::cout << pXPath << " is an Invalid xPath, returning xPath as value" << std::endl;
+        std::cout << "xPath: " << pXPath << "| value: " << pXPath << std::endl;
     }
     else if (pAttribute->isInstanceValueValid() == true)
     {
         //strcpy(pValue, pAttribute->getEnvValueFromXML());
         strcpy(pValue, pAttribute->getInstanceValue());
+        std::cout << "xPath: " << pXPath << "| value: " << pValue << std::endl;
     }
-    else
-    {
+    /*else
+    { // If attribute is valid but instance does not exist
+        std::cout << "xPath: " << pXPath << "| value: NULL" << std::endl;
         pValue = NULL;
-    }
+    }*/
     return true;
 }
 
