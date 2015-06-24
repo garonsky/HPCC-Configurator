@@ -15,9 +15,9 @@ const CXSDNodeBase* CSequence::getNodeByTypeAndNameDescending(NODE_TYPES eNodeTy
         return this;
     }
 
-    if (p_mElementArray != NULL)
+    if (m_pElementArray != NULL)
     {
-        pMatchingNode = p_mElementArray->getNodeByTypeAndNameDescending(eNodeType, pName);
+        pMatchingNode = m_pElementArray->getNodeByTypeAndNameDescending(eNodeType, pName);
     }
 
     return pMatchingNode;
@@ -67,9 +67,9 @@ void CSequence::dump(std::ostream& cout, unsigned int offset) const
 
     QUICK_OUT(cout, XSDXPath,  offset);
 
-    if (p_mElementArray != NULL)
+    if (m_pElementArray != NULL)
     {
-        p_mElementArray->dump(cout, offset);
+        m_pElementArray->dump(cout, offset);
     }
 
     QuickOutFooter(cout, XSD_SEQUENCE_STR, offset);
@@ -77,50 +77,50 @@ void CSequence::dump(std::ostream& cout, unsigned int offset) const
 
 void CSequence::getDocumentation(StringBuffer &strDoc) const
 {
-    if (p_mElementArray != NULL)
+    if (m_pElementArray != NULL)
     {
-        p_mElementArray->getDocumentation(strDoc);
+        m_pElementArray->getDocumentation(strDoc);
     }
 }
 
 void CSequence::getDojoJS(StringBuffer &strJS) const
 {
-    if (p_mElementArray != NULL)
+    if (m_pElementArray != NULL)
     {
-        p_mElementArray->getDojoJS(strJS);
+        m_pElementArray->getDojoJS(strJS);
     }
 }
 
 void CSequence::getQML(StringBuffer &strQML, int idx) const
 {
-    if (p_mElementArray != NULL)
+    if (m_pElementArray != NULL)
     {
-        p_mElementArray->getQML(strQML);
+        m_pElementArray->getQML(strQML);
     }
 }
 
 void CSequence::getQML2(StringBuffer &strQML, int idx) const
 {
-    if (p_mElementArray != NULL)
+    if (m_pElementArray != NULL)
     {
         this->setUIType(this->getParentNode()->getUIType());
-        p_mElementArray->getQML2(strQML);
+        m_pElementArray->getQML2(strQML);
     }
 }
 
 void CSequence::getQML3(StringBuffer &strQML, int idx) const
 {   
-    if (p_mElementArray != NULL)
+    if (m_pElementArray != NULL)
     {
-        p_mElementArray->getQML3(strQML);
+        m_pElementArray->getQML3(strQML);
     }
 }
 
 void CSequence::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 {
-    if (p_mElementArray != NULL)
+    if (m_pElementArray != NULL)
     {
-        p_mElementArray->populateEnvXPath(strXPath);
+        m_pElementArray->populateEnvXPath(strXPath);
     }
 
     this->setEnvXPath(strXPath);
@@ -128,15 +128,15 @@ void CSequence::populateEnvXPath(StringBuffer strXPath, unsigned int index)
 
 void CSequence::loadXMLFromEnvXml(const IPropertyTree *pEnvTree)
 {
-    if (p_mElementArray != NULL)
+    if (m_pElementArray != NULL)
     {
-        p_mElementArray->loadXMLFromEnvXml(pEnvTree);
+        m_pElementArray->loadXMLFromEnvXml(pEnvTree);
     }
 }
 
 bool CSequence::hasChildElements() const
 {
-    if (this->p_mElementArray->length() > 0)
+    if (this->m_pElementArray->length() > 0)
     {
         return true;
     }

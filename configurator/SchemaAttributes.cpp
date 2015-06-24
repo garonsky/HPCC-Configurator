@@ -22,13 +22,12 @@ CAttribute::~CAttribute()
     //CConfigSchemaHelper::getInstance()->getSchemaMapManager()->removeMapOfXPathToAttribute(this->getEnvXPath());
 }
 
-bool CAttribute::isHidden(){
-    if(this->getAnnotation()->getAppInfo() != NULL){
-        if(!stricmp(this->getAnnotation()->getAppInfo()->getViewType(),"hidden")){
-            return true;
-        }
+bool CAttribute::isHidden()
+{
+    if(this->getAnnotation()->getAppInfo() != NULL && !stricmp(this->getAnnotation()->getAppInfo()->getViewType(),"hidden"))
+    {
+        return true;
     }
-    
     return false;
 }
 
@@ -447,19 +446,22 @@ void CAttribute::getQML3(StringBuffer &strQML, const char * role, int idx) const
         }
      */
     DEBUG_MARK_QML;
-    StringBuffer name(role == NULL ? this->getName() : role);
-    StructArrayOf<StringBuffer> values;
+    StringBuffer name(role == NULL || role[0] == '\0' ? this->getName() : role);
+    StringArray values;
     values.append(this->getEnvXPath());
-    if(this->getAnnotation()->getAppInfo() != NULL){
+    if(this->getAnnotation()->getAppInfo() != NULL)
+    {
         const char * viewType = this->getAnnotation()->getAppInfo()->getViewType();
-        if( viewType != NULL){
+        if( viewType != NULL)
+        {
             if(!stricmp(viewType,"readonly"))
                 viewType = "text";
             else
                 viewType = "field";
         } else viewType = "field";
         CQMLMarkupHelper::buildRole(strQML, name, values, viewType, this->getAnnotation()->getAppInfo()->getToolTip(), this->getDefault());
-    } else {
+    } else
+    {
         CQMLMarkupHelper::buildRole(strQML, name, values, "field");
     }
     DEBUG_MARK_QML
@@ -1250,16 +1252,20 @@ void CAttributeArray::getQML3(StringBuffer &strQML, int idx) const
      */
     DEBUG_MARK_QML;
     // If UI is LIST, each AttributeArray.getQML3() call needs to effectively return a row
-    if(this->getUIType() == QML_UI_TABLE_LIST){
+    if(this->getUIType() == QML_UI_TABLE_LIST)
+    {
         strQML.append(QML_TABLE_ROW_START);
-        for(int i = 0; i < this->length(); i++){
+        for(int i = 0; i < this->length(); i++)
+        {
             (this->item(i)).getQML3(strQML);
         }
         strQML.append(QML_TABLE_ROW_END);
     // Otherwise, assume Key/Val and generate your own table
-    } else {
-        StructArrayOf<StringBuffer> roles;
-        StructArrayOf<StringBuffer> titles;
+    } 
+    else 
+    {
+        StringArray roles;
+        StringArray titles;
         strQML.append(QML_TABLE_START);
         
         // Builds Columns
@@ -1272,9 +1278,10 @@ void CAttributeArray::getQML3(StringBuffer &strQML, int idx) const
         // build Rows
         for (int i = 0; i < this->length(); i++)
         {
-            if((this->item(i)).isHidden()) continue;
+            if((this->item(i)).isHidden()) 
+                continue;
             strQML.append(QML_TABLE_ROW_START);
-            StructArrayOf<StringBuffer> key;
+            StringArray key;
             key.append(this->item(i).getTitle());
             CQMLMarkupHelper::buildRole(strQML, "key", key);
             (this->item(i)).getQML3(strQML, "value");
@@ -1352,9 +1359,12 @@ const CAttribute* CAttributeArray::findAttributeWithName(const char *pName, bool
 
     return NULL;
 }
-const void CAttributeArray::getAttributeNames(StructArrayOf<StringBuffer> &names, StructArrayOf<StringBuffer> &titles) const{
-    for(int i = 0; i < this->length(); i++){
-        if(!this->item(i).isHidden()){
+const void CAttributeArray::getAttributeNames(StringArray &names, StringArray &titles) const
+{
+    for(int i = 0; i < this->length(); i++)
+    {
+        if(!this->item(i).isHidden())
+        {
             names.append(this->item(i).getName());
             titles.append(this->item(i).getTitle());
         }

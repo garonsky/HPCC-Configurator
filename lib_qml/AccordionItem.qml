@@ -4,7 +4,8 @@ Rectangle {
     id: accordion
     property string title
     property string altTitle
-    property int index : -5
+    property bool edited: false
+    property int index : -1
     property var originalParent : parent
     property var colorSchemePicker:[
 		["#1be7ff","#6eeb83","#e4ff1a","#e8aa14","#ff5714"],
@@ -49,7 +50,7 @@ Rectangle {
 	states: [
 		State {
 			name: "EXPANDED"
-			StateChangeScript {script: {
+			StateChangeScript { script: {
 		    		
 			}}
 			ParentChange{
@@ -76,7 +77,7 @@ Rectangle {
             	duration: 500
             	easing.type: Easing.OutQuad 
             }
-            ScriptAction {script:{
+            ScriptAction { script:{
             	if(state == "")
             		listRoot.visibility = listRoot.visibility - 1
             	else if(state == "EXPANDED")
@@ -89,7 +90,8 @@ Rectangle {
 
 	Text {
     	id: titleText
-    	text: (altTitle ? (typeof ApplicationData != 'undefined' ? ApplicationData.getValue(altTitle) : altTitle) + "|" : "") + title
+    	text: (altTitle ? (typeof ApplicationData != 'undefined' ? ApplicationData.getValue(altTitle) : altTitle) + "|" : "") + title + (edited ? "*" :"")
+        font.bold: edited
 		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.top: parent.top
 		anchors.topMargin: 4

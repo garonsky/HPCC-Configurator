@@ -4,8 +4,8 @@
 //#include "jarray.hpp"
 class StringBuffer;
 class CAttribute;
-template <typename CLASS>
-class StructArrayOf;
+class StringArray;
+class String;
    
 
 static const char* QML_TABLE_DATA_MODEL(" tableDataModel\n");
@@ -520,11 +520,13 @@ class CQMLMarkupHelper
 {
 public:
     // New Helper Functions
-    static void buildAccordionStart(StringBuffer &strQML, const char * title, const char * altTitle = "", int idx = -5);
+    static void buildAccordionStart(StringBuffer &strQML, const char * title, const char * altTitle = "", int idx = -1);
     // End Accordion with QML_DOUBLE_END_BRACKET
 
-    static void buildColumns(StringBuffer &strQML, StructArrayOf<StringBuffer> &roles, StructArrayOf<StringBuffer> &titles);
-    static void buildRole(StringBuffer &strQML, const char * role, StructArrayOf<StringBuffer> &values, const char * type = "text", const char * tooltip = "", const char * placeholder = "");
+    static void buildColumns(StringBuffer &strQML, StringArray &roles, StringArray &titles);
+    static void buildRole(StringBuffer &strQML, const char * role, StringArray &values, const char * type = "text", const char * tooltip = "", const char * placeholder = "");
+
+    static const StringBuffer printProperty(const char * property, const char * value, const bool newline = true);
     // NewHelperFunctions end;
 
     static void getTabQML(StringBuffer &strQML, const char *pName);

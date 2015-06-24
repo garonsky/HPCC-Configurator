@@ -10,7 +10,7 @@ class CSequence : public CXSDNode
 {
 public:
 
-    CSequence(CXSDNodeBase* pParentNode = NULL, CElementArray* pElemArray = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_SEQUENCE), p_mElementArray(pElemArray)
+    CSequence(CXSDNodeBase* pParentNode = NULL, CElementArray* pElemArray = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_SEQUENCE), m_pElementArray(pElemArray)
     {
     }
 
@@ -42,7 +42,7 @@ public:
 
 protected:
 
-    CElementArray *p_mElementArray;
+    CElementArray *m_pElementArray;
 
 private:
 

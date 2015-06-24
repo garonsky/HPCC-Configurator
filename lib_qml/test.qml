@@ -82,26 +82,23 @@ Item {
                                                 AccordionItem{
                                                     title: "6"
                                                     contentModel: VisualItemModel {
-                                                        /*Table{
+                                                        Table{
                                                             tableContent: ListModel {
                                                                 ListElement {
-                                                                    value: ListElement {value: "A Masterpiece"; type: "field"; tooltip:"Hey" }
-                                                                    key: ListElement {value: "Gabriel"}
-                                                                    alphabet: ListElement { value: "soup" }
+                                                                    value: ListElement {value: [ListElement{value: "A Masterpiece"}] type: "field"; tooltip:"Hey" }
+                                                                    key: ListElement {value: [ListElement{value: "Gabriel"}]}
                                                                 }
                                                                 ListElement {
-                                                                    value: ListElement {value: "Brilliance"; type: "field"; placeholder: "lel"}
-                                                                    key: ListElement { value: "Jens" }
-                                                                    alphabet: ListElement { value: "order" }
+                                                                    value: ListElement {value: [ListElement{value: "Brilliance"}] type: "field"; placeholder: "lel"}
+                                                                    key: ListElement { value: [ListElement{value: "Jens"}] type: "field"}
                                                                 }
                                                                 ListElement {
-                                                                    value: ListElement {value: "Outstanding"; type: "field"}
-                                                                    key: ListElement { value: "Frederik" }
-                                                                    alphabet: ListElement { value: "yodels" }
+                                                                    value: ListElement {value: [ListElement{value: "Outstanding"}] type: "field"}
+                                                                    key: ListElement { value: [ListElement{value: "Frederik"},ListElement{value: "Jacob"},ListElement{value: "Markus"}] type: "combo" }
                                                                 }
                                                             }
-                                                            columnNames: [{role:"key",title:"key"}, {role:"value",title:"value"},{role:"alphabet",title:"Alpha"}]
-                                                        }*/
+                                                            columnNames: [{role:"key",title:"key"}, {role:"value",title:"value"}]
+                                                        }
                                                         Text {text: "Hello"}
                                                     }
                                                 }
@@ -120,26 +117,23 @@ Item {
         AccordionItem{
             title: "7"
             contentModel: VisualItemModel {
-                /*Table{
+                Table{
                     tableContent: ListModel {
                         ListElement {
-                            value: ListElement {value: "A Masterpiece"; type: "field"; tooltip:"Hey" }
-                            key: ListElement {value: "Gabriel"}
-                            alphabet: ListElement { value: "soup" }
+                            value: ListElement {value: [ListElement{value: "A Masterpiece"}] type: "field"; tooltip:"Hey" }
+                            key: ListElement {value: [ListElement{value: "Gabriel"}]}
                         }
                         ListElement {
-                            value: ListElement {value: "Brilliance"; type: "field"; placeholder: "lel"}
-                            key: ListElement { value: "Jens" }
-                            alphabet: ListElement { value: "order" }
+                            value: ListElement {value: [ListElement{value: "Brilliance"}] type: "field"; placeholder: "lel"}
+                            key: ListElement { value: [ListElement{value: "Jens"}] type: "field"}
                         }
                         ListElement {
-                            value: ListElement {value: "Outstanding"; type: "field"}
-                            key: ListElement { value: "Frederik" }
-                            alphabet: ListElement { value: "yodels" }
+                            value: ListElement {value: [ListElement{value: "Outstanding"}] type: "field"}
+                            key: ListElement { value: [ListElement{value: "Frederik"},ListElement{value: "Jacob"},ListElement{value: "Markus"}] type: "combo" }
                         }
                     }
-                    columnNames: [{role:"key",title:"key"}, {role:"value",title:"value"},{role:"alphabet",title:"Alpha"}]
-                }*/
+                    columnNames: [{role:"key",title:"key"}, {role:"value",title:"value"}]
+                }
                 Text {text: "Hello"}
 
             }

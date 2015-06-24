@@ -1025,16 +1025,12 @@ void CElement::getQML3(StringBuffer &strQML, int idx) const
         else 
         {
             const char * altTitle = "";
-            if((m_pComplexTypeArray->item(0)).getAttributeArray() != NULL){
-                if((m_pComplexTypeArray->item(0)).getAttributeArray()->findAttributeWithName("name") != NULL){
-                    altTitle = (m_pComplexTypeArray->item(0)).getAttributeArray()->findAttributeWithName("name")->getEnvXPath();
-                }
+            if((m_pComplexTypeArray->item(0)).getAttributeArray() != NULL && (m_pComplexTypeArray->item(0)).getAttributeArray()->findAttributeWithName("name") != NULL)
+            {
+                altTitle = (m_pComplexTypeArray->item(0)).getAttributeArray()->findAttributeWithName("name")->getEnvXPath();
             }
     
             DEBUG_MARK_QML;
-            /*if(!stricmp(getMaxOccurs(),"unbounded")) // If unbounded, print index
-                CQMLMarkupHelper::buildAccordionStart(strQML, this->getTitle(), altTitle, idx);
-            else // Otherwise, don't*/
             CQMLMarkupHelper::buildAccordionStart(strQML, this->getTitle(), altTitle);
             DEBUG_MARK_QML;
             m_pComplexTypeArray->getQML3(strQML);
@@ -1221,12 +1217,9 @@ bool CElement::isTopLevelElement() const
 
 const char * CElement::getViewType() const
 {
-    if(m_pAnnotation != NULL){
-        if(m_pAnnotation->getAppInfo() != NULL){
-            if(m_pAnnotation->getAppInfo()->getViewType() != NULL){
-                return this->getAnnotation()->getAppInfo()->getViewType();
-            }
-        }
+    if(m_pAnnotation != NULL && m_pAnnotation->getAppInfo() != NULL)
+    {
+        return m_pAnnotation->getAppInfo()->getViewType();
     }
     return NULL;
 }
@@ -1337,16 +1330,17 @@ void CElementArray::getQML2(StringBuffer &strQML, int idx) const
 void CElementArray::getQML3(StringBuffer &strQML, int idx) const
 {
     DEBUG_MARK_QML;
-    if(this->length() > 1){
-        
-        StructArrayOf<StringBuffer> keyspace;
+    if(this->length() > 1)
+    {
+        StringArray keyspace;
         MapStringTo<bool,bool> isList;
         MapStringTo<StringBuffer,const char *> elementGroups;
         // Go through Element Array to initialize elementGroups
         for (int i = 0; i < this->length(); i++) 
         {
             // If this is a unique element name
-            if(elementGroups.getValue((this->item(i)).getName()) == NULL){
+            if(elementGroups.getValue((this->item(i)).getName()) == NULL)
+            {
                 // Initialize temp string
                 StringBuffer temp("");
                 // Build Accordion
@@ -1363,8 +1357,8 @@ void CElementArray::getQML3(StringBuffer &strQML, int idx) const
                 {
                     isList.setValue((this->item(i)).getName(),true);
                     temp.append(QML_TABLE_START);
-                    StructArrayOf<StringBuffer> names;
-                    StructArrayOf<StringBuffer> titles;
+                    StringArray names;
+                    StringArray titles;
                     ((this->item(i)).getComplexTypeArray()->item(0)).getAttributeArray()->getAttributeNames(names,titles);
                     CQMLMarkupHelper::buildColumns(temp, names, titles);
                     temp.append(QML_TABLE_CONTENT_START);
@@ -1379,16 +1373,19 @@ void CElementArray::getQML3(StringBuffer &strQML, int idx) const
         for (int i = 0; i < this->length(); i++)
         {
             assert(*elementGroups.getValue((this->item(i)).getName()) != NULL);
-            if(*elementGroups.getValue((this->item(i)).getName()) != NULL){
+            if(*elementGroups.getValue((this->item(i)).getName()) != NULL)
+            {
                 StringBuffer temp = *elementGroups.getValue((this->item(i)).getName());
-                if(*isList.getValue((this->item(i)).getName()) == true){
+                if(*isList.getValue((this->item(i)).getName()) == true)
+                {
                     (this->item(i)).setUIType(QML_UI_TABLE_LIST);
                 }
                 (this->item(i)).getQML3(temp,i);
                 elementGroups.setValue((this->item(i)).getName(),temp.str());
             }
         }
-        for(int i = 0; i < keyspace.length(); i++){
+        for(int i = 0; i < keyspace.length(); i++)
+        {
             strQML.append(*elementGroups.getValue(keyspace[i]));
             DEBUG_MARK_QML;
             if(*isList.getValue(keyspace[i]) == true)

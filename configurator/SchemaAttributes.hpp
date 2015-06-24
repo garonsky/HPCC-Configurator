@@ -151,7 +151,7 @@ public:
     virtual const char* getXML(const char* /*pComponent*/);
 
     const CAttribute* findAttributeWithName(const char *pName, bool bCaseInsensitive = true) const;
-    const void getAttributeNames(StructArrayOf<StringBuffer> &names, StructArrayOf<StringBuffer> &titles) const;
+    const void getAttributeNames(StringArray &names, StringArray &titles) const;
 
     static CAttributeArray* load(const char* pSchemaFile);
     static CAttributeArray* load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath);

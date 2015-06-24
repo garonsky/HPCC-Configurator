@@ -11,7 +11,6 @@
 
 int CQMLMarkupHelper::glImplicitHeight = -1;
 
-
 void CQMLMarkupHelper::getTabQML(StringBuffer &strQML, const char *pName)
 {
     assert(pName != NULL);
@@ -163,49 +162,71 @@ bool CQMLMarkupHelper::isTableRequired(const CAttribute *pAttrib)
 
 void CQMLMarkupHelper::buildAccordionStart(StringBuffer &strQML, const char * title, const char * altTitle, int idx)
 {
+    StringBuffer result;
     assert(title != NULL);
-    strQML.append("AccordionItem {\n\
-                            title: \"").append(title).append("\"\n");
+    result.append("AccordionItem {\n");
+    result.append(CQMLMarkupHelper::printProperty("title",title));
     if(strlen(altTitle)){
-        strQML.append("altTitle: \"").append(altTitle).append("\"\n");
+        result.append(CQMLMarkupHelper::printProperty("altTitle",altTitle));
     }
-    strQML.append("index: ").append(idx).append("\n\
-                            contentModel: VisualItemModel {\n");
+    char * index = NULL;
+    /*numtostr(index,idx);
+    result.append(CQMLMarkupHelper::printProperty("index",index));*/
+    result.append("contentModel: VisualItemModel {\n");
+
+    strQML.append(result);
 }
-void CQMLMarkupHelper::buildColumns(StringBuffer &strQML, StructArrayOf<StringBuffer> &roles, StructArrayOf<StringBuffer> &titles)
+void CQMLMarkupHelper::buildColumns(StringBuffer &strQML, StringArray &roles, StringArray &titles)
 {  
     /*
     Sample QML for Column Instance
     columnNames: [{role:"key",title:"key"}, {role:"value",title:"value"},{role:"alphabet",title:"Alpha"}]
      */
+    StringBuffer result;
     assert(roles.length() == titles.length());
-    strQML.append("columnNames: [");
+    result.append("columnNames: [");
     for(int i = 0; i < roles.length(); i++){
-        strQML.append("{ role:\"").append(roles[i]).append("\", title:\"").append(titles[i]).append("\" }");
+        const StringBuffer temprole = CQMLMarkupHelper::printProperty("role", roles[i], false);
+        const StringBuffer temptitle = CQMLMarkupHelper::printProperty("title", titles[i], false);
+        result.appendf("{%s,%s}", temprole.toCharArray(), temptitle.toCharArray());
         if(i != roles.length() - 1)
-            strQML.append(",");
+            result.append(",");
     }
-    strQML.append("]\n");
+    result.append("]\n");
+
+    strQML.append(result);
 }
 
-void CQMLMarkupHelper::buildRole(StringBuffer &strQML, const char * role, StructArrayOf<StringBuffer> &values, const char * type, const char * tooltip, const char * placeholder)
+void CQMLMarkupHelper::buildRole(StringBuffer &strQML, const char * role, StringArray &values, const char * type, const char * tooltip, const char * placeholder)
 {
+    StringBuffer result;
     StringBuffer escapedToolTip = tooltip;
     escapedToolTip.replaceString("\"","\\\"");
     StringBuffer escapedPlaceholder = placeholder;
     escapedPlaceholder.replaceString("\"","\\\"");
-    strQML.append(role);
-    strQML.append(": ListElement { \n");
-    strQML.append("value:[");
-    for(int i = 0; i < values.length(); i++){
-        strQML.append("ListElement {value: \"");
-        strQML.append(values[i]);
-        strQML.append("\"}");
+    result.append(role);
+    result.append(": ListElement { \n");
+    result.append("value:[");
+    for(int i = 0; i < values.length(); i++)
+{        result.append("ListElement {value: \"");
+        result.append(values[i]);
+        result.append("\"}");
         if(i != values.length()-1)
-            strQML.append(",");
+            result.append(",");
     }
-    strQML.append("]\n");
-    strQML.append("type: \"").append(type).append("\"\n");
-    strQML.append("tooltip: \"").append(escapedToolTip).append("\"\n");
-    strQML.append("placeholder: \"").append(escapedPlaceholder).append("\"}\n");
+    result.append("]\n");
+    result.append(CQMLMarkupHelper::printProperty("type",type));
+    result.append(CQMLMarkupHelper::printProperty("tooltip",escapedToolTip));
+    result.append(CQMLMarkupHelper::printProperty("placeholder",escapedPlaceholder));
+    result.append("}");
+    strQML.append(result);
+}
+
+const StringBuffer CQMLMarkupHelper::printProperty(const char * property, const char * value, const bool newline)
+{
+    StringBuffer result;
+    result.appendf("%s: \"%s\"",property,value);
+    if(newline)
+        result.append("\n");
+    return result;
 }

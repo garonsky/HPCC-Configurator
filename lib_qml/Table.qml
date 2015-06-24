@@ -3,7 +3,7 @@ import QtQuick.Controls 1.3
 import QtQml.Models 2.1
 
 Item{
-	id: root
+	id: tableRoot
 	property var columnNames
 	property alias tableContent: tableContent.sourceComponent
 	width: parent ? parent.width : 500
@@ -23,7 +23,8 @@ Item{
 	Component {
 		id: fieldCol
 		TextField{
-			text: {
+            property string origText
+            text: {
                 var result = value;
                 if (typeof ApplicationData != 'undefined' && value){
                     result = ApplicationData.getValue(value);
@@ -33,15 +34,20 @@ Item{
                         result = ""
                     }
                 }
+                origText = result;
                 return result;
             }
 			placeholderText: placeholder
 			onEditingFinished: {
-				if(typeof ApplicationData != 'undefined')
-				{
-					console.log("Setting text \"" + text + "\" to xpath \"" + value + "\"")
-					ApplicationData.setValue(value,text)
-				}
+                if(origText != text){
+                        tableRoot.parent.parent.parent.edited = true;
+                    if(typeof ApplicationData != 'undefined')
+                    {
+    					console.log("Setting text \"" + text + "\" to xpath \"" + value + "\"")
+    					ApplicationData.setValue(value,text)
+    				}
+                }
+
 			}
 		}
 	}
@@ -65,6 +71,17 @@ Item{
 		id: comboCol
 		ComboBox{
 			model: value
+            property int origIndex: {origIndex = currentIndex}
+            onActivated:{
+                if(origIndex != currentIndex){
+                    tableRoot.parent.parent.parent.edited = true;
+                    if(typeof ApplicationData != 'undefined')
+                    {
+                        console.log("Setting text \"" + currentText + "\" to xpath \"" + value + "\"")
+                        ApplicationData.setValue(value,currentText)
+                    }
+                }
+            }
 		}
 	}
 	TableView {
