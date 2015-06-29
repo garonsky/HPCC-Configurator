@@ -10,7 +10,7 @@ class CSequence : public CXSDNode
 {
 public:
 
-    CSequence(CXSDNodeBase* pParentNode = NULL, CElementArray* pElemArray = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_SEQUENCE), p_mElementArray(pElemArray)
+    CSequence(CXSDNodeBase* pParentNode = NULL, CElementArray* pElemArray = NULL) : CXSDNode::CXSDNode(pParentNode, XSD_SEQUENCE), m_pElementArray(pElemArray)
     {
     }
 
@@ -30,6 +30,8 @@ public:
 
     virtual void getQML2(StringBuffer &strQML, int idx = -1) const;
 
+    virtual void getQML3(StringBuffer &strQML, int idx = -1) const;
+
     virtual void populateEnvXPath(StringBuffer strXPath, unsigned int index = 1);
 
     virtual void loadXMLFromEnvXml(const IPropertyTree *pEnvTree);
@@ -40,7 +42,7 @@ public:
 
 protected:
 
-    CElementArray *p_mElementArray;
+    CElementArray *m_pElementArray;
 
 private:
 

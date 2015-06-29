@@ -254,6 +254,40 @@ void CComplexType::getQML2(StringBuffer &strQML, int idx) const
         assert(!"what am i?");
     }
 }
+void CComplexType::getQML3(StringBuffer &strQML, int idx) const
+{
+    if (m_pAttributeArray != NULL && m_pAttributeArray->length() > 0)
+    {
+        DEBUG_MARK_QML;
+        if( m_pSequence             == NULL && 
+            m_pAttributeGroupArray  == NULL)
+        {
+            m_pAttributeArray->setUIType(this->getUIType());
+            m_pAttributeArray->getQML3(strQML);
+        } 
+        else 
+        {
+            CQMLMarkupHelper::buildAccordionStart(strQML, "Attributes");
+            m_pAttributeArray->setUIType(this->getUIType());
+            m_pAttributeArray->getQML3(strQML);
+            strQML.append(QML_DOUBLE_END_BRACKET);
+        }
+        DEBUG_MARK_QML;
+    }
+    if (m_pSequence != NULL)
+    {
+        DEBUG_MARK_QML;
+        m_pSequence->getQML3(strQML);
+        DEBUG_MARK_QML;
+    }
+    if(m_pAttributeGroupArray != NULL)
+    {
+        DEBUG_MARK_QML;
+        m_pAttributeGroupArray->getQML3(strQML);
+        DEBUG_MARK_QML;
+    }
+    
+}
 /*
 
     if ((m_pSequence != NULL || (m_pAttributeArray != NULL && m_pAttributeArray->length() > 0)) && this->getUIType() != QML_UI_TABLE)
@@ -539,6 +573,16 @@ void CComplexTypeArray::getQML2(StringBuffer &strQML, int idx) const
     {
         DEBUG_MARK_QML;
         (this->item(idx)).getQML2(strQML);
+        DEBUG_MARK_QML;
+    }
+}
+void CComplexTypeArray::getQML3(StringBuffer &strQML, int idx) const
+{
+    for (int idx=0; idx < this->length(); idx++)
+    {
+        DEBUG_MARK_QML;
+        (this->item(idx)).setUIType(this->getUIType());
+        (this->item(idx)).getQML3(strQML);
         DEBUG_MARK_QML;
     }
 }

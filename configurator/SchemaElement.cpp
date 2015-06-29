@@ -1,6 +1,8 @@
 #include <cassert>
 #include "jptree.hpp"
 #include "jstring.hpp"
+#include "jarray.hpp"
+#include "jhash.hpp"
 #include "XMLTags.h"
 #include "SchemaAnnotation.hpp"
 #include "SchemaCommon.hpp"
@@ -1009,129 +1011,35 @@ void CElement::getQML2(StringBuffer &strQML, int idx) const
 
     }
 }
-    /*else if (this->hasChildElements() == true || this->getMaxOccursInt() == 1)
+void CElement::getQML3(StringBuffer &strQML, int idx) const
+{
+    DEBUG_MARK_QML;
+    if (m_pComplexTypeArray != NULL)
     {
-        this->setUIType(QML_UI_TAB);
-
-        CQMLMarkupHelper::getTabQML(strQML, this->getTitle());
-        DEBUG_MARK_QML;
-        strQML.append(QML_GRID_LAYOUT_BEGIN_1);
-        DEBUG_MARK_QML;
-
-        if (m_pAnnotation != NULL)
-        {
-            DEBUG_MARK_QML2(this);
-            m_pAnnotation->getQML2(strQML);
-            DEBUG_MARK_QML2(this);
-        }
-
-        if (m_pComplexTypeArray != NULL && m_pComplexTypeArray->length() > 0)
-        {
-            if (this->hasChildElements() == true)
-            {
-                strQML.append(QML_TAB_VIEW_BEGIN);
-                DEBUG_MARK_QML
-
-                DEBUG_MARK_QML2(this);
-                m_pComplexTypeArray->getQML2(strQML);
-                DEBUG_MARK_QML2(this);
-            }
-            else
-            {
-
-            }
-
-            if (this->hasChildElements() == true)
-            {
-                strQML.append(QML_TAB_VIEW_STYLE);
-                DEBUG_MARK_QML;
-                strQML.append(QML_TAB_VIEW_END);
-                DEBUG_MARK_QML;
-                strQML.append(QML_TAB_TEXT_STYLE);
-                DEBUG_MARK_QML;
-            }
-        }
-
-        strQML.append(QML_GRID_LAYOUT_END);
-        DEBUG_MARK_QML;
-        strQML.append(QML_FLICKABLE_HEIGHT).append(CQMLMarkupHelper::getImplicitHeight() * 1.5);
-        DEBUG_MARK_QML;
-        strQML.append(QML_FLICKABLE_END);
-        DEBUG_MARK_QML;
-        strQML.append(QML_TAB_END);
-        DEBUG_MARK_QML;
-    }
-    else if (this->getMaxOccursInt() > 1)
-    {
-        this->setUIType(QML_UI_TABLE);
-
-        strQML.append(QML_TABLE_VIEW_BEGIN);
-        DEBUG_MARK_QML;
-
-        strQML.append(QML_MODEL).append(modelNames[CConfigSchemaHelper::getInstance(0)->getNumberOfTables()]).append(QML_STYLE_NEW_LINE);
-        DEBUG_MARK_QML;
-
-        strQML.append(QML_PROPERTY_STRING_TABLE_BEGIN).append(modelNames[CConfigSchemaHelper::getInstance(0)->getNumberOfTables()]).append(QML_PROPERTY_STRING_TABLE_PART_1).append(this->getXSDXPath()).append(QML_PROPERTY_STRING_TABLE_END);
-        DEBUG_MARK_QML;
-
-        CConfigSchemaHelper::getInstance(0)->incTables();
-
-        if (m_pComplexTypeArray != NULL)
+        if(this->getUIType() == QML_UI_TABLE_LIST)
         {
             DEBUG_MARK_QML;
-            m_pComplexTypeArray->getQML2(strQML);
-            DEBUG_MARK_QML;
+            m_pComplexTypeArray->setUIType(this->getUIType());
+            m_pComplexTypeArray->getQML3(strQML);
         }
-
-        DEBUG_MARK_QML;
-        strQML.append(QML_TABLE_VIEW_END);
-        DEBUG_MARK_QML;
-    }
-    else if (this->getUIType() == QML_UI_EMPTY)
-    {
-        DEBUG_MARK_QML;
-
-        if (m_pComplexTypeArray != NULL)
-        {*/
-            /*strQML.append(QML_TAB_VIEW_BEGIN);
+        else 
+        {
+            const char * altTitle = "";
+            if((m_pComplexTypeArray->item(0)).getAttributeArray() != NULL && (m_pComplexTypeArray->item(0)).getAttributeArray()->findAttributeWithName("name") != NULL)
+            {
+                altTitle = (m_pComplexTypeArray->item(0)).getAttributeArray()->findAttributeWithName("name")->getEnvXPath();
+            }
+    
             DEBUG_MARK_QML;
-            CQMLMarkupHelper::getTabQML(strQML, this->getTitle());
+            CQMLMarkupHelper::buildAccordionStart(strQML, this->getTitle(), altTitle);
             DEBUG_MARK_QML;
-            strQML.append(QML_GRID_LAYOUT_BEGIN_1);
-            DEBUG_MARK_QML;*/
-
-         /*   DEBUG_MARK_QML;
-            //m_pComplexTypeArray->setUIType(QML_UI_TEXT_FIELD);
-            //m_pComplexTypeArray->setUIType(QML_UI_TAB);
-            m_pComplexTypeArray->getQML2(strQML,idx);
-            DEBUG_MARK_QML;
-
-            /*strQML.append(QML_GRID_LAYOUT_END);
-            DEBUG_MARK_QML;
-            strQML.append(QML_FLICKABLE_HEIGHT).append(CQMLMarkupHelper::getImplicitHeight() * 1.5);
-            DEBUG_MARK_QML;
-            strQML.append(QML_FLICKABLE_END);
-            DEBUG_MARK_QML;
-            strQML.append(QML_TAB_END);
-            DEBUG_MARK_QML;
-            strQML.append(QML_TAB_VIEW_STYLE);
-            DEBUG_MARK_QML;
-            strQML.append(QML_TAB_VIEW_END);
-            DEBUG_MARK_QML;
-            strQML.append(QML_TAB_TEXT_STYLE);
+            m_pComplexTypeArray->getQML3(strQML);
+            strQML.append(QML_DOUBLE_END_BRACKET);
             DEBUG_MARK_QML;
         }
     }
-    else if (this->getConstParentNode()->getUIType() == QML_UI_TAB)
-    {
-
-    }
-    else
-    {
-        assert(!"what am i?");
-    }
-
-}*/
+    DEBUG_MARK_QML;
+}
 
 bool CElement::isATab() const
 {
@@ -1307,6 +1215,15 @@ bool CElement::isTopLevelElement() const
     //*/return m_bTopLevelElement;
 }
 
+const char * CElement::getViewType() const
+{
+    if(m_pAnnotation != NULL && m_pAnnotation->getAppInfo() != NULL)
+    {
+        return m_pAnnotation->getAppInfo()->getViewType();
+    }
+    return NULL;
+}
+
 void CElementArray::dump(std::ostream &cout, unsigned int offset) const
 {
     offset+= STANDARD_OFFSET_1;
@@ -1407,6 +1324,77 @@ void CElementArray::getQML2(StringBuffer &strQML, int idx) const
         DEBUG_MARK_QML;
         this->item(0).getQML2(strQML,0);
         DEBUG_MARK_QML;
+    }
+}
+
+void CElementArray::getQML3(StringBuffer &strQML, int idx) const
+{
+    DEBUG_MARK_QML;
+    if(this->length() > 1)
+    {
+        StringArray keyspace;
+        MapStringTo<bool,bool> isList;
+        MapStringTo<StringBuffer,const char *> elementGroups;
+        // Go through Element Array to initialize elementGroups
+        for (int i = 0; i < this->length(); i++) 
+        {
+            // If this is a unique element name
+            if(elementGroups.getValue((this->item(i)).getName()) == NULL)
+            {
+                // Initialize temp string
+                StringBuffer temp("");
+                // Build Accordion
+                CQMLMarkupHelper::buildAccordionStart(temp,(this->item(i)).getTitle());
+                // If list or instance, append table boilerplate, make mapping for later
+                if( (this->item(i)).getViewType() != NULL && 
+                    (!stricmp((this->item(i)).getViewType(),"list") || !stricmp((this->item(i)).getViewType(),"instance")) &&
+                    (this->item(i)).getComplexTypeArray() != NULL &&
+                    ((this->item(i)).getComplexTypeArray()->item(0)).getSequence() == NULL &&
+                    ((this->item(i)).getComplexTypeArray()->item(0)).getAttributeGroupArray() == NULL && 
+                    ((this->item(i)).getComplexTypeArray()->item(0)).getAttributeArray() != NULL && 
+                    ((this->item(i)).getComplexTypeArray()->item(0)).getAttributeArray()->length() > 0
+                    )
+                {
+                    isList.setValue((this->item(i)).getName(),true);
+                    temp.append(QML_TABLE_START);
+                    StringArray names;
+                    StringArray titles;
+                    ((this->item(i)).getComplexTypeArray()->item(0)).getAttributeArray()->getAttributeNames(names,titles);
+                    CQMLMarkupHelper::buildColumns(temp, names, titles);
+                    temp.append(QML_TABLE_CONTENT_START);
+                } else {
+                    isList.setValue((this->item(i)).getName(),false);
+                }
+                // Save grouping, save keyspace for reference
+                elementGroups.setValue((this->item(i)).getName(),temp.str());
+                keyspace.append((this->item(i)).getName());
+            }
+        }
+        for (int i = 0; i < this->length(); i++)
+        {
+            assert(*elementGroups.getValue((this->item(i)).getName()) != NULL);
+            if(*elementGroups.getValue((this->item(i)).getName()) != NULL)
+            {
+                StringBuffer temp = *elementGroups.getValue((this->item(i)).getName());
+                if(*isList.getValue((this->item(i)).getName()) == true)
+                {
+                    (this->item(i)).setUIType(QML_UI_TABLE_LIST);
+                }
+                (this->item(i)).getQML3(temp,i);
+                elementGroups.setValue((this->item(i)).getName(),temp.str());
+            }
+        }
+        for(int i = 0; i < keyspace.length(); i++)
+        {
+            strQML.append(*elementGroups.getValue(keyspace[i]));
+            DEBUG_MARK_QML;
+            if(*isList.getValue(keyspace[i]) == true)
+                strQML.append(QML_DOUBLE_END_BRACKET);
+            strQML.append(QML_DOUBLE_END_BRACKET);
+            DEBUG_MARK_QML;
+        }
+    } else {
+        (this->item(0)).getQML3(strQML,0);
     }
 }
 

@@ -2,6 +2,7 @@
 #include "SchemaCommon.hpp"
 #include "jstring.hpp"
 #include "jutil.hpp"
+#include "jarray.hpp"
 #include "jdebug.hpp"
 #include "SchemaAttributes.hpp"
 #include "SchemaElement.hpp"
@@ -157,4 +158,75 @@ bool CQMLMarkupHelper::isTableRequired(const CAttribute *pAttrib)
     {
         return false;
     }
+}
+
+void CQMLMarkupHelper::buildAccordionStart(StringBuffer &strQML, const char * title, const char * altTitle, int idx)
+{
+    StringBuffer result;
+    assert(title != NULL);
+    result.append("AccordionItem {\n");
+    result.append(CQMLMarkupHelper::printProperty("title",title));
+    if(strlen(altTitle)){
+        result.append(CQMLMarkupHelper::printProperty("altTitle",altTitle));
+    }
+    char * index = NULL;
+    /*numtostr(index,idx);
+    result.append(CQMLMarkupHelper::printProperty("index",index));*/
+    result.append("contentModel: VisualItemModel {\n");
+
+    strQML.append(result);
+}
+void CQMLMarkupHelper::buildColumns(StringBuffer &strQML, StringArray &roles, StringArray &titles)
+{  
+    /*
+    Sample QML for Column Instance
+    columnNames: [{role:"key",title:"key"}, {role:"value",title:"value"},{role:"alphabet",title:"Alpha"}]
+     */
+    StringBuffer result;
+    assert(roles.length() == titles.length());
+    result.append("columnNames: [");
+    for(int i = 0; i < roles.length(); i++){
+        const StringBuffer temprole = CQMLMarkupHelper::printProperty("role", roles[i], false);
+        const StringBuffer temptitle = CQMLMarkupHelper::printProperty("title", titles[i], false);
+        result.appendf("{%s,%s}", temprole.toCharArray(), temptitle.toCharArray());
+        if(i != roles.length() - 1)
+            result.append(",");
+    }
+    result.append("]\n");
+
+    strQML.append(result);
+}
+
+void CQMLMarkupHelper::buildRole(StringBuffer &strQML, const char * role, StringArray &values, const char * type, const char * tooltip, const char * placeholder)
+{
+    StringBuffer result;
+    StringBuffer escapedToolTip = tooltip;
+    escapedToolTip.replaceString("\"","\\\"");
+    StringBuffer escapedPlaceholder = placeholder;
+    escapedPlaceholder.replaceString("\"","\\\"");
+    result.append(role);
+    result.append(": ListElement { \n");
+    result.append("value:[");
+    for(int i = 0; i < values.length(); i++)
+{        result.append("ListElement {value: \"");
+        result.append(values[i]);
+        result.append("\"}");
+        if(i != values.length()-1)
+            result.append(",");
+    }
+    result.append("]\n");
+    result.append(CQMLMarkupHelper::printProperty("type",type));
+    result.append(CQMLMarkupHelper::printProperty("tooltip",escapedToolTip));
+    result.append(CQMLMarkupHelper::printProperty("placeholder",escapedPlaceholder));
+    result.append("}");
+    strQML.append(result);
+}
+
+const StringBuffer CQMLMarkupHelper::printProperty(const char * property, const char * value, const bool newline)
+{
+    StringBuffer result;
+    result.appendf("%s: \"%s\"",property,value);
+    if(newline)
+        result.append("\n");
+    return result;
 }

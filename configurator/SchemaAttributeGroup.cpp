@@ -1,8 +1,9 @@
-﻿#include "SchemaAttributeGroup.hpp"
+#include "SchemaAttributeGroup.hpp"
 #include "DocumentationMarkup.hpp"
 #include "ConfigSchemaHelper.hpp"
 #include "jptree.hpp"
 #include "SchemaMapManager.hpp"
+#include "QMLMarkup.hpp"
 
 const CXSDNodeBase* CAttributeGroup::getNodeByTypeAndNameAscending(NODE_TYPES eNodeType, const char *pName) const
 {
@@ -114,6 +115,20 @@ void CAttributeGroup::getQML(StringBuffer &strQML, int idx) const
             m_pRefAttributeGroup->getConstAttributeArray()->getQML(strQML);
         }
     }
+}
+
+void CAttributeGroup::getQML3(StringBuffer &strQML, int idx) const
+{
+    DEBUG_MARK_QML;
+    if (this->getRef() != NULL && this->getRef()[0] != 0 && m_pRefAttributeGroup != NULL && m_pRefAttributeGroup->getConstAttributeArray() != NULL)
+    {
+        DEBUG_MARK_QML;
+        CQMLMarkupHelper::buildAccordionStart(strQML, this->getRef(), "");
+        m_pRefAttributeGroup->getConstAttributeArray()->getQML3(strQML);
+        strQML.append(QML_DOUBLE_END_BRACKET);
+        DEBUG_MARK_QML;
+    }
+    DEBUG_MARK_QML;
 }
 
 void CAttributeGroup::populateEnvXPath(StringBuffer strXPath, unsigned int index)
@@ -377,6 +392,16 @@ void CAttributeGroupArray::getQML2(StringBuffer &strQML, int idx) const
     {
         (this->item(idx)).getQML2(strQML);
     }
+}
+
+void CAttributeGroupArray::getQML3(StringBuffer &strQML, int idx) const
+{
+    DEBUG_MARK_QML;
+    for (int idx=0; idx < this->length(); idx++)
+    {
+        (this->item(idx)).getQML3(strQML);
+    }
+    DEBUG_MARK_QML;
 }
 
 void CAttributeGroupArray::populateEnvXPath(StringBuffer strXPath, unsigned int index)

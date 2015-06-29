@@ -122,23 +122,26 @@ int initialize(int argc, char *argv[])
 
 int getValue(const char *pXPath, char *pValue)
 {
-    int counter = 0;
-    itoa(counter, pValue, 10);
-    counter++;
-
+    // By Default, return xPath as value.
+    strcpy(pValue, pXPath);
     CAttribute *pAttribute = CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getAttributeFromXPath(pXPath);
 
-    assert(pAttribute != NULL);
-
-    if (pAttribute->isInstanceValueValid() == true)
+    //assert(pAttribute != NULL);
+    if(pAttribute == NULL)
+    {
+        std::cout << "xPath: " << pXPath << "| value: " << pXPath << std::endl;
+    }
+    else if (pAttribute->isInstanceValueValid() == true)
     {
         //strcpy(pValue, pAttribute->getEnvValueFromXML());
         strcpy(pValue, pAttribute->getInstanceValue());
+        std::cout << "xPath: " << pXPath << "| value: " << pValue << std::endl;
     }
-    else
-    {
+    /*else
+    { // If attribute is valid but instance does not exist
+        std::cout << "xPath: " << pXPath << "| value: NULL" << std::endl;
         pValue = NULL;
-    }
+    }*/
     return true;
 }
 
@@ -214,19 +217,15 @@ const char* getTableValue(const char *pXPath, int nRow)
         else
         {
             StringBuffer strXPath(pXPath);
-            const StringBuffer strXPathOrignal(pXPath);
+            const StringBuffer strXPathOriginal(pXPath);
 
 
-            int offset = CConfigSchemaHelper::stripXPathIndex(strXPath);
+            int offset = strXPathOriginal.length() - (CConfigSchemaHelper::stripXPathIndex(strXPath) + 1) ;
             CConfigSchemaHelper::stripXPathIndex(strXPath);
 
             strXPath.appendf("[%d]", nRow);
 
-            //char pTemp[64];
-            //int offset = strlen(itoa(nRow, pTemp, 10)) - 1;
-
-            //strXPath.append((String(strXPathOrignal).substring(strXPath.length()-offset, strXPathOrignal.length()))->toCharArray());
-            strXPath.append((String(strXPathOrignal).substring(strXPathOrignal.length()-offset-1, strXPathOrignal.length()))->str());
+            strXPath.append(strXPathOriginal, offset, strXPathOriginal.length() - offset);
 
             pAttribute =  CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getAttributeFromXPath(strXPath.str());
 
