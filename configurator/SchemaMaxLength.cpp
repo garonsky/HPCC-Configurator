@@ -2,7 +2,7 @@
 
 CMaxLength* CMaxLength::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
 {
-    CMaxLength *pMaxLength = CXSDNodeWithRestrictions::load(pParentNode, pSchemaRoot, xpath);
+    CMaxLength *pMaxLength = CXSDNodeWithRestrictions<CMaxLength>::load(pParentNode, pSchemaRoot, xpath);
 
     if (pMaxLength == NULL)
     {

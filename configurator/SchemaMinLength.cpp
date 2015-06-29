@@ -2,7 +2,7 @@
 
 CMinLength* CMinLength::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
 {
-    CMinLength *pMinLength = CXSDNodeWithRestrictions::load(pParentNode, pSchemaRoot, xpath);
+    CMinLength *pMinLength = CXSDNodeWithRestrictions<CMinLength>::load(pParentNode, pSchemaRoot, xpath);
 
     if (pMinLength == NULL)
     {

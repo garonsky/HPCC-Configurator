@@ -2,7 +2,7 @@
 
 CTotalDigits* CTotalDigits::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
 {
-    CTotalDigits *pTotalDigits = CXSDNodeWithRestrictions::load(pParentNode, pSchemaRoot, xpath);
+    CTotalDigits *pTotalDigits = CXSDNodeWithRestrictions<CTotalDigits>::load(pParentNode, pSchemaRoot, xpath);
 
     if (pTotalDigits == NULL)
     {

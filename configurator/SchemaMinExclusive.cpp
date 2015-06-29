@@ -2,7 +2,7 @@
 
 CMinExclusive* CMinExclusive::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
 {
-    CMinExclusive *pMinExclusive = CXSDNodeWithRestrictions::load(pParentNode, pSchemaRoot, xpath);
+    CMinExclusive *pMinExclusive = CXSDNodeWithRestrictions<CMinExclusive>::load(pParentNode, pSchemaRoot, xpath);
 
     if (pMinExclusive == NULL)
     {
