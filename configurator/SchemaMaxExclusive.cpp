@@ -2,7 +2,7 @@
 
 CMaxExclusive* CMaxExclusive::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
 {
-    CMaxExclusive *pMaxExclusive = CXSDNodeWithRestrictions::load(pParentNode, pSchemaRoot, xpath);
+    CMaxExclusive *pMaxExclusive = CXSDNodeWithRestrictions<CMaxExclusive>::load(pParentNode, pSchemaRoot, xpath);
 
     if (pMaxExclusive == NULL)
     {

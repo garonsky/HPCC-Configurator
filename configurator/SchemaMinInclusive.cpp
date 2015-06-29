@@ -3,7 +3,7 @@
 CMinInclusive* CMinInclusive::load(CXSDNodeBase* pParentNode, const IPropertyTree *pSchemaRoot, const char* xpath)
 {
 
-    CMinInclusive *pMinInclusive = CXSDNodeWithRestrictions::load(pParentNode, pSchemaRoot, xpath);
+    CMinInclusive *pMinInclusive = CXSDNodeWithRestrictions<CMinInclusive>::load(pParentNode, pSchemaRoot, xpath);
 
     if (pMinInclusive == NULL)
     {
