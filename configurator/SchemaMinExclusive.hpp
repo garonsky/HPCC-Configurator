@@ -18,7 +18,7 @@ public:
 
 protected:
 
-    CMinExclusive(CXSDNodeBase* pParentNode = NULL) : CXSDNodeWithRestrictions<CMinExclusive>::CXSDNodeWithRestrictions<CMinExclusive>(pParentNode, XSD_MIN_EXCLUSIVE), m_nMinExclusive(-1)
+    CMinExclusive(CXSDNodeBase* pParentNode = NULL) : CXSDNodeWithRestrictions<CMinExclusive>::CXSDNodeWithRestrictions(pParentNode, XSD_MIN_EXCLUSIVE), m_nMinExclusive(-1)
     {
     }
 };
