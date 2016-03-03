@@ -12,6 +12,7 @@
 #include "ConfigNotifications.hpp"
 #include <iostream>
 #include "jlog.hpp"
+#include "build-config.h"
 
 namespace CONFIGURATOR_API
 {
@@ -224,9 +225,11 @@ const char* getTableValue(const char *pXPath, int nRow)
 
             //char pTemp[64];
             //int offset = strlen(itoa(nRow, pTemp, 10)) - 1;
-
-            strXPath.append((String(strXPathOrignal).substring(strXPath.length()-offset, strXPathOrignal.length()))->toCharArray());
-            //strXPath.append((String(strXPathOrignal).substring(strXPathOrignal.length()-offset-1, strXPathOrignal.length()))->str());
+#if BUILD_VERSION_MAJOR >= 6 && BUILD_VERSION_MINOR >= 0
+            strXPath.append((String(strXPathOrignal).substring(strXPath.length()-offset, strXPathOrignal.length()))->str());
+#else
+            strXPath.append((String(strXPathOrignal).substring(strXPathOrignal.length()-offset-1, strXPathOrignal.length()))->toCharArray());
+#endif
 
             pAttribute =  CConfigSchemaHelper::getInstance()->getSchemaMapManager()->getAttributeFromXPath(strXPath.str());
 

@@ -23,6 +23,8 @@ SET(  SRCS QMLMarkup.cpp QMLMarkup.hpp ConfiguratorMain.cpp ConfigFileComponentU
         ${CMAKE_PREFIX_PATH}/mkspecs/linux-g++
         ${CMAKE_CURRENT_SOURCE_DIR}/configurator_ui
         ${CMAKE_CURRENT_SOURCE_DIR}/configurator_app
+        ${CMAKE_BINARY_DIR}
+        ${CMAKE_BINARY_DIR}/oss
 )
 
 IF( CONFIGURATOR_STATIC_LIB )

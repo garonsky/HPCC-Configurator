@@ -11,6 +11,7 @@
 #include "SchemaMapManager.hpp"
 #include "ConfigSchemaHelper.hpp"
 #include "ConfigFileUtils.hpp"
+#include "build-config.h"
 
 #define LOOP_THRU_BUILD_SET_MANAGER_BUILD_SET \
 int nComponentCount = CBuildSetManager::getInstance()->getBuildSetComponentCount();         \
@@ -727,9 +728,11 @@ const char* CConfigSchemaHelper::getTableValue(const char* pXPath,  int nRow) co
 
             char pTemp[64];
             int offset = strlen(itoa(nRow, pTemp, 10)) - 1;
-
-            //strXPath.append((String(strXPathOrignal).substring(strXPath.length()-offset, strXPathOrignal.length()))->str());
+#if BUILD_VERSION_MAJOR >= 6 && BUILD_VERSION_MINOR >= 0
+            strXPath.append((String(strXPathOrignal).substring(strXPath.length()-offset, strXPathOrignal.length()))->str());
+#else
             strXPath.append((String(strXPathOrignal).substring(strXPath.length()-offset, strXPathOrignal.length()))->toCharArray());
+#endif
 
             pAttribute = m_pSchemaMapManager->getAttributeFromXPath(strXPath.str());
 
@@ -855,7 +858,7 @@ bool CConfigSchemaHelper::saveConfigurtionFile() const
 
     StringBuffer strXML;
 
-    strXML.appendf("<"XML_HEADER">\n<!-- Edited with THE CONFIGURATOR -->\n");
+    strXML.appendf("<" XML_HEADER ">\n<!-- Edited with THE CONFIGURATOR -->\n");
     toXML(this->getConstEnvPropertyTree(), strXML, 0, XML_SortTags | XML_Format);
 
     if (CConfigFileUtils::getInstance()->writeConfigurationToFile(m_strEnvFilePath.str(), strXML.str(), strXML.length()) == CConfigFileUtils::CF_NO_ERROR)

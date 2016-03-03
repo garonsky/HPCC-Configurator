@@ -40,6 +40,7 @@ ENDIF()
 
 INCLUDE (${HPCC_CONFIGURATOR_SOURCE_DIR}/version.cmake)
 INCLUDE (${HPCC_SOURCE_DIR}/version.cmake)
+
 INCLUDE (${HPCC_CONFIGURATOR_SOURCE_DIR}/cmake_modules/optionDefaults.cmake)
 INCLUDE (${HPCC_CONFIGURATOR_SOURCE_DIR}/cmake_modules/configuratorCommonSetup.cmake)
 
@@ -147,6 +148,8 @@ IF (NOT "${CMAKE_VERSION}" VERSION_LESS "2.8.2")
     ENDIF ( CMAKE_SYSTEM MATCHES Linux )
     IF ( EXISTS ${HPCC_CONFIGURATOR_SOURCE_DIR}/cmake_modules/dependencies/${packageRevision}.cmake.in )
 	CONFIGURE_FILE(${HPCC_CONFIGURATOR_SOURCE_DIR}/cmake_modules/dependencies/${packageRevision}.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/dependencies/${packageRevision}.cmake)
+        CONFIGURE_FILE(${HPCC_SOURCE_DIR}/build-config.h.cmake "build-config.h")
+
 	MESSAGE("-- Configuring ${packageRevision}.cmake.in --> ${packageRevision}.cmake")
         INCLUDE( ${CMAKE_CURRENT_BINARY_DIR}/dependencies/${packageRevision}.cmake )
     ELSE()
