@@ -13,6 +13,8 @@ configurator/ConfigFileUtilsObserver.cpp
 configurator/ConfigFileUtilsObserver.hpp
 configurator/ConfigHardware.cpp
 configurator/ConfigHardware.hpp
+configurator/ConfigNotifications.cpp
+configurator/ConfigNotifications.hpp
 configurator/ConfigSchemaHelper.cpp
 configurator/ConfigSchemaHelper.hpp
 configurator/ConfiguratorAPI.cpp
@@ -93,6 +95,8 @@ configurator/SchemaSelector.cpp
 configurator/SchemaSelector.hpp
 configurator/SchemaSequence.cpp
 configurator/SchemaSequence.hpp
+configurator/SchemaSimpleContent.cpp
+configurator/SchemaSimpleContent.hpp
 configurator/SchemaSimpleType.cpp
 configurator/SchemaSimpleType.hpp
 configurator/SchemaTotalDigits.cpp
@@ -118,9 +122,3 @@ configurator_ui/AppData.cpp
 configurator_ui/AppData.hpp
 configurator_ui/ConfiguratorUI.cpp
 configurator_ui/ConfiguratorUI.hpp
-configurator/CMakeLists.txt
-CMakeLists.txt
-configurator_app/MainWindow.ui
-configurator/ConfigNotifications.hpp
-configurator/ConfigNotifications.cpp
-configurator_app/CMakeLists.txt

@@ -108,7 +108,7 @@ void CQMLMarkupHelper::getTableViewColumn(StringBuffer &strQML, const char* colT
 unsigned CQMLMarkupHelper::getRandomID(StringBuffer *pID)
 {
     Owned<IRandomNumberGenerator> random = createRandomNumberGenerator();
-    random->seed(get_cycles_now());
+    random->seed(static_cast<unsigned>(get_cycles_now()));
 
     unsigned int retVal =  (random->next() % UINT_MAX);
 
